@@ -4,11 +4,6 @@
 #include <cmath>
 #include <limits>
 
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonValue>
-#include <QJsonArray>
-
 //#define __TEST
 //#define __UI_TEST
 
@@ -224,8 +219,8 @@ static inline void fill_rect(NVGcontext* vg, const Rect1& r, const NVGcolor* col
     if (stroke_width > 0) {
         nvgStrokeWidth(vg, stroke_width);
         if (stroke_color) nvgStrokeColor(vg, *stroke_color);
-		else nvgStrokeColor(vg, nvgRGB(0, 0, 0));   
-        nvgStroke(vg);                         
+		else nvgStrokeColor(vg, nvgRGB(0, 0, 0));
+        nvgStroke(vg);
     }
 }
 
@@ -499,8 +494,7 @@ public:
     }
 };
 
-class ModelDrawer : public QObject{
-      Q_OBJECT
+class ModelDrawer {
 protected:
     template <class T>
     float interp(float x, std::initializer_list<T> x_list, std::initializer_list<T> y_list, bool extrapolate)
@@ -704,11 +698,11 @@ public:
         else if (longActive) {
             if (xState == 3 || xState == 5) {      //XState.e2eStop, XState.e2eStopped
                 if (v_ego < 1.0) {
-                    sprintf(str, "%s", (trafficState >= 1000) ? tr("Signal Error").toStdString().c_str(): tr("Signal Ready").toStdString().c_str());
+                    sprintf(str, "%s", (trafficState >= 1000) ? "信号错误" : "信号等待");
                     ui_draw_text(s, x, disp_y, str, disp_size, COLOR_WHITE, BOLD);
                 }
                 else {
-                    ui_draw_text(s, x, disp_y, tr("Signal slowing").toStdString().c_str(), disp_size, COLOR_WHITE, BOLD);
+                    ui_draw_text(s, x, disp_y, "信号减速中", disp_size, COLOR_WHITE, BOLD);
                 }
 #if 0
                 else if (getStopDist() > 0.5) {
@@ -720,7 +714,7 @@ public:
 #endif
             }
             else if (xState == 4) {     //XState.e2ePrepare
-				      ui_draw_text(s, x, disp_y, "E2E주행중", disp_size, COLOR_WHITE, BOLD);
+				      ui_draw_text(s, x, disp_y, "E2E模式", disp_size, COLOR_WHITE, BOLD);
 			      }
             else if (xState == 0 || xState == 1 || xState == 2) {     //XState.lead
                 draw_dist = true;
@@ -1062,17 +1056,17 @@ protected:
                 ui_draw_text(s, bx, by + 25 * scale - 6 * (1 - scale), str, 60 * scale, COLOR_BLACK, BOLD, 0.0f, 0.0f);
             }
         }
-	}
+    }
     int  drawTurnInfoHud(const UIState* s) {
       if (s->fb_w < 1200) return -1;
 #ifdef __UI_TEST
         active_carrot = 2;
         nGoPosDist = 500000;
         nGoPosTime = 4 * 60 * 60;
-        szSdiDescr = "어린이 보호구역(스쿨존 시작 구간)";
+        szSdiDescr = "儿童保护区域（学校区域起始路段）";
         xTurnInfo = 1;
         xDistToTurn = 1000;
-        szPosRoadName = "구문천 1길 17";
+        szPosRoadName = "九文川1街17号";
 #endif
 
         //if (active_carrot <= 1) return;
@@ -1114,9 +1108,9 @@ protected:
             case 4: ui_draw_image(s, { bx - icon_size / 2, by - icon_size / 2, icon_size, icon_size }, "ic_lane_change_r", 1.0f); break;
             case 7: ui_draw_image(s, { bx - icon_size / 2, by - icon_size / 2, icon_size, icon_size }, "ic_turn_u", 1.0f); break;
             case 6: ui_draw_text(s, bx, by + 20, "TG", 35, COLOR_WHITE, BOLD); break;
-            case 8: ui_draw_text(s, bx, by + 20, "목적지", 35, COLOR_WHITE, BOLD); break;
+            case 8: ui_draw_text(s, bx, by + 20, "目的地", 35, COLOR_WHITE, BOLD); break;
             default:
-                sprintf(str, "감속:%d", xTurnInfo);
+                sprintf(str, "减速:%d", xTurnInfo);
                 ui_draw_text(s, bx, by + 20, str, 35, COLOR_WHITE, BOLD);
                 break;
             }
@@ -1151,8 +1145,7 @@ protected:
             int remaining_minutes = (int)nGoPosTime / 60;
             local->tm_min += remaining_minutes;
             mktime(local);
-            bool is_kor = s->language == "main_ko";
-            sprintf(str, "%s: %.1f%s(%02d:%02d)", (is_kor)?"도착":"ETA", (float)nGoPosTime / 60., (is_kor)?"분":"MIN", local->tm_hour, local->tm_min);
+            sprintf(str, "到达: %.1f分(%02d:%02d)", (float)nGoPosTime / 60., local->tm_hour, local->tm_min);
             ui_draw_text(s, tbt_x + 190, tbt_y + 80, str, 50, COLOR_WHITE, BOLD);
             sprintf(str, "%.1f%s", nGoPosDist / 1000. * ((s->scene.is_metric)?1:KM_TO_MILE), (s->scene.is_metric) ? "km" : "mile");
             ui_draw_text(s, tbt_x + 190 + 120, tbt_y + 130, str, 50, COLOR_WHITE, BOLD);
@@ -1168,7 +1161,7 @@ public:
             return -1;
         }
         const auto carrot_man = sm["carrotMan"].getCarrotMan();
-          
+
         active_carrot = carrot_man.getActiveCarrot();
 
         if (active_carrot > 1) {
@@ -1192,7 +1185,7 @@ public:
           szSdiDescr = QString::fromStdString(carrot_man.getSzSdiDescr());
           szPosRoadName = QString::fromStdString(carrot_man.getSzPosRoadName());
           szTBTMainText = QString::fromStdString(carrot_man.getSzTBTMainText());
-          
+
         }
         else {
           //xTurnInfo = -1;
@@ -1634,8 +1627,6 @@ protected:
     int use_lane_line_speed_apply = 0;
 public:
     void draw(const UIState* s, float& pathDrawSeq) {
-        SubMaster& sm = *(s->sm);
-        auto car_state = sm["carState"].getCarState();
         params_count = (params_count + 1) % 20;
         if (params_count == 0) {
             show_path_mode_normal = params.getInt("ShowPathMode");
@@ -1645,7 +1636,7 @@ public:
             show_path_color_cruise_off = params.getInt("ShowPathColorCruiseOff");
         }
         if (!make_data(s)) return;
-        int temp = (int)car_state.getUseLaneLineSpeed();
+        int temp = params.getInt("UseLaneLineSpeedApply");
         if (temp != use_lane_line_speed_apply) {
             ui_draw_text_a(s, 0, 0, (temp>0)?"LaneMode":"Laneless", 30, (temp>0)?COLOR_GREEN:COLOR_YELLOW, BOLD);
             use_lane_line_speed_apply = temp;
@@ -1660,6 +1651,8 @@ public:
             COLOR_WHITE_ALPHA(alpha),         COLOR_BLACK_ALPHA(alpha),
         };
 
+        SubMaster& sm = *(s->sm);
+        auto car_state = sm["carState"].getCarState();
         bool brake_valid = car_state.getBrakeLights();
         const auto radar_state = sm["radarState"].getRadarState();
         auto lead_one = radar_state.getLeadOne();
@@ -1894,6 +1887,11 @@ private:
 };
 
 
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonArray>
+
 typedef struct {
     float x, y, d, v, y_rel, v_lat, radar;
 } lead_vertex_data;
@@ -1981,7 +1979,7 @@ public:
               int max_z = lane_lines[2].getZ().size();
               float z_offset = 0.0;
               foreach(const QString & pair, pairs) {
-                QStringList xy = pair.split(",");  // ","로 x와 y 구분                
+                QStringList xy = pair.split(",");  // ","로 x와 y 구분
                 if (xy.size() == 3) {
                   //printf("coords = x: %.1f, y: %.1f, d:%.1f\n", xy[0].toFloat(), xy[1].toFloat(), xy[2].toFloat());
                   float x = xy[0].toFloat();
@@ -1998,9 +1996,9 @@ public:
             }
             auto meta = sm["modelV2"].getModelV2().getMeta();
             QString desireLog = QString::fromStdString(meta.getDesireLog());
-            sprintf(carrot_man_debug, "%s, m_kph= %d, %dkm/h TBT(%d): %dm, CAM(%d): %dkm/h, %dm, ATC(%s), T(%d)",
-                desireLog.toStdString().c_str(),
+            sprintf(carrot_man_debug, "model_kph= %d, %s, %dkm/h TBT(%d): %dm, CAM(%d): %dkm/h, %dm, ATC(%s), T(%d)",
                 (int)(velocity.getX()[32] * 3.6),
+                desireLog.toStdString().c_str(),
                 carrot_man.getDesiredSpeed(),
                 carrot_man.getXTurnInfo(),
                 carrot_man.getXDistToTurn(),
@@ -2105,7 +2103,7 @@ public:
     void drawDebug(UIState* s) {
         if (params.getInt("ShowDebugUI") > 1) {
             nvgTextAlign(s->vg, NVG_ALIGN_RIGHT | NVG_ALIGN_BOTTOM);
-            ui_draw_text(s, s->fb_w, s->fb_h - 10, carrot_man_debug, 25, COLOR_WHITE, BOLD, 1.0f, 1.0f);
+            ui_draw_text(s, s->fb_w, s->fb_h - 10, carrot_man_debug, 35, COLOR_WHITE, BOLD, 1.0f, 1.0f);
         }
     }
     void drawNaviPath(UIState* s) {
@@ -2174,7 +2172,7 @@ public:
     void drawHud(UIState* s) {
         int show_device_state = params.getInt("ShowDeviceState");
         blink_timer = (blink_timer + 1) % 16;
-        disp_timer = (disp_timer + 1) % 64; 
+        disp_timer = (disp_timer + 1) % 64;
         nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_BOTTOM);
 
         int x = 140;// 120;
@@ -2255,7 +2253,7 @@ public:
         const SubMaster& sm = *(s->sm);
 
         // draw gap info
-        char driving_mode_str[32] = "연비";
+        char driving_mode_str[32] = "经济";
         int driving_mode = myDrivingMode;// params.getInt("MyDrivingMode");
         NVGcolor mode_color = COLOR_GREEN_ALPHA(210);
         NVGcolor text_color = COLOR_WHITE;
@@ -2425,7 +2423,7 @@ public:
             }
             if (show_datetime == 1 || show_datetime == 3) {
                 //strftime(str, sizeof(str), "%m-%d-%a", local);
-                const char* weekdays_ko[] = { "일", "월", "화", "수", "목", "금", "토" };
+                const char* weekdays_ko[] = { "日", "一", "二", "三", "四", "五", "六" };
                 strftime(str, sizeof(str), "%m-%d", local); // 날짜만 가져옴
                 int weekday_index = local->tm_wday; // tm_wday: 0=일, 1=월, ..., 6=토
                 snprintf(str + strlen(str), sizeof(str) - strlen(str), "(%s)", weekdays_ko[weekday_index]);
@@ -2724,7 +2722,7 @@ void ui_draw(UIState *s, ModelRenderer* model_renderer, int w, int h) {
   int path_x = drawPathEnd.getPathX();
   int path_y = drawPathEnd.getPathY();
   drawDesire.draw(s, path_x, path_y - 135);
-  
+
 
   drawPlot.draw(s);
 
