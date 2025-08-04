@@ -930,8 +930,8 @@ void CarrotPanel::updateButtonStyles() {
 }
 
 
-CValueControl::CValueControl(const QString& params, const QString& title, const QString& desc, int min, int max, int unit)
-  : AbstractControl(title, desc), m_params(params), m_min(min), m_max(max), m_unit(unit) {
+CValueControl::CValueControl(const QString& params, const QString& title, const QString& desc, const QString& icon, int min, int max, int unit)
+  : AbstractControl(title, desc, icon), m_params(params), m_min(min), m_max(max), m_unit(unit) {
 
   label.setAlignment(Qt::AlignVCenter | Qt::AlignRight);
   label.setStyleSheet("color: #e0e879");
