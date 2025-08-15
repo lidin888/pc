@@ -23,6 +23,9 @@ echo "installing python packages..."
 uv sync --frozen --all-extras
 source .venv/bin/activate
 
+echo "installing xattr..."
+uv pip install xattr
+
 echo "PYTHONPATH=${PWD}" > "$ROOT"/.env
 if [[ "$(uname)" == 'Darwin' ]]; then
   echo "# msgq doesn't work on mac" >> "$ROOT"/.env
