@@ -23,9 +23,9 @@ class OverlayDialog : public QWidget {
 
 public:
   explicit OverlayDialog(QWidget* parent = nullptr) : QWidget(parent) {
-    setWindowFlags(Qt::Window | Qt::FramelessWindowHint); // ´ÙÀÌ¾ó·Î±×Ã³·³ µ¿ÀÛ
+    setWindowFlags(Qt::Window | Qt::FramelessWindowHint); // ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½Î±ï¿½Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     setStyleSheet("background-color: rgba(0, 0, 0, 0.8); border-radius: 10px;");
-    resize(400, 300); // ±âº» Å©±â ¼³Á¤
+    resize(400, 300); // ï¿½âº» Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
   }
 
   void setContent(QWidget* content) {
@@ -237,6 +237,10 @@ void OnroadWindow::mousePressEvent(QMouseEvent* e) {
   }
   else if (x > 350 && x < 550 && y > 20 && y < 250) { // gap control
     int longitudinalPersonalityMax = params.getInt("LongitudinalPersonalityMax");
+    std::vector<QString> longi_button_texts{tr("Aggressive"), tr("Standard"), tr("Relaxed")};
+    if (longitudinalPersonalityMax > 3) {
+      longi_button_texts.push_back(tr("MoreRelaxed"));
+    }
     int personality = (params.getInt("LongitudinalPersonality") - 1 + longitudinalPersonalityMax) % longitudinalPersonalityMax;
     params.putIntNonBlocking("LongitudinalPersonality", personality);
 
@@ -254,7 +258,7 @@ void OnroadWindow::mousePressEvent(QMouseEvent* e) {
     }
     
     UIState* s = uiState();
-    s->scene._current_carrot_display = (s->scene._current_carrot_display % 3) + 1;  // 4¹ø: full mapÀº ¾Èº¸¿©ÁÜ.
+    s->scene._current_carrot_display = (s->scene._current_carrot_display % 3) + 1;  // 4ï¿½ï¿½: full mapï¿½ï¿½ ï¿½Èºï¿½ï¿½ï¿½ï¿½ï¿½.
     printf("_current_carrot_display1=%d\n", s->scene._current_carrot_display);
     QWidget::mousePressEvent(e);
   }
@@ -280,15 +284,15 @@ void OnroadWindow::offroadTransition(bool offroad) {
       mapDialog->setAttribute(Qt::WA_TranslucentBackground);
       mapDialog->setAttribute(Qt::WA_NoSystemBackground);
 
-      // MapPanel Ãß°¡
+      // MapPanel ï¿½ß°ï¿½
       auto m = new MapPanel(get_mapbox_settings(), mapDialog);
       map = m;
       mapDialog->setContent(m);
 
-      // Æ¯Á¤ À§Ä¡¿¡ ¹èÄ¡ (¿À¸¥ÂÊ ÇÏ´Ü)
+      // Æ¯ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½Ä¡ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½)
       mapDialog->setGeometry(topWidget(this)->width() - 790 - UI_BORDER_SIZE, UI_BORDER_SIZE + 15, 775, topWidget(this)->height() - 400);
 
-      //mapDialog->hide(); // ±âº»ÀûÀ¸·Î ¼û±è »óÅÂ
+      //mapDialog->hide(); // ï¿½âº»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
       mapDialog->show();
       mapDialog->raise();
       uiState()->scene._current_carrot_display = 1;
@@ -310,11 +314,11 @@ void OnroadWindow::paintEvent(QPaintEvent *event) {
 }
 
 
-// OnroadWindow.cpp¿¡¼­ OpenGL ÃÊ±âÈ­ ¹× ±×¸®±â ±¸Çö
+// OnroadWindow.cppï¿½ï¿½ï¿½ï¿½ OpenGL ï¿½Ê±ï¿½È­ ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 void OnroadWindow::initializeGL() {
-    initializeOpenGLFunctions(); // QOpenGLFunctions ÃÊ±âÈ­
+    initializeOpenGLFunctions(); // QOpenGLFunctions ï¿½Ê±ï¿½È­
 
-    // Parent widgetÀ» À§ÇÑ NanoVG ÄÁÅØ½ºÆ® »ý¼º
+    // Parent widgetï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ NanoVG ï¿½ï¿½ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
     //s->vg = nvgCreate(NVG_ANTIALIAS | NVG_STENCIL_STROKES | NVG_DEBUG);
     //if (s->vg == nullptr) {
     //    printf("Could not init nanovg.\n");
