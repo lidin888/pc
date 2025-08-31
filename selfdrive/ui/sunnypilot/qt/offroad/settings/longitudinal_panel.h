@@ -34,6 +34,10 @@ private:
   CustomAccIncrement *customAccIncrement = nullptr;
   ParamControl *SmartCruiseControlVision;
   ParamControl *intelligentCruiseButtonManagement = nullptr;
+
+  ParamControlSP *vibePersonalityControl;
+  ParamControlSP *vibeAccelPersonalityControl;
+  ParamControlSP *vibeFollowPersonalityControl;
   SpeedLimitSettings *speedLimitScreen;
   PushButtonSP *speedLimitSettings;
 };
