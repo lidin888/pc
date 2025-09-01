@@ -411,7 +411,9 @@ void DevicePanel::calibration() {
   if (!uiState()->engaged()) {
     if (ConfirmationDialog::confirm(tr("Are you sure you want to reset calibration?"), tr("ReCalibration"), this)) {
       if (!uiState()->engaged()) {
-        std::thread worker(execAndReboot, "cd /data/params/d_tmp;  rm -f CalibrationParams");
+        // 修复校准参数删除路径
+        std::string cmd = "rm -f " + Params().getParamPath("CalibrationParams");
+        std::thread worker(execAndReboot, cmd);
         worker.detach();
       }
     }
