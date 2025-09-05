@@ -1227,7 +1227,7 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     </message>
     <message>
         <source>NVMe drive not mounted.</source>
-        <translation type="vanished">NVMe固态硬盘未被挂载。</translation>
+        <translation>NVMe固态硬盘未被挂载。</translation>
     </message>
     <message>
         <source>Unsupported NVMe drive detected. Device may draw significantly more power and overheat due to the unsupported NVMe.</source>
@@ -1244,10 +1244,6 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     <message>
         <source>Device temperature too high. System cooling down before starting. Current internal component temperature: %1</source>
         <translation>设备温度过高。系统正在冷却中，等冷却完毕后才会启动。目前内部组件温度：%1</translation>
-    </message>
-    <message>
-        <source>CarrotAmap 是将高德导航数据传输到C3，实现控制车速和变道，并不能完全自主驾驶！请注意安全驾驶.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1289,6 +1285,25 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     </message>
 </context>
 <context>
+    <name>OnroadWindow</name>
+    <message>
+        <source>Aggressive</source>
+        <translation type="unfinished">积极</translation>
+    </message>
+    <message>
+        <source>Standard</source>
+        <translation type="unfinished">标准</translation>
+    </message>
+    <message>
+        <source>Relaxed</source>
+        <translation type="unfinished">舒适</translation>
+    </message>
+    <message>
+        <source>MoreRelaxed</source>
+        <translation type="unfinished">更舒适</translation>
+    </message>
+</context>
+<context>
     <name>PairingPopup</name>
     <message>
         <source>Pair your device to your comma account</source>
@@ -1326,15 +1341,15 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     <name>PathEndDrawer</name>
     <message>
         <source>Signal Error</source>
-        <translation>信号错误</translation>
+        <translation type="vanished">信号错误</translation>
     </message>
     <message>
         <source>Signal Ready</source>
-        <translation>信号就绪</translation>
+        <translation type="vanished">信号就绪</translation>
     </message>
     <message>
         <source>Signal slowing</source>
-        <translation>信号减速</translation>
+        <translation type="vanished">信号减速</translation>
     </message>
 </context>
 <context>
