@@ -33,4 +33,6 @@ protected:
 
  bool has_longitudinal_control = false;
  bool offroad = true;
+ ButtonParamControlSP *visual_style_settings;
+ OptionControlSP *visual_style_threshold_settings;
 };
