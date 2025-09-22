@@ -131,6 +131,7 @@ inline static std::unordered_map<std::string, ParamKeyAttributes> keys = {
     {"Version", {PERSISTENT, STRING}},
 
     // --- sunnypilot params --- //
+    {"AccelPersonality", {PERSISTENT | BACKUP, INT, std::to_string(static_cast<int>(cereal::LongitudinalPlanSP::AccelerationPersonality::NORMAL))}},
     {"ApiCache_DriveStats", {PERSISTENT, JSON}},
     {"AutoLaneChangeBsmDelay", {PERSISTENT | BACKUP, BOOL, "0"}},
     {"AutoLaneChangeTimer", {PERSISTENT | BACKUP, INT, "0"}},
@@ -163,6 +164,17 @@ inline static std::unordered_map<std::string, ParamKeyAttributes> keys = {
     {"ShowAdvancedControls", {PERSISTENT | BACKUP, BOOL, "0"}},
     {"SmartCruiseControlVision", {PERSISTENT | BACKUP, BOOL, "0"}},
     {"StandstillTimer", {PERSISTENT | BACKUP, BOOL, "0"}},
+    {"VibePersonalityEnabled", {PERSISTENT | BACKUP, BOOL, "0"}},
+    {"VibeAccelPersonalityEnabled", {PERSISTENT | BACKUP, BOOL, "0"}},
+    {"VibeFollowPersonalityEnabled", {PERSISTENT | BACKUP, BOOL, "0"}},
+
+    // toyota specific params
+    {"ToyotaAutoHold", {PERSISTENT | BACKUP, BOOL, "0"}},
+    {"ToyotaEnhancedBsm", {PERSISTENT | BACKUP, BOOL, "0"}},
+    {"ToyotaTSS2Long", {PERSISTENT | BACKUP, BOOL, "0"}},
+    {"ToyotaStockLongitudinal", {PERSISTENT | BACKUP, BOOL, "0"}},
+    {"ToyotaDriveMode", {PERSISTENT | BACKUP, BOOL, "0"}},
+    {"RoadEdgeLaneChangeEnabled", {PERSISTENT | BACKUP, BOOL, "0"}},
 
     // MADS params
     {"Mads", {PERSISTENT | BACKUP, BOOL, "1"}},
@@ -204,7 +216,7 @@ inline static std::unordered_map<std::string, ParamKeyAttributes> keys = {
     {"LagdToggle", {PERSISTENT | BACKUP, BOOL, "1"}},
     {"LagdToggleDelay", {PERSISTENT | BACKUP, FLOAT, "0.2"}},
     {"LagdValueCache", {PERSISTENT, FLOAT, "0.2"}},
-    {"LaneTurnDesire", {PERSISTENT | BACKUP, BOOL, "0"}},
+    {"LaneTurnDesire", {PERSISTENT | BACKUP, INT, "0"}},
     {"LaneTurnValue", {PERSISTENT | BACKUP, FLOAT, "19.0"}},
 
     // mapd
