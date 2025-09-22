@@ -124,9 +124,22 @@ class LongitudinalPlanner(LongitudinalPlannerSP):
     prev_accel_constraint = not (reset_state or sm['carState'].standstill)
 
     if mode == 'acc':
-      accel_clip = [ACCEL_MIN, get_max_accel(v_ego)]
-      steer_angle_without_offset = sm['carState'].steeringAngleDeg - sm['liveParameters'].angleOffsetDeg
-      accel_clip = limit_accel_in_turns(v_ego, steer_angle_without_offset, accel_clip, self.CP)
+      if self.vibe_controller.is_accel_enabled():
+        # Only get max acceleration from vibe controller, use default ACCEL_MIN for minimum
+        accel_limits = self.vibe_controller.get_accel_limits(v_ego)
+        if accel_limits is not None:
+          max_accel = accel_limits[1]
+          accel_clip = [ACCEL_MIN, max_accel]
+        else:
+          # Fallback to stock if vibe controller returns None
+          accel_clip = [ACCEL_MIN, get_max_accel(v_ego)]
+        # Recalculate limit turn according to the new max limit
+        steer_angle_without_offset = sm['carState'].steeringAngleDeg - sm['liveParameters'].angleOffsetDeg
+        accel_clip = limit_accel_in_turns(v_ego, steer_angle_without_offset, accel_clip, self.CP)
+      else:
+        accel_clip = [ACCEL_MIN, get_max_accel(v_ego)]
+        steer_angle_without_offset = sm['carState'].steeringAngleDeg - sm['liveParameters'].angleOffsetDeg
+        accel_clip = limit_accel_in_turns(v_ego, steer_angle_without_offset, accel_clip, self.CP)
     else:
       accel_clip = [ACCEL_MIN, ACCEL_MAX]
 
@@ -146,7 +159,7 @@ class LongitudinalPlanner(LongitudinalPlannerSP):
       clipped_accel_coast_interp = np.interp(v_ego, [MIN_ALLOW_THROTTLE_SPEED, MIN_ALLOW_THROTTLE_SPEED*2], [accel_clip[1], clipped_accel_coast])
       accel_clip[1] = min(accel_clip[1], clipped_accel_coast_interp)
 
-    # Get new v_cruise and a_desired from Smart Cruise Control
+    # Get new v_cruise and a_desired from Smart Cruise Control and Speed Limit Assist
     v_cruise, self.a_desired = LongitudinalPlannerSP.update_targets(self, sm, self.v_desired_filter.x, self.a_desired, v_cruise)
 
     if force_slow_decel:
