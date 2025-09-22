@@ -1,6 +1,4 @@
 #include "selfdrive/ui/qt/onroad/model.h"
-#include <QPainterPath>
-#include <algorithm>
 
 void ModelRenderer::draw(QPainter &painter, const QRect &surface_rect) {
   auto *s = uiState();
@@ -52,12 +50,7 @@ void ModelRenderer::update_leads(const cereal::RadarState::Reader &radar_state, 
 
 void ModelRenderer::update_model(const cereal::ModelDataV2::Reader &model, const cereal::RadarState::LeadData::Reader &lead) {
   const auto &model_position = model.getPosition();
-  float max_distance;
-  if (QString::fromStdString(Params().get("VisualStyle")).toInt() == 0) {
-    max_distance = std::clamp(*(model_position.getX().end() - 1), MIN_DRAW_DISTANCE, MAX_DRAW_DISTANCE);
-  } else {
-    max_distance = std::clamp(*(model_position.getX().end() - 1), 0.0f, 300.0f);
-  }
+  float max_distance = std::clamp(*(model_position.getX().end() - 1), MIN_DRAW_DISTANCE, MAX_DRAW_DISTANCE);
 
   // update lane lines
   const auto &lane_lines = model.getLaneLines();
@@ -66,7 +59,6 @@ void ModelRenderer::update_model(const cereal::ModelDataV2::Reader &model, const
   for (int i = 0; i < std::size(lane_line_vertices); i++) {
     lane_line_probs[i] = line_probs[i];
     mapLineToPolygon(lane_lines[i], 0.025 * lane_line_probs[i], 0, &lane_line_vertices[i], max_idx);
-    // mapLineToPolygon(lane_lines[i], 0.025, 0, &lane_line_vertices[i], max_idx);
   }
 
   // update road edges
@@ -87,136 +79,16 @@ void ModelRenderer::update_model(const cereal::ModelDataV2::Reader &model, const
 }
 
 void ModelRenderer::drawLaneLines(QPainter &painter) {
-  if (QString::fromStdString(Params().get("VisualStyle")).toInt() == 2) {
-    QRectF r = clip_region;
+  // lanelines
+  for (int i = 0; i < std::size(lane_line_vertices); ++i) {
+    painter.setBrush(QColor::fromRgbF(1.0, 1.0, 1.0, std::clamp<float>(lane_line_probs[i], 0.0, 0.7)));
+    painter.drawPolygon(lane_line_vertices[i]);
+  }
 
-    // --- Find horizon from road edges ---
-    qreal horizonY = r.center().y();  // fallback
-    if (!road_edge_vertices[0].isEmpty() || !road_edge_vertices[1].isEmpty()) {
-      qreal leftH  = r.top();
-      qreal rightH = r.top();
-
-      if (!road_edge_vertices[0].isEmpty()) {
-        leftH = std::numeric_limits<qreal>::max();
-        for (const QPointF &pt : road_edge_vertices[0]) {
-          if (pt.y() < leftH) leftH = pt.y();
-        }
-      }
-
-      if (!road_edge_vertices[1].isEmpty()) {
-        rightH = std::numeric_limits<qreal>::max();
-        for (const QPointF &pt : road_edge_vertices[1]) {
-          if (pt.y() < rightH) rightH = pt.y();
-        }
-      }
-
-      // Pick the lower (visually deeper) horizon to ensure no gaps
-      horizonY = std::max(leftH, rightH);
-    }
-
-
-    // --- Background ---
-    // Fill above horizon: pure black
-    // painter.fillRect(QRectF(r.left(), r.top(), r.width(), horizonY - 100), QColor("#000000"));
-
-    // Gradient band across horizon
-    QLinearGradient bgGrad(r.left(), horizonY - 50, r.left(), horizonY + 50);
-    bgGrad.setColorAt(0.0, QColor("#000000"));  // top of band
-    bgGrad.setColorAt(0.5, QColor("#333333"));  // middle blend
-    bgGrad.setColorAt(1.0, QColor("#333333"));  // bottom of band
-    painter.fillRect(QRectF(r.left(), horizonY - 100, r.width(), 100), bgGrad);
-
-    // Fill below horizon: solid dark gray
-    painter.fillRect(QRectF(r.left(), horizonY + 0, r.width(), r.bottom() - (horizonY + 0)), QColor("#111111"));
-
-
-    auto buildFill = [&](const QPolygonF &edgeRibbon, bool isLeftSide) -> QPolygonF {
-      if (edgeRibbon.isEmpty()) return {};
-
-      QMap<int, QPointF> byY;
-      for (const QPointF &pt : edgeRibbon) {
-        int yi = int(std::round(pt.y()));
-        if (!byY.contains(yi)) {
-          byY[yi] = pt;
-        } else {
-          if (isLeftSide) {
-            if (pt.x() > byY[yi].x()) byY[yi] = pt;
-          } else {
-            if (pt.x() < byY[yi].x()) byY[yi] = pt;
-          }
-        }
-      }
-      if (byY.isEmpty()) return {};
-
-      QPolygonF curve;
-      for (auto it = byY.cbegin(); it != byY.cend(); ++it) {
-        curve << it.value();
-      }
-      if (curve.size() < 2) return {};
-
-      const qreal topY = curve.first().y();
-      QPolygonF fill;
-      if (isLeftSide) {
-        fill << QPointF(r.left(), topY);
-        for (const QPointF &pt : curve) fill << pt;
-        fill << QPointF(r.left(), r.bottom());
-      } else {
-        fill << QPointF(r.right(), topY);
-        for (const QPointF &pt : curve) fill << pt;
-        fill << QPointF(r.right(), r.bottom());
-      }
-      return fill;
-    };
-
-    // Left and right fills
-    QPolygonF leftFill  = buildFill(road_edge_vertices[0], true);
-    QPolygonF rightFill = buildFill(road_edge_vertices[1], false);
-
-    if (!leftFill.isEmpty()) {
-      painter.setBrush(QColor("#333333"));
-      painter.drawPolygon(leftFill);
-    }
-    if (!rightFill.isEmpty()) {
-      painter.setBrush(QColor("#333333"));
-      painter.drawPolygon(rightFill);
-    }
-
-    // Lane lines
-    for (int i = 0; i < std::size(lane_line_vertices); ++i) {
-      painter.setBrush(QColor::fromRgbF(1.0, 1.0, 1.0, std::clamp<float>(lane_line_probs[i], 0.0, 0.7)));
-      // painter.setBrush(QColor("#E6E6E6"));
-      painter.drawPolygon(lane_line_vertices[i]);
-    }
-
-    // Road edges
-    for (int i = 0; i < std::size(road_edge_vertices); ++i) {
-      if (road_edge_vertices[i].isEmpty()) continue;
-      QPainterPath path;
-      path.addPolygon(road_edge_vertices[i]);
-      QPainterPathStroker stroker;
-      stroker.setWidth(15);
-      QPainterPath thickPath = stroker.createStroke(path);
-      QRectF bounds = thickPath.boundingRect();
-      QLinearGradient grad(bounds.left(), bounds.top(), bounds.left(), bounds.bottom());
-      grad.setColorAt(1.0, QColor(0x55, 0x55, 0x55, 255));
-      grad.setColorAt(0.0, QColor(0x33, 0x33, 0x33, 0));
-      painter.setPen(Qt::NoPen);
-      painter.setBrush(grad);
-      painter.drawPath(thickPath);
-    }
-
-  } else {
-    // lanelines
-    for (int i = 0; i < std::size(lane_line_vertices); ++i) {
-      painter.setBrush(QColor::fromRgbF(1.0, 1.0, 1.0, std::clamp<float>(lane_line_probs[i], 0.0, 0.7)));
-      painter.drawPolygon(lane_line_vertices[i]);
-    }
-
-    // road edges
-    for (int i = 0; i < std::size(road_edge_vertices); ++i) {
-      painter.setBrush(QColor::fromRgbF(1.0, 0, 0, std::clamp<float>(1.0 - road_edge_stds[i], 0.0, 1.0)));
-      painter.drawPolygon(road_edge_vertices[i]);
-    }
+  // road edges
+  for (int i = 0; i < std::size(road_edge_vertices); ++i) {
+    painter.setBrush(QColor::fromRgbF(1.0, 0, 0, std::clamp<float>(1.0 - road_edge_stds[i], 0.0, 1.0)));
+    painter.drawPolygon(road_edge_vertices[i]);
   }
 }
 
@@ -325,110 +197,21 @@ void ModelRenderer::drawLead(QPainter &painter, const cereal::RadarState::LeadDa
   float g_xo = sz / 5;
   float g_yo = sz / 10;
 
-  int visual_style = QString::fromStdString(Params().get("VisualStyle")).toInt();
-
   QPointF glow[] = {{x + (sz * 1.35) + g_xo, y + sz + g_yo}, {x, y - g_yo}, {x - (sz * 1.35) - g_xo, y + sz + g_yo}};
-  if (visual_style == 2) {
-    painter.setBrush(QColor(0xE6, 0xE6, 0xE6, 255));
-  } else {
-    painter.setBrush(QColor(218, 202, 37, 255));
-  }
+  painter.setBrush(QColor(218, 202, 37, 255));
   painter.drawPolygon(glow, std::size(glow));
 
   // chevron
   QPointF chevron[] = {{x + (sz * 1.25), y + sz}, {x, y}, {x - (sz * 1.25), y + sz}};
-  if (visual_style == 2) {
-    painter.setBrush(QColor(0, 0, 0, fillAlpha));
-  } else {
-    painter.setBrush(QColor(201, 34, 49, fillAlpha));
-  }
+  painter.setBrush(QColor(201, 34, 49, fillAlpha));
   painter.drawPolygon(chevron, std::size(chevron));
 }
 
-float mapRange(float x, float in_min, float in_max, float out_min, float out_max) {
-  x = std::clamp(x, in_min, in_max);
-  return out_min + (x - in_min) * (out_max - out_min) / (in_max - in_min);
-}
-
-// Projects a point in car space to the corresponding point in full frame image space.
+// Projects a point in car to space to the corresponding point in full frame image space.
 bool ModelRenderer::mapToScreen(float in_x, float in_y, float in_z, QPointF *out) {
-  auto *s = uiState();
-  auto &sm = *(s->sm);
-  int visual_style = QString::fromStdString(Params().get("VisualStyle")).toInt();
-  int visual_blend = QString::fromStdString(Params().get("VisualStyleBlend")).toInt();
-  float visual_blend_threshold = QString::fromStdString(Params().get("VisualStyleBlendThreshold")).toFloat();
-  float blend_speed_mph = sm["carState"].getCarState().getVEgo() * 2.23694f;  // convert to mph
-
-  // Normal perspective (3D)
   Eigen::Vector3f input(in_x, in_y, in_z);
   auto pt = car_space_transform * input;
-  bool normal_valid = (pt.z() > 1e-3f &&
-                       std::isfinite(pt.x()) && std::isfinite(pt.y()));
-  QPointF normal_view;
-  if (normal_valid) {
-    normal_view = QPointF(pt.x() / pt.z(), pt.y() / pt.z());
-  }
-
-  const float base_scale_x = 20.0f;  // in/out 20 (far/fast) 100 (close/slow)
-  const float base_scale_y = 15.0f;  // squish (was 20.0f)
-  const float y_offset = 450.0f;
-
-  float factor_scale_x = 0.0f;
-  if (blend_speed_mph > 0.0f) {
-    factor_scale_x = mapRange(blend_speed_mph, 0.0f, 50.0f, 100.0f, 0.0f);
-  }
-
-  float scale_x = base_scale_x + factor_scale_x;
-  float scale_y = base_scale_y;
-
-  QPointF topdown_view(
-    clip_region.center().x() + in_y * scale_x,
-    (clip_region.bottom() - y_offset) - in_x * scale_y
-  );
-
-  // Force top-down if VisualStyle == 3
-  if (visual_style == 3) {
-    *out = topdown_view;
-    return clip_region.contains(*out);
-  }
-
-  // Blending mode
-  if (visual_blend == 1 && visual_style != 0) {
-    static float blend = 0.0f;        // 0 = 3D, 1 = 2D
-    static float target_blend = 0.0f; // where we want to go
-    static double last_t = millis_since_boot();
-
-    // Hysteresis logic
-    if (target_blend < 0.5f && blend_speed_mph > visual_blend_threshold) {
-      target_blend = 1.0f;  // switch to 2D
-    } else if (target_blend > 0.5f && blend_speed_mph < (visual_blend_threshold - 5)) {
-      target_blend = 0.0f;  // switch back to 3D
-    }
-
-    // Time-based interpolation
-    double now = millis_since_boot();
-    double dt = (now - last_t) / 1000.0;
-    last_t = now;
-
-    const float transition_time = 1.50f; // seconds for full morph
-    float step = dt / transition_time;
-
-    if (blend < target_blend) {
-      blend = std::min(blend + step, target_blend);
-    } else if (blend > target_blend) {
-      blend = std::max(blend - step, target_blend);
-    }
-
-    if (!normal_valid) return false;
-    *out = QPointF(
-      (1 - blend) * normal_view.x() + blend * topdown_view.x(),
-      (1 - blend) * normal_view.y() + blend * topdown_view.y()
-    );
-  } else {
-    if (!normal_valid) return false;
-    *out = normal_view;
-  }
-
+  *out = QPointF(pt.x() / pt.z(), pt.y() / pt.z());
   return clip_region.contains(*out);
 }
 

@@ -25,14 +25,6 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
   dmon.updateState(s);
-
-  // dynamically adjust background
-  int style = QString::fromStdString(Params().get("VisualStyle")).toInt();
-  if (style == 0) {
-    setBackgroundColor(bg_colors[STATUS_DISENGAGED]);
-  } else {
-    setBackgroundColor(QColor(0, 0, 0));
-  }
 }
 
 void AnnotatedCameraWidget::initializeGL() {
@@ -43,11 +35,7 @@ void AnnotatedCameraWidget::initializeGL() {
   qInfo() << "OpenGL language version:" << QString((const char*)glGetString(GL_SHADING_LANGUAGE_VERSION));
 
   prev_draw_t = millis_since_boot();
-  if (QString::fromStdString(Params().get("VisualStyle")).toInt() == 0) {
-    setBackgroundColor(bg_colors[STATUS_DISENGAGED]);
-  } else {
-    setBackgroundColor(QColor(0, 0, 0));
-  }
+  setBackgroundColor(bg_colors[STATUS_DISENGAGED]);
 }
 
 mat4 AnnotatedCameraWidget::calcFrameMatrix() {
