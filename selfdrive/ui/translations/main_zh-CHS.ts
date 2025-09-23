@@ -1081,7 +1081,7 @@ This will not disable OEM functionality.</source>
     </message>
     <message>
         <source>Nudgeless</source>
-        <translation>无干预驾驶</translation>
+        <translation>自动</translation>
     </message>
 </context>
 <context>
