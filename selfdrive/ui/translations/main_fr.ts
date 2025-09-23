@@ -1051,49 +1051,49 @@ Cela ne désactivera pas les fonctionnalités OEM.</translation>
     </message>
     <message>
         <source>Block Lane Change: Road Edge Detection</source>
-        <translation type="vanished">Blocage du changement de voie : Détection du bord de la route</translation>
+        <translation>Blocage du changement de voie : Détection du bord de la route</translation>
     </message>
     <message>
         <source>Enable this toggle to block lane change when road edge is detected on the stalk actuated side.</source>
-        <translation type="vanished">Activez cette option pour bloquer le changement de voie lorsque le bord de la route est détecté du côté actionné par le levier.</translation>
+        <translation>Activez cette option pour bloquer le changement de voie lorsque le bord de la route est détecté du côté actionné par le levier.</translation>
     </message>
 </context>
 <context>
     <name>LaneTurnDesireControl</name>
     <message>
         <source>Lane Turn Desires</source>
-        <translation type="vanished">Désirs de virage de voie</translation>
+        <translation>Désirs de virage de voie</translation>
     </message>
     <message>
         <source>If you&apos;re driving at 20 mph (32 km/h) or below and have your blinker on, the car will plan a turn in that direction at the nearest drivable path. This prevents situations (like at red lights) where the car might plan the wrong turn direction.</source>
-        <translation type="vanished">Si vous conduisez à 20 mph (32 km/h) ou moins et que votre clignotant est activé, la voiture planifiera un virage dans cette direction au niveau du chemin praticable le plus proche. Cela évite des situations (comme aux feux rouges) où la voiture pourrait planifier une mauvaise direction de virage.</translation>
+        <translation>Si vous conduisez à 20 mph (32 km/h) ou moins et que votre clignotant est activé, la voiture planifiera un virage dans cette direction au niveau du chemin praticable le plus proche. Cela évite des situations (comme aux feux rouges) où la voiture pourrait planifier une mauvaise direction de virage.</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation type="vanished">Arrêt</translation>
+        <translation>Arrêt</translation>
     </message>
     <message>
         <source>Nudge</source>
-        <translation type="vanished">Pousser</translation>
+        <translation>Pousser</translation>
     </message>
     <message>
         <source>Nudgeless</source>
-        <translation type="vanished">Sans intervention</translation>
+        <translation>Sans intervention</translation>
     </message>
 </context>
 <context>
     <name>LaneTurnSettings</name>
     <message>
         <source>Back</source>
-        <translation type="vanished">Retour</translation>
+        <translation>Retour</translation>
     </message>
     <message>
         <source>Adjust Lane Turn Speed</source>
-        <translation type="vanished">Ajuster la vitesse de virage de voie</translation>
+        <translation>Ajuster la vitesse de virage de voie</translation>
     </message>
     <message>
         <source>Set the maximum speed for lane turn desires. Default is 19 %1.</source>
-        <translation type="vanished">Définir la vitesse maximale pour les intentions de virage de voie. La valeur par défaut est 19 %1.</translation>
+        <translation>Définir la vitesse maximale pour les intentions de virage de voie. La valeur par défaut est 19 %1.</translation>
     </message>
 </context>
 <context>
@@ -1140,7 +1140,7 @@ Cela ne désactivera pas les fonctionnalités OEM.</translation>
     </message>
     <message>
         <source>Customize Lane Turn</source>
-        <translation type="vanished">Personnaliser le virage de voie</translation>
+        <translation>Personnaliser le virage de voie</translation>
     </message>
 </context>
 <context>
@@ -1167,27 +1167,27 @@ Cela ne désactivera pas les fonctionnalités OEM.</translation>
     </message>
     <message>
         <source>Vibe Personality Controller</source>
-        <translation type="vanished">Contrôleur de Personnalité d&apos;Ambiance</translation>
+        <translation>Contrôleur de Personnalité d&apos;Ambiance</translation>
     </message>
     <message>
         <source>Advanced driving personality system with separate controls for acceleration behavior (Eco/Normal/Sport) and following distance/braking (Relaxed/Standard/Aggressive). Customize your driving experience with independent acceleration and distance personalities.</source>
-        <translation type="vanished">Système de personnalité de conduite avancé avec des commandes distinctes pour le comportement d&apos;accélération (Éco/Normal/Sport) et la distance de suivi/freinage (Détendu/Standard/Agressif). Personnalisez votre expérience de conduite avec des profils d&apos;accélération et de distance indépendants.</translation>
+        <translation>Système de personnalité de conduite avancé avec des commandes distinctes pour le comportement d&apos;accélération (Éco/Normal/Sport) et la distance de suivi/freinage (Détendu/Standard/Agressif). Personnalisez votre expérience de conduite avec des profils d&apos;accélération et de distance indépendants.</translation>
     </message>
     <message>
         <source>Acceleration Personality</source>
-        <translation type="vanished">Personnalité d&apos;Accélération</translation>
+        <translation>Personnalité d&apos;Accélération</translation>
     </message>
     <message>
         <source>Controls acceleration behavior: Eco (efficient), Normal (balanced), Sport (responsive). Adjust how aggressively the vehicle accelerates while maintaining smooth operation.</source>
-        <translation type="vanished">Contrôle le comportement d&apos;accélération : Éco (efficace), Normal (équilibré), Sport (réactif). Ajuste l&apos;agressivité de l&apos;accélération du véhicule tout en maintenant un fonctionnement fluide.</translation>
+        <translation>Contrôle le comportement d&apos;accélération : Éco (efficace), Normal (équilibré), Sport (réactif). Ajuste l&apos;agressivité de l&apos;accélération du véhicule tout en maintenant un fonctionnement fluide.</translation>
     </message>
     <message>
         <source>Following Distance Personality</source>
-        <translation type="vanished">Personnalité de la distance de suivi</translation>
+        <translation>Personnalité de la distance de suivi</translation>
     </message>
     <message>
         <source>Controls following distance and braking behavior: Relaxed (longer distance, gentler braking), Standard (balanced), Aggressive (shorter distance, firmer braking). Fine-tune your comfort level in traffic situations.</source>
-        <translation type="vanished">Contrôle la distance de suivi et le comportement de freinage : Détendu (distance plus longue, freinage plus doux), Standard (équilibré), Agressif (distance plus courte, freinage plus ferme). Ajustez finement votre niveau de confort dans les situations de circulation.</translation>
+        <translation>Contrôle la distance de suivi et le comportement de freinage : Détendu (distance plus longue, freinage plus doux), Standard (équilibré), Agressif (distance plus courte, freinage plus ferme). Ajustez finement votre niveau de confort dans les situations de circulation.</translation>
     </message>
     <message>
         <source>Speed Limit Control (SLC)</source>
@@ -1498,15 +1498,15 @@ La valeur par défaut du délai logiciel est de 0,2.</translation>
     </message>
     <message>
         <source>Use Lane Turn Desires</source>
-        <translation>Utiliser les désirs de virage de voie</translation>
+        <translation type="vanished">Utiliser les désirs de virage de voie</translation>
     </message>
     <message>
         <source>Adjust Lane Turn Speed</source>
-        <translation>Ajuster la vitesse de virage de voie</translation>
+        <translation type="vanished">Ajuster la vitesse de virage de voie</translation>
     </message>
     <message>
         <source>Set the maximum speed for lane turn desires. Default is 19 %1.</source>
-        <translation>Définir la vitesse maximale pour les intentions de virage de voie. La valeur par défaut est 19 %1.</translation>
+        <translation type="vanished">Définir la vitesse maximale pour les intentions de virage de voie. La valeur par défaut est 19 %1.</translation>
     </message>
 </context>
 <context>
@@ -2102,6 +2102,10 @@ Data</source>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Assist</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>
@@ -2633,6 +2637,10 @@ Data</source>
         <source>Speed Limit</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>⦿ Assist: Adjusts the vehicle&apos;s cruise speed based on the current road&apos;s speed limit when operating the +/- buttons.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SshControl</name>
@@ -3051,63 +3059,63 @@ Redémarrez comma pour qu&apos;openpilot utilise la clé</translation>
     </message>
     <message>
         <source>Enable drive mode btn link</source>
-        <translation type="vanished">Activer le lien du bouton mode conduite</translation>
+        <translation>Activer le lien du bouton mode conduite</translation>
     </message>
     <message>
         <source>Links cars drive mode btn with accel personalities based on personality (i.e., relaxed, standard, sport)</source>
-        <translation type="vanished">Lier le bouton de mode de conduite des voitures aux profils d&apos;accélération selon la personnalité (ex. : détendu, standard, sport)</translation>
+        <translation>Lier le bouton de mode de conduite des voitures aux profils d&apos;accélération selon la personnalité (ex. : détendu, standard, sport)</translation>
     </message>
     <message>
         <source>Toyota: Auto Brake Hold FOR TSS2 HYBRID CARS</source>
-        <translation type="vanished">Toyota : Frein de stationnement automatique POUR VÉHICULES HYBRIDES TSS2</translation>
+        <translation>Toyota : Frein de stationnement automatique POUR VÉHICULES HYBRIDES TSS2</translation>
     </message>
     <message>
         <source>As you may auto brake hold currently supported by openpilot, this feature will allow sunnypilot to automatically hold the vehicle at a stop when the lead car is stopped. (TSS2 Hybird only)</source>
-        <translation type="vanished">Comme vous le savez peut-être, le freinage automatique maintenu est actuellement pris en charge par openpilot. Cette fonctionnalité permettra à sunnypilot de maintenir automatiquement le véhicule à l&apos;arrêt lorsque le véhicule précédent est stoppé. (Uniquement pour TSS2 Hybride)</translation>
+        <translation>Comme vous le savez peut-être, le freinage automatique maintenu est actuellement pris en charge par openpilot. Cette fonctionnalité permettra à sunnypilot de maintenir automatiquement le véhicule à l&apos;arrêt lorsque le véhicule précédent est stoppé. (Uniquement pour TSS2 Hybride)</translation>
     </message>
     <message>
         <source>Toyota: Prius TSS2 BSM and some tssp</source>
-        <translation type="vanished">Toyota : Prius TSS2 BSM et certains TSSP</translation>
+        <translation>Toyota : Prius TSS2 BSM et certains TSSP</translation>
     </message>
     <message>
         <source>Add support for BSM.</source>
-        <translation type="vanished">Ajouter la prise en charge du BSM.</translation>
+        <translation>Ajouter la prise en charge du BSM.</translation>
     </message>
     <message>
         <source>Toyota: custom tune</source>
-        <translation type="vanished">Toyota : réglage personnalisé</translation>
+        <translation>Toyota : réglage personnalisé</translation>
     </message>
     <message>
         <source>idk something gas and brake</source>
-        <translation type="vanished">Je ne sais pas, quelque chose comme accélérateur et frein.</translation>
+        <translation>Je ne sais pas, quelque chose comme accélérateur et frein.</translation>
     </message>
     <message>
         <source>Toyota: Stock Toyota Longitudinal</source>
-        <translation type="vanished">Toyota : Longitudinale Toyota d&apos;origine</translation>
+        <translation>Toyota : Longitudinale Toyota d&apos;origine</translation>
     </message>
     <message>
         <source>This feature will allow sunnypilot to use the stock Toyota longitudinal control instead of the sunnypilot longitudinal control. </source>
-        <translation type="vanished">Cette fonctionnalité permettra à sunnypilot d&apos;utiliser le contrôle longitudinal d&apos;origine de Toyota au lieu du contrôle longitudinal de sunnypilot.</translation>
+        <translation>Cette fonctionnalité permettra à sunnypilot d&apos;utiliser le contrôle longitudinal d&apos;origine de Toyota au lieu du contrôle longitudinal de sunnypilot.</translation>
     </message>
     <message>
         <source>Sport</source>
-        <translation type="vanished">Sport</translation>
+        <translation>Sport</translation>
     </message>
     <message>
         <source>Normal</source>
-        <translation type="vanished">Normal</translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <source>Eco</source>
-        <translation type="vanished">Éco</translation>
+        <translation>Éco</translation>
     </message>
     <message>
         <source>Acceleration Personality</source>
-        <translation type="vanished">Personnalité d&apos;Accélération</translation>
+        <translation>Personnalité d&apos;Accélération</translation>
     </message>
     <message>
         <source>Normal is recommended. In sport mode, sunnypilot will provide aggressive acceleration for a dynamic driving experience. In eco mode, sunnypilot will apply smoother and more relaxed acceleration. On supported cars, you can cycle through these acceleration personality within Onroad Settings on the driving screen.</source>
-        <translation type="vanished">Normal est recommandé. En mode sport, sunnypilot offrira une accélération agressive pour une expérience de conduite dynamique. En mode éco, sunnypilot appliquera une accélération plus douce et plus détendue. Sur les voitures compatibles, vous pouvez parcourir ces profils d&apos;accélération dans les paramètres Onroad sur l&apos;écran de conduite.</translation>
+        <translation>Normal est recommandé. En mode sport, sunnypilot offrira une accélération agressive pour une expérience de conduite dynamique. En mode éco, sunnypilot appliquera une accélération plus douce et plus détendue. Sur les voitures compatibles, vous pouvez parcourir ces profils d&apos;accélération dans les paramètres Onroad sur l&apos;écran de conduite.</translation>
     </message>
     <message>
         <source>Off</source>
@@ -3279,6 +3287,14 @@ Bas</translation>
     </message>
     <message>
         <source>Displays the name of the road the car is traveling on. The OpenStreetMap database of the location must be downloaded from the OSM panel to fetch the road name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This feature requires openpilot longitudinal control to be available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start the vehicle to check vehicle compatibility.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

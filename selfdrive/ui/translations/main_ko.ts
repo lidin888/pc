@@ -1054,49 +1054,49 @@ This will not disable OEM functionality.</source>
     </message>
     <message>
         <source>Block Lane Change: Road Edge Detection</source>
-        <translation type="vanished">차선 변경 차단: 도로 가장자리 감지</translation>
+        <translation>차선 변경 차단: 도로 가장자리 감지</translation>
     </message>
     <message>
         <source>Enable this toggle to block lane change when road edge is detected on the stalk actuated side.</source>
-        <translation type="vanished">이 토글을 활성화하면 스토크 작동 쪽에서 도로 가장자리가 감지될 때 차선 변경을 차단합니다.</translation>
+        <translation>이 토글을 활성화하면 스토크 작동 쪽에서 도로 가장자리가 감지될 때 차선 변경을 차단합니다.</translation>
     </message>
 </context>
 <context>
     <name>LaneTurnDesireControl</name>
     <message>
         <source>Lane Turn Desires</source>
-        <translation type="vanished">차선 변경 의향</translation>
+        <translation>차선 변경 의향</translation>
     </message>
     <message>
         <source>If you&apos;re driving at 20 mph (32 km/h) or below and have your blinker on, the car will plan a turn in that direction at the nearest drivable path. This prevents situations (like at red lights) where the car might plan the wrong turn direction.</source>
-        <translation type="vanished">20mph(32km/h) 이하로 주행 중 방향지시등을 켜면, 차량은 가장 가까운 주행 가능 경로에서 해당 방향으로 회전을 계획합니다. 이는 (적색 신호등 등에서) 차량이 잘못된 회전 방향을 계획하는 상황을 방지합니다.</translation>
+        <translation>20mph(32km/h) 이하로 주행 중 방향지시등을 켜면, 차량은 가장 가까운 주행 가능 경로에서 해당 방향으로 회전을 계획합니다. 이는 (적색 신호등 등에서) 차량이 잘못된 회전 방향을 계획하는 상황을 방지합니다.</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation type="vanished">끄기</translation>
+        <translation>끄기</translation>
     </message>
     <message>
         <source>Nudge</source>
-        <translation type="vanished">조금 밀기</translation>
+        <translation>조금 밀기</translation>
     </message>
     <message>
         <source>Nudgeless</source>
-        <translation type="vanished">무인터페이스</translation>
+        <translation>무인터페이스</translation>
     </message>
 </context>
 <context>
     <name>LaneTurnSettings</name>
     <message>
         <source>Back</source>
-        <translation type="vanished">뒤로</translation>
+        <translation>뒤로</translation>
     </message>
     <message>
         <source>Adjust Lane Turn Speed</source>
-        <translation type="vanished">차선 회전 속도 조정</translation>
+        <translation>차선 회전 속도 조정</translation>
     </message>
     <message>
         <source>Set the maximum speed for lane turn desires. Default is 19 %1.</source>
-        <translation type="vanished">차선 변경 욕구의 최대 속도를 설정합니다. 기본값은 19 %1입니다.</translation>
+        <translation>차선 변경 욕구의 최대 속도를 설정합니다. 기본값은 19 %1입니다.</translation>
     </message>
 </context>
 <context>
@@ -1143,7 +1143,7 @@ This will not disable OEM functionality.</source>
     </message>
     <message>
         <source>Customize Lane Turn</source>
-        <translation type="vanished">차선 회전 사용자 지정</translation>
+        <translation>차선 회전 사용자 지정</translation>
     </message>
 </context>
 <context>
@@ -1170,27 +1170,27 @@ This will not disable OEM functionality.</source>
     </message>
     <message>
         <source>Vibe Personality Controller</source>
-        <translation type="vanished">분위기 성격 컨트롤러</translation>
+        <translation>분위기 성격 컨트롤러</translation>
     </message>
     <message>
         <source>Advanced driving personality system with separate controls for acceleration behavior (Eco/Normal/Sport) and following distance/braking (Relaxed/Standard/Aggressive). Customize your driving experience with independent acceleration and distance personalities.</source>
-        <translation type="vanished">가속 행동(에코/일반/스포츠)과 차간 거리/제동(느긋함/표준/공격적)을 별도로 제어하는 고급 주행 성향 시스템. 독립적인 가속 및 거리 성향 설정으로 나만의 주행 경험을 맞춤 구성하세요.</translation>
+        <translation>가속 행동(에코/일반/스포츠)과 차간 거리/제동(느긋함/표준/공격적)을 별도로 제어하는 고급 주행 성향 시스템. 독립적인 가속 및 거리 성향 설정으로 나만의 주행 경험을 맞춤 구성하세요.</translation>
     </message>
     <message>
         <source>Acceleration Personality</source>
-        <translation type="vanished">가속 성향</translation>
+        <translation>가속 성향</translation>
     </message>
     <message>
         <source>Controls acceleration behavior: Eco (efficient), Normal (balanced), Sport (responsive). Adjust how aggressively the vehicle accelerates while maintaining smooth operation.</source>
-        <translation type="vanished">가속 동작 제어: 에코(효율적), 일반(균형적), 스포츠(반응적). 부드러운 주행을 유지하면서 차량이 얼마나 민첩하게 가속하는지 조정합니다.</translation>
+        <translation>가속 동작 제어: 에코(효율적), 일반(균형적), 스포츠(반응적). 부드러운 주행을 유지하면서 차량이 얼마나 민첩하게 가속하는지 조정합니다.</translation>
     </message>
     <message>
         <source>Following Distance Personality</source>
-        <translation type="vanished">차간 거리 성향</translation>
+        <translation>차간 거리 성향</translation>
     </message>
     <message>
         <source>Controls following distance and braking behavior: Relaxed (longer distance, gentler braking), Standard (balanced), Aggressive (shorter distance, firmer braking). Fine-tune your comfort level in traffic situations.</source>
-        <translation type="vanished">차량 간 거리와 제동 거동을 조절합니다: 느슨함(더 긴 거리, 부드러운 제동), 표준(균형 잡힘), 공격적(더 짧은 거리, 강한 제동). 교통 상황에서 본인의 편안함 수준을 미세 조정하세요.</translation>
+        <translation>차량 간 거리와 제동 거동을 조절합니다: 느슨함(더 긴 거리, 부드러운 제동), 표준(균형 잡힘), 공격적(더 짧은 거리, 강한 제동). 교통 상황에서 본인의 편안함 수준을 미세 조정하세요.</translation>
     </message>
     <message>
         <source>Speed Limit Control (SLC)</source>
@@ -1501,15 +1501,15 @@ The default software delay value is 0.2</source>
     </message>
     <message>
         <source>Use Lane Turn Desires</source>
-        <translation>차선 회전 의사 사용</translation>
+        <translation type="vanished">차선 회전 의사 사용</translation>
     </message>
     <message>
         <source>Adjust Lane Turn Speed</source>
-        <translation>차선 회전 속도 조정</translation>
+        <translation type="vanished">차선 회전 속도 조정</translation>
     </message>
     <message>
         <source>Set the maximum speed for lane turn desires. Default is 19 %1.</source>
-        <translation>차선 회전 욕구에 대한 최대 속도를 설정합니다. 기본값은 19 %1입니다.</translation>
+        <translation type="vanished">차선 회전 욕구에 대한 최대 속도를 설정합니다. 기본값은 19 %1입니다.</translation>
     </message>
 </context>
 <context>
@@ -2104,6 +2104,10 @@ Data</source>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Assist</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>
@@ -2635,6 +2639,10 @@ Data</source>
         <source>Speed Limit</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>⦿ Assist: Adjusts the vehicle&apos;s cruise speed based on the current road&apos;s speed limit when operating the +/- buttons.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SshControl</name>
@@ -3057,63 +3065,63 @@ Restart comma to have openpilot use the key</source>
     </message>
     <message>
         <source>Enable drive mode btn link</source>
-        <translation type="vanished">주행 모드 활성화 버튼 링크</translation>
+        <translation>주행 모드 활성화 버튼 링크</translation>
     </message>
     <message>
         <source>Links cars drive mode btn with accel personalities based on personality (i.e., relaxed, standard, sport)</source>
-        <translation type="vanished">자동차 주행 모드 버튼을 성격(즉, 여유, 표준, 스포츠)에 기반한 가속 성향과 연동</translation>
+        <translation>자동차 주행 모드 버튼을 성격(즉, 여유, 표준, 스포츠)에 기반한 가속 성향과 연동</translation>
     </message>
     <message>
         <source>Toyota: Auto Brake Hold FOR TSS2 HYBRID CARS</source>
-        <translation type="vanished">도요타: 자동 브레이크 홀드 TSS2 하이브리드 차량용</translation>
+        <translation>도요타: 자동 브레이크 홀드 TSS2 하이브리드 차량용</translation>
     </message>
     <message>
         <source>As you may auto brake hold currently supported by openpilot, this feature will allow sunnypilot to automatically hold the vehicle at a stop when the lead car is stopped. (TSS2 Hybird only)</source>
-        <translation type="vanished">현재 openpilot에서 지원하는 자동 브레이크 홀드 기능과 마찬가지로, 이 기능은 선행 차량이 정지했을 때 sunnypilot이 자동으로 차량을 정지 상태로 유지하도록 합니다. (TSS2 하이브리드 전용)</translation>
+        <translation>현재 openpilot에서 지원하는 자동 브레이크 홀드 기능과 마찬가지로, 이 기능은 선행 차량이 정지했을 때 sunnypilot이 자동으로 차량을 정지 상태로 유지하도록 합니다. (TSS2 하이브리드 전용)</translation>
     </message>
     <message>
         <source>Toyota: Prius TSS2 BSM and some tssp</source>
-        <translation type="vanished">도요타: 프리우스 TSS2 BSM 및 일부 TSSP</translation>
+        <translation>도요타: 프리우스 TSS2 BSM 및 일부 TSSP</translation>
     </message>
     <message>
         <source>Add support for BSM.</source>
-        <translation type="vanished">BSM 지원 기능을 추가합니다.</translation>
+        <translation>BSM 지원 기능을 추가합니다.</translation>
     </message>
     <message>
         <source>Toyota: custom tune</source>
-        <translation type="vanished">토요타: 맞춤 튜닝</translation>
+        <translation>토요타: 맞춤 튜닝</translation>
     </message>
     <message>
         <source>idk something gas and brake</source>
-        <translation type="vanished">뭔가 가속과 브레이크 같은 거요</translation>
+        <translation>뭔가 가속과 브레이크 같은 거요</translation>
     </message>
     <message>
         <source>Toyota: Stock Toyota Longitudinal</source>
-        <translation type="vanished">토요타: 기본 토요타 종방향</translation>
+        <translation>토요타: 기본 토요타 종방향</translation>
     </message>
     <message>
         <source>This feature will allow sunnypilot to use the stock Toyota longitudinal control instead of the sunnypilot longitudinal control. </source>
-        <translation type="vanished">이 기능은 써니파일롯이 자체 종방향 제어 대신 토요타 기본 종방향 제어를 사용할 수 있도록 합니다.</translation>
+        <translation>이 기능은 써니파일롯이 자체 종방향 제어 대신 토요타 기본 종방향 제어를 사용할 수 있도록 합니다.</translation>
     </message>
     <message>
         <source>Sport</source>
-        <translation type="vanished">스포츠</translation>
+        <translation>스포츠</translation>
     </message>
     <message>
         <source>Normal</source>
-        <translation type="vanished">정상</translation>
+        <translation>정상</translation>
     </message>
     <message>
         <source>Eco</source>
-        <translation type="vanished">에코</translation>
+        <translation>에코</translation>
     </message>
     <message>
         <source>Acceleration Personality</source>
-        <translation type="vanished">가속 성향</translation>
+        <translation>가속 성향</translation>
     </message>
     <message>
         <source>Normal is recommended. In sport mode, sunnypilot will provide aggressive acceleration for a dynamic driving experience. In eco mode, sunnypilot will apply smoother and more relaxed acceleration. On supported cars, you can cycle through these acceleration personality within Onroad Settings on the driving screen.</source>
-        <translation type="vanished">일반 모드가 권장됩니다. 스포츠 모드에서는 써니파일럿이 역동적인 주행 경험을 위해 강한 가속을 제공합니다. 에코 모드에서는 써니파일럿이 더 부드럽고 여유로운 가속을 적용합니다. 지원되는 차량에서는 주행 화면의 온로드 설정에서 이러한 가속 성향을 순환하여 선택할 수 있습니다.</translation>
+        <translation>일반 모드가 권장됩니다. 스포츠 모드에서는 써니파일럿이 역동적인 주행 경험을 위해 강한 가속을 제공합니다. 에코 모드에서는 써니파일럿이 더 부드럽고 여유로운 가속을 적용합니다. 지원되는 차량에서는 주행 화면의 온로드 설정에서 이러한 가속 성향을 순환하여 선택할 수 있습니다.</translation>
     </message>
     <message>
         <source>Off</source>
@@ -3282,6 +3290,14 @@ Bottom</source>
     <message>
         <source>Displays the name of the road the car is traveling on. The OpenStreetMap database of the location must be downloaded from the OSM panel to fetch the road name.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This feature requires openpilot longitudinal control to be available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start the vehicle to check vehicle compatibility.</source>
+        <translation type="unfinished">차량 호환성을 확인하려면 차량 시동을 걸어주세요.</translation>
     </message>
 </context>
 <context>
