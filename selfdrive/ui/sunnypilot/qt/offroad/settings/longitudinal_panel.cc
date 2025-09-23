@@ -180,7 +180,6 @@ void LongitudinalPanel::refresh(bool _offroad) {
   customAccIncrement->refresh();
 
   SmartCruiseControlVision->setEnabled(has_longitudinal_control || icbm_allowed);
-  SmartCruiseControlMap->setEnabled(has_longitudinal_control || icbm_allowed);
   // Vibe Personality controls - always enabled for toggling
   vibePersonalityControl->setEnabled(true);
   vibeAccelPersonalityControl->setEnabled(true);
@@ -189,6 +188,7 @@ void LongitudinalPanel::refresh(bool _offroad) {
   vibeAccelPersonalityControl->refresh();
   vibeFollowPersonalityControl->refresh();
 
+  SmartCruiseControlMap->setEnabled(has_longitudinal_control || icbm_allowed);
 
   offroad = _offroad;
 }
