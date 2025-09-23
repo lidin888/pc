@@ -675,11 +675,11 @@ This is the time after which settings UI closes automatically if user is not int
     </message>
     <message>
         <source>Default</source>
-        <translation type="vanished">默认</translation>
+        <translation>默认</translation>
     </message>
     <message>
         <source>Offroad</source>
-        <translation type="vanished">離線</translation>
+        <translation>離線</translation>
     </message>
     <message>
         <source>Git Pull &amp; Reboot</source>

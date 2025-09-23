@@ -721,11 +721,11 @@ This is the time after which settings UI closes automatically if user is not int
     </message>
     <message>
         <source>Default</source>
-        <translation type="vanished">デフォルト</translation>
+        <translation>デフォルト</translation>
     </message>
     <message>
         <source>Offroad</source>
-        <translation type="vanished">オフロード</translation>
+        <translation>オフロード</translation>
     </message>
     <message>
         <source>Git Pull &amp; Reboot</source>
