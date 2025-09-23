@@ -155,11 +155,11 @@ void HudRendererSP::draw(QPainter &p, const QRect &surface_rect) {
 
     // Speed Limit
     bool showSpeedLimit;
-    bool speedLimitAssistPreActivePulse = pulseElement(speedLimitAssistFrame);
+    bool speed_limit_assist_pre_active_pulse = pulseElement(speedLimitAssistFrame);
 
     if (speedLimitAssistState == cereal::LongitudinalPlanSP::SpeedLimit::AssistState::PRE_ACTIVE) {
       speedLimitAssistFrame++;
-      showSpeedLimit = speedLimitAssistPreActivePulse;
+      showSpeedLimit = speed_limit_assist_pre_active_pulse;
     } else {
       speedLimitAssistFrame = 0;
       showSpeedLimit = speedLimitMode != SpeedLimitMode::OFF;
@@ -366,14 +366,12 @@ void HudRendererSP::drawStandstillTimer(QPainter &p, int x, int y) {
 }
 
 void HudRendererSP::drawSpeedLimitSigns(QPainter &p) {
-  bool speedLimitValid = speedLimit > 0;
-  bool useLastValidSpeedLimit = !speedLimitValid && speedLimitLastValid > 0;
-  int speedLimitRounded = std::nearbyint(speedLimit);
-  int speedLimitFinalRounded = std::nearbyint(speedLimit + speedLimitOffset);
-  bool overspeed = speedLimitFinalRounded < std::nearbyint(speed) && speedLimitRounded > 0;
+  bool hasSpeedLimit = speedLimitValid || speedLimitLastValid;
+  int speedLimitFinal = std::nearbyint(speedLimitValid ? speedLimit : speedLimitLast);
+  int speedLimitOffsetFinal = speedLimitFinal + std::nearbyint(speedLimitOffset);
+  bool overspeed = hasSpeedLimit && speedLimitOffsetFinal < std::nearbyint(speed);
   bool speedLimitWarningEnabled = speedLimitMode >= SpeedLimitMode::WARNING;
-  QString speedLimitStr = speedLimitValid ? QString::number(speedLimitRounded) :
-                          (useLastValidSpeedLimit ? QString::number(speedLimitLastValid) : "---");
+  QString speedLimitStr = hasSpeedLimit ? QString::number(speedLimitFinal) : "---";
 
   // Offset display text
   QString speedLimitSubText = "";

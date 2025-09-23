@@ -37,7 +37,7 @@ def speed_limit_pre_active_alert(CP: car.CarParams, CS: car.CarState, sm: messag
     "限速辅助：需激活",
     f"手动将设定速度更改为 {max_initial_set_speed} {speed_unit} 以激活",
     AlertStatus.normal, AlertSize.mid,
-    Priority.LOW, VisualAlert.none, AudibleAlert.none, 5.)
+    Priority.LOW, VisualAlert.none, AudibleAlert.none, .1)
 
 
 class EventsSP(EventsBase):
