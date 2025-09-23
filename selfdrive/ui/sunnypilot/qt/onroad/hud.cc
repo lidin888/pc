@@ -34,6 +34,7 @@ void HudRendererSP::updateState(const UIState &s) {
   speedLimitValid = speedLimit > 0;
   speedLimitLastValid = speedLimitLast > 0;
   speedLimitMode = static_cast<SpeedLimitMode>(s.scene.speed_limit_mode);
+  speedLimitAssistState = lp_sp.getSpeedLimit().getAssist().getState();
   roadName = s.scene.road_name;
   if (sm.updated("liveMapDataSP")) {
     roadNameStr = QString::fromStdString(lmd.getRoadName());
@@ -154,8 +155,23 @@ void HudRendererSP::draw(QPainter &p, const QRect &surface_rect) {
     }
 
     // Speed Limit
-    if (speedLimitMode != SpeedLimitMode::OFF) {
+    bool showSpeedLimit;
+    bool speed_limit_assist_pre_active_pulse = pulseElement(speedLimitAssistFrame);
+
+    if (speedLimitAssistState == cereal::LongitudinalPlanSP::SpeedLimit::AssistState::PRE_ACTIVE) {
+      speedLimitAssistFrame++;
+      showSpeedLimit = speed_limit_assist_pre_active_pulse;
+    } else {
+      speedLimitAssistFrame = 0;
+      showSpeedLimit = speedLimitMode != SpeedLimitMode::OFF;
+    }
+
+    if (showSpeedLimit) {
       drawSpeedLimitSigns(p);
+    }
+
+    // do not show during SLA's preActive state
+    if (showSpeedLimit && speedLimitAssistState != cereal::LongitudinalPlanSP::SpeedLimit::AssistState::PRE_ACTIVE) {
       drawUpcomingSpeedLimit(p);
     }
 
@@ -355,7 +371,7 @@ void HudRendererSP::drawSpeedLimitSigns(QPainter &p) {
   int speedLimitFinal = std::nearbyint(speedLimitValid ? speedLimit : speedLimitLast);
   int speedLimitOffsetFinal = speedLimitFinal + std::nearbyint(speedLimitOffset);
   bool overspeed = hasSpeedLimit && speedLimitOffsetFinal < std::nearbyint(speed);
-  bool speedLimitWarningEnabled = speedLimitMode == SpeedLimitMode::WARNING;  // TODO-SP: update to include SpeedLimitMode::ASSIST
+  bool speedLimitWarningEnabled = speedLimitMode >= SpeedLimitMode::WARNING;
   QString speedLimitStr = hasSpeedLimit ? QString::number(speedLimitFinal) : "---";
 
   // Offset display text
