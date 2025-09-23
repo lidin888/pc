@@ -1061,49 +1061,49 @@ This will not disable OEM functionality.</source>
     </message>
     <message>
         <source>Block Lane Change: Road Edge Detection</source>
-        <translation type="vanished">阻塞车道变更：路缘检测</translation>
+        <translation>阻塞车道变更：路缘检测</translation>
     </message>
     <message>
         <source>Enable this toggle to block lane change when road edge is detected on the stalk actuated side.</source>
-        <translation type="vanished">启用此开关以在探测到行驶道边缘时阻止车辆向操作杆所在侧变道。</translation>
+        <translation>启用此开关以在探测到行驶道边缘时阻止车辆向操作杆所在侧变道。</translation>
     </message>
 </context>
 <context>
     <name>LaneTurnDesireControl</name>
     <message>
         <source>Lane Turn Desires</source>
-        <translation type="vanished">車道轉向意願</translation>
+        <translation>車道轉向意願</translation>
     </message>
     <message>
         <source>If you&apos;re driving at 20 mph (32 km/h) or below and have your blinker on, the car will plan a turn in that direction at the nearest drivable path. This prevents situations (like at red lights) where the car might plan the wrong turn direction.</source>
-        <translation type="vanished">若您以時速20英里（約32公里）或更低的速度行駛，並開啟方向燈，車輛將會在最近的可通行路徑上規劃該方向的轉彎。這能避免車輛在特定情境（例如紅燈停等時）誤判轉彎方向的情況發生。</translation>
+        <translation>若您以時速20英里（約32公里）或更低的速度行駛，並開啟方向燈，車輛將會在最近的可通行路徑上規劃該方向的轉彎。這能避免車輛在特定情境（例如紅燈停等時）誤判轉彎方向的情況發生。</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation type="vanished">關閉</translation>
+        <translation>關閉</translation>
     </message>
     <message>
         <source>Nudge</source>
-        <translation type="vanished">輕推</translation>
+        <translation>輕推</translation>
     </message>
     <message>
         <source>Nudgeless</source>
-        <translation type="vanished">無需提醒</translation>
+        <translation>無需提醒</translation>
     </message>
 </context>
 <context>
     <name>LaneTurnSettings</name>
     <message>
         <source>Back</source>
-        <translation type="vanished">返回</translation>
+        <translation>返回</translation>
     </message>
     <message>
         <source>Adjust Lane Turn Speed</source>
-        <translation type="vanished">調整車道轉彎速度</translation>
+        <translation>調整車道轉彎速度</translation>
     </message>
     <message>
         <source>Set the maximum speed for lane turn desires. Default is 19 %1.</source>
-        <translation type="vanished">設定車道轉向期望的最大速度。預設值為 19 %1。</translation>
+        <translation>設定車道轉向期望的最大速度。預設值為 19 %1。</translation>
     </message>
 </context>
 <context>
@@ -1150,7 +1150,7 @@ This will not disable OEM functionality.</source>
     </message>
     <message>
         <source>Customize Lane Turn</source>
-        <translation type="vanished">自訂車道轉向</translation>
+        <translation>自訂車道轉向</translation>
     </message>
 </context>
 <context>
@@ -1177,27 +1177,27 @@ This will not disable OEM functionality.</source>
     </message>
     <message>
         <source>Vibe Personality Controller</source>
-        <translation type="vanished">震动个性控制器</translation>
+        <translation>震动个性控制器</translation>
     </message>
     <message>
         <source>Advanced driving personality system with separate controls for acceleration behavior (Eco/Normal/Sport) and following distance/braking (Relaxed/Standard/Aggressive). Customize your driving experience with independent acceleration and distance personalities.</source>
-        <translation type="vanished">先進的駕駛性格系統，包含加速行為（環保/標準/運動）和跟車距離/剎車（輕鬆/標準/積極）的獨立控制。通過獨立的加速和距離性格自定義您的駕駛體驗。</translation>
+        <translation>先進的駕駛性格系統，包含加速行為（環保/標準/運動）和跟車距離/剎車（輕鬆/標準/積極）的獨立控制。通過獨立的加速和距離性格自定義您的駕駛體驗。</translation>
     </message>
     <message>
         <source>Acceleration Personality</source>
-        <translation type="vanished">加速性格</translation>
+        <translation>加速性格</translation>
     </message>
     <message>
         <source>Controls acceleration behavior: Eco (efficient), Normal (balanced), Sport (responsive). Adjust how aggressively the vehicle accelerates while maintaining smooth operation.</source>
-        <translation type="vanished">控制加速行为：Eco（高效）、Normal（平衡）、Sport（灵敏）。调整车辆加速的积极性，同时保持平稳运行。</translation>
+        <translation>控制加速行为：Eco（高效）、Normal（平衡）、Sport（灵敏）。调整车辆加速的积极性，同时保持平稳运行。</translation>
     </message>
     <message>
         <source>Following Distance Personality</source>
-        <translation type="vanished">跟隨距離特性</translation>
+        <translation>跟隨距離特性</translation>
     </message>
     <message>
         <source>Controls following distance and braking behavior: Relaxed (longer distance, gentler braking), Standard (balanced), Aggressive (shorter distance, firmer braking). Fine-tune your comfort level in traffic situations.</source>
-        <translation type="vanished">控制跟車距離和剎車行為：放鬆（較長距離，較柔和剎車），標準（平衡），積極（較短距離，較堅定剎車）。在交通情況下微調您的舒適度。</translation>
+        <translation>控制跟車距離和剎車行為：放鬆（較長距離，較柔和剎車），標準（平衡），積極（較短距離，較堅定剎車）。在交通情況下微調您的舒適度。</translation>
     </message>
     <message>
         <source>Speed Limit Control (SLC)</source>
@@ -1245,6 +1245,14 @@ This will not disable OEM functionality.</source>
     </message>
     <message>
         <source>Speed Limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smart Cruise Control - Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use map data to estimate the appropriate speed to drive through turns ahead.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1508,15 +1516,15 @@ The default software delay value is 0.2</source>
     </message>
     <message>
         <source>Use Lane Turn Desires</source>
-        <translation>使用车道转向意愿</translation>
+        <translation type="vanished">使用车道转向意愿</translation>
     </message>
     <message>
         <source>Adjust Lane Turn Speed</source>
-        <translation>调整车道转向速度</translation>
+        <translation type="vanished">调整车道转向速度</translation>
     </message>
     <message>
         <source>Set the maximum speed for lane turn desires. Default is 19 %1.</source>
-        <translation>設定轉向欲望的最高速度。預設值為19 %1。</translation>
+        <translation type="vanished">設定轉向欲望的最高速度。預設值為19 %1。</translation>
     </message>
 </context>
 <context>
@@ -2109,6 +2117,10 @@ Data</source>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Assist</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>
@@ -2640,6 +2652,10 @@ Data</source>
         <source>Speed Limit</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>⦿ Assist: Adjusts the vehicle&apos;s cruise speed based on the current road&apos;s speed limit when operating the +/- buttons.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SshControl</name>
@@ -3057,63 +3073,63 @@ Restart comma to have openpilot use the key</source>
     </message>
     <message>
         <source>Enable drive mode btn link</source>
-        <translation type="vanished">启用驾驶模式按钮链接</translation>
+        <translation>启用驾驶模式按钮链接</translation>
     </message>
     <message>
         <source>Links cars drive mode btn with accel personalities based on personality (i.e., relaxed, standard, sport)</source>
-        <translation type="vanished">根据性格（如：放松、标准、运动）链接汽车驾驶模式按钮与加速性格</translation>
+        <translation>根据性格（如：放松、标准、运动）链接汽车驾驶模式按钮与加速性格</translation>
     </message>
     <message>
         <source>Toyota: Auto Brake Hold FOR TSS2 HYBRID CARS</source>
-        <translation type="vanished">豐田：自動剎車保持系統，適用於TSS2混合動力車</translation>
+        <translation>豐田：自動剎車保持系統，適用於TSS2混合動力車</translation>
     </message>
     <message>
         <source>As you may auto brake hold currently supported by openpilot, this feature will allow sunnypilot to automatically hold the vehicle at a stop when the lead car is stopped. (TSS2 Hybird only)</source>
-        <translation type="vanished">如您所知，openpilot目前支持自动刹车保持功能，此功能将允许sunnypilot在前车停止时自动保持车辆停止状态。（仅限TSS2混合动力）</translation>
+        <translation>如您所知，openpilot目前支持自动刹车保持功能，此功能将允许sunnypilot在前车停止时自动保持车辆停止状态。（仅限TSS2混合动力）</translation>
     </message>
     <message>
         <source>Toyota: Prius TSS2 BSM and some tssp</source>
-        <translation type="vanished">Toyota：普锐斯 TSS2 BSM 以及一些 tssp</translation>
+        <translation>Toyota：普锐斯 TSS2 BSM 以及一些 tssp</translation>
     </message>
     <message>
         <source>Add support for BSM.</source>
-        <translation type="vanished">添加BSM支持。</translation>
+        <translation>添加BSM支持。</translation>
     </message>
     <message>
         <source>Toyota: custom tune</source>
-        <translation type="vanished">Toyota：自定义调校</translation>
+        <translation>Toyota：自定义调校</translation>
     </message>
     <message>
         <source>idk something gas and brake</source>
-        <translation type="vanished">不知道是关于油门和刹车的事情</translation>
+        <translation>不知道是关于油门和刹车的事情</translation>
     </message>
     <message>
         <source>Toyota: Stock Toyota Longitudinal</source>
-        <translation type="vanished">豐田：原廠豐田縱向系统</translation>
+        <translation>豐田：原廠豐田縱向系统</translation>
     </message>
     <message>
         <source>This feature will allow sunnypilot to use the stock Toyota longitudinal control instead of the sunnypilot longitudinal control. </source>
-        <translation type="vanished">此功能将允许sunnypilot使用原厂丰田纵向控制，而非sunnypilot纵向控制。</translation>
+        <translation>此功能将允许sunnypilot使用原厂丰田纵向控制，而非sunnypilot纵向控制。</translation>
     </message>
     <message>
         <source>Sport</source>
-        <translation type="vanished">运动模式</translation>
+        <translation>运动模式</translation>
     </message>
     <message>
         <source>Normal</source>
-        <translation type="vanished">正常</translation>
+        <translation>正常</translation>
     </message>
     <message>
         <source>Eco</source>
-        <translation type="vanished">經濟模式</translation>
+        <translation>經濟模式</translation>
     </message>
     <message>
         <source>Acceleration Personality</source>
-        <translation type="vanished">加速性格</translation>
+        <translation>加速性格</translation>
     </message>
     <message>
         <source>Normal is recommended. In sport mode, sunnypilot will provide aggressive acceleration for a dynamic driving experience. In eco mode, sunnypilot will apply smoother and more relaxed acceleration. On supported cars, you can cycle through these acceleration personality within Onroad Settings on the driving screen.</source>
-        <translation type="vanished">建议使用正常模式。在运动模式下，sunnypilot将提供积极的加速度，以带来动感的驾驶体验。在经济模式下，sunnypilot将应用更平稳、更放松的加速度。在支持的汽车上，您可以在驾驶屏幕上的Onroad设置中切换这些加速性格。</translation>
+        <translation>建议使用正常模式。在运动模式下，sunnypilot将提供积极的加速度，以带来动感的驾驶体验。在经济模式下，sunnypilot将应用更平稳、更放松的加速度。在支持的汽车上，您可以在驾驶屏幕上的Onroad设置中切换这些加速性格。</translation>
     </message>
     <message>
         <source>Off</source>
@@ -3281,6 +3297,14 @@ Bottom</source>
     <message>
         <source>Displays the name of the road the car is traveling on. The OpenStreetMap database of the location must be downloaded from the OSM panel to fetch the road name.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This feature requires openpilot longitudinal control to be available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start the vehicle to check vehicle compatibility.</source>
+        <translation type="unfinished">启动车辆以检查车辆兼容性。</translation>
     </message>
 </context>
 <context>
