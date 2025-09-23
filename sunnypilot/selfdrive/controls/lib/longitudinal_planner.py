@@ -69,8 +69,8 @@ class LongitudinalPlannerSP:
     targets = {
       LongitudinalPlanSource.cruise: (v_cruise, a_ego),
       LongitudinalPlanSource.sccVision: (self.scc.vision.output_v_target, self.scc.vision.output_a_target),
-      LongitudinalPlanSource.speedLimitAssist: (self.sla.output_v_target, self.sla.output_a_target),
       LongitudinalPlanSource.sccMap: (self.scc.map.output_v_target, self.scc.map.output_a_target),
+      LongitudinalPlanSource.speedLimitAssist: (self.sla.output_v_target, self.sla.output_a_target),
     }
 
     self.source = min(targets, key=lambda k: targets[k][0])
