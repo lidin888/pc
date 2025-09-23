@@ -669,11 +669,11 @@ Dies ist die Zeit, nach der sich die Einstellungsoberfl√§che automatisch schlie√
     </message>
     <message>
         <source>Default</source>
-        <translation type="vanished">Standard</translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <source>Offroad</source>
-        <translation type="vanished">Offroad</translation>
+        <translation>Offroad</translation>
     </message>
     <message>
         <source>Git Pull &amp; Reboot</source>

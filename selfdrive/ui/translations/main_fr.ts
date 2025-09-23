@@ -670,11 +670,11 @@ Il s&apos;agit du délai après lequel l&apos;interface des paramètres se ferme
     </message>
     <message>
         <source>Default</source>
-        <translation type="vanished">Par défaut</translation>
+        <translation>Par défaut</translation>
     </message>
     <message>
         <source>Offroad</source>
-        <translation type="vanished">Hors route</translation>
+        <translation>Hors route</translation>
     </message>
     <message>
         <source>Git Pull &amp; Reboot</source>

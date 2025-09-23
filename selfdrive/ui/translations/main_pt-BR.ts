@@ -552,6 +552,14 @@ This is the time after which settings UI closes automatically if user is not int
         <source>Controls state of the device after boot/sleep.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offroad</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DriveStats</name>
