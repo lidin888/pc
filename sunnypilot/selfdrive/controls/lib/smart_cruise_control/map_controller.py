@@ -13,7 +13,7 @@ from openpilot.sunnypilot.selfdrive.controls.lib.smart_cruise_control import MIN
 MapState = VisionState = custom.LongitudinalPlanSP.SmartCruiseControl.MapState
 
 ACTIVE_STATES = (MapState.turning, )
-ENABLED_STATES = (MapState.enabled, *ACTIVE_STATES)
+ENABLED_STATES = (MapState.enabled, MapState.overriding, *ACTIVE_STATES)
 
 R = 6373000.0  # approximate radius of earth in meters
 TO_RADIANS = math.pi / 180
