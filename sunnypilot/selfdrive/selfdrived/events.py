@@ -29,11 +29,18 @@ def speed_limit_adjust_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.
 
 
 def speed_limit_pre_active_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int, personality) -> Alert:
-  max_initial_set_speed = PCM_LONG_REQUIRED_MAX_SET_SPEED[metric]
-  speed_unit = "km/h" if metric else "mph"
+  if CP.openpilotLongitudinalControl and CP.pcmCruise:
+    # PCM long
+    pcm_long_required_max_set_speed_conv = round(PCM_LONG_REQUIRED_MAX_SET_SPEED[metric] * (CV.MS_TO_KPH if metric else CV.MS_TO_MPH))
+    speed_unit = "km/h" if metric else "mph"
+    alert_2_str = f"手动将设定速度更改为 {pcm_long_required_max_set_speed_conv} {speed_unit} 以激活"
+  else:
+    # Non PCM long
+    alert_2_str = "操作+/-巡航控制按钮以激活"
+
   return Alert(
     "限速辅助：需激活",
-    f"手动将设定速度更改为 {max_initial_set_speed} {speed_unit} 以激活",
+    alert_2_str,
     AlertStatus.normal, AlertSize.mid,
     Priority.LOW, VisualAlert.none, AudibleAlert.none, .1)
 
