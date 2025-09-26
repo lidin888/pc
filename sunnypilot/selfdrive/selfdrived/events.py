@@ -3,7 +3,7 @@ from cereal import log, car, custom
 from openpilot.common.constants import CV
 from openpilot.sunnypilot.selfdrive.selfdrived.events_base import EventsBase, Priority, ET, Alert, \
   NoEntryAlert, ImmediateDisableAlert, EngagementAlert, NormalPermanentAlert, AlertCallbackType, wrong_car_mode_alert
-from openpilot.sunnypilot.selfdrive.controls.lib.speed_limit import PCM_LONG_REQUIRED_MAX_SET_SPEED
+from openpilot.sunnypilot.selfdrive.controls.lib.speed_limit import PCM_LONG_REQUIRED_MAX_SET_SPEED, CONFIRM_SPEED_THRESHOLD
 
 
 AlertSize = log.SelfdriveState.AlertSize
@@ -31,7 +31,11 @@ def speed_limit_adjust_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.
 def speed_limit_pre_active_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int, personality) -> Alert:
   if CP.openpilotLongitudinalControl and CP.pcmCruise:
     # PCM long
-    pcm_long_required_max_set_speed_conv = round(PCM_LONG_REQUIRED_MAX_SET_SPEED[metric] * (CV.MS_TO_KPH if metric else CV.MS_TO_MPH))
+    speed_conv = CV.MS_TO_KPH if metric else CV.MS_TO_MPH
+    cst_low, cst_high = PCM_LONG_REQUIRED_MAX_SET_SPEED[metric]
+    speed_limit_final_last_conv = round(sm['longitudinalPlanSP'].speedLimit.resolver.speedLimitFinalLast * speed_conv)
+    pcm_long_required_max = cst_low if speed_limit_final_last_conv < CONFIRM_SPEED_THRESHOLD[metric] else cst_high
+    pcm_long_required_max_set_speed_conv = round(pcm_long_required_max * speed_conv)
     speed_unit = "km/h" if metric else "mph"
     alert_2_str = f"手动将设定速度更改为 {pcm_long_required_max_set_speed_conv} {speed_unit} 以激活"
   else:
@@ -207,5 +211,12 @@ EVENTS_SP: dict[int, dict[str, Alert | AlertCallbackType]] = {
       "",
       AlertStatus.normal, AlertSize.small,
       Priority.LOW, VisualAlert.none, AudibleAlert.none, 5.),
+  },
+  EventNameSP.e2eChime: {
+    ET.PERMANENT: Alert(
+      "",
+      "",
+      AlertStatus.normal, AlertSize.none,
+      Priority.MID, VisualAlert.none, AudibleAlert.prompt, 1.5),
   },
 }
