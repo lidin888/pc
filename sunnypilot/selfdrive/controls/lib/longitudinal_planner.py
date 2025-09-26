@@ -36,6 +36,9 @@ class LongitudinalPlannerSP:
     self.output_v_target = 0.
     self.output_a_target = 0.
 
+    self.greenLightAlert = False
+    self.leadDepartAlert = False
+
   @property
   def mlsim(self) -> bool:
     # If we don't have a generation set, we assume it's default model. Which as of today are mlsim.
@@ -82,6 +85,7 @@ class LongitudinalPlannerSP:
   def update(self, sm: messaging.SubMaster) -> None:
     self.dec.update(sm)
     self.vibe_controller.update()
+    self.update_e2e_alerts(sm)
 
   def publish_longitudinal_plan_sp(self, sm: messaging.SubMaster, pm: messaging.PubMaster) -> None:
     plan_sp_send = messaging.new_message('longitudinalPlanSP')
@@ -138,4 +142,33 @@ class LongitudinalPlannerSP:
     assist.vTarget = float(self.sla.output_v_target)
     assist.aTarget = float(self.sla.output_a_target)
 
+    # E2E Alerts
+    e2eAlerts = longitudinalPlanSP.e2eAlerts
+    e2eAlerts.greenLightAlert = self.greenLightAlert
+    e2eAlerts.leadDepartAlert = self.leadDepartAlert
+
     pm.send('longitudinalPlanSP', plan_sp_send)
+
+  def update_e2e_alerts(self, sm: messaging.SubMaster) -> None:
+    model_x: list[float] = sm['modelV2'].position.x
+    max_idx = len(model_x) - 1
+    lead_status: bool = sm['radarState'].leadOne.status
+    lead_vRel: float = sm['radarState'].leadOne.vRel
+    isStandstill: bool = sm['carState'].standstill
+    gasPressed: bool = sm['carState'].gasPressed
+    self.greenLightAlert = False
+    self.leadDepartAlert = False
+
+    # Green light alert
+    if (isStandstill
+            and model_x[max_idx] > 30
+            and not lead_status
+            and not gasPressed):
+      self.greenLightAlert = True
+    # Lead departure alert
+    elif (isStandstill
+          and model_x[max_idx] > 30
+          and lead_status
+          and lead_vRel > 1
+          and not gasPressed):
+      self.leadDepartAlert = True
