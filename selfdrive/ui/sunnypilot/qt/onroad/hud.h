@@ -86,4 +86,6 @@ private:
   SpeedLimitMode speedLimitMode = SpeedLimitMode::OFF;
   bool roadName;
   QString roadNameStr;
+  cereal::LongitudinalPlanSP::SpeedLimit::AssistState speedLimitAssistState;
+  int speedLimitAssistFrame;
 };
