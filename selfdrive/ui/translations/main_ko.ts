@@ -967,6 +967,16 @@ Firehose 모드를 사용하면 훈련 데이터 업로드를 극대화하여 op
         <source>ft</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>GREEN
+LIGHT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LEAD VEHICLE
+DEPARTING</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HyundaiSettings</name>
