@@ -965,6 +965,18 @@ Firehose模式允许您最大化训练数据上传以改善openpilot的驾驶模
         <source>ft</source>
         <translation>ft</translation>
     </message>
+    <message>
+        <source>GREEN
+LIGHT</source>
+        <translation>绿
+灯</translation>
+    </message>
+    <message>
+        <source>LEAD VEHICLE
+DEPARTING</source>
+        <translation>前车
+出发</translation>
+    </message>
 </context>
 <context>
     <name>HyundaiSettings</name>

@@ -962,6 +962,16 @@ Der Firehose-Modus ermöglicht es Ihnen, Ihre Trainingsdaten-Uploads zu maximier
         <source>ft</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>GREEN
+LIGHT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LEAD VEHICLE
+DEPARTING</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HyundaiSettings</name>
