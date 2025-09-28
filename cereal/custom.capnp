@@ -143,14 +143,14 @@ struct ModelManagerSP @0xaedffd8f31e7b55d {
 
 struct LongitudinalPlanSP @0xf35cc4560bbf6ec2 {
   dec @0 :DynamicExperimentalControl;
-  accelPersonality @7 :AccelerationPersonality;
+  accelPersonality @8 :AccelerationPersonality;
   longitudinalPlanSource @1 :LongitudinalPlanSource;
   smartCruiseControl @2 :SmartCruiseControl;
   speedLimit @3 :SpeedLimit;
   vTarget @4 :Float32;
   aTarget @5 :Float32;
   events @6 :List(OnroadEventSP.Event);
-  e2eAlerts @8 :E2eAlerts;
+  e2eAlerts @7 :E2eAlerts;
 
   struct DynamicExperimentalControl {
     state @0 :DynamicExperimentalControlState;
