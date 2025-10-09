@@ -1530,6 +1530,17 @@ The default software delay value is 0.2</source>
     </message>
 </context>
 <context>
+    <name>OnroadScreenBrightnessControl</name>
+    <message>
+        <source>Onroad Brightness Delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Onroad Brightness</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OsmPanel</name>
     <message>
         <source>Mapd Version</source>
