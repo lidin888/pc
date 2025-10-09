@@ -1803,11 +1803,11 @@ The default software delay value is 0.2</source>
     <name>OnroadScreenBrightnessControl</name>
     <message>
         <source>Onroad Brightness Delay</source>
-        <translation type="deepseek-chat">道路亮度调节延迟</translation>
+        <translation>道路亮度调节延迟</translation>
     </message>
     <message>
         <source>Onroad Brightness</source>
-        <translation type="deepseek-chat">行车亮度</translation>
+        <translation>行车亮度</translation>
     </message>
 </context>
 <context>
@@ -3486,6 +3486,14 @@ Bottom</source>
     <message>
         <source>Speedometer: Hide from Onroad Screen</source>
         <translation>速度表：从行车屏幕中隐藏</translation>
+    </message>
+    <message>
+        <source>Show Rocket Fuel Bar</source>
+        <translation type="deepseek-chat">显示火箭燃料条</translation>
+    </message>
+    <message>
+        <source>Show a indicator on the left side of the screen to indicate acceleration and braking.</source>
+        <translation type="deepseek-chat">在屏幕左侧显示一个指示器，用于表示加速和制动状态。</translation>
     </message>
 </context>
 <context>
