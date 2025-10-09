@@ -9,9 +9,8 @@ from cereal import messaging, custom
 from opendbc.car import structs
 from openpilot.common.constants import CV
 from openpilot.selfdrive.car.cruise import V_CRUISE_MAX
-from openpilot.common.params import Params
-from openpilot.common.realtime import DT_MDL
 from openpilot.sunnypilot.selfdrive.controls.lib.dec.dec import DynamicExperimentalController
+from openpilot.sunnypilot.selfdrive.controls.lib.e2e_alerts_helper import E2EAlertsHelper
 from openpilot.sunnypilot.selfdrive.controls.lib.smart_cruise_control.smart_cruise_control import SmartCruiseControl
 from openpilot.sunnypilot.selfdrive.controls.lib.speed_limit.speed_limit_assist import SpeedLimitAssist
 from openpilot.sunnypilot.selfdrive.controls.lib.speed_limit.speed_limit_resolver import SpeedLimitResolver
@@ -34,8 +33,7 @@ class LongitudinalPlannerSP:
     self.sla = SpeedLimitAssist(CP)
     self.generation = int(model_bundle.generation) if (model_bundle := get_active_bundle()) else None
     self.source = LongitudinalPlanSource.cruise
-    self._params = Params()
-    self._frame = -1
+    self.e2e_alerts_helper = E2EAlertsHelper()
 
     self.output_v_target = 0.
     self.output_a_target = 0.
@@ -64,8 +62,6 @@ class LongitudinalPlannerSP:
     long_enabled = sm['carControl'].enabled
     long_override = sm['carControl'].cruiseControl.override
 
-    self.events_sp.clear()
-
     # Smart Cruise Control
     self.scc.update(sm, long_enabled, long_override, v_ego, a_ego, v_cruise)
 
@@ -75,7 +71,7 @@ class LongitudinalPlannerSP:
     # Speed Limit Assist
     has_speed_limit = self.resolver.speed_limit_valid or self.resolver.speed_limit_last_valid
     self.sla.update(long_enabled, long_override, v_ego, a_ego, v_cruise_cluster, self.resolver.speed_limit,
-                    self.resolver.speed_limit_final_last, has_speed_limit, self.resolver.distance, self.events_sp, CS)
+                    self.resolver.speed_limit_final_last, has_speed_limit, self.resolver.distance, self.events_sp)
 
     targets = {
       LongitudinalPlanSource.cruise: (v_cruise, a_ego),
@@ -89,11 +85,10 @@ class LongitudinalPlannerSP:
     return self.output_v_target, self.output_a_target
 
   def update(self, sm: messaging.SubMaster) -> None:
-    self._read_params()
+    self.events_sp.clear()
     self.dec.update(sm)
+    self.e2e_alerts_helper.update(sm, self.events_sp)
     self.vibe_controller.update()
-    self.update_e2e_alerts(sm)
-    self._frame += 1
 
   def publish_longitudinal_plan_sp(self, sm: messaging.SubMaster, pm: messaging.PubMaster) -> None:
     plan_sp_send = messaging.new_message('longitudinalPlanSP')
@@ -152,8 +147,8 @@ class LongitudinalPlannerSP:
 
     # E2E Alerts
     e2eAlerts = longitudinalPlanSP.e2eAlerts
-    e2eAlerts.greenLightAlert = self.greenLightAlert
-    e2eAlerts.leadDepartAlert = self.leadDepartAlert
+    e2eAlerts.greenLightAlert = self.e2e_alerts_helper.green_light_alert
+    e2eAlerts.leadDepartAlert = self.e2e_alerts_helper.lead_depart_alert
 
     pm.send('longitudinalPlanSP', plan_sp_send)
 
