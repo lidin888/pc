@@ -137,11 +137,11 @@ Veuillez utiliser cette fonction avec prudence. Utilisez le clignotant uniquemen
     <name>Brightness</name>
     <message>
         <source>Brightness</source>
-        <translation>Luminosité</translation>
+        <translation type="vanished">Luminosité</translation>
     </message>
     <message>
         <source>Overrides the brightness of the device.</source>
-        <translation>Remplace la luminosité de l&apos;appareil.</translation>
+        <translation type="vanished">Remplace la luminosité de l&apos;appareil.</translation>
     </message>
     <message>
         <source>Auto (Dark)</source>
@@ -150,6 +150,14 @@ Veuillez utiliser cette fonction avec prudence. Utilisez le clignotant uniquemen
     <message>
         <source>Auto</source>
         <translation>Automatique</translation>
+    </message>
+    <message>
+        <source>Global Brightness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overrides the brightness of the device. This applies to both onroad and offroad screens. </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -600,12 +608,12 @@ Steering lag calibration is complete.</source>
     </message>
     <message>
         <source>Interactivity Timeout</source>
-        <translation>Temps d&apos;Interactivité Dépassé</translation>
+        <translation type="vanished">Temps d&apos;Interactivité Dépassé</translation>
     </message>
     <message>
         <source>Apply a custom timeout for settings UI.
 This is the time after which settings UI closes automatically if user is not interacting with the screen.</source>
-        <translation>Appliquer un délai d&apos;expiration personnalisé pour l&apos;interface des paramètres.
+        <translation type="vanished">Appliquer un délai d&apos;expiration personnalisé pour l&apos;interface des paramètres.
 Il s&apos;agit du délai après lequel l&apos;interface des paramètres se ferme automatiquement si l&apos;utilisateur n&apos;interagit pas avec l&apos;écran.</translation>
     </message>
     <message>
@@ -654,7 +662,7 @@ Il s&apos;agit du délai après lequel l&apos;interface des paramètres se ferme
     </message>
     <message>
         <source>Always Offroad</source>
-        <translation>Toujours Hors Route</translation>
+        <translation type="vanished">Toujours Hors Route</translation>
     </message>
     <message>
         <source>⁍ Default: Device will boot/wake-up normally &amp; will be ready to engage.</source>
@@ -695,6 +703,35 @@ Il s&apos;agit du délai après lequel l&apos;interface des paramètres se ferme
     <message>
         <source>Update process started. Device will reboot if updates are applied.</source>
         <translation type="vanished">Processus de mise à jour démarré. L&apos;appareil redémarrera si des mises à jour sont appliquées.</translation>
+    </message>
+    <message>
+        <source>Onroad Uploads</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Always Offroad</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DisplayPanel</name>
+    <message>
+        <source>Onroad Screen: Reduced Brightness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turn off device screen or reduce brightness after driving starts. It automatically brightens again when screen is touched or a visible alert is displayed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Interactivity Timeout</source>
+        <translation type="unfinished">Temps d&apos;Interactivité Dépassé</translation>
+    </message>
+    <message>
+        <source>Apply a custom timeout for settings UI.
+This is the time after which settings UI closes automatically if user is not interacting with the screen.</source>
+        <translation type="unfinished">Appliquer un délai d&apos;expiration personnalisé pour l&apos;interface des paramètres.
+Il s&apos;agit du délai après lequel l&apos;interface des paramètres se ferme automatiquement si l&apos;utilisateur n&apos;interagit pas avec l&apos;écran.</translation>
     </message>
 </context>
 <context>
@@ -917,7 +954,7 @@ Le Mode Firehose vous permet de maximiser vos téléchargements de données d&ap
     </message>
     <message>
         <source>MAX</source>
-        <translation type="vanished">MAX</translation>
+        <translation>MAX</translation>
     </message>
     <message>
         <source>SPEED</source>
@@ -1150,7 +1187,19 @@ Cela ne désactivera pas les fonctionnalités OEM.</translation>
     </message>
     <message>
         <source>Customize Lane Turn</source>
-        <translation>Personnaliser le virage de voie</translation>
+        <translation type="vanished">Personnaliser le virage de voie</translation>
+    </message>
+    <message>
+        <source>Enforce Torque Lateral Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable this to enforce sunnypilot to steer with Torque lateral control.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Customize Params</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2218,6 +2267,10 @@ Data</source>
         <source>Developer</source>
         <translation>Développeur</translation>
     </message>
+    <message>
+        <source>Display</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SetupWidget</name>
@@ -3193,6 +3246,60 @@ Complet : Gestionnaire de fichiers + Flux en direct.</translation>
     </message>
 </context>
 <context>
+    <name>TorqueLateralControlCustomParams</name>
+    <message>
+        <source>Manual Real-Time Tuning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enforces the torque lateral controller to use the fixed values instead of the learned values from Self-Tune. Enabling this toggle overrides Self-Tune values.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lateral Acceleration Factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real-time and Offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offline Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TorqueLateralControlSettings</name>
+    <message>
+        <source>Self-Tune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enables self-tune for Torque lateral control for platforms that do not use Torque lateral control by default.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less Restrict Settings for Self-Tune (Beta)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less strict settings when using Self-Tune. This allows torqued to be more forgiving when learning values.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Custom Tuning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enables custom tuning for Torque lateral control. Modifying Lateral Acceleration Factor and Friction below will override the offline values indicated in the YAML files within &quot;opendbc/car/torque_data&quot;. The values will also be used live when &quot;Manual Real-Time Tuning&quot; toggle is enabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TreeOptionDialog</name>
     <message>
         <source>Select</source>
@@ -3313,6 +3420,38 @@ Bas</translation>
     </message>
     <message>
         <source>Start the vehicle to check vehicle compatibility.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green Traffic Light Alert (Beta)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A chime and on-screen alert will play when the traffic light you are waiting for turns green and you have no vehicle in front of you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Note: This chime is only designed as a notification. It is the driver&apos;s responsibility to observe their environment and make decisions accordingly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lead Departure Alert (Beta)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A chime and on-screen alert will play when you are stopped, and the vehicle in front of you start moving.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speedometer: Always Display True Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always display the true vehicle current speed from wheel speed sensors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speedometer: Hide from Onroad Screen</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

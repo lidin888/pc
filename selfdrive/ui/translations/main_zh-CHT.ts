@@ -136,11 +136,11 @@ Please use caution when using this feature. Only use the blinker when traffic an
     <name>Brightness</name>
     <message>
         <source>Brightness</source>
-        <translation>亮度</translation>
+        <translation type="vanished">亮度</translation>
     </message>
     <message>
         <source>Overrides the brightness of the device.</source>
-        <translation>覆蓋設備的亮度。</translation>
+        <translation type="vanished">覆蓋設備的亮度。</translation>
     </message>
     <message>
         <source>Auto (Dark)</source>
@@ -149,6 +149,14 @@ Please use caution when using this feature. Only use the blinker when traffic an
     <message>
         <source>Auto</source>
         <translation>自动</translation>
+    </message>
+    <message>
+        <source>Global Brightness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overrides the brightness of the device. This applies to both onroad and offroad screens. </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -605,12 +613,12 @@ Steering lag calibration is complete.</source>
     </message>
     <message>
         <source>Interactivity Timeout</source>
-        <translation>交互超时</translation>
+        <translation type="vanished">交互超时</translation>
     </message>
     <message>
         <source>Apply a custom timeout for settings UI.
 This is the time after which settings UI closes automatically if user is not interacting with the screen.</source>
-        <translation>为设置界面应用自定义超时。
+        <translation type="vanished">为设置界面应用自定义超时。
 此时间是指如果用户未与屏幕互动，则设置界面将自动关闭的时间。</translation>
     </message>
     <message>
@@ -659,7 +667,7 @@ This is the time after which settings UI closes automatically if user is not int
     </message>
     <message>
         <source>Always Offroad</source>
-        <translation>永远離線</translation>
+        <translation type="vanished">永远離線</translation>
     </message>
     <message>
         <source>⁍ Default: Device will boot/wake-up normally &amp; will be ready to engage.</source>
@@ -700,6 +708,35 @@ This is the time after which settings UI closes automatically if user is not int
     <message>
         <source>Update process started. Device will reboot if updates are applied.</source>
         <translation type="vanished">更新程序已啟動。若更新套用完成，裝置將重新啟動。</translation>
+    </message>
+    <message>
+        <source>Onroad Uploads</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Always Offroad</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DisplayPanel</name>
+    <message>
+        <source>Onroad Screen: Reduced Brightness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turn off device screen or reduce brightness after driving starts. It automatically brightens again when screen is touched or a visible alert is displayed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Interactivity Timeout</source>
+        <translation type="unfinished">交互超时</translation>
+    </message>
+    <message>
+        <source>Apply a custom timeout for settings UI.
+This is the time after which settings UI closes automatically if user is not interacting with the screen.</source>
+        <translation type="unfinished">为设置界面应用自定义超时。
+此时间是指如果用户未与屏幕互动，则设置界面将自动关闭的时间。</translation>
     </message>
 </context>
 <context>
@@ -921,7 +958,7 @@ Firehose模式允许您最大化训练数据上传，以改进 openpilot 的驾�
     </message>
     <message>
         <source>MAX</source>
-        <translation type="vanished">最大</translation>
+        <translation>最大</translation>
     </message>
     <message>
         <source>SPEED</source>
@@ -1160,7 +1197,19 @@ This will not disable OEM functionality.</source>
     </message>
     <message>
         <source>Customize Lane Turn</source>
-        <translation>自訂車道轉向</translation>
+        <translation type="vanished">自訂車道轉向</translation>
+    </message>
+    <message>
+        <source>Enforce Torque Lateral Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable this to enforce sunnypilot to steer with Torque lateral control.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Customize Params</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2225,6 +2274,10 @@ Data</source>
         <source>Developer</source>
         <translation>开发者</translation>
     </message>
+    <message>
+        <source>Display</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SetupWidget</name>
@@ -3195,6 +3248,60 @@ Full: File Manager + Live Stream.</source>
     </message>
 </context>
 <context>
+    <name>TorqueLateralControlCustomParams</name>
+    <message>
+        <source>Manual Real-Time Tuning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enforces the torque lateral controller to use the fixed values instead of the learned values from Self-Tune. Enabling this toggle overrides Self-Tune values.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lateral Acceleration Factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real-time and Offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offline Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TorqueLateralControlSettings</name>
+    <message>
+        <source>Self-Tune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enables self-tune for Torque lateral control for platforms that do not use Torque lateral control by default.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less Restrict Settings for Self-Tune (Beta)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less strict settings when using Self-Tune. This allows torqued to be more forgiving when learning values.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Custom Tuning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enables custom tuning for Torque lateral control. Modifying Lateral Acceleration Factor and Friction below will override the offline values indicated in the YAML files within &quot;opendbc/car/torque_data&quot;. The values will also be used live when &quot;Manual Real-Time Tuning&quot; toggle is enabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TreeOptionDialog</name>
     <message>
         <source>Select</source>
@@ -3315,6 +3422,38 @@ Bottom</source>
     <message>
         <source>Start the vehicle to check vehicle compatibility.</source>
         <translation type="unfinished">启动车辆以检查车辆兼容性。</translation>
+    </message>
+    <message>
+        <source>Green Traffic Light Alert (Beta)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A chime and on-screen alert will play when the traffic light you are waiting for turns green and you have no vehicle in front of you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Note: This chime is only designed as a notification. It is the driver&apos;s responsibility to observe their environment and make decisions accordingly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lead Departure Alert (Beta)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A chime and on-screen alert will play when you are stopped, and the vehicle in front of you start moving.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speedometer: Always Display True Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always display the true vehicle current speed from wheel speed sensors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speedometer: Hide from Onroad Screen</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
