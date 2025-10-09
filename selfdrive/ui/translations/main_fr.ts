@@ -1791,6 +1791,17 @@ La valeur par défaut du délai logiciel est de 0,2.</translation>
     </message>
 </context>
 <context>
+    <name>OnroadScreenBrightnessControl</name>
+    <message>
+        <source>Onroad Brightness Delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Onroad Brightness</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OsmPanel</name>
     <message>
         <source>Mapd Version</source>

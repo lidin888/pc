@@ -1800,6 +1800,17 @@ The default software delay value is 0.2</source>
     </message>
 </context>
 <context>
+    <name>OnroadScreenBrightnessControl</name>
+    <message>
+        <source>Onroad Brightness Delay</source>
+        <translation type="deepseek-chat">道路亮度调节延迟</translation>
+    </message>
+    <message>
+        <source>Onroad Brightness</source>
+        <translation type="deepseek-chat">行车亮度</translation>
+    </message>
+</context>
+<context>
     <name>OsmPanel</name>
     <message>
         <source>Mapd Version</source>
@@ -3259,54 +3270,54 @@ Full: File Manager + Live Stream.</source>
     <name>TorqueLateralControlCustomParams</name>
     <message>
         <source>Manual Real-Time Tuning</source>
-        <translation type="deepseek-chat">手动实时调谐</translation>
+        <translation>手动实时调谐</translation>
     </message>
     <message>
         <source>Enforces the torque lateral controller to use the fixed values instead of the learned values from Self-Tune. Enabling this toggle overrides Self-Tune values.</source>
-        <translation type="deepseek-chat">强制横向扭矩控制器使用固定值，而非自学习系统（Self-Tune）获取的数值。启用此开关将覆盖自学习数值。</translation>
+        <translation>强制横向扭矩控制器使用固定值，而非自学习系统（Self-Tune）获取的数值。启用此开关将覆盖自学习数值。</translation>
     </message>
     <message>
         <source>Lateral Acceleration Factor</source>
-        <translation type="deepseek-chat">横向加速度系数</translation>
+        <translation>横向加速度系数</translation>
     </message>
     <message>
         <source>Friction</source>
-        <translation type="deepseek-chat">摩擦力</translation>
+        <translation>摩擦力</translation>
     </message>
     <message>
         <source>Real-time and Offline</source>
-        <translation type="deepseek-chat">实时与离线</translation>
+        <translation>实时与离线</translation>
     </message>
     <message>
         <source>Offline Only</source>
-        <translation type="deepseek-chat">仅限离线</translation>
+        <translation>仅限离线</translation>
     </message>
 </context>
 <context>
     <name>TorqueLateralControlSettings</name>
     <message>
         <source>Self-Tune</source>
-        <translation type="deepseek-chat">自我调校</translation>
+        <translation>自我调校</translation>
     </message>
     <message>
         <source>Enables self-tune for Torque lateral control for platforms that do not use Torque lateral control by default.</source>
-        <translation type="deepseek-chat">为默认不使用扭矩横向控制的平台启用扭矩横向控制的自动调谐功能。</translation>
+        <translation>为默认不使用扭矩横向控制的平台启用扭矩横向控制的自动调谐功能。</translation>
     </message>
     <message>
         <source>Less Restrict Settings for Self-Tune (Beta)</source>
-        <translation type="deepseek-chat">降低自我调校限制设置（测试版）</translation>
+        <translation>降低自我调校限制设置（测试版）</translation>
     </message>
     <message>
         <source>Less strict settings when using Self-Tune. This allows torqued to be more forgiving when learning values.</source>
-        <translation type="deepseek-chat">使用自调谐时设置更为宽松。这使扭矩在学习数值时更具容错性。</translation>
+        <translation>使用自调谐时设置更为宽松。这使扭矩在学习数值时更具容错性。</translation>
     </message>
     <message>
         <source>Enable Custom Tuning</source>
-        <translation type="deepseek-chat">启用自定义调校</translation>
+        <translation>启用自定义调校</translation>
     </message>
     <message>
         <source>Enables custom tuning for Torque lateral control. Modifying Lateral Acceleration Factor and Friction below will override the offline values indicated in the YAML files within "opendbc/car/torque_data". The values will also be used live when "Manual Real-Time Tuning" toggle is enabled.</source>
-        <translation type="deepseek-chat">启用扭矩横向控制的自定义调校。调整下方的横向加速度系数和摩擦系数将覆盖"opendbc/car/torque_data"中YAML文件内标注的离线数值。当启用"手动实时调校"开关时，这些数值也将实时生效。</translation>
+        <translation>启用扭矩横向控制的自定义调校。调整下方的横向加速度系数和摩擦系数将覆盖"opendbc/car/torque_data"中YAML文件内标注的离线数值。当启用"手动实时调校"开关时，这些数值也将实时生效。</translation>
     </message>
 </context>
 <context>
@@ -3446,35 +3457,35 @@ Bottom</source>
     </message>
     <message>
         <source>Green Traffic Light Alert (Beta)</source>
-        <translation type="deepseek-chat">绿灯提醒（测试版）</translation>
+        <translation>绿灯提醒（测试版）</translation>
     </message>
     <message>
         <source>A chime and on-screen alert will play when the traffic light you are waiting for turns green and you have no vehicle in front of you.</source>
-        <translation type="deepseek-chat">当您等待的交通信号灯变为绿灯且前方没有车辆时，系统会发出提示音并显示屏幕提醒。</translation>
+        <translation>当您等待的交通信号灯变为绿灯且前方没有车辆时，系统会发出提示音并显示屏幕提醒。</translation>
     </message>
     <message>
         <source>Note: This chime is only designed as a notification. It is the driver's responsibility to observe their environment and make decisions accordingly.</source>
-        <translation type="deepseek-chat">注意：此提示音仅作为通知用途。驾驶员有责任观察周围环境并据此做出决策。</translation>
+        <translation>注意：此提示音仅作为通知用途。驾驶员有责任观察周围环境并据此做出决策。</translation>
     </message>
     <message>
         <source>Lead Departure Alert (Beta)</source>
-        <translation type="deepseek-chat">提前出发警报（测试版）</translation>
+        <translation>提前出发警报（测试版）</translation>
     </message>
     <message>
         <source>A chime and on-screen alert will play when you are stopped, and the vehicle in front of you start moving.</source>
-        <translation type="deepseek-chat">当您停车时，若前方车辆开始移动，系统将发出提示音并显示屏幕警告。</translation>
+        <translation>当您停车时，若前方车辆开始移动，系统将发出提示音并显示屏幕警告。</translation>
     </message>
     <message>
         <source>Speedometer: Always Display True Speed</source>
-        <translation type="deepseek-chat">速度表：始终显示真实速度</translation>
+        <translation>速度表：始终显示真实速度</translation>
     </message>
     <message>
         <source>Always display the true vehicle current speed from wheel speed sensors.</source>
-        <translation type="deepseek-chat">始终显示来自车轮速度传感器的真实车辆当前速度。</translation>
+        <translation>始终显示来自车轮速度传感器的真实车辆当前速度。</translation>
     </message>
     <message>
         <source>Speedometer: Hide from Onroad Screen</source>
-        <translation type="deepseek-chat">速度表：从行车屏幕中隐藏</translation>
+        <translation>速度表：从行车屏幕中隐藏</translation>
     </message>
 </context>
 <context>
