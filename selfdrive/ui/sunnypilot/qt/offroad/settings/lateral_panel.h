@@ -43,8 +43,6 @@ private:
   MadsSettings *madsWidget = nullptr;
   PushButtonSP *laneChangeSettingsButton;
   LaneChangeSettings *laneChangeWidget = nullptr;
-  PushButtonSP *laneTurnSettingsButton;
-  LaneTurnSettings *laneTurnWidget = nullptr;
   NeuralNetworkLateralControl *nnlcToggle = nullptr;
   BlinkerPauseLateralSettings *blinkerPauseLateralSettings = nullptr;
   ParamControl *torqueLateralControlToggle;

@@ -75,8 +75,8 @@
         <translation>输入密码</translation>
     </message>
     <message>
-        <source>for &quot;%1&quot;</source>
-        <translation>网络名称：&quot;%1&quot;</translation>
+        <source>for "%1"</source>
+        <translation>网络名称："%1"</translation>
     </message>
     <message>
         <source>Prevent large data uploads when on a metered cellular connection</source>
@@ -136,11 +136,11 @@ Please use caution when using this feature. Only use the blinker when traffic an
     <name>Brightness</name>
     <message>
         <source>Brightness</source>
-        <translation>亮度</translation>
+        <translation type="vanished">亮度</translation>
     </message>
     <message>
         <source>Overrides the brightness of the device.</source>
-        <translation>覆盖设备的亮度设置。</translation>
+        <translation type="vanished">覆盖设备的亮度设置。</translation>
     </message>
     <message>
         <source>Auto (Dark)</source>
@@ -149,6 +149,14 @@ Please use caution when using this feature. Only use the blinker when traffic an
     <message>
         <source>Auto</source>
         <translation>自动</translation>
+    </message>
+    <message>
+        <source>Global Brightness</source>
+        <translation>全局亮度</translation>
+    </message>
+    <message>
+        <source>Overrides the brightness of the device. This applies to both onroad and offroad screens. </source>
+        <translation>覆盖设备的亮度设置。此设置适用于车载和离线屏幕。</translation>
     </message>
 </context>
 <context>
@@ -319,7 +327,7 @@ Please use caution when using this feature. Only use the blinker when traffic an
         <translation>ADB（Android调试桥接）允许通过USB或网络连接到您的设备。更多信息请参见 [https://docs.comma.ai/how-to/connect-to-comma](https://docs.comma.ai/how-to/connect-to-comma)。</translation>
     </message>
     <message>
-        <source>On this car, sunnypilot defaults to the car&apos;s built-in ACC instead of openpilot&apos;s longitudinal control. Enable this to switch to openpilot longitudinal control. Enabling Experimental mode is recommended when enabling openpilot longitudinal control alpha.</source>
+        <source>On this car, sunnypilot defaults to the car's built-in ACC instead of openpilot's longitudinal control. Enable this to switch to openpilot longitudinal control. Enabling Experimental mode is recommended when enabling openpilot longitudinal control alpha.</source>
         <translation>在此车辆上，sunnypilot 默认使用车辆内置的 ACC 而非 openpilot 的纵向控制。启用此选项可切换到 openpilot 纵向控制。建议在启用 openpilot 纵向控制 Alpha 版本时同时启用试验模式。</translation>
     </message>
 </context>
@@ -364,7 +372,7 @@ This only toggles the visibility of the controls; it does not toggle the actual 
         <translation>启用时，将创建一个预构建文件以加速启动时间。禁用时，会立即删除预构建文件以便重新编译本地编辑的 C++ 文件。&lt;br&gt;&lt;br&gt;&lt;b&gt;若要在设备上本地编辑 C++ 文件，必须先禁用此选项以便重新编译更改。&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>Quickboot mode requires updates to be disabled.&lt;br&gt;Enable &apos;Disable Updates&apos; in the Software panel first.</source>
+        <source>Quickboot mode requires updates to be disabled.&lt;br&gt;Enable 'Disable Updates' in the Software panel first.</source>
         <translation>快速启动模式需要禁用更新。&lt;br&gt;请先在软件面板中启用“禁用更新”。</translation>
     </message>
     <message>
@@ -380,7 +388,7 @@ This only toggles the visibility of the controls; it does not toggle the actual 
         <translation>启用Copyparty服务</translation>
     </message>
     <message>
-        <source>Copyparty is a very capable file server, you can use it to download your routes, view your logs and even make some edits on some files from your browser. Requires you to connect to your comma locally via it&apos;s IP.</source>
+        <source>Copyparty is a very capable file server, you can use it to download your routes, view your logs and even make some edits on some files from your browser. Requires you to connect to your comma locally via it's IP.</source>
         <translation>Copyparty是一款功能强大的文件服务器，您可以通过它下载行车路线、查看日志记录，甚至直接在浏览器中对某些文件进行编辑。使用前需通过设备IP地址在本地网络连接到您的comma设备。</translation>
     </message>
 </context>
@@ -603,12 +611,12 @@ Steering lag calibration is complete.</source>
     </message>
     <message>
         <source>Interactivity Timeout</source>
-        <translation>交互超时</translation>
+        <translation type="vanished">交互超时</translation>
     </message>
     <message>
         <source>Apply a custom timeout for settings UI.
 This is the time after which settings UI closes automatically if user is not interacting with the screen.</source>
-        <translation>为设置界面应用自定义超时时间。
+        <translation type="vanished">为设置界面应用自定义超时时间。
 如果用户未与屏幕交互，设置界面将在该时间后自动关闭。</translation>
     </message>
     <message>
@@ -657,7 +665,7 @@ This is the time after which settings UI closes automatically if user is not int
     </message>
     <message>
         <source>Always Offroad</source>
-        <translation>始终离线</translation>
+        <translation type="vanished">始终离线</translation>
     </message>
     <message>
         <source>⁍ Default: Device will boot/wake-up normally &amp; will be ready to engage.</source>
@@ -698,6 +706,35 @@ This is the time after which settings UI closes automatically if user is not int
     <message>
         <source>Update process started. Device will reboot if updates are applied.</source>
         <translation type="vanished">更新进程已启动。如果应用更新，设备将重启。</translation>
+    </message>
+    <message>
+        <source>Onroad Uploads</source>
+        <translation>上传行驶状态</translation>
+    </message>
+    <message>
+        <source>Enable Always Offroad</source>
+        <translation>启用离线模式</translation>
+    </message>
+</context>
+<context>
+    <name>DisplayPanel</name>
+    <message>
+        <source>Onroad Screen: Reduced Brightness</source>
+        <translation>行驶中屏幕：降低亮度</translation>
+    </message>
+    <message>
+        <source>Turn off device screen or reduce brightness after driving starts. It automatically brightens again when screen is touched or a visible alert is displayed.</source>
+        <translation>在驾驶开始后关闭设备屏幕或调暗屏幕亮度。当屏幕被触碰或显示可见警报时，屏幕会自动调亮。</translation>
+    </message>
+    <message>
+        <source>Interactivity Timeout</source>
+        <translation>交互超时</translation>
+    </message>
+    <message>
+        <source>Apply a custom timeout for settings UI.
+This is the time after which settings UI closes automatically if user is not interacting with the screen.</source>
+        <translation>为设置界面应用自定义超时时间。
+如果用户未与屏幕交互，设置界面将在该时间后自动关闭。</translation>
     </message>
 </context>
 <context>
@@ -767,7 +804,7 @@ This is the time after which settings UI closes automatically if user is not int
         <translation>外部存储</translation>
     </message>
     <message>
-        <source>Extend your comma device&apos;s storage by inserting a USB drive into the aux port.</source>
+        <source>Extend your comma device's storage by inserting a USB drive into the aux port.</source>
         <translation>通过将USB驱动器插入辅助端口来扩展您的comma设备的存储空间。</translation>
     </message>
     <message>
@@ -832,8 +869,8 @@ This is the time after which settings UI closes automatically if user is not int
         </translation>
     </message>
     <message>
-        <source>&lt;span stylesheet=&apos;font-size: 60px; font-weight: bold; color: #e74c3c;&apos;&gt;INACTIVE&lt;/span&gt;: connect to an unmetered network</source>
-        <translation>&lt;span stylesheet=&apos;font-size: 60px; font-weight: bold; color: #e74c3c;&apos;&gt;闲置&lt;/span&gt;：请连接到不限流量的网络</translation>
+        <source>&lt;span stylesheet='font-size: 60px; font-weight: bold; color: #e74c3c;'&gt;INACTIVE&lt;/span&gt;: connect to an unmetered network</source>
+        <translation>&lt;span stylesheet='font-size: 60px; font-weight: bold; color: #e74c3c;'&gt;闲置&lt;/span&gt;：请连接到不限流量的网络</translation>
     </message>
     <message>
         <source>Firehose Mode</source>
@@ -842,13 +879,13 @@ This is the time after which settings UI closes automatically if user is not int
     <message>
         <source>sunnypilot learns to drive by watching humans, like you, drive.
 
-Firehose Mode allows you to maximize your training data uploads to improve openpilot&apos;s driving models. More data means bigger models, which means better Experimental Mode.</source>
+Firehose Mode allows you to maximize your training data uploads to improve openpilot's driving models. More data means bigger models, which means better Experimental Mode.</source>
         <translation>sunnypilot 通过观察人类驾驶来学习驾驶。
 
 Firehose模式允许您最大化训练数据上传以改善openpilot的驾驶模型。更多的数据意味着更大的模型，这意味着更好的实验模式。</translation>
     </message>
     <message>
-        <source>For maximum effectiveness, bring your device inside and connect to a good USB-C adapter and Wi-Fi weekly.&lt;br&gt;&lt;br&gt;Firehose Mode can also work while you&apos;re driving if connected to a hotspot or unlimited SIM card.&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Frequently Asked Questions&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;Does it matter how or where I drive?&lt;/i&gt; Nope, just drive as you normally would.&lt;br&gt;&lt;br&gt;&lt;i&gt;Do all of my segments get pulled in Firehose Mode?&lt;/i&gt; No, we selectively pull a subset of your segments.&lt;br&gt;&lt;br&gt;&lt;i&gt;What&apos;s a good USB-C adapter?&lt;/i&gt; Any fast phone or laptop charger should be fine.&lt;br&gt;&lt;br&gt;&lt;i&gt;Does it matter which software I run?&lt;/i&gt; Yes, only upstream sunnypilot (and particular forks) are able to be used for training.</source>
+        <source>For maximum effectiveness, bring your device inside and connect to a good USB-C adapter and Wi-Fi weekly.&lt;br&gt;&lt;br&gt;Firehose Mode can also work while you're driving if connected to a hotspot or unlimited SIM card.&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Frequently Asked Questions&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;Does it matter how or where I drive?&lt;/i&gt; Nope, just drive as you normally would.&lt;br&gt;&lt;br&gt;&lt;i&gt;Do all of my segments get pulled in Firehose Mode?&lt;/i&gt; No, we selectively pull a subset of your segments.&lt;br&gt;&lt;br&gt;&lt;i&gt;What's a good USB-C adapter?&lt;/i&gt; Any fast phone or laptop charger should be fine.&lt;br&gt;&lt;br&gt;&lt;i&gt;Does it matter which software I run?&lt;/i&gt; Yes, only upstream sunnypilot (and particular forks) are able to be used for training.</source>
         <translation>要确保设备发挥最大效用，请每周将设备带入室内，连接到优质的USB-C适配器和Wi-Fi。&lt;br&gt;&lt;br&gt;即使在驾驶过程中，只要连接到热点或无限流量SIM卡，Firehose模式也能正常工作。&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;常见问题解答&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;我如何驾驶或在哪里驾驶是否重要？&lt;/i&gt; 不，只需像平常一样驾驶即可。&lt;br&gt;&lt;br&gt;&lt;i&gt;我的所有行程段是否都会在Firehose模式下被拉取？&lt;/i&gt; 不，我们会选择性地拉取部分行程段。&lt;br&gt;&lt;br&gt;&lt;i&gt;什么是好的USB-C适配器？&lt;/i&gt; 任何快速的手机或笔记本电脑充电器都应该可以。&lt;br&gt;&lt;br&gt;&lt;i&gt;运行哪种软件是否重要？&lt;/i&gt; 是的，只有上游的sunnypilot（及特定分支）能用于训练。</translation>
     </message>
 </context>
@@ -919,7 +956,7 @@ Firehose模式允许您最大化训练数据上传以改善openpilot的驾驶模
     </message>
     <message>
         <source>MAX</source>
-        <translation type="vanished">最大</translation>
+        <translation>最大</translation>
     </message>
     <message>
         <source>SPEED</source>
@@ -1001,7 +1038,7 @@ DEPARTING</source>
         <translation>此功能仅在启用openpilot纵向控制时可用。</translation>
     </message>
     <message>
-        <source>Enable &quot;Always Offroad&quot; in Device panel, or turn vehicle off to select an option.</source>
+        <source>Enable "Always Offroad" in Device panel, or turn vehicle off to select an option.</source>
         <translation>在设备面板中启用“始终离线”或关闭车辆以选择一个选项。</translation>
     </message>
     <message>
@@ -1078,10 +1115,10 @@ This will not disable OEM functionality.</source>
         <translation>车道转向意图</translation>
     </message>
     <message>
-        <source>If you&apos;re driving at 20 mph (32 km/h) or below and have your blinker on, the car will plan a turn in that direction at the nearest drivable path. This prevents situations (like at red lights) where the car might plan the wrong turn direction.</source>
+        <source>If you're driving at 20 mph (32 km/h) or below and have your blinker on, the car will plan a turn in that direction at the nearest drivable path. This prevents situations (like at red lights) where the car might plan the wrong turn direction.</source>
         <translation>当您以20英里/小时（32公里/小时）或更低的速度行驶并开启转向灯时，车辆将在最近的可行驶路径上规划该方向的转弯。这一设计可避免车辆在特定场景（如红灯等待时）误判转弯方向的情况发生。
 
-（注：根据技术文档的翻译规范，采用&quot;车辆&quot;而非&quot;汽车&quot;保持专业语境；&quot;blinker&quot;译为&quot;转向灯&quot;符合中国汽车行业术语；补充&quot;这一设计&quot;使因果逻辑更清晰；括号内&quot;红灯等待时&quot;比直译&quot;红绿灯处&quot;更准确体现实际驾驶场景；最后采用&quot;误判转弯方向&quot;既保留原意又符合中文表达习惯。）</translation>
+（注：根据技术文档的翻译规范，采用"车辆"而非"汽车"保持专业语境；"blinker"译为"转向灯"符合中国汽车行业术语；补充"这一设计"使因果逻辑更清晰；括号内"红灯等待时"比直译"红绿灯处"更准确体现实际驾驶场景；最后采用"误判转弯方向"既保留原意又符合中文表达习惯。）</translation>
     </message>
     <message>
         <source>Off</source>
@@ -1155,7 +1192,19 @@ This will not disable OEM functionality.</source>
     </message>
     <message>
         <source>Customize Lane Turn</source>
-        <translation>自定义车道转向</translation>
+        <translation type="vanished">自定义车道转向</translation>
+    </message>
+    <message>
+        <source>Enforce Torque Lateral Control</source>
+        <translation>启用扭矩横向控制</translation>
+    </message>
+    <message>
+        <source>Enable this to enforce sunnypilot to steer with Torque lateral control.</source>
+        <translation>启用此功能以强制sunnypilot使用扭矩横向控制进行转向。</translation>
+    </message>
+    <message>
+        <source>Customize Params</source>
+        <translation>自定义参数</translation>
     </message>
 </context>
 <context>
@@ -1558,8 +1607,8 @@ The default software delay value is 0.2</source>
         <translation>输入密码</translation>
     </message>
     <message>
-        <source>for &quot;%1&quot;</source>
-        <translation>网络名称：&quot;%1&quot;</translation>
+        <source>for "%1"</source>
+        <translation>网络名称："%1"</translation>
     </message>
     <message>
         <source>Wrong password</source>
@@ -1612,11 +1661,11 @@ The default software delay value is 0.2</source>
         <translation>模糊</translation>
     </message>
     <message>
-        <source>Match: &quot;Exact&quot; is ideal, but &quot;Fuzzy&quot; is fine too.</source>
-        <translation>匹配：&quot;精确&quot;是理想的，但&quot;模糊&quot;也可以。</translation>
+        <source>Match: "Exact" is ideal, but "Fuzzy" is fine too.</source>
+        <translation>匹配："精确"是理想的，但"模糊"也可以。</translation>
     </message>
     <message>
-        <source>Formerly known as &lt;b&gt;&quot;NNFF&quot;&lt;/b&gt;, this replaces the lateral &lt;b&gt;&quot;torque&quot;&lt;/b&gt; controller, with one using a neural network trained on each car&apos;s (actually, each separate EPS firmware) driving data for increased controls accuracy.</source>
+        <source>Formerly known as &lt;b&gt;"NNFF"&lt;/b&gt;, this replaces the lateral &lt;b&gt;"torque"&lt;/b&gt; controller, with one using a neural network trained on each car's (actually, each separate EPS firmware) driving data for increased controls accuracy.</source>
         <translation>曾用名&lt;b&gt;“NNFF”&lt;/b&gt;，此功能用神经网络替换了传统的&lt;b&gt;“扭矩”&lt;/b&gt;控制器，该网络根据每辆车（实际上是每个独立的EPS固件）的驾驶数据进行训练，以提高控制精度。</translation>
     </message>
     <message>
@@ -1645,11 +1694,11 @@ The default software delay value is 0.2</source>
 %1</translation>
     </message>
     <message>
-        <source>Taking camera snapshots. System won&apos;t start until finished.</source>
+        <source>Taking camera snapshots. System won't start until finished.</source>
         <translation>正在使用相机拍摄中。在完成之前，系统将无法启动。</translation>
     </message>
     <message>
-        <source>An update to your device&apos;s operating system is downloading in the background. You will be prompted to update when it&apos;s ready to install.</source>
+        <source>An update to your device's operating system is downloading in the background. You will be prompted to update when it's ready to install.</source>
         <translation>一个针对您设备的操作系统更新正在后台下载中。当更新准备好安装时，您将收到提示进行更新。</translation>
     </message>
     <message>
@@ -1673,15 +1722,15 @@ The default software delay value is 0.2</source>
         <translation>暂停更新</translation>
     </message>
     <message>
-        <source>openpilot detected excessive %1 actuation on your last drive. Please contact support at https://comma.ai/support and share your device&apos;s Dongle ID for troubleshooting.</source>
+        <source>openpilot detected excessive %1 actuation on your last drive. Please contact support at https://comma.ai/support and share your device's Dongle ID for troubleshooting.</source>
         <translation>openpilot检测到您上次驾驶中%1的激活过度。请通过https://comma.ai/support联系支持，并分享您的设备Dongle ID以便故障排除。</translation>
     </message>
     <message>
-        <source>Immediately connect to the internet to check for updates. If you do not connect to the internet, sunnypilot won&apos;t engage in %1</source>
+        <source>Immediately connect to the internet to check for updates. If you do not connect to the internet, sunnypilot won't engage in %1</source>
         <translation>立即连接到互联网检查更新。如果您不连接到互联网，sunnypilot 将无法在 %1 中启动。</translation>
     </message>
     <message>
-        <source>Connect to internet to check for updates. sunnypilot won&apos;t automatically start until it connects to internet to check for updates.</source>
+        <source>Connect to internet to check for updates. sunnypilot won't automatically start until it connects to internet to check for updates.</source>
         <translation>连接到互联网以检查更新。在连接到互联网并检查更新之前，sunnypilot 将不会自动启动。</translation>
     </message>
     <message>
@@ -1689,7 +1738,7 @@ The default software delay value is 0.2</source>
         <translation>sunnypilot无法识别您的汽车。您的车辆要么不受支持，要么其ECU无法识别。请提交拉取请求以将固件版本添加到适当的车辆中。需要帮助吗？请加入discord.comma.ai。</translation>
     </message>
     <message>
-        <source>sunnypilot detected a change in the device&apos;s mounting position. Ensure the device is fully seated in the mount and the mount is firmly secured to the windshield.</source>
+        <source>sunnypilot detected a change in the device's mounting position. Ensure the device is fully seated in the mount and the mount is firmly secured to the windshield.</source>
         <translation>sunnypilot检测到设备的安装位置发生了变化。请确保设备完全安装在支架上，并且支架牢固地固定在挡风玻璃上。</translation>
     </message>
     <message>
@@ -1894,7 +1943,7 @@ Warning: You are on a metered connection!</source>
         <translation>在手机上访问 https://stable.konik.ai</translation>
     </message>
     <message>
-        <source>Click &quot;add new device&quot; and scan the QR code on the right</source>
+        <source>Click "add new device" and scan the QR code on the right</source>
         <translation>点击“添加新设备”，扫描右侧二维码</translation>
     </message>
     <message>
@@ -2228,6 +2277,10 @@ Data</source>
     <message>
         <source>Developer</source>
         <translation>开发人员</translation>
+    </message>
+    <message>
+        <source>Display</source>
+        <translation>显示</translation>
     </message>
 </context>
 <context>
@@ -2659,11 +2712,11 @@ Data</source>
         <translation>⦿ 关闭：禁用速度限制功能。</translation>
     </message>
     <message>
-        <source>⦿ Information: Displays the current road&apos;s speed limit.</source>
+        <source>⦿ Information: Displays the current road's speed limit.</source>
         <translation>⦿ 信息：显示当前道路的速度限制。</translation>
     </message>
     <message>
-        <source>⦿ Warning: Provides a warning when exceeding the current road&apos;s speed limit.</source>
+        <source>⦿ Warning: Provides a warning when exceeding the current road's speed limit.</source>
         <translation>⦿ 警告：当超过当前道路的速度限制时提供警告。</translation>
     </message>
     <message>
@@ -2671,7 +2724,7 @@ Data</source>
         <translation>速度限制</translation>
     </message>
     <message>
-        <source>⦿ Assist: Adjusts the vehicle&apos;s cruise speed based on the current road&apos;s speed limit when operating the +/- buttons.</source>
+        <source>⦿ Assist: Adjusts the vehicle's cruise speed based on the current road's speed limit when operating the +/- buttons.</source>
         <translation>⦿ 辅助：当操作+/-按钮时，会根据当前道路的速度限制调整车辆的巡航速度。</translation>
     </message>
 </context>
@@ -2702,7 +2755,7 @@ Data</source>
         <translation>删除</translation>
     </message>
     <message>
-        <source>Username &apos;%1&apos; has no keys on GitHub</source>
+        <source>Username '%1' has no keys on GitHub</source>
         <translation>用户名“%1”在GitHub上没有密钥</translation>
     </message>
     <message>
@@ -2710,7 +2763,7 @@ Data</source>
         <translation>请求超时</translation>
     </message>
     <message>
-        <source>Username &apos;%1&apos; doesn&apos;t exist on GitHub</source>
+        <source>Username '%1' doesn't exist on GitHub</source>
         <translation>GitHub上不存在用户名“%1”</translation>
     </message>
 </context>
@@ -2764,11 +2817,11 @@ Data</source>
         <translation>未找到sunnylink Dongle ID。这可能是由于互联网连接弱或sunnylink注册问题。请重启后再试。</translation>
     </message>
     <message>
-        <source>🎉Welcome back! We&apos;re excited to see you&apos;ve enabled sunnylink again! 🚀</source>
+        <source>🎉Welcome back! We're excited to see you've enabled sunnylink again! 🚀</source>
         <translation>🎉欢迎回来！我们很高兴看到您再次启用了sunnylink！🚀</translation>
     </message>
     <message>
-        <source>👋Not going to lie, it&apos;s sad to see you disabled sunnylink 😢, but we&apos;ll be here when you&apos;re ready to come back 🎉.</source>
+        <source>👋Not going to lie, it's sad to see you disabled sunnylink 😢, but we'll be here when you're ready to come back 🎉.</source>
         <translation>👋不得不说，看到你禁用了sunnylink让人感到难过😢，但我们会在你准备好回来时一直等你🎉。</translation>
     </message>
     <message>
@@ -2848,7 +2901,7 @@ Data</source>
         <translation>启用 sunnylink 上传功能，允许 sunnypilot 将您的驾驶数据上传到 sunnypilot 服务器。（仅适用于最高级别用户，且不会为您带来任何好处。我们只是在测试数据量。）</translation>
     </message>
     <message>
-        <source>[Don&apos;t use] Enable sunnylink uploader</source>
+        <source>[Don't use] Enable sunnylink uploader</source>
         <translation>[不要使用] 启用 sunnylink 上传器</translation>
     </message>
     <message>
@@ -2860,7 +2913,7 @@ Data</source>
         <translation>为了安全备份、恢复和远程配置</translation>
     </message>
     <message>
-        <source>Sponsorship isn&apos;t required for basic backup/restore</source>
+        <source>Sponsorship isn't required for basic backup/restore</source>
         <translation>赞助不是基本备份/恢复的必需条件。</translation>
     </message>
     <message>
@@ -2879,7 +2932,7 @@ Data</source>
         <translation>按照提示完成配对过程</translation>
     </message>
     <message>
-        <source>Re-enter the &quot;sunnylink&quot; panel to verify sponsorship status</source>
+        <source>Re-enter the "sunnylink" panel to verify sponsorship status</source>
         <translation>重新进入“sunnylink”面板以验证赞助状态</translation>
     </message>
     <message>
@@ -2887,7 +2940,7 @@ Data</source>
         <translation>如果赞助状态未更新，请在Discord上联系管理员，网址为 https://discord.gg/sunnypilot</translation>
     </message>
     <message>
-        <source>Scan the QR code to visit sunnyhaibin&apos;s GitHub Sponsors page</source>
+        <source>Scan the QR code to visit sunnyhaibin's GitHub Sponsors page</source>
         <translation>扫描二维码访问sunnyhaibin的GitHub赞助页面</translation>
     </message>
     <message>
@@ -2955,8 +3008,8 @@ Restart comma to have openpilot use the key</source>
         <translation>欢迎使用sunnypilot</translation>
     </message>
     <message>
-        <source>You must accept the Terms and Conditions to use sunnypilot. Read the latest terms at &lt;span style=&apos;color: #465BEA;&apos;&gt;https://comma.ai/terms&lt;/span&gt; before continuing.</source>
-        <translation>您必须接受条款和条件才能使用sunnypilot。继续之前，请在&lt;span style=&apos;color: #465BEA;&apos;&gt;https://comma.ai/terms&lt;/span&gt;阅读最新的条款。</translation>
+        <source>You must accept the Terms and Conditions to use sunnypilot. Read the latest terms at &lt;span style='color: #465BEA;'&gt;https://comma.ai/terms&lt;/span&gt; before continuing.</source>
+        <translation>您必须接受条款和条件才能使用sunnypilot。继续之前，请在&lt;span style='color: #465BEA;'&gt;https://comma.ai/terms&lt;/span&gt;阅读最新的条款。</translation>
     </message>
 </context>
 <context>
@@ -2998,7 +3051,7 @@ Restart comma to have openpilot use the key</source>
         <translation>新驾驶视角</translation>
     </message>
     <message>
-        <source>Experimental mode is currently unavailable on this car since the car&apos;s stock ACC is used for longitudinal control.</source>
+        <source>Experimental mode is currently unavailable on this car since the car's stock ACC is used for longitudinal control.</source>
         <translation>由于此车辆使用自带的ACC纵向控制，当前无法使用试验模式。</translation>
     </message>
     <message>
@@ -3074,7 +3127,7 @@ Restart comma to have openpilot use the key</source>
         <translation>标准模式推荐使用。在激进模式下，sunnypilot将更紧密地跟随前车，并在油门和刹车上更具侵略性。在放松模式下，sunnypilot将与前车保持更远的距离。在支持的车辆上，您可以通过方向盘上的距离按钮来切换这些模式。</translation>
     </message>
     <message>
-        <source>sunnypilot defaults to driving in &lt;b&gt;chill mode&lt;/b&gt;. Experimental mode enables &lt;b&gt;alpha-level features&lt;/b&gt; that aren&apos;t ready for chill mode. Experimental features are listed below:</source>
+        <source>sunnypilot defaults to driving in &lt;b&gt;chill mode&lt;/b&gt;. Experimental mode enables &lt;b&gt;alpha-level features&lt;/b&gt; that aren't ready for chill mode. Experimental features are listed below:</source>
         <translation>sunnypilot 默认以&lt;b&gt;舒适模式&lt;/b&gt;行驶。实验模式开启&lt;b&gt;α级功能&lt;/b&gt;，这些功能尚未适用于舒适模式。以下列出了实验功能：</translation>
     </message>
     <message>
@@ -3166,7 +3219,7 @@ Restart comma to have openpilot use the key</source>
         <translation>局域传输</translation>
     </message>
     <message>
-        <source>dashy - dragonpilot&apos;s all-in-one system hub for you.
+        <source>dashy - dragonpilot's all-in-one system hub for you.
 
 Visit http://&lt;device_ip&gt;:5088 to access.
 
@@ -3200,6 +3253,60 @@ Full: File Manager + Live Stream.</source>
     <message>
         <source>Distraction Detection Level</source>
         <translation>分心检测等级</translation>
+    </message>
+</context>
+<context>
+    <name>TorqueLateralControlCustomParams</name>
+    <message>
+        <source>Manual Real-Time Tuning</source>
+        <translation type="deepseek-chat">手动实时调谐</translation>
+    </message>
+    <message>
+        <source>Enforces the torque lateral controller to use the fixed values instead of the learned values from Self-Tune. Enabling this toggle overrides Self-Tune values.</source>
+        <translation type="deepseek-chat">强制横向扭矩控制器使用固定值，而非自学习系统（Self-Tune）获取的数值。启用此开关将覆盖自学习数值。</translation>
+    </message>
+    <message>
+        <source>Lateral Acceleration Factor</source>
+        <translation type="deepseek-chat">横向加速度系数</translation>
+    </message>
+    <message>
+        <source>Friction</source>
+        <translation type="deepseek-chat">摩擦力</translation>
+    </message>
+    <message>
+        <source>Real-time and Offline</source>
+        <translation type="deepseek-chat">实时与离线</translation>
+    </message>
+    <message>
+        <source>Offline Only</source>
+        <translation type="deepseek-chat">仅限离线</translation>
+    </message>
+</context>
+<context>
+    <name>TorqueLateralControlSettings</name>
+    <message>
+        <source>Self-Tune</source>
+        <translation type="deepseek-chat">自我调校</translation>
+    </message>
+    <message>
+        <source>Enables self-tune for Torque lateral control for platforms that do not use Torque lateral control by default.</source>
+        <translation type="deepseek-chat">为默认不使用扭矩横向控制的平台启用扭矩横向控制的自动调谐功能。</translation>
+    </message>
+    <message>
+        <source>Less Restrict Settings for Self-Tune (Beta)</source>
+        <translation type="deepseek-chat">降低自我调校限制设置（测试版）</translation>
+    </message>
+    <message>
+        <source>Less strict settings when using Self-Tune. This allows torqued to be more forgiving when learning values.</source>
+        <translation type="deepseek-chat">使用自调谐时设置更为宽松。这使扭矩在学习数值时更具容错性。</translation>
+    </message>
+    <message>
+        <source>Enable Custom Tuning</source>
+        <translation type="deepseek-chat">启用自定义调校</translation>
+    </message>
+    <message>
+        <source>Enables custom tuning for Torque lateral control. Modifying Lateral Acceleration Factor and Friction below will override the offline values indicated in the YAML files within "opendbc/car/torque_data". The values will also be used live when "Manual Real-Time Tuning" toggle is enabled.</source>
+        <translation type="deepseek-chat">启用扭矩横向控制的自定义调校。调整下方的横向加速度系数和摩擦系数将覆盖"opendbc/car/torque_data"中YAML文件内标注的离线数值。当启用"手动实时调校"开关时，这些数值也将实时生效。</translation>
     </message>
 </context>
 <context>
@@ -3337,6 +3444,38 @@ Bottom</source>
         <source>Start the vehicle to check vehicle compatibility.</source>
         <translation>启动车辆以检查车辆兼容性。</translation>
     </message>
+    <message>
+        <source>Green Traffic Light Alert (Beta)</source>
+        <translation type="deepseek-chat">绿灯提醒（测试版）</translation>
+    </message>
+    <message>
+        <source>A chime and on-screen alert will play when the traffic light you are waiting for turns green and you have no vehicle in front of you.</source>
+        <translation type="deepseek-chat">当您等待的交通信号灯变为绿灯且前方没有车辆时，系统会发出提示音并显示屏幕提醒。</translation>
+    </message>
+    <message>
+        <source>Note: This chime is only designed as a notification. It is the driver's responsibility to observe their environment and make decisions accordingly.</source>
+        <translation type="deepseek-chat">注意：此提示音仅作为通知用途。驾驶员有责任观察周围环境并据此做出决策。</translation>
+    </message>
+    <message>
+        <source>Lead Departure Alert (Beta)</source>
+        <translation type="deepseek-chat">提前出发警报（测试版）</translation>
+    </message>
+    <message>
+        <source>A chime and on-screen alert will play when you are stopped, and the vehicle in front of you start moving.</source>
+        <translation type="deepseek-chat">当您停车时，若前方车辆开始移动，系统将发出提示音并显示屏幕警告。</translation>
+    </message>
+    <message>
+        <source>Speedometer: Always Display True Speed</source>
+        <translation type="deepseek-chat">速度表：始终显示真实速度</translation>
+    </message>
+    <message>
+        <source>Always display the true vehicle current speed from wheel speed sensors.</source>
+        <translation type="deepseek-chat">始终显示来自车轮速度传感器的真实车辆当前速度。</translation>
+    </message>
+    <message>
+        <source>Speedometer: Hide from Onroad Screen</source>
+        <translation type="deepseek-chat">速度表：从行车屏幕中隐藏</translation>
+    </message>
 </context>
 <context>
     <name>WiFiPromptWidget</name>
@@ -3345,12 +3484,12 @@ Bottom</source>
         <translation>开启</translation>
     </message>
     <message>
-        <source>Maximize your training data uploads to improve openpilot&apos;s driving models.</source>
+        <source>Maximize your training data uploads to improve openpilot's driving models.</source>
         <translation>最大化您的训练数据上传，以改善 openpilot 的驾驶模型。</translation>
     </message>
     <message>
-        <source>&lt;span style=&apos;font-family: &quot;Noto Color Emoji&quot;;&apos;&gt;🔥&lt;/span&gt; Firehose Mode &lt;span style=&apos;font-family: Noto Color Emoji;&apos;&gt;🔥&lt;/span&gt;</source>
-        <translation>&lt;span style=&apos;font-family: &quot;Noto Color Emoji&quot;;&apos;&gt;🔥&lt;/span&gt; Firehose 模式 &lt;span style=&apos;font-family: Noto Color Emoji;&apos;&gt;🔥&lt;/span&gt;</translation>
+        <source>&lt;span style='font-family: "Noto Color Emoji";'&gt;🔥&lt;/span&gt; Firehose Mode &lt;span style='font-family: Noto Color Emoji;'&gt;🔥&lt;/span&gt;</source>
+        <translation>&lt;span style='font-family: "Noto Color Emoji";'&gt;🔥&lt;/span&gt; Firehose 模式 &lt;span style='font-family: Noto Color Emoji;'&gt;🔥&lt;/span&gt;</translation>
     </message>
 </context>
 <context>
@@ -3368,8 +3507,8 @@ Bottom</source>
         <translation>忽略</translation>
     </message>
     <message>
-        <source>Forget Wi-Fi Network &quot;%1&quot;?</source>
-        <translation>忽略WiFi网络 &quot;%1&quot;?</translation>
+        <source>Forget Wi-Fi Network "%1"?</source>
+        <translation>忽略WiFi网络 "%1"?</translation>
     </message>
     <message>
         <source>Forget</source>

@@ -59,27 +59,7 @@ LateralPanel::LateralPanel(SettingsWindowSP *parent) : QFrame(parent) {
     sunnypilotScroller->restoreScrollPosition();
     main_layout->setCurrentWidget(sunnypilotScreen);
   });
-
-  // Lane Turn Settings
-  laneTurnSettingsButton = new PushButtonSP(tr("Customize Lane Turn"));
-  laneTurnSettingsButton->setObjectName("lane_turn_btn");
-  connect(laneTurnSettingsButton, &QPushButton::clicked, [=]() {
-    sunnypilotScroller->setLastScrollPosition();
-    main_layout->setCurrentWidget(laneTurnWidget);
-  });
-
-  laneTurnWidget = new LaneTurnSettings(this);
-  connect(laneTurnWidget, &LaneTurnSettings::backPress, [=]() {
-    sunnypilotScroller->restoreScrollPosition();
-    main_layout->setCurrentWidget(sunnypilotScreen);
-  });
-
-  QWidget *laneButtonsWidget = new QWidget();
-  QHBoxLayout *laneButtonsLayout = new QHBoxLayout(laneButtonsWidget);
-  laneButtonsLayout->setContentsMargins(0, 0, 0, 0);
-  laneChangeSettingsButton->setFixedWidth(750); laneTurnSettingsButton->setFixedWidth(750);
-  laneButtonsLayout->addWidget(laneChangeSettingsButton); laneButtonsLayout->addWidget(laneTurnSettingsButton);
-  list->addItem(laneButtonsWidget);
+  list->addItem(laneChangeSettingsButton);
 
   list->addItem(vertical_space(0));
   list->addItem(horizontal_line());
