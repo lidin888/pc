@@ -3094,6 +3094,14 @@ Bottom</source>
         <source>Speedometer: Hide from Onroad Screen</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show Rocket Fuel Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show a indicator on the left side of the screen to indicate acceleration and braking.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WiFiPromptWidget</name>
