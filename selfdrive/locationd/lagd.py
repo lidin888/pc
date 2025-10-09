@@ -13,6 +13,23 @@ from openpilot.common.realtime import config_realtime_process
 from openpilot.common.swaglog import cloudlog
 from openpilot.selfdrive.locationd.helpers import fft_next_good_size, parabolic_peak_interp
 
+# BLOCK_SIZE = 50  # 减少块大小以更快更新进度
+# BLOCK_NUM = 30
+# BLOCK_NUM_NEEDED = 2  # 保持较低的需要块数
+# MOVING_WINDOW_SEC = 45.0  # 减少时间窗口
+# MIN_OKAY_WINDOW_SEC = 8.0  # 减少需要的有效窗口时间
+# MIN_RECOVERY_BUFFER_SEC = 0.3  # 减少恢复缓冲时间
+# MIN_VEGO = 5.0  # 进一步降低最低速度要求
+# MIN_ABS_YAW_RATE = 0.0
+# MAX_YAW_RATE_SANITY_CHECK = 2.5  # 进一步放宽最大偏航率检查
+# MIN_NCC = 0.5  # 降低相关性阈值
+# MAX_LAG = 1.0
+# MAX_LAG_STD = 0.35  # 进一步放宽最大延迟标准差
+# MAX_LAT_ACCEL = 5.0  # 放宽最大横向加速度
+# MAX_LAT_ACCEL_DIFF = 2.5  # 放宽最大横向加速度差
+# MIN_CONFIDENCE = 0.2  # 降低最低置信度
+# CORR_BORDER_OFFSET = 3
+# LAG_CANDIDATE_CORR_THRESHOLD = 0.5  # 降低相关性阈值
 BLOCK_SIZE = 100
 BLOCK_NUM = 50
 BLOCK_NUM_NEEDED = 5
@@ -30,7 +47,6 @@ MAX_LAT_ACCEL_DIFF = 0.6
 MIN_CONFIDENCE = 0.7
 CORR_BORDER_OFFSET = 5
 LAG_CANDIDATE_CORR_THRESHOLD = 0.9
-
 
 def masked_normalized_cross_correlation(expected_sig: np.ndarray, actual_sig: np.ndarray, mask: np.ndarray, n: int):
   """
@@ -247,8 +263,8 @@ class LateralLagEstimator:
       self.desired_curvature = msg.desiredCurvature
     elif which == 'liveLocationKalman':
       self.yaw_rate = msg.angularVelocityCalibrated.value[2]
-      self.yaw_rate_std = msg.angularVelocityCalibrated.std[2]    
-      self.pose_valid = msg.angularVelocityCalibrated.valid and msg.posenetOK and msg.inputsOK  
+      self.yaw_rate_std = msg.angularVelocityCalibrated.std[2]
+      self.pose_valid = msg.angularVelocityCalibrated.valid and msg.posenetOK and msg.inputsOK
       self.calib_valid = msg.status == log.LiveLocationKalman.Status.valid
     self.t = t
 
@@ -266,7 +282,7 @@ class LateralLagEstimator:
     turning = np.abs(self.yaw_rate) >= self.min_yr
     sensors_valid = self.pose_valid and np.abs(self.yaw_rate) < MAX_YAW_RATE_SANITY_CHECK and self.yaw_rate_std < MAX_YAW_RATE_SANITY_CHECK
     la_valid = np.abs(la_actual_pose) <= self.max_lat_accel and np.abs(la_desired - la_actual_pose) <= self.max_lat_accel_diff
-    calib_valid = self.calib_valid #self.calibrator.calib_valid
+    calib_valid = True#self.calibrator.calib_valid
 
     if not self.lat_active:
       self.last_lat_inactive_t = self.t
