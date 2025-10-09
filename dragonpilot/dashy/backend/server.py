@@ -117,7 +117,7 @@ async def init_api(request):
     try:
         params = Params()
         is_metric = params.get_bool("IsMetric")
-        dp_dev_dashy = int(params.get("dp_dev_dashy") or 0)
+        dp_dev_dashy = int(params.get("Dashy") or 0)
         return web.json_response({'is_metric': is_metric, 'dp_dev_dashy': dp_dev_dashy})
     except Exception as e:
         logging.getLogger("web_ui").error(f"Error fetching initial data: {e}")
