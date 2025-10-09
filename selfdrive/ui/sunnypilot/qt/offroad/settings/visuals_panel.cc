@@ -89,7 +89,14 @@ VisualsPanel::VisualsPanel(QWidget *parent) : QWidget(parent) {
       tr("Show a indicator on the left side of the screen to indicate acceleration and braking."),
       "",
       false,
-    }
+    },
+    {
+      "ShowTurnSignals",
+      tr("Display Turn Signals"),
+      tr("When enabled, visual turn indicators are drawn on the HUD."),
+      "",
+      false,
+    },
   };
 
   // Add regular toggles first
