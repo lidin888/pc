@@ -37,7 +37,7 @@ const char * query_device(const char *device_path, char *result) {
     snprintf(result, 255, "%s", cap.bus_info);
     return (const char*)result;
 }
-
+/*
 const char *get_device(const char *addr, char *device)
 {
      DIR *dir;
@@ -78,7 +78,7 @@ const char *get_device(const char *addr, char *device)
     closedir(dir);
     return "";
 }
-
+*/
 void camerad::camera_runner() {
   //cl_device_id device_id = cl_get_device_id(CL_DEVICE_TYPE_DEFAULT);
   //cl_device_type device_type = CL_DEVICE_TYPE_GPU | CL_DEVICE_TYPE_CPU;
@@ -109,27 +109,35 @@ void camerad::run() {
     // return;
   //}
 
+#ifdef USE_ROADCAMERASTATE
   char device_path0[512] = {0};
+#endif
+#ifdef USE_ROADCAMERASTATE
   char device_path1[512] = {0};
+#endi
   //get_device("usb-0000:03:00.4-3", device_path0);
   // get_device("usb-0000:04:00.3-2", device_path0);
   //std::cout << device_path0 <<  std::endl;
   //get_device("usb-0000:03:00.3-4", device_path1);
   //std::cout << device_path1 <<  std::endl;
 
+#ifdef USE_ROADCAMERASTATE
   if (strlen(device_path0) == 0)
   {
       //std::cerr << "Error finding video " << "usb-0000:04:00.3-2.2" << std::endl;
       strcpy(device_path0, "/dev/video0");
       // return;
   }
+#endif
 
+#ifdef USE_ROADCAMERASTATE
   if (strlen(device_path1) == 0)
   {
       //std::cerr << "Error finding video " << "usb-0000:04:00.3-2.3" << std::endl;
       strcpy(device_path1, "/dev/video2");
       // return;
   }
+#endif
 
 #ifdef USE_ROADCAMERASTATE
   const char* device0 = device_path0;//"/dev/video0";
@@ -156,13 +164,13 @@ void camerad::run() {
   th_cam.join();
 }
 
+/*
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <net/if.h>
 
-/*
 int mac() {
   struct ifreq ifr;
   int _fd = socket(AF_INET, SOCK_DGRAM, 0);
