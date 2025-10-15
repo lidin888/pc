@@ -6,11 +6,17 @@ from openpilot.common.params import Params
 from openpilot.system.manager.process_config import managed_processes
 from openpilot.system.hardware import HARDWARE
 
+import os
+USBCAM = os.getenv("USE_USBCAM") is not None
+
 if __name__ == "__main__":
   CP = car.CarParams(notCar=True, wheelbase=1, steerRatio=10)
   Params().put("CarParams", CP.to_bytes())
 
-  procs = ['webcamerad', 'ui', 'modeld', 'calibrationd', 'plannerd']
+  if not USBCAM:
+    procs = ['webcamerad', 'ui', 'modeld', 'calibrationd', 'plannerd']
+  else:
+    procs = ['usbcamerad', 'ui', 'modeld', 'calibrationd', 'plannerd']
   for p in procs:
     managed_processes[p].start()
 
