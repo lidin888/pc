@@ -854,7 +854,7 @@
     </message>
     <message>
         <source>Are you sure you want to reset calibration?</source>
-        <translation>您確定要重設校準嗎？</translation>
+        <translation type="vanished">您確定要重設校準嗎？</translation>
     </message>
     <message>
         <source>Review Training Guide</source>
@@ -1010,6 +1010,34 @@
     </message>
     <message>
         <source>Reboot &amp; Disengage to Calibration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CalibrationParams</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LiveDelay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LiveTorqueParameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LiveParameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LiveParametersV2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select calibration parameter to reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to reset %1?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

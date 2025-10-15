@@ -114,7 +114,7 @@ void camerad::run() {
 #endif
 #ifdef USE_ROADCAMERASTATE
   char device_path1[512] = {0};
-#endi
+#endif
   //get_device("usb-0000:03:00.4-3", device_path0);
   // get_device("usb-0000:04:00.3-2", device_path0);
   //std::cout << device_path0 <<  std::endl;
@@ -154,7 +154,7 @@ void camerad::run() {
   height = CAM_HEIGHT;
   camera *cam_wide = new camera(device1, "wideRoadCameraState", width, height,  CAM_FPS, output_prefix);
   m_cameras.push_back(cam_wide);
-#end
+#endif
 
   for (camera *cam : m_cameras) {
       cam->run();

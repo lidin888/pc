@@ -846,7 +846,7 @@
     </message>
     <message>
         <source>Are you sure you want to reset calibration?</source>
-        <translation>캘리브레이션을 초기화하시겠습니까?</translation>
+        <translation type="vanished">캘리브레이션을 초기화하시겠습니까?</translation>
     </message>
     <message>
         <source>Review Training Guide</source>
@@ -1002,6 +1002,34 @@
     </message>
     <message>
         <source>Git pull &amp; Reboot?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CalibrationParams</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LiveDelay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LiveTorqueParameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LiveParameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LiveParametersV2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select calibration parameter to reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to reset %1?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

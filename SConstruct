@@ -351,7 +351,7 @@ messaging = [socketmaster, msgq, 'capnp', 'kj',]
 Export('messaging')
 
 # Build other submodules
-SConscript(['camera/SConscript'])
+# SConscript(['camera/SConscript'])
 SConscript(['tools/webcam/SConscript'])
 
 # Build other submodules
