@@ -25,6 +25,8 @@ source .venv/bin/activate
 
 echo "installing xattr..."
 uv pip install xattr
+echo "installing flask..."
+uv pip install flask
 
 echo "PYTHONPATH=${PWD}" > "$ROOT"/.env
 if [[ "$(uname)" == 'Darwin' ]]; then

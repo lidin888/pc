@@ -101,10 +101,12 @@ procs = [
   #NativeProcess("mapsd", "selfdrive/navd", ["./mapsd"], always_run),
   #PythonProcess("navmodeld", "selfdrive.modeld.navmodeld", only_onroad),
   NativeProcess("sensord", "system/sensord", ["./sensord"], only_onroad, enabled=not PC),
+  NativeProcess("sensord_jy62", "system/sensord", ["./sensord_jy62"], only_onroad, enabled=PC),
+  NativeProcess("locationd", "selfdrive/locationd", ["./locationd"], only_onroad, enabled=PC),
   NativeProcess("ui", "selfdrive/ui", ["./ui"], always_run, watchdog_max_dt=(5 if not PC else None)),
   PythonProcess("soundd", "selfdrive.ui.soundd", only_onroad),
-  # 更新locationd配置以支持JY62设备
-  NativeProcess("locationd", "selfdrive/locationd", ["./locationd", "--type=jy62", "--device=/dev/ttyUSB0", "--baud=115200"], only_onroad),
+  #下面这个带参数的locationd，不要和sensord_jy62进程同时开启，否则会冲突,二选一开启
+  #NativeProcess("locationd_jy62", "selfdrive/locationd", ["./locationd_jy62", "--type=jy62", "--device=/dev/ttyUSB0", "--baud=115200"], only_onroad),
   #PythonProcess("locationd", "selfdrive.locationd.locationd", only_onroad),
   NativeProcess("_pandad", "selfdrive/pandad", ["./pandad"], always_run, enabled=False),
   PythonProcess("calibrationd", "selfdrive.locationd.calibrationd", only_onroad),
