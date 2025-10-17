@@ -81,10 +81,10 @@ void ModelRenderer::update_model(const cereal::ModelDataV2::Reader &model, const
 void ModelRenderer::drawLaneLines(QPainter &painter) {
   // lanelines
   for (int i = 0; i < std::size(lane_line_vertices); ++i) {
-    painter.setBrush(QColor::fromRgbF(0, 1.0, 0, std::clamp<float>(lane_line_probs[i], 0.0, 1.0)));
+    // 修改车道线颜色为 #E500FE
+    painter.setBrush(QColor::fromRgbF(0.9, 0.0, 0.98, std::clamp<float>(lane_line_probs[i], 0.0, 0.7)));
     painter.drawPolygon(lane_line_vertices[i]);
   }
-
   // road edges
   for (int i = 0; i < std::size(road_edge_vertices); ++i) {
     painter.setBrush(QColor::fromRgbF(1.0, 0, 0, std::clamp<float>(1.0 - road_edge_stds[i], 0.0, 1.0)));

@@ -115,7 +115,7 @@ void AnnotatedCameraWidget::paintGL() {
       float v_ego = sm["carState"].getCarState().getVEgo();
       if ((v_ego < 1) || available_streams.size() == 1) {
         wide_cam_requested = true;
-      } else if (v_ego > 6) {
+      } else if (v_ego > 14) {
         wide_cam_requested = false;
       }
       //wide_cam_requested = wide_cam_requested && sm["selfdriveState"].getSelfdriveState().getExperimentalMode();
