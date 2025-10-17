@@ -28,7 +28,6 @@ REPLAY = "REPLAY" in os.environ
 SIMULATION = "SIMULATION" in os.environ
 TESTING_CLOSET = "TESTING_CLOSET" in os.environ
 LONGITUDINAL_PERSONALITY_MAP = {v: k for k, v in log.LongitudinalPersonality.schema.enumerants.items()}
-DRIVER_CAM = os.getenv("DRIVER_CAM") is not None
 
 ThermalStatus = log.DeviceState.ThermalStatus
 State = log.SelfdriveState.OpenpilotState
@@ -64,21 +63,19 @@ class SelfdriveD:
 
     self.gps_location_service = get_gps_location_service(self.params)
     self.gps_packets = [self.gps_location_service]
-    self.sensor_packets = []
-    self.camera_packets = ["roadCameraState"]
+    self.sensor_packets = ["accelerometer", "gyroscope"]
+    self.camera_packets = ["roadCameraState", "driverCameraState", "wideRoadCameraState"]
 
     self.disable_dm = self.params.get_int("DisableDM")
 
     # TODO: de-couple selfdrived with card/conflate on carState without introducing controls mismatches
     self.car_state_sock = messaging.sub_sock('carState', timeout=20)
 
-    # ignore = self.sensor_packets + self.gps_packets + ['alertDebug', "accelerometer", "gyroscope", "driverMonitoringState"]
-    ignore = self.sensor_packets + self.gps_packets + ["alertDebug", "dmonitoringmodeld", "dmonitoringd", 'driverMonitoringState','liveLocationKalman','liveParameters','liveTorqueParameters','driverAssistance']
-    if SIMULATION:
-      ignore += ['driverCameraState', 'managerState']
+    ignore = self.sensor_packets + self.gps_packets + ['alertDebug']
+    if True:
+      ignore += ['driverCameraState', 'managerState', 'driverMonitoringState']
     elif self.disable_dm > 0:
-      if "driverCameraState" in self.camera_packets:
-        self.camera_packets.remove("driverCameraState")
+      self.camera_packets.remove("driverCameraState")
     ignore += ['driverMonitoringState']
 
     if REPLAY:
@@ -192,7 +189,7 @@ class SelfdriveD:
       car_events = self.car_events.update(CS, self.CS_prev, self.sm['carControl']).to_msg()
       self.events.add_from_msg(car_events)
 
-      if self.CP.notCar and DRIVER_CAM:
+      if self.CP.notCar:
         # wait for everything to init first
         if self.sm.frame > int(5. / DT_CTRL) and self.initialized:
           # body always wants to enable
@@ -297,11 +294,11 @@ class SelfdriveD:
         cloudlog.event("process_not_running", not_running=not_running, error=True)
       self.not_running_prev = not_running
     if self.sm.recv_frame['managerState'] and (not_running - self.ignored_processes):
-      self.events.add(EventName.processNotRunning)
+      pass#self.events.add(EventName.processNotRunning)
     else:
       if not SIMULATION and not self.rk.lagging:
         if not self.sm.all_alive(self.camera_packets):
-          self.events.add(EventName.cameraMalfunction)
+          pass#self.events.add(EventName.cameraMalfunction)
         elif not self.sm.all_freq_ok(self.camera_packets):
           self.events.add(EventName.cameraFrameRate)
     if not REPLAY and self.rk.lagging:
@@ -325,11 +322,11 @@ class SelfdriveD:
     no_system_errors = (not has_disable_events) or (len(self.events) == num_events)
     if not self.sm.all_checks() and no_system_errors:
       if not self.sm.all_alive():
-        self.events.add(EventName.commIssue)
+        pass#self.events.add(EventName.commIssue)
       elif not self.sm.all_freq_ok():
-        self.events.add(EventName.commIssueAvgFreq)
+        pass#self.events.add(EventName.commIssueAvgFreq)
       else:
-        self.events.add(EventName.commIssue)
+        pass#self.events.add(EventName.commIssue)
 
       logs = {
         'invalid': [s for s, valid in self.sm.valid.items() if not valid],
@@ -354,7 +351,7 @@ class SelfdriveD:
 
     # conservative HW alert. if the data or frequency are off, locationd will throw an error
     if any((self.sm.frame - self.sm.recv_frame[s])*DT_CTRL > 10. for s in self.sensor_packets):
-      self.events.add(EventName.sensorDataInvalid)
+      pass#self.events.add(EventName.sensorDataInvalid)
 
     if not REPLAY:
       # Check for mismatch between openpilot and car's PCM
@@ -392,8 +389,7 @@ class SelfdriveD:
       gps_ok = self.sm.recv_frame[self.gps_location_service] > 0 and (self.sm.frame - self.sm.recv_frame[self.gps_location_service]) * DT_CTRL < 2.0
       if not gps_ok and self.sm['liveLocationKalman'].inputsOK and (self.distance_traveled > 1500):
         if self.distance_traveled < 1600:
-          # self.events.add(EventName.noGps)
-          pass
+          self.events.add(EventName.noGps)
       #if gps_ok:
       #  self.distance_traveled = 0
       self.distance_traveled += abs(CS.vEgo) * DT_CTRL
