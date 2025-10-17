@@ -890,9 +890,9 @@ int Localizer::open_jy62_device() {
     case 230400: baud_rate = B230400; break;
     case 460800: baud_rate = B460800; break;
     case 921600: baud_rate = B921600; break;
-    default:     
+    default:
       LOGW("Unsupported baud rate %d, using default 115200", this->baud_rate_);
-      baud_rate = B115200;   
+      baud_rate = B115200;
       break;
   }
 
@@ -1146,7 +1146,7 @@ std::vector<uint8_t> Localizer::read_jy62_packet() {
 }
 
 // 根据文档规范解析JY62数据包
-bool Localizer::parse_jy62_packet(const std::vector<uint8_t>& packet, 
+bool Localizer::parse_jy62_packet(const std::vector<uint8_t>& packet,
                          double& accel_x, double& accel_y, double& accel_z,
                          double& gyro_x, double& gyro_y, double& gyro_z) {
   // 检查数据包大小
@@ -1180,52 +1180,52 @@ bool Localizer::parse_jy62_packet(const std::vector<uint8_t>& packet,
     case 0x51: { // 加速度数据
       // 检查是否有足够的数据
       if (packet.size() < 11) return false;
-      
+
       // 解析加速度数据
       int16_t ax = (int16_t)((packet[3] << 8) | packet[2]);
       int16_t ay = (int16_t)((packet[5] << 8) | packet[4]);
       int16_t az = (int16_t)((packet[7] << 8) | packet[6]);
-      
+
       // 转换为物理单位 (g)
       accel_x = ax / 32768.0 * 16.0;
       accel_y = ay / 32768.0 * 16.0;
       accel_z = az / 32768.0 * 16.0;
-      
+
       return true;
     }
     case 0x52: { // 角速度数据
       // 检查是否有足够的数据
       if (packet.size() < 11) return false;
-      
+
       // 解析角速度数据
       int16_t wx = (int16_t)((packet[3] << 8) | packet[2]);
       int16_t wy = (int16_t)((packet[5] << 8) | packet[4]);
       int16_t wz = (int16_t)((packet[7] << 8) | packet[6]);
-      
+
       // 转换为物理单位 (°/s)
       gyro_x = wx / 32768.0 * 2000.0;
       gyro_y = wy / 32768.0 * 2000.0;
       gyro_z = wz / 32768.0 * 2000.0;
-      
+
       return true;
     }
     case 0x53: { // 角度数据
       // 检查是否有足够的数据
       if (packet.size() < 11) return false;
-      
+
       // 解析角度数据
       int16_t roll_l = (int16_t)((packet[3] << 8) | packet[2]);
       int16_t pitch_l = (int16_t)((packet[5] << 8) | packet[4]);
       int16_t yaw_l = (int16_t)((packet[7] << 8) | packet[6]);
-      
+
       // 转换为物理单位 (°)
       double roll = roll_l / 32768.0 * 180.0;
       double pitch = pitch_l / 32768.0 * 180.0;
       double yaw = yaw_l / 32768.0 * 180.0;
-      
+
       // 发布角度数据
       publish_orientation(pitch, roll, yaw);
-      
+
       return true;
     }
     default: {
@@ -1259,9 +1259,13 @@ void Localizer::jy62_reader_thread() {
         switch (packet_type) {
           case 0x51: // 加速度数据
             this->publish_accelerometer(accel_x, accel_y, accel_z);
+            printf("Accel: [x %.3f, y %.3f, z %.3f]\n", accel_x, accel_y, accel_z);
+            fflush(stdout);
             break;
           case 0x52: // 角速度数据
             this->publish_gyroscope(gyro_x, gyro_y, gyro_z);
+            printf("Gyro: [x %.3f, y %.3f, z %.3f]\n", gyro_x, gyro_y, gyro_z);
+            fflush(stdout);
             break;
           case 0x53: // 角度数据
             // 当前不处理角度数据
