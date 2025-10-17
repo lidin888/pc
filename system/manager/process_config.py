@@ -7,7 +7,6 @@ from openpilot.common.params import Params
 from openpilot.system.hardware import PC, TICI
 from openpilot.system.manager.process import PythonProcess, NativeProcess, DaemonProcess
 from openpilot.system.hardware.hw import Paths
-FLASK_AVAILABLE = importlib.util.find_spec("flask") is not None
 WEBCAM = os.getenv("USE_WEBCAM") is not None
 USBCAM = os.getenv("USE_USBCAM") is not None
 JY62 = os.getenv("JY62")
