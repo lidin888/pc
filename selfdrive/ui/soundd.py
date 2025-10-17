@@ -129,8 +129,10 @@ class Soundd:
 
       if self.lang == "main_ko":
         wavefile = wave.open(BASEDIR + "/selfdrive/assets/sounds/" + filename, 'r')
-      else:
+      elif self.lang == "main_zh-CHS" or self.lang == "main_zh-CHT":
         wavefile = wave.open(BASEDIR + "/selfdrive/assets/sounds_chs/" + filename, 'r')
+      else:
+        wavefile = wave.open(BASEDIR + "/selfdrive/assets/sounds_eng/" + filename, 'r')
 
       #assert wavefile.getnchannels() == 1
       assert wavefile.getsampwidth() == 2
