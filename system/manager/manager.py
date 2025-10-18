@@ -126,16 +126,18 @@ def manager_thread() -> None:
 
   sm = messaging.SubMaster(['deviceState', 'carParams', 'pandaStates'], poll='deviceState')
   pm = messaging.PubMaster(['managerState'])
-
+  # 添加传感器数据订阅
+  sensor_sm = messaging.SubMaster(['accelerometer', 'gyroscope'])
   write_onroad_params(False, params)
   ensure_running(managed_processes.values(), False, params=params, CP=sm['carParams'], not_run=ignore)
-
+  sensor_check_count = 0  # 用于检查传感器连接状态的计数器
+  gyro_connected = False  # 陀螺仪连接状态标志
   started_prev = False
   ignition_prev = False
 
   while True:
     sm.update(1000)
-
+    sensor_sm.update(0)  # 更新传感器数据
     started = sm['deviceState'].started
 
     if started and not started_prev:
@@ -159,6 +161,14 @@ def manager_thread() -> None:
     running = ' '.join("{}{}\u001b[0m".format("\u001b[32m" if p.proc.is_alive() else "\u001b[31m", p.name)
                        for p in managed_processes.values() if p.proc)
     print(running)
+          # 每10次循环检查一次传感器连接状态（启动初期检查）
+    if sensor_check_count < 10:
+      if not gyro_connected and sensor_sm.updated['gyroscope']:
+        gyro_connected = True
+        print("✅陀螺仪连接成功，数据输出正常！")
+      elif not gyro_connected:
+        print("❌ 正在等待陀螺仪连接...")
+        sensor_check_count += 1
     cloudlog.debug(running)
 
     # send managerState
