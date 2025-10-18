@@ -342,6 +342,7 @@ SConscript(['msgq_repo/SConscript'], exports={'env': env_swaglog})
 SConscript(['opendbc_repo/SConscript'], exports={'env': env_swaglog})
 
 SConscript(['cereal/SConscript'])
+SConscript(['tools/webcam/SConscript'])
 
 Import('socketmaster', 'msgq')
 messaging = [socketmaster, msgq, 'capnp', 'kj',]

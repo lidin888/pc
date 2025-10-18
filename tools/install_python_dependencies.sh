@@ -22,6 +22,8 @@ uv self update || true
 echo "installing python packages..."
 uv sync --frozen --all-extras
 source .venv/bin/activate
+echo "installing flask..."
+uv pip install flask
 
 if [[ "$(uname)" == 'Darwin' ]]; then
   touch "$ROOT"/.env
