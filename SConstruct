@@ -342,7 +342,6 @@ SConscript(['msgq_repo/SConscript'], exports={'env': env_swaglog})
 SConscript(['opendbc_repo/SConscript'], exports={'env': env_swaglog})
 
 SConscript(['cereal/SConscript'])
-SConscript(['tools/webcam/SConscript'])
 
 Import('socketmaster', 'msgq')
 messaging = [socketmaster, msgq, 'capnp', 'kj',]
@@ -363,6 +362,7 @@ SConscript([
 
 if arch == "larch64":
   SConscript(['system/camerad/SConscript'])
+  SConscript(['tools/webcam/SConscript'])
 
 # Build openpilot
 SConscript(['third_party/SConscript'])

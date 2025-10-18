@@ -1,252 +1,296 @@
-#!/usr/bin/env python3
-import datetime
+import importlib
 import os
 import signal
-import sys
+import struct
 import time
-import traceback
+import subprocess
+from collections.abc import Callable, ValuesView
+from abc import ABC, abstractmethod
+from multiprocessing import Process
 
-from cereal import log
+from setproctitle import setproctitle
+
+from cereal import car, log
 import cereal.messaging as messaging
 import openpilot.system.sentry as sentry
-from openpilot.common.params import Params, ParamKeyFlag
-from openpilot.common.text_window import TextWindow
-from openpilot.system.hardware import HARDWARE
-from openpilot.system.manager.helpers import unblock_stdout, write_onroad_params, save_bootlog
-from openpilot.system.manager.process import ensure_running
-from openpilot.system.manager.process_config import managed_processes
-from openpilot.system.athena.registration import register, UNREGISTERED_DONGLE_ID
-from openpilot.common.swaglog import cloudlog, add_file_handler
-from openpilot.system.version import get_build_metadata, terms_version, training_version
-from openpilot.system.hardware.hw import Paths
+from openpilot.common.basedir import BASEDIR
+from openpilot.common.params import Params
+from openpilot.common.swaglog import cloudlog
+from openpilot.common.watchdog import WATCHDOG_FN
+
+ENABLE_WATCHDOG = os.getenv("NO_WATCHDOG") is None
 
 
-def manager_init() -> None:
-  save_bootlog()
-
-  build_metadata = get_build_metadata()
-
-  params = Params()
-  params.clear_all(ParamKeyFlag.CLEAR_ON_MANAGER_START)
-  params.clear_all(ParamKeyFlag.CLEAR_ON_ONROAD_TRANSITION)
-  params.clear_all(ParamKeyFlag.CLEAR_ON_OFFROAD_TRANSITION)
-  params.clear_all(ParamKeyFlag.CLEAR_ON_IGNITION_ON)
-  if build_metadata.release_channel:
-    params.clear_all(ParamKeyFlag.DEVELOPMENT_ONLY)
-
-  # device boot mode
-  if params.get("DeviceBootMode") == 1:  # start in Always Offroad mode
-    params.put_bool("OffroadMode", True)
-
-  if params.get_bool("RecordFrontLock"):
-    params.put_bool("RecordFront", True)
-
-  # set unset params to their default value
-  for k in params.all_keys():
-    default_value = params.get_default_value(k)
-    if default_value is not None and params.get(k) is None:
-      params.put(k, default_value)
-
-  # Create folders needed for msgq
+def launcher(proc: str, name: str) -> None:
   try:
-    os.mkdir(Paths.shm_path())
-  except FileExistsError:
-    pass
-  except PermissionError:
-    print(f"WARNING: failed to make {Paths.shm_path()}")
+    # import the process
+    mod = importlib.import_module(proc)
 
-  # set params
-  serial = HARDWARE.get_serial()
-  params.put("Version", build_metadata.openpilot.version)
-  params.put("TermsVersion", terms_version)
-  params.put("TrainingVersion", training_version)
-  params.put("GitCommit", build_metadata.openpilot.git_commit)
-  params.put("GitCommitDate", build_metadata.openpilot.git_commit_date)
-  params.put("GitBranch", build_metadata.channel)
-  params.put("GitRemote", build_metadata.openpilot.git_origin)
-  params.put_bool("IsDevelopmentBranch", build_metadata.development_channel)
-  params.put_bool("IsTestedBranch", build_metadata.tested_channel)
-  params.put_bool("IsReleaseBranch", build_metadata.release_channel)
-  params.put("HardwareSerial", serial)
+    # rename the process
+    setproctitle(proc)
 
-  # set dongle id
-  reg_res = register(show_spinner=True)
-  if reg_res:
-    dongle_id = reg_res
-  else:
-    raise Exception(f"Registration failed for device {serial}")
-  os.environ['DONGLE_ID'] = dongle_id  # Needed for swaglog
-  os.environ['GIT_ORIGIN'] = build_metadata.openpilot.git_normalized_origin # Needed for swaglog
-  os.environ['GIT_BRANCH'] = build_metadata.channel # Needed for swaglog
-  os.environ['GIT_COMMIT'] = build_metadata.openpilot.git_commit # Needed for swaglog
+    # create new context since we forked
+    messaging.reset_context()
 
-  if not build_metadata.openpilot.is_dirty:
-    os.environ['CLEAN'] = '1'
+    # add daemon name tag to logs
+    cloudlog.bind(daemon=name)
+    sentry.set_tag("daemon", name)
 
-  # init logging
-  sentry.init(sentry.SentryProject.SELFDRIVE)
-  cloudlog.bind_global(dongle_id=dongle_id,
-                       version=build_metadata.openpilot.version,
-                       origin=build_metadata.openpilot.git_normalized_origin,
-                       branch=build_metadata.channel,
-                       commit=build_metadata.openpilot.git_commit,
-                       dirty=build_metadata.openpilot.is_dirty,
-                       device=HARDWARE.get_device_type())
-
-  # preimport all processes
-  for p in managed_processes.values():
-    p.prepare()
-
-
-def manager_cleanup() -> None:
-  # send signals to kill all procs
-  for p in managed_processes.values():
-    p.stop(block=False)
-
-  # ensure all are killed
-  for p in managed_processes.values():
-    p.stop(block=True)
-
-  cloudlog.info("everything is dead")
-
-
-def manager_thread() -> None:
-  cloudlog.bind(daemon="manager")
-  cloudlog.info("manager start")
-  cloudlog.info({"environ": os.environ})
-
-  params = Params()
-
-  ignore: list[str] = []
-  if params.get("DongleId") in (None, UNREGISTERED_DONGLE_ID):
-    ignore += ["manage_athenad", "uploader"]
-  if os.getenv("NOBOARD") is not None:
-    ignore.append("pandad")
-  ignore += [x for x in os.getenv("BLOCK", "").split(",") if len(x) > 0]
-
-  sm = messaging.SubMaster(['deviceState', 'carParams', 'pandaStates'], poll='deviceState')
-  pm = messaging.PubMaster(['managerState'])
-  # 添加传感器数据订阅
-  sensor_sm = messaging.SubMaster(['accelerometer', 'gyroscope'])
-  write_onroad_params(False, params)
-  ensure_running(managed_processes.values(), False, params=params, CP=sm['carParams'], not_run=ignore)
-  sensor_check_count = 0  # 用于检查传感器连接状态的计数器
-  gyro_connected = False  # 陀螺仪连接状态标志
-  started_prev = False
-  ignition_prev = False
-
-  while True:
-    sm.update(1000)
-    sensor_sm.update(0)  # 更新传感器数据
-    started = sm['deviceState'].started
-
-    if started and not started_prev:
-      params.clear_all(ParamKeyFlag.CLEAR_ON_ONROAD_TRANSITION)
-    elif not started and started_prev:
-      params.clear_all(ParamKeyFlag.CLEAR_ON_OFFROAD_TRANSITION)
-
-    ignition = any(ps.ignitionLine or ps.ignitionCan for ps in sm['pandaStates'] if ps.pandaType != log.PandaState.PandaType.unknown)
-    if ignition and not ignition_prev:
-      params.clear_all(ParamKeyFlag.CLEAR_ON_IGNITION_ON)
-
-    # update onroad params, which drives pandad's safety setter thread
-    if started != started_prev:
-      write_onroad_params(started, params)
-
-    started_prev = started
-    ignition_prev = ignition
-
-    ensure_running(managed_processes.values(), started, params=params, CP=sm['carParams'], not_run=ignore)
-
-    running = ' '.join("{}{}\u001b[0m".format("\u001b[32m" if p.proc.is_alive() else "\u001b[31m", p.name)
-                       for p in managed_processes.values() if p.proc)
-    print(running)
-          # 每10次循环检查一次传感器连接状态（启动初期检查）
-    if sensor_check_count < 10:
-      if not gyro_connected and sensor_sm.updated['gyroscope']:
-        gyro_connected = True
-        print("✅陀螺仪连接成功，数据输出正常！")
-      elif not gyro_connected:
-        print("❌ 正在等待陀螺仪连接...")
-        sensor_check_count += 1
-    cloudlog.debug(running)
-
-    # send managerState
-    msg = messaging.new_message('managerState', valid=True)
-    msg.managerState.processes = [p.get_process_state_msg() for p in managed_processes.values()]
-    pm.send('managerState', msg)
-
-    # kick AGNOS power monitoring watchdog
-    try:
-      if sm.all_checks(['deviceState']):
-        with open("/var/tmp/power_watchdog", "w") as f:
-          f.write(str(time.monotonic()))
-    except Exception:
-      pass
-
-    # Exit main loop when uninstall/shutdown/reboot is needed
-    shutdown = False
-    for param in ("DoUninstall", "DoShutdown", "DoReboot"):
-      if params.get_bool(param):
-        shutdown = True
-        params.put("LastManagerExitReason", f"{param} {datetime.datetime.now()}")
-        cloudlog.warning(f"Shutting down manager - {param} set")
-
-    if shutdown:
-      break
-
-
-def main() -> None:
-  manager_init()
-  if os.getenv("PREPAREONLY") is not None:
-    return
-
-  # SystemExit on sigterm
-  signal.signal(signal.SIGTERM, lambda signum, frame: sys.exit(1))
-
-  try:
-    manager_thread()
-  except Exception:
-    traceback.print_exc()
-    sentry.capture_exception()
-  finally:
-    manager_cleanup()
-
-  params = Params()
-  if params.get_bool("DoUninstall"):
-    cloudlog.warning("uninstalling")
-    HARDWARE.uninstall()
-  elif params.get_bool("DoReboot"):
-    cloudlog.warning("reboot")
-    HARDWARE.reboot()
-  elif params.get_bool("DoShutdown"):
-    cloudlog.warning("shutdown")
-    HARDWARE.shutdown()
-
-
-if __name__ == "__main__":
-  unblock_stdout()
-
-  try:
-    main()
+    # exec the process
+    mod.main()
   except KeyboardInterrupt:
-    print("got CTRL-C, exiting")
+    cloudlog.warning(f"child {proc} got SIGINT")
   except Exception:
-    add_file_handler(cloudlog)
-    cloudlog.exception("Manager failed to start")
-
-    try:
-      managed_processes['ui'].stop()
-    except Exception:
-      pass
-
-    # Show last 3 lines of traceback
-    error = traceback.format_exc(-3)
-    error = "Manager failed to start\n\n" + error
-    with TextWindow(error) as t:
-      t.wait_for_exit()
-
+    # can't install the crash handler because sys.excepthook doesn't play nice
+    # with threads, so catch it here.
+    sentry.capture_exception()
     raise
 
-  # manual exit because we are forked
-  sys.exit(0)
+
+def nativelauncher(pargs: list[str], cwd: str, name: str) -> None:
+  os.environ['MANAGER_DAEMON'] = name
+
+  # exec the process
+  os.chdir(cwd)
+  os.execvp(pargs[0], pargs)
+
+
+def join_process(process: Process, timeout: float) -> None:
+  # Process().join(timeout) will hang due to a python 3 bug: https://bugs.python.org/issue28382
+  # We have to poll the exitcode instead
+  t = time.monotonic()
+  while time.monotonic() - t < timeout and process.exitcode is None:
+    time.sleep(0.001)
+
+
+class ManagerProcess(ABC):
+  daemon = False
+  sigkill = False
+  should_run: Callable[[bool, Params, car.CarParams], bool]
+  proc: Process | None = None
+  enabled = True
+  name = ""
+
+  last_watchdog_time = 0
+  watchdog_max_dt: int | None = None
+  watchdog_seen = False
+  shutting_down = False
+
+  @abstractmethod
+  def prepare(self) -> None:
+    pass
+
+  @abstractmethod
+  def start(self) -> None:
+    pass
+
+  def restart(self) -> None:
+    self.stop(sig=signal.SIGKILL)
+    self.start()
+
+  def check_watchdog(self, started: bool) -> None:
+    if self.watchdog_max_dt is None or self.proc is None:
+      return
+
+    try:
+      fn = WATCHDOG_FN + str(self.proc.pid)
+      with open(fn, "rb") as f:
+        self.last_watchdog_time = struct.unpack('Q', f.read())[0]
+    except Exception:
+      pass
+
+    dt = time.monotonic() - self.last_watchdog_time / 1e9
+
+    if dt > self.watchdog_max_dt:
+      if self.watchdog_seen and ENABLE_WATCHDOG:
+        cloudlog.error(f"Watchdog timeout for {self.name} (exitcode {self.proc.exitcode}) restarting ({started=})")
+        self.restart()
+    else:
+      self.watchdog_seen = True
+
+  def stop(self, retry: bool = True, block: bool = True, sig: signal.Signals = None) -> int | None:
+    if self.proc is None:
+      return None
+
+    if self.proc.exitcode is None:
+      if not self.shutting_down:
+        cloudlog.info(f"killing {self.name}")
+        if sig is None:
+          sig = signal.SIGKILL if self.sigkill else signal.SIGINT
+        self.signal(sig)
+        self.shutting_down = True
+
+        if not block:
+          return None
+
+      join_process(self.proc, 5)
+
+      # If process failed to die send SIGKILL
+      if self.proc.exitcode is None and retry:
+        cloudlog.info(f"killing {self.name} with SIGKILL")
+        self.signal(signal.SIGKILL)
+        self.proc.join()
+
+    ret = self.proc.exitcode
+    cloudlog.info(f"{self.name} is dead with {ret}")
+
+    if self.proc.exitcode is not None:
+      self.shutting_down = False
+      self.proc = None
+
+    return ret
+
+  def signal(self, sig: int) -> None:
+    if self.proc is None:
+      return
+
+    # Don't signal if already exited
+    if self.proc.exitcode is not None and self.proc.pid is not None:
+      return
+
+    # Can't signal if we don't have a pid
+    if self.proc.pid is None:
+      return
+
+    cloudlog.info(f"sending signal {sig} to {self.name}")
+    os.kill(self.proc.pid, sig)
+
+  def get_process_state_msg(self):
+    state = log.ManagerState.ProcessState.new_message()
+    state.name = self.name
+    if self.proc:
+      state.running = self.proc.is_alive()
+      state.shouldBeRunning = self.proc is not None and not self.shutting_down
+      state.pid = self.proc.pid or 0
+      state.exitCode = self.proc.exitcode or 0
+    return state
+
+
+class NativeProcess(ManagerProcess):
+  def __init__(self, name, cwd, cmdline, should_run, enabled=True, sigkill=False, watchdog_max_dt=None):
+    self.name = name
+    self.cwd = cwd
+    self.cmdline = cmdline
+    self.should_run = should_run
+    self.enabled = enabled
+    self.sigkill = sigkill
+    self.watchdog_max_dt = watchdog_max_dt
+    self.launcher = nativelauncher
+
+  def prepare(self) -> None:
+    pass
+
+  def start(self) -> None:
+    # In case we only tried a non blocking stop we need to stop it before restarting
+    if self.shutting_down:
+      self.stop()
+
+    if self.proc is not None:
+      return
+
+    cwd = os.path.join(BASEDIR, self.cwd)
+    cloudlog.info(f"starting process {self.name}")
+    self.proc = Process(name=self.name, target=self.launcher, args=(self.cmdline, cwd, self.name))
+    self.proc.start()
+    self.watchdog_seen = False
+    self.shutting_down = False
+
+
+class PythonProcess(ManagerProcess):
+  def __init__(self, name, module, should_run, enabled=True, sigkill=False, watchdog_max_dt=None):
+    self.name = name
+    self.module = module
+    self.should_run = should_run
+    self.enabled = enabled
+    self.sigkill = sigkill
+    self.watchdog_max_dt = watchdog_max_dt
+    self.launcher = launcher
+
+  def prepare(self) -> None:
+    if self.enabled:
+      cloudlog.info(f"preimporting {self.module}")
+      importlib.import_module(self.module)
+
+  def start(self) -> None:
+    # In case we only tried a non blocking stop we need to stop it before restarting
+    if self.shutting_down:
+      self.stop()
+
+    if self.proc is not None:
+      return
+
+    # TODO: this is just a workaround for this tinygrad check:
+    # https://github.com/tinygrad/tinygrad/blob/ac9c96dae1656dc220ee4acc39cef4dd449aa850/tinygrad/device.py#L26
+    name = self.name if "modeld" not in self.name else "MainProcess"
+
+    cloudlog.info(f"starting python {self.module}")
+    self.proc = Process(name=name, target=self.launcher, args=(self.module, self.name))
+    self.proc.start()
+    self.watchdog_seen = False
+    self.shutting_down = False
+
+
+class DaemonProcess(ManagerProcess):
+  """Python process that has to stay running across manager restart.
+  This is used for athena so you don't lose SSH access when restarting manager."""
+  def __init__(self, name, module, param_name, enabled=True):
+    self.name = name
+    self.module = module
+    self.param_name = param_name
+    self.enabled = enabled
+    self.params = None
+
+  @staticmethod
+  def should_run(started, params, CP):
+    return True
+
+  def prepare(self) -> None:
+    pass
+
+  def start(self) -> None:
+    if self.params is None:
+      self.params = Params()
+
+    pid = self.params.get(self.param_name)
+    if pid is not None:
+      try:
+        os.kill(int(pid), 0)
+        with open(f'/proc/{pid}/cmdline') as f:
+          if self.module in f.read():
+            # daemon is running
+            return
+      except (OSError, FileNotFoundError):
+        # process is dead
+        pass
+
+    cloudlog.info(f"starting daemon {self.name}")
+    proc = subprocess.Popen(['python', '-m', self.module],
+                               stdin=open('/dev/null'),
+                               stdout=open('/dev/null', 'w'),
+                               stderr=open('/dev/null', 'w'),
+                               preexec_fn=os.setpgrp)
+
+    self.params.put(self.param_name, proc.pid)
+
+  def stop(self, retry=True, block=True, sig=None) -> None:
+    pass
+
+
+def ensure_running(procs: ValuesView[ManagerProcess], started: bool, params=None, CP: car.CarParams=None,
+                   not_run: list[str] | None=None) -> list[ManagerProcess]:
+  if not_run is None:
+    not_run = []
+
+  running = []
+  for p in procs:
+    if p.enabled and p.name not in not_run and p.should_run(started, params, CP):
+      running.append(p)
+    else:
+      p.stop(block=False)
+
+    p.check_watchdog(started)
+
+  for p in running:
+    p.start()
+
+  return running
