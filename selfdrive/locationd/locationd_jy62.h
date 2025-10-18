@@ -110,6 +110,10 @@ private:
   double gps_time_offset;
   Eigen::VectorXd camodo_yawrate_distribution = Eigen::Vector2d(0.0, 10.0); // mean, std
 
+  uint32_t accel_data_cnt = 0;
+  uint32_t gyro_data_cnt = 0;
+  std::unique_ptr<PubMaster> _pm;  // 添加这一行
+
   // JY62设备相关的成员变量
   ImuDeviceType device_type_;
   bool is_jy62_device_ = false;
