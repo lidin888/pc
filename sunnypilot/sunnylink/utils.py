@@ -38,7 +38,14 @@ def register_sunnylink():
   """Register the device with Sunnylink if it is enabled."""
   extra_args = {}
 
-  if not Params().get_bool("SunnylinkEnabled"):
+  # 安全地检查SunnylinkEnabled参数，避免因参数不存在导致崩溃
+  try:
+    sunnylink_enabled = Params().get_bool("SunnylinkEnabled")
+  except Exception:
+    # 如果参数不存在或访问失败，使用默认值False
+    sunnylink_enabled = False
+    
+  if not sunnylink_enabled:
     print("Sunnylink is not enabled. Exiting.")
     exit(0)
 

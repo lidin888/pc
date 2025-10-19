@@ -128,7 +128,14 @@ if __name__ == '__main__':
   parser.add_argument('--keyboard', action='store_true', help='Use your keyboard instead of a joystick')
   args = parser.parse_args()
 
-  if not Params().get_bool("IsOffroad") and "ZMQ" not in os.environ:
+  # 安全地检查IsOffroad参数，避免因参数不存在导致崩溃
+  try:
+    is_offroad = Params().get_bool("IsOffroad")
+  except Exception:
+    # 如果参数不存在或访问失败，使用默认值True（假设车辆处于熄火状态）
+    is_offroad = True
+    
+  if not is_offroad and "ZMQ" not in os.environ:
     print("The car must be off before running joystick_control.")
     exit()
 

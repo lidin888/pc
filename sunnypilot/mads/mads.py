@@ -40,7 +40,13 @@ class ModularAssistiveDrivingSystem:
     self.state_machine = StateMachine(self)
     self.events = self.selfdrive.events
     self.events_sp = self.selfdrive.events_sp
-    self.disengage_on_accelerator = Params().get_bool("DisengageOnAccelerator")
+    # 安全地检查DisengageOnAccelerator参数，避免因参数不存在导致崩溃
+    try:
+      self.disengage_on_accelerator = Params().get_bool("DisengageOnAccelerator")
+    except Exception:
+      # 如果参数不存在或访问失败，使用默认值True（与openpilot默认行为一致）
+      self.disengage_on_accelerator = True
+      
     if self.CP.brand == "hyundai":
       if self.CP.flags & (HyundaiFlags.HAS_LDA_BUTTON | HyundaiFlags.CANFD):
         self.allow_always = True
