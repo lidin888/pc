@@ -404,25 +404,12 @@ void execAndReboot(const std::string& cmd) {
 
 void DevicePanel::calibration() {
   if (!uiState()->engaged()) {
-    QStringList calibOptions;
-    calibOptions << tr("CalibrationParams") << tr("LiveDelay") << tr("LiveTorqueParameters") << tr("LiveParameters") << tr("LiveParametersV2");
-
-    QString selectedParam = MultiOptionDialog::getSelection(
-      tr("Select calibration parameter to reset"),
-      calibOptions,
-      calibOptions.first(),
-      this
-    );
-
-    if (!selectedParam.isEmpty()) {
-      QString confirmMsg = tr("Are you sure you want to reset %1?").arg(selectedParam);
-      if (ConfirmationDialog::confirm(confirmMsg, tr("ReCalibration"), this)) {
-        if (!uiState()->engaged()) {
-          params.remove(selectedParam.toStdString());
-          QTimer::singleShot(100, [this]() {
-            params.putBool("DoReboot", true);
-          });
-        }
+    if (ConfirmationDialog::confirm(tr("Are you sure you want to reset calibration?"), tr("ReCalibration"), this)) {
+      if (!uiState()->engaged()) {
+        // 修复校准参数删除路径
+        std::string cmd = "rm -f " + Params().getParamPath("CalibrationParams");
+        std::thread worker(execAndReboot, cmd);
+        worker.detach();
       }
     }
   } else {
