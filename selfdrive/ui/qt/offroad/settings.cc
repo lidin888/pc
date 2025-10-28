@@ -409,14 +409,42 @@ void execAndReboot(const std::string& cmd) {
 
 void DevicePanel::calibration() {
   if (!uiState()->engaged()) {
-    if (ConfirmationDialog::confirm(tr("Are you sure you want to reset calibration?"), tr("ReCalibration"), this)) {
-      if (!uiState()->engaged()) {
-        // 修复校准参数删除路径
-        std::string cmd = "rm -f " + Params().getParamPath("CalibrationParams");
-        std::thread worker(execAndReboot, cmd);
-        worker.detach();
-      }
+    QStringList calibOptions;
+    calibOptions << tr("AllCalibParams")
+                 << tr("CalibrationParams")
+                 << tr("LiveDelay")
+                 << tr("LiveTorqueParameters")
+                 << tr("LiveParameters")
+                 << tr("LiveParametersV2");
+    QString selectedParam = MultiOptionDialog::getSelection(
+      tr("Select calibration parameter to reset"),
+      calibOptions,
+      "",
+      this
+    );
+
+if (selectedParam.isEmpty()) return;
+    QString confirmMsg = tr("Are you sure you want to reset %1?").arg(selectedParam);
+    if (!ConfirmationDialog::confirm(confirmMsg, tr("ReCalibration"), this)) return;
+    if (uiState()->engaged()) {
+      ConfirmationDialog::alert(tr("Reboot & Disengage to Calibration"), this);
+      return;
     }
+    std::thread worker([selectedParam]() {
+      if (selectedParam == "AllCalibParams") {
+        std::string cmd = "rm -f " + Params().getParamPath("CalibrationParams") + " " +
+                          Params().getParamPath("LiveParameters") + " " +
+                          Params().getParamPath("LiveParametersV2") + " " +
+                          Params().getParamPath("LiveTorqueParameters") + " " +
+                          Params().getParamPath("LiveDelay");
+        execAndReboot(cmd);
+      } else {
+        // 修复校准参数删除路径
+        std::string cmd = "rm -f " + Params().getParamPath(selectedParam.toStdString());
+        execAndReboot(cmd);
+      }
+    });
+    worker.detach();
   } else {
     ConfirmationDialog::alert(tr("Reboot & Disengage to Calibration"), this);
   }
