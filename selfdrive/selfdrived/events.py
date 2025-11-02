@@ -842,8 +842,8 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
   },
 
   EventName.selfdrivedLagging: {
-    ET.SOFT_DISABLE: soft_disable_alert("系统延迟"),
-    ET.NO_ENTRY: NoEntryAlert("自动驾驶进程延迟：请重启设备"),
+    # ET.SOFT_DISABLE: soft_disable_alert("系统延迟"),
+    # ET.NO_ENTRY: NoEntryAlert("自动驾驶进程延迟：请重启设备"),
   },
 
   # Thrown when manager detects a service exited unexpectedly while driving
