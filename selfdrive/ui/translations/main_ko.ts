@@ -163,6 +163,121 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
 </context>
 <context>
+    <name>DecControllerSubpanel</name>
+    <message>
+        <source>Reset to Defaults</source>
+        <translation type="vanished">기본값으로 재설정</translation>
+    </message>
+    <message>
+        <source>FCW Detection</source>
+        <translation type="vanished">FCW 감지</translation>
+    </message>
+    <message>
+        <source>Use blended mode when FCW is detected in the road ahead.</source>
+        <translation type="vanished">FCW가 전방에서 감지될 때 혼합 모드를 사용하세요.</translation>
+    </message>
+    <message>
+        <source>Enable at Standstill</source>
+        <translation type="vanished">정차 중 활성화</translation>
+    </message>
+    <message>
+        <source>Use blended mode when the vehicle is at a standstill.</source>
+        <translation type="vanished">차량이 정지 상태일 때 블렌디드 모드를 사용하세요.</translation>
+    </message>
+    <message>
+        <source>Follow Lead Vehicle</source>
+        <translation type="vanished">선행 차량 따라가기</translation>
+    </message>
+    <message>
+        <source>Model Slow Down Detection</source>
+        <translation type="vanished">모델 속도 감지 감속</translation>
+    </message>
+    <message>
+        <source>Below Cruise Speed Detection</source>
+        <translation type="vanished">순항 속도 미만 감지</translation>
+    </message>
+    <message>
+        <source>Lead Vehicle Detection</source>
+        <translation type="vanished">선행 차량 감지</translation>
+    </message>
+    <message>
+        <source>Use blended mode when a lead vehicle is detected and significantly slowing.</source>
+        <translation type="vanished">선행 차량이 감지되고 현저히 감속할 때 혼합 모드를 사용하세요.</translation>
+    </message>
+    <message>
+        <source>Significantly Slower Lead Detection</source>
+        <translation type="vanished">상당히 느린 선행 차량 감지</translation>
+    </message>
+    <message>
+        <source>Stopped Lead Detection</source>
+        <translation type="vanished">선행 차량 정지 감지</translation>
+    </message>
+    <message>
+        <source>Distance-Based Switching</source>
+        <translation type="vanished">거리 기반 전환</translation>
+    </message>
+    <message>
+        <source>Use blended mode when the distance to the lead vehicle is below the specified threshold.</source>
+        <translation type="vanished">선행 차량과의 거리가 지정된 임계값보다 낮을 때 혼합 모드를 사용하세요.</translation>
+    </message>
+    <message>
+        <source>Distance Threshold</source>
+        <translation type="vanished">거리 임계값</translation>
+    </message>
+    <message>
+        <source>Distance from lead vehicle in meters below which blended mode will be used.</source>
+        <translation type="vanished">선행 차량과의 거리(미터)가 이 값보다 작으면 블렌디드 모드가 사용됩니다.</translation>
+    </message>
+    <message>
+        <source>Speed-Based Switching</source>
+        <translation type="vanished">속도 기반 전환</translation>
+    </message>
+    <message>
+        <source>Use blended mode when the vehicle speed is below the specified threshold.</source>
+        <translation type="vanished">차량 속도가 지정된 임계값보다 낮을 때 혼합 모드를 사용하세요.</translation>
+    </message>
+    <message>
+        <source>Speed Threshold</source>
+        <translation type="vanished">속도 임계값</translation>
+    </message>
+    <message>
+        <source>Speed in km/h below which blended mode will be used.</source>
+        <translation type="vanished">혼합 모드가 사용될 km/h 기준 속도.</translation>
+    </message>
+    <message>
+        <source>Currently active. Prefers ACC with weighted confidence when following a lead vehicle for normal scenarios. If the model wants to slowdown significantly, it will still trigger blended mode.</source>
+        <translation type="vanished">현재 활성화됨. 일반적인 상황에서 선행 차량을 따라갈 때는 가중치 신뢰도를 적용한 ACC를 선호합니다. 모델이 상당히 감속을 원할 경우, 여전히 블렌디드 모드가 작동됩니다.</translation>
+    </message>
+    <message>
+        <source>Disabled when Follow Lead Vehicle is active. Follow Lead mode overrides this when a lead vehicle is present (except during imminent slowdown scenarios).</source>
+        <translation type="vanished">선행 차량 추적 모드가 활성화되면 비활성화됩니다. 선행 차량이 있을 경우 선행 차량 추적 모드가 이를 재정의합니다(급감속 상황 제외).</translation>
+    </message>
+    <message>
+        <source>Disabled when Follow Lead Vehicle is active. Follow Lead mode overrides this when a lead vehicle is present.</source>
+        <translation type="vanished">선행 차량 추적 모드가 활성화된 경우 비활성화됩니다. 선행 차량이 감지되면 선행 차량 추적 모드가 이 기능을 우선합니다.</translation>
+    </message>
+    <message>
+        <source>When enabled, prefers ACC mode when following a lead vehicle for normal scenarios. Model wants to stop now situations still trigger blended mode.</source>
+        <translation type="vanished">활성화 시, 일반적인 상황에서 선행 차량을 따라갈 때 ACC 모드를 우선 사용합니다. &apos;지금 정지하려 함&apos; 상황에서는 여전히 블렌디드 모드가 작동합니다.</translation>
+    </message>
+    <message>
+        <source>Model slow down detection and below cruise speed detection must be enabled to use this mode.</source>
+        <translation type="vanished">이 모드를 사용하려면 모델 감속 감지 및 순항 속도 미만 감지 기능을 활성화해야 합니다.</translation>
+    </message>
+    <message>
+        <source>Use blended mode when the model detects a slow down scenario ahead.</source>
+        <translation type="vanished">모델이 앞으로 감속 상황을 감지할 때 블렌디드 모드를 사용하세요.</translation>
+    </message>
+    <message>
+        <source>Use blended mode when driving significantly slower than the set cruise speed.</source>
+        <translation type="vanished">크루즈 속도보다 훨씬 느리게 주행할 때 블렌디드 모드를 사용하세요.</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="vanished">뒤로</translation>
+    </message>
+</context>
+<context>
     <name>DeclinePage</name>
     <message>
         <source>Back</source>
@@ -253,6 +368,22 @@ This only toggles the visibility of the controls; it does not toggle the actual 
     <message>
         <source>Quickboot mode requires updates to be disabled.&lt;br&gt;Enable &apos;Disable Updates&apos; in the Software panel first.</source>
         <translation>빠른 부팅 모드는 업데이트가 비활성화되어 있어야 합니다.&lt;br&gt;먼저 소프트웨어 패널에서 &apos;업데이트 비활성화&apos;를 활성화하세요.</translation>
+    </message>
+    <message>
+        <source>Use Raylib UI</source>
+        <translation type="vanished">Raylib UI 사용</translation>
+    </message>
+    <message>
+        <source>Enables or disables the use of Raylib for UI rendering. Changing this will trigger a UI restart.</source>
+        <translation type="vanished">UI 렌더링을 위해 Raylib 사용을 활성화하거나 비활성화합니다. 이 설정을 변경하면 UI가 재시작됩니다.</translation>
+    </message>
+    <message>
+        <source>Enable Copyparty service</source>
+        <translation>Copyparty 서비스 활성화</translation>
+    </message>
+    <message>
+        <source>Copyparty is a very capable file server, you can use it to download your routes, view your logs and even make some edits on some files from your browser. Requires you to connect to your comma locally via it&apos;s IP.</source>
+        <translation>Copyparty는 매우 유능한 파일 서버로, 이를 사용하여 경로를 다운로드하고 로그를 확인하며, 브라우저에서 일부 파일을 편집할 수도 있습니다. 로컬 IP를 통해 comma에 연결해야 합니다.</translation>
     </message>
 </context>
 <context>
@@ -378,8 +509,8 @@ This only toggles the visibility of the controls; it does not toggle the actual 
         <translation>다시보기</translation>
     </message>
     <message>
-        <source>Pair your device with comma connect (connect.comma.ai) and claim your comma prime offer.</source>
-        <translation>기기를 comma connect (connect.comma.ai)와 페어링하고 comma prime 혜택을 받으세요.</translation>
+        <source>Pair your device with comma connect (stable.konik.ai) and claim your comma prime offer.</source>
+        <translation>기기를 comma connect (stable.konik.ai)와 페어링하고 comma prime 혜택을 받으세요.</translation>
     </message>
     <message>
         <source>Pair Device</source>
@@ -542,6 +673,45 @@ This is the time after which settings UI closes automatically if user is not int
         <source>Controls state of the device after boot/sleep.</source>
         <translation>부팅/절전 모드 후 기기의 상태를 제어합니다.</translation>
     </message>
+    <message>
+        <source>Default</source>
+        <translation>기본값</translation>
+    </message>
+    <message>
+        <source>Offroad</source>
+        <translation>오프로드</translation>
+    </message>
+    <message>
+        <source>Git Pull &amp; Reboot</source>
+        <translation type="vanished">깃 풀 및 재부팅</translation>
+    </message>
+    <message>
+        <source>Git pull &amp; Reboot?</source>
+        <translation type="vanished">깃 풀 및 재부팅?</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="vanished">네</translation>
+    </message>
+    <message>
+        <source>Failed to start update process.</source>
+        <translation type="vanished">업데이트 프로세스를 시작하지 못했습니다.</translation>
+    </message>
+    <message>
+        <source>Update process started. Device will reboot if updates are applied.</source>
+        <translation type="vanished">업데이트 프로세스가 시작되었습니다. 업데이트가 적용되면 장치가 재부팅됩니다.</translation>
+    </message>
+</context>
+<context>
+    <name>DisplayPanel</name>
+    <message>
+        <source>Driving Screen Off: Non-Critical Events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turn off device screen or reduce brightness after driving starts. It automatically brightens again when screen is touched or a critical event occurs.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DriveStats</name>
@@ -604,6 +774,61 @@ This is the time after which settings UI closes automatically if user is not int
     </message>
 </context>
 <context>
+    <name>ExternalStorageControl</name>
+    <message>
+        <source>External Storage</source>
+        <translation>외부 저장소</translation>
+    </message>
+    <message>
+        <source>Extend your comma device&apos;s storage by inserting a USB drive into the aux port.</source>
+        <translation>콤마 디바이스의 저장 공간을 AUX 포트에 USB 드라이브를 삽입하여 확장하세요.</translation>
+    </message>
+    <message>
+        <source>CHECK</source>
+        <translation>확인</translation>
+    </message>
+    <message>
+        <source>MOUNT</source>
+        <translation>장착</translation>
+    </message>
+    <message>
+        <source>UNMOUNT</source>
+        <translation>언마운트</translation>
+    </message>
+    <message>
+        <source>FORMAT</source>
+        <translation>형식</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to format this drive? This will erase all data.</source>
+        <translation>이 드라이브를 포맷하시겠습니까? 모든 데이터가 삭제됩니다.</translation>
+    </message>
+    <message>
+        <source>Format</source>
+        <translation>형식</translation>
+    </message>
+    <message>
+        <source>formatting</source>
+        <translation>서식 지정</translation>
+    </message>
+    <message>
+        <source>insert drive</source>
+        <translation>운전 시작</translation>
+    </message>
+    <message>
+        <source>needs format</source>
+        <translation>형식 필요</translation>
+    </message>
+    <message>
+        <source>mounting</source>
+        <translation>장착</translation>
+    </message>
+    <message>
+        <source>unmounting</source>
+        <translation>마운트 해제</translation>
+    </message>
+</context>
+<context>
     <name>FirehosePanel</name>
     <message>
         <source>Firehose Mode: ACTIVE</source>
@@ -654,6 +879,105 @@ Firehose 모드를 사용하면 훈련 데이터 업로드를 극대화하여 op
         <source>MAX</source>
         <translation>최대</translation>
     </message>
+    <message>
+        <source>SPEED</source>
+        <translation type="vanished">속도</translation>
+    </message>
+    <message>
+        <source>LIMIT</source>
+        <translation type="vanished">제한</translation>
+    </message>
+    <message>
+        <source>AHEAD</source>
+        <translation type="vanished">앞으로</translation>
+    </message>
+    <message>
+        <source>IGNORED</source>
+        <translation type="vanished">무시됨</translation>
+    </message>
+    <message>
+        <source>PREPARING</source>
+        <translation type="vanished">준비 중</translation>
+    </message>
+    <message>
+        <source>ADAPTING</source>
+        <translation type="vanished">적응 중</translation>
+    </message>
+    <message>
+        <source>ACTIVE</source>
+        <translation type="vanished">활성</translation>
+    </message>
+    <message>
+        <source>TURN AHEAD</source>
+        <translation type="vanished">회전 앞쪽</translation>
+    </message>
+    <message>
+        <source>TURNING</source>
+        <translation type="vanished">회전</translation>
+    </message>
+    <message>
+        <source>TURN EXIT</source>
+        <translation type="vanished">회전 출구</translation>
+    </message>
+</context>
+<context>
+    <name>HudRendererSP</name>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>마일/시</translation>
+    </message>
+    <message>
+        <source>MAX</source>
+        <translation>최대</translation>
+    </message>
+    <message>
+        <source>SPEED</source>
+        <translation>속도</translation>
+    </message>
+    <message>
+        <source>LIMIT</source>
+        <translation>제한</translation>
+    </message>
+    <message>
+        <source>AHEAD</source>
+        <translation>앞으로</translation>
+    </message>
+    <message>
+        <source>PREPARING</source>
+        <translation type="vanished">준비 중</translation>
+    </message>
+    <message>
+        <source>ADAPTING</source>
+        <translation type="vanished">적응 중</translation>
+    </message>
+    <message>
+        <source>ACTIVE</source>
+        <translation type="vanished">활성</translation>
+    </message>
+    <message>
+        <source>Near</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>km</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>m</source>
+        <translation type="unfinished">분</translation>
+    </message>
+    <message>
+        <source>mi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ft</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HyundaiSettings</name>
@@ -697,6 +1021,20 @@ Firehose 모드를 사용하면 훈련 데이터 업로드를 극대화하여 op
         <source>Fine-tune your driving experience by adjusting acceleration smoothness with openpilot longitudinal control.</source>
         <translation>openpilot 가감속 제어의 가속 부드러움을 조정하여 주행 경험을 세밀하게 조정하세요.</translation>
     </message>
+    <message>
+        <source>Bookmark</source>
+        <translation type="vanished">북마크</translation>
+    </message>
+    <message>
+        <source>Steering Custom ☆ Button</source>
+        <translation type="vanished">조향 커스텀 ☆ 버튼</translation>
+    </message>
+    <message>
+        <source>Customize the steering wheel custom/star button for openpilot control.
+This will not disable OEM functionality.</source>
+        <translation type="vanished">오픈파일럿 제어를 위한 스티어링 휠 커스텀/스타 버튼을 사용자 지정합니다.
+이 설정은 OEM 기능을 비활성화하지 않습니다.</translation>
+    </message>
 </context>
 <context>
     <name>InputDialog</name>
@@ -724,6 +1062,52 @@ Firehose 모드를 사용하면 훈련 데이터 업로드를 극대화하여 op
     <message>
         <source>Toggle to enable a delay timer for seamless lane changes when blind spot monitoring (BSM) detects a obstructing vehicle, ensuring safe maneuvering.</source>
         <translation>토글을 켜면 사각지대 모니터링(BSM)이 가로막는 차량을 감지할 때 차로 변경을 안전하게 수행할 수 있도록 지연 타이머를 활성화합니다.</translation>
+    </message>
+    <message>
+        <source>Block Lane Change: Road Edge Detection</source>
+        <translation type="vanished">차선 변경 차단: 도로 가장자리 감지</translation>
+    </message>
+    <message>
+        <source>Enable this toggle to block lane change when road edge is detected on the stalk actuated side.</source>
+        <translation type="vanished">이 토글을 활성화하면 스토크 작동 쪽에서 도로 가장자리가 감지될 때 차선 변경을 차단합니다.</translation>
+    </message>
+</context>
+<context>
+    <name>LaneTurnDesireControl</name>
+    <message>
+        <source>Lane Turn Desires</source>
+        <translation type="vanished">차선 변경 의향</translation>
+    </message>
+    <message>
+        <source>If you&apos;re driving at 20 mph (32 km/h) or below and have your blinker on, the car will plan a turn in that direction at the nearest drivable path. This prevents situations (like at red lights) where the car might plan the wrong turn direction.</source>
+        <translation type="vanished">20mph(32km/h) 이하로 주행 중 방향지시등을 켜면, 차량은 가장 가까운 주행 가능 경로에서 해당 방향으로 회전을 계획합니다. 이는 (적색 신호등 등에서) 차량이 잘못된 회전 방향을 계획하는 상황을 방지합니다.</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation type="vanished">끄기</translation>
+    </message>
+    <message>
+        <source>Nudge</source>
+        <translation type="vanished">조금 밀기</translation>
+    </message>
+    <message>
+        <source>Nudgeless</source>
+        <translation type="vanished">무인터페이스</translation>
+    </message>
+</context>
+<context>
+    <name>LaneTurnSettings</name>
+    <message>
+        <source>Back</source>
+        <translation type="vanished">뒤로</translation>
+    </message>
+    <message>
+        <source>Adjust Lane Turn Speed</source>
+        <translation type="vanished">차선 회전 속도 조정</translation>
+    </message>
+    <message>
+        <source>Set the maximum speed for lane turn desires. Default is 19 %1.</source>
+        <translation type="vanished">차선 변경 욕구의 최대 속도를 설정합니다. 기본값은 19 %1입니다.</translation>
     </message>
 </context>
 <context>
@@ -768,6 +1152,10 @@ Firehose 모드를 사용하면 훈련 데이터 업로드를 극대화하여 op
         <source>This platform supports limited MADS settings.</source>
         <translation>이 플랫폼은 제한된 MADS 설정을 지원합니다.</translation>
     </message>
+    <message>
+        <source>Customize Lane Turn</source>
+        <translation type="vanished">차선 회전 사용자 지정</translation>
+    </message>
 </context>
 <context>
     <name>LongitudinalPanel</name>
@@ -790,6 +1178,86 @@ Firehose 모드를 사용하면 훈련 데이터 업로드를 극대화하여 op
     <message>
         <source>Start the vehicle to check vehicle compatibility.</source>
         <translation>차량 호환성을 확인하려면 차량 시동을 걸어주세요.</translation>
+    </message>
+    <message>
+        <source>Vibe Personality Controller</source>
+        <translation type="vanished">분위기 성격 컨트롤러</translation>
+    </message>
+    <message>
+        <source>Advanced driving personality system with separate controls for acceleration behavior (Eco/Normal/Sport) and following distance/braking (Relaxed/Standard/Aggressive). Customize your driving experience with independent acceleration and distance personalities.</source>
+        <translation type="vanished">가속 행동(에코/일반/스포츠)과 차간 거리/제동(느긋함/표준/공격적)을 별도로 제어하는 고급 주행 성향 시스템. 독립적인 가속 및 거리 성향 설정으로 나만의 주행 경험을 맞춤 구성하세요.</translation>
+    </message>
+    <message>
+        <source>Acceleration Personality</source>
+        <translation type="vanished">가속 성향</translation>
+    </message>
+    <message>
+        <source>Controls acceleration behavior: Eco (efficient), Normal (balanced), Sport (responsive). Adjust how aggressively the vehicle accelerates while maintaining smooth operation.</source>
+        <translation type="vanished">가속 동작 제어: 에코(효율적), 일반(균형적), 스포츠(반응적). 부드러운 주행을 유지하면서 차량이 얼마나 민첩하게 가속하는지 조정합니다.</translation>
+    </message>
+    <message>
+        <source>Following Distance Personality</source>
+        <translation type="vanished">차간 거리 성향</translation>
+    </message>
+    <message>
+        <source>Controls following distance and braking behavior: Relaxed (longer distance, gentler braking), Standard (balanced), Aggressive (shorter distance, firmer braking). Fine-tune your comfort level in traffic situations.</source>
+        <translation type="vanished">차량 간 거리와 제동 거동을 조절합니다: 느슨함(더 긴 거리, 부드러운 제동), 표준(균형 잡힘), 공격적(더 짧은 거리, 강한 제동). 교통 상황에서 본인의 편안함 수준을 미세 조정하세요.</translation>
+    </message>
+    <message>
+        <source>Speed Limit Control (SLC)</source>
+        <translation type="vanished">속도 제어 (SLC)</translation>
+    </message>
+    <message>
+        <source>When you engage ACC, you will be prompted to set the cruising speed to the speed limit of the road adjusted by the Offset and Source Policy specified, or the current driving speed. The maximum cruising speed will always be the MAX set speed.</source>
+        <translation type="vanished">ACC를 작동시키면, 지정된 오프셋 및 소스 정책에 따라 조정된 도로 제한 속도 또는 현재 주행 속도로 순항 속도를 설정하라는 메시지가 표시됩니다. 최대 순항 속도는 항상 설정된 최대 속도(MAX)로 유지됩니다.</translation>
+    </message>
+    <message>
+        <source>Vision Turn Speed Controller</source>
+        <translation type="vanished">비전 회전 속도 컨트롤러</translation>
+    </message>
+    <message>
+        <source>Also known as V-TSC, this controller automatically slows down for curvature while OP longitudinal is engaged.</source>
+        <translation type="vanished">V-TSC로도 알려진 이 컨트롤러는 OP 롱기튜디널(종방향 제어)이 작동 중일 때 곡률에 따라 자동으로 속도를 줄입니다.</translation>
+    </message>
+    <message>
+        <source>Enable Dynamic Experimental Control</source>
+        <translation type="vanished">동적 실험 제어 활성화</translation>
+    </message>
+    <message>
+        <source>Enable toggle to allow the model to determine when to use sunnypilot ACC or sunnypilot End to End Longitudinal.</source>
+        <translation type="vanished">활성화 토글을 통해 모델이 써니파일럿 ACC 또는 써니파일럿 종단 간 종방향 제어 사용 시점을 결정하도록 허용합니다.</translation>
+    </message>
+    <message>
+        <source>Customize DEC</source>
+        <translation type="vanished">DEC 사용자 지정</translation>
+    </message>
+    <message>
+        <source>Smart Cruise Control - Vision</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use vision path predictions to estimate the appropriate speed to drive through turns ahead.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Intelligent Cruise Button Management (ICBM) (Alpha)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When enabled, sunnypilot will attempt to manage the built-in cruise control buttons by emulating button presses for limited longitudinal control.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed Limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smart Cruise Control - Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use map data to estimate the appropriate speed to drive through turns ahead.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1020,34 +1488,50 @@ The default software delay value is 0.2</source>
     </message>
     <message>
         <source>Refresh Model List</source>
-        <translation type="unfinished"></translation>
+        <translation>모델 목록 새로고침</translation>
     </message>
     <message>
         <source>REFRESH</source>
-        <translation type="unfinished">새로 고침</translation>
+        <translation>새로고침</translation>
     </message>
     <message>
         <source>Fetching Latest Models</source>
-        <translation type="unfinished"></translation>
+        <translation>최신 모델 가져오는 중</translation>
     </message>
     <message>
         <source>Enable this for the car to learn and adapt its steering response time. Disable to use a fixed steering response time. Keeping this on provides the stock openpilot experience.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 기능을 활성화하면 차량이 조향 반응 시간을 학습하고 적응합니다. 비활성화 시 고정된 조향 반응 시간을 사용합니다. 이 설정을 켜두면 오픈파일럿의 기본 경험을 제공합니다.</translation>
     </message>
     <message>
         <source>Live Steer Delay:</source>
-        <translation type="unfinished"></translation>
+        <translation>라이브 조향 지연:</translation>
     </message>
     <message>
         <source>Actuator Delay:</source>
-        <translation type="unfinished"></translation>
+        <translation>액추에이터 지연:</translation>
     </message>
     <message>
         <source>Software Delay:</source>
-        <translation type="unfinished"></translation>
+        <translation>소프트웨어 지연:</translation>
     </message>
     <message>
         <source>Total Delay:</source>
+        <translation>전체 지연 시간:</translation>
+    </message>
+    <message>
+        <source>Use Lane Turn Desires</source>
+        <translation>차선 회전 의사 사용</translation>
+    </message>
+    <message>
+        <source>Adjust Lane Turn Speed</source>
+        <translation>차선 회전 속도 조정</translation>
+    </message>
+    <message>
+        <source>Set the maximum speed for lane turn desires. Default is 19 %1.</source>
+        <translation>차선 회전 욕구에 대한 최대 속도를 설정합니다. 기본값은 19 %1입니다.</translation>
+    </message>
+    <message>
+        <source>If you’re driving at 20 mph (32 km/h) or below and have your blinker on, the car will plan a turn in that direction at the nearest drivable path. This prevents situations (like at red lights) where the car might plan the wrong turn direction.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1214,6 +1698,10 @@ The default software delay value is 0.2</source>
         <translation>OpenStreetMap 데이터베이스가 최신이 아닙니다. 향상된 속도 제어 및 도로명 표시를 위해 OpenStreetMap 데이터를 계속 사용하려면, 새로운 지도를 다운로드해야 합니다.
 
 %1</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Unsupported branch detected&lt;/b&gt; - The current version of &lt;b&gt;&lt;u&gt;%1&lt;/u&gt;&lt;/b&gt; branch is no longer supported on the comma three. Please go to &lt;b&gt;[Device &gt; Software]&lt;/b&gt; and install a supported branch with &lt;b&gt;&lt;u&gt;-tici&lt;/u&gt;&lt;/b&gt; in the branch name for the comma three.</source>
+        <translation>&lt;b&gt;지원되지 않는 브랜치 감지됨&lt;/b&gt; - 현재 &lt;b&gt;&lt;u&gt;%1&lt;/u&gt;&lt;/b&gt; 브랜치 버전은 comma three에서 더 이상 지원되지 않습니다. &lt;b&gt;[장치 &gt; 소프트웨어]&lt;/b&gt;로 이동하여 comma three용 &lt;b&gt;&lt;u&gt;-tici&lt;/u&gt;&lt;/b&gt;가 포함된 지원되는 브랜치를 설치해 주세요.</translation>
     </message>
 </context>
 <context>
@@ -1403,16 +1891,16 @@ Warning: You are on a metered connection!</source>
         <translation>기기를 comma 계정에 페어링하세요.</translation>
     </message>
     <message>
-        <source>Go to https://connect.comma.ai on your phone</source>
-        <translation>휴대폰에서 https://connect.comma.ai로 이동하세요.</translation>
+        <source>Go to https://stable.konik.ai on your phone</source>
+        <translation>휴대폰에서 https://stable.konik.ai로 이동하세요.</translation>
     </message>
     <message>
         <source>Click &quot;add new device&quot; and scan the QR code on the right</source>
         <translation>&quot;새 기기 추가&quot;를 누르고 오른쪽에 있는 QR 코드를 스캔하세요.</translation>
     </message>
     <message>
-        <source>Bookmark connect.comma.ai to your home screen to use it like an app</source>
-        <translation>connect.comma.ai를 홈 화면에 북마크하여 앱처럼 사용하세요.</translation>
+        <source>Bookmark stable.konik.ai to your home screen to use it like an app</source>
+        <translation>stable.konik.ai를 홈 화면에 북마크하여 앱처럼 사용하세요.</translation>
     </message>
     <message>
         <source>Please connect to Wi-Fi to complete initial pairing</source>
@@ -1527,8 +2015,8 @@ Warning: You are on a metered connection!</source>
         <translation>지금 업그레이드하세요</translation>
     </message>
     <message>
-        <source>Become a comma prime member at connect.comma.ai</source>
-        <translation>connect.comma.ai에서 comma 프라임 회원이 되세요.</translation>
+        <source>Become a comma prime member at stable.konik.ai</source>
+        <translation>stable.konik.ai에서 comma 프라임 회원이 되세요.</translation>
     </message>
     <message>
         <source>PRIME FEATURES:</source>
@@ -1589,6 +2077,59 @@ Warning: You are on a metered connection!</source>
     <message>
         <source>sunnypilot</source>
         <translation>sunnypilot</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Percent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Car
+Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Map
+Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Car
+First</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Map
+First</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Combined
+Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Assist</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1684,6 +2225,10 @@ Warning: You are on a metered connection!</source>
         <source>Developer</source>
         <translation>개발자</translation>
     </message>
+    <message>
+        <source>Display</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SetupWidget</name>
@@ -1692,8 +2237,8 @@ Warning: You are on a metered connection!</source>
         <translation>설정 완료하기</translation>
     </message>
     <message>
-        <source>Pair your device with comma connect (connect.comma.ai) and claim your comma prime offer.</source>
-        <translation>기기를 comma connect (connect.comma.ai)와 페어링하고 comma prime 혜택을 받으세요.</translation>
+        <source>Pair your device with comma connect (stable.konik.ai) and claim your comma prime offer.</source>
+        <translation>기기를 comma connect (stable.konik.ai)와 페어링하고 comma prime 혜택을 받으세요.</translation>
     </message>
     <message>
         <source>Pair device</source>
@@ -1721,18 +2266,6 @@ Warning: You are on a metered connection!</source>
     <message>
         <source>TEMP</source>
         <translation>온도</translation>
-    </message>
-    <message>
-        <source>HIGH</source>
-        <translation>높음</translation>
-    </message>
-    <message>
-        <source>GOOD</source>
-        <translation>정상</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>양호</translation>
     </message>
     <message>
         <source>VEHICLE</source>
@@ -1773,6 +2306,22 @@ Warning: You are on a metered connection!</source>
     <message>
         <source>5G</source>
         <translation>5G</translation>
+    </message>
+    <message>
+        <source>CPU</source>
+        <translation>CPU</translation>
+    </message>
+    <message>
+        <source>GPU</source>
+        <translation>GPU</translation>
+    </message>
+    <message>
+        <source>MEMORY</source>
+        <translation>메모리</translation>
+    </message>
+    <message>
+        <source>Free Space</source>
+        <translation>자유 공간</translation>
     </message>
 </context>
 <context>
@@ -1918,6 +2467,208 @@ Warning: You are on a metered connection!</source>
     <message>
         <source>Please enable always offroad mode or turn off vehicle to adjust these toggles</source>
         <translation>이 설정들을 변경하려면 항상 오프로드 모드를 활성화하거나 차량 시동을 꺼야 합니다.</translation>
+    </message>
+</context>
+<context>
+    <name>SpeedLimitControl</name>
+    <message>
+        <source>Customize SLC</source>
+        <translation type="vanished">SLC 사용자 지정</translation>
+    </message>
+</context>
+<context>
+    <name>SpeedLimitControlPolicy</name>
+    <message>
+        <source>Back</source>
+        <translation type="vanished">뒤로</translation>
+    </message>
+    <message>
+        <source>Speed Limit Source</source>
+        <translation type="vanished">속도 제한 출처</translation>
+    </message>
+    <message>
+        <source>⦿ Car Only: Use Speed Limit data only from Car</source>
+        <translation type="vanished">⦿ 차량 전용: 차량에서만 속도 제한 데이터 사용</translation>
+    </message>
+    <message>
+        <source>⦿ Map Only: Use Speed Limit data only from OpenStreetMaps</source>
+        <translation type="vanished">⦿ 지도 전용: OpenStreetMaps의 속도 제한 데이터만 사용</translation>
+    </message>
+    <message>
+        <source>⦿ Car First: Use Speed Limit data from Car if available, else use from OpenStreetMaps</source>
+        <translation type="vanished">⦿ 차량 우선: 가능한 경우 차량의 속도 제한 데이터를 사용하고, 그렇지 않으면 OpenStreetMaps의 데이터를 사용합니다.</translation>
+    </message>
+    <message>
+        <source>⦿ Map First: Use Speed Limit data from OpenStreetMaps if available, else use from Car</source>
+        <translation type="vanished">⦿ 지도 우선: 가능한 경우 OpenStreetMaps의 속도 제한 데이터를 사용하고, 그렇지 않으면 차량 데이터를 사용합니다.</translation>
+    </message>
+    <message>
+        <source>⦿ Combined: Use combined Speed Limit data from Car &amp; OpenStreetMaps</source>
+        <translation type="vanished">⦿ 통합: 차량 및 OpenStreetMaps의 속도 제한 데이터를 통합하여 사용</translation>
+    </message>
+</context>
+<context>
+    <name>SpeedLimitControlSubpanel</name>
+    <message>
+        <source>Back</source>
+        <translation type="vanished">뒤로</translation>
+    </message>
+    <message>
+        <source>Customize Warning</source>
+        <translation type="vanished">사용자 경고 설정</translation>
+    </message>
+    <message>
+        <source>Customize Source</source>
+        <translation type="vanished">소스 사용자 지정</translation>
+    </message>
+    <message>
+        <source>Engage Mode</source>
+        <translation type="vanished">작동 모드</translation>
+    </message>
+    <message>
+        <source>Speed Limit Offset</source>
+        <translation type="vanished">속도 제한 오프셋</translation>
+    </message>
+    <message>
+        <source>⦿ Auto: Automatic speed adjustment based on speed limit data</source>
+        <translation type="vanished">⦿ 자동: 속도 제한 데이터에 따른 자동 속도 조절</translation>
+    </message>
+    <message>
+        <source>⦿ User Confirm: Asks driver to confirm speed adjustment based on speed limit data</source>
+        <translation type="vanished">⦿ 사용자 확인: 속도 제한 데이터를 기반으로 속도 조정을 운전자에게 확인 요청</translation>
+    </message>
+    <message>
+        <source>⦿ None: No Offset</source>
+        <translation type="vanished">⦿ 없음: 오프셋 없음</translation>
+    </message>
+    <message>
+        <source>⦿ Fixed: Adds a fixed offset [Speed Limit + Offset]</source>
+        <translation type="vanished">⦿ 수정됨: 고정 오프셋 추가 [속도 제한 + 오프셋]</translation>
+    </message>
+    <message>
+        <source>⦿ Percent: Adds a percent offset [Speed Limit + (Offset % Speed Limit)]</source>
+        <translation type="vanished">⦿ 백분율: 퍼센트 오프셋 추가 [제한 속도 + (오프셋 % 제한 속도)]</translation>
+    </message>
+</context>
+<context>
+    <name>SpeedLimitControlWarning</name>
+    <message>
+        <source>Back</source>
+        <translation type="vanished">뒤로</translation>
+    </message>
+    <message>
+        <source>Speed Limit Warning</source>
+        <translation type="vanished">속도 제한 경고</translation>
+    </message>
+    <message>
+        <source>Warning Offset</source>
+        <translation type="vanished">경고 오프셋</translation>
+    </message>
+    <message>
+        <source>N/A</source>
+        <translation type="vanished">죄송합니다. 입력된 내용이 없어 번역을 수행할 수 없습니다. 번역이 필요한 문장이나 단어를 입력해 주세요.</translation>
+    </message>
+    <message>
+        <source>⦿ Off: No Warning</source>
+        <translation type="vanished">⦿ 끄기: 경고 없음</translation>
+    </message>
+    <message>
+        <source>⦿ Display: Speed Limit Sign will visually alert</source>
+        <translation type="vanished">⦿ 디스플레이: 속도 제한 표지판이 시각적으로 경고합니다</translation>
+    </message>
+    <message>
+        <source>⦿ Chime: Speed Limit Sign will visually alert along with an audible chime</source>
+        <translation type="vanished">⦿ 경고음: 속도 제한 표지판이 시각적으로 경고와 함께 소리로 알림을 제공합니다.</translation>
+    </message>
+    <message>
+        <source>⦿ None: No Offset</source>
+        <translation type="vanished">⦿ 없음: 오프셋 없음</translation>
+    </message>
+    <message>
+        <source>⦿ Fixed: Adds a fixed offset [Speed Limit + Offset]</source>
+        <translation type="vanished">⦿ 수정됨: 고정 오프셋 추가 [속도 제한 + 오프셋]</translation>
+    </message>
+    <message>
+        <source>⦿ Percent: Adds a percent offset [Speed Limit + (Offset % Speed Limit)]</source>
+        <translation type="vanished">⦿ 백분율: 퍼센트 오프셋 추가 [제한 속도 + (오프셋 % 제한 속도)]</translation>
+    </message>
+</context>
+<context>
+    <name>SpeedLimitPolicy</name>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">뒤로</translation>
+    </message>
+    <message>
+        <source>Speed Limit Source</source>
+        <translation type="unfinished">속도 제한 출처</translation>
+    </message>
+    <message>
+        <source>⦿ Car Only: Use Speed Limit data only from Car</source>
+        <translation type="unfinished">⦿ 차량 전용: 차량에서만 속도 제한 데이터 사용</translation>
+    </message>
+    <message>
+        <source>⦿ Map Only: Use Speed Limit data only from OpenStreetMaps</source>
+        <translation type="unfinished">⦿ 지도 전용: OpenStreetMaps의 속도 제한 데이터만 사용</translation>
+    </message>
+    <message>
+        <source>⦿ Car First: Use Speed Limit data from Car if available, else use from OpenStreetMaps</source>
+        <translation type="unfinished">⦿ 차량 우선: 가능한 경우 차량의 속도 제한 데이터를 사용하고, 그렇지 않으면 OpenStreetMaps의 데이터를 사용합니다.</translation>
+    </message>
+    <message>
+        <source>⦿ Map First: Use Speed Limit data from OpenStreetMaps if available, else use from Car</source>
+        <translation type="unfinished">⦿ 지도 우선: 가능한 경우 OpenStreetMaps의 속도 제한 데이터를 사용하고, 그렇지 않으면 차량 데이터를 사용합니다.</translation>
+    </message>
+    <message>
+        <source>⦿ Combined: Use combined Speed Limit data from Car &amp; OpenStreetMaps</source>
+        <translation type="unfinished">⦿ 통합: 차량 및 OpenStreetMaps의 속도 제한 데이터를 통합하여 사용</translation>
+    </message>
+</context>
+<context>
+    <name>SpeedLimitSettings</name>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">뒤로</translation>
+    </message>
+    <message>
+        <source>Customize Source</source>
+        <translation type="unfinished">소스 사용자 지정</translation>
+    </message>
+    <message>
+        <source>Speed Limit Offset</source>
+        <translation type="unfinished">속도 제한 오프셋</translation>
+    </message>
+    <message>
+        <source>⦿ None: No Offset</source>
+        <translation type="unfinished">⦿ 없음: 오프셋 없음</translation>
+    </message>
+    <message>
+        <source>⦿ Fixed: Adds a fixed offset [Speed Limit + Offset]</source>
+        <translation type="unfinished">⦿ 수정됨: 고정 오프셋 추가 [속도 제한 + 오프셋]</translation>
+    </message>
+    <message>
+        <source>⦿ Percent: Adds a percent offset [Speed Limit + (Offset % Speed Limit)]</source>
+        <translation type="unfinished">⦿ 백분율: 퍼센트 오프셋 추가 [제한 속도 + (오프셋 % 제한 속도)]</translation>
+    </message>
+    <message>
+        <source>⦿ Off: Disables the Speed Limit functions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>⦿ Information: Displays the current road&apos;s speed limit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>⦿ Warning: Provides a warning when exceeding the current road&apos;s speed limit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed Limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>⦿ Assist: Adjusts the vehicle&apos;s cruise speed based on the current road&apos;s speed limit when operating the +/- buttons.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2090,27 +2841,32 @@ Warning: You are on a metered connection!</source>
     </message>
     <message>
         <source>Enable sunnylink uploader to allow sunnypilot to upload your driving data to sunnypilot servers. (only for highest tiers, and does NOT bring ANY benefit to you. We are just testing data volume.)</source>
-        <translation type="unfinished"></translation>
+        <translation>써니링크 업로더를 활성화하면 써니파일럿이 운전 데이터를 써니파일럿 서버로 업로드할 수 있습니다. (최고 등급 계층만 해당되며, 사용자에게 어떤 이점도 제공하지 않습니다. 데이터 용량 테스트만 진행 중입니다.)</translation>
     </message>
     <message>
         <source>[Don&apos;t use] Enable sunnylink uploader</source>
-        <translation type="unfinished"></translation>
+        <translation>[사용하지 않음] 선니링크 업로더 활성화</translation>
     </message>
     <message>
         <source>🚀 sunnylink 🚀</source>
-        <translation type="unfinished"></translation>
+        <translation>🚀 써니링크 🚀
+
+(번역 노트:
+- &quot;Sunnylink&quot;은 고유명사로 간주하여 음차 번역 적용
+- 이모지(🚀)는 원문 유지하여 역동적인 느낌 보존
+- 전체적으로 소프트웨어 GUI의 간결하고 현대적인 스타일 반영)</translation>
     </message>
     <message>
         <source>For secure backup, restore, and remote configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>보안 백업, 복원 및 원격 구성을 위해</translation>
     </message>
     <message>
         <source>Sponsorship isn&apos;t required for basic backup/restore</source>
-        <translation type="unfinished"></translation>
+        <translation>기본 백업/복원에는 후원이 필요하지 않습니다</translation>
     </message>
     <message>
         <source>Click the sponsor button for more details</source>
-        <translation type="unfinished"></translation>
+        <translation>스폰서 버튼을 클릭하여 자세한 내용을 확인하세요</translation>
     </message>
 </context>
 <context>
@@ -2150,6 +2906,39 @@ Warning: You are on a metered connection!</source>
     <message>
         <source>Early Access: Become a sunnypilot Sponsor</source>
         <translation>얼리 액세스: sunnypilot 후원자가 되세요</translation>
+    </message>
+</context>
+<context>
+    <name>TSKKeyboard</name>
+    <message>
+        <source>SecOCKey Install</source>
+        <translation>SecOC 키 설치</translation>
+    </message>
+    <message>
+        <source>INSTALL</source>
+        <translation>설치</translation>
+    </message>
+    <message>
+        <source>Archived key: </source>
+        <translation>보관된 키:</translation>
+    </message>
+    <message>
+        <source>Enter your Car Security Key</source>
+        <translation>차량 보안 키를 입력하세요</translation>
+    </message>
+    <message>
+        <source>Success!
+Restart comma to have openpilot use the key</source>
+        <translation>성공!
+콤마를 재시작하여 openpilot이 키를 사용하도록 하세요</translation>
+    </message>
+    <message>
+        <source>Invalid key: %1</source>
+        <translation>잘못된 키: %1</translation>
+    </message>
+    <message>
+        <source>Not Installed</source>
+        <translation>설치되지 않음</translation>
     </message>
 </context>
 <context>
@@ -2301,6 +3090,118 @@ Warning: You are on a metered connection!</source>
         <source>Enable the sunnypilot longitudinal control (alpha) toggle to allow Experimental mode.</source>
         <translation>실험 모드를 활성화하려면 sunnypilot 가감속 제어(알파) 토글을 켜세요.</translation>
     </message>
+    <message>
+        <source>Enable drive mode btn link</source>
+        <translation type="vanished">주행 모드 활성화 버튼 링크</translation>
+    </message>
+    <message>
+        <source>Links cars drive mode btn with accel personalities based on personality (i.e., relaxed, standard, sport)</source>
+        <translation type="vanished">자동차 주행 모드 버튼을 성격(즉, 여유, 표준, 스포츠)에 기반한 가속 성향과 연동</translation>
+    </message>
+    <message>
+        <source>Toyota: Auto Brake Hold FOR TSS2 HYBRID CARS</source>
+        <translation type="vanished">도요타: 자동 브레이크 홀드 TSS2 하이브리드 차량용</translation>
+    </message>
+    <message>
+        <source>As you may auto brake hold currently supported by openpilot, this feature will allow sunnypilot to automatically hold the vehicle at a stop when the lead car is stopped. (TSS2 Hybird only)</source>
+        <translation type="vanished">현재 openpilot에서 지원하는 자동 브레이크 홀드 기능과 마찬가지로, 이 기능은 선행 차량이 정지했을 때 sunnypilot이 자동으로 차량을 정지 상태로 유지하도록 합니다. (TSS2 하이브리드 전용)</translation>
+    </message>
+    <message>
+        <source>Toyota: Prius TSS2 BSM and some tssp</source>
+        <translation type="vanished">도요타: 프리우스 TSS2 BSM 및 일부 TSSP</translation>
+    </message>
+    <message>
+        <source>Add support for BSM.</source>
+        <translation type="vanished">BSM 지원 기능을 추가합니다.</translation>
+    </message>
+    <message>
+        <source>Toyota: custom tune</source>
+        <translation type="vanished">토요타: 맞춤 튜닝</translation>
+    </message>
+    <message>
+        <source>idk something gas and brake</source>
+        <translation type="vanished">뭔가 가속과 브레이크 같은 거요</translation>
+    </message>
+    <message>
+        <source>Toyota: Stock Toyota Longitudinal</source>
+        <translation type="vanished">토요타: 기본 토요타 종방향</translation>
+    </message>
+    <message>
+        <source>This feature will allow sunnypilot to use the stock Toyota longitudinal control instead of the sunnypilot longitudinal control. </source>
+        <translation type="vanished">이 기능은 써니파일롯이 자체 종방향 제어 대신 토요타 기본 종방향 제어를 사용할 수 있도록 합니다.</translation>
+    </message>
+    <message>
+        <source>Sport</source>
+        <translation type="vanished">스포츠</translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation type="vanished">정상</translation>
+    </message>
+    <message>
+        <source>Eco</source>
+        <translation type="vanished">에코</translation>
+    </message>
+    <message>
+        <source>Acceleration Personality</source>
+        <translation type="vanished">가속 성향</translation>
+    </message>
+    <message>
+        <source>Normal is recommended. In sport mode, sunnypilot will provide aggressive acceleration for a dynamic driving experience. In eco mode, sunnypilot will apply smoother and more relaxed acceleration. On supported cars, you can cycle through these acceleration personality within Onroad Settings on the driving screen.</source>
+        <translation type="vanished">일반 모드가 권장됩니다. 스포츠 모드에서는 써니파일럿이 역동적인 주행 경험을 위해 강한 가속을 제공합니다. 에코 모드에서는 써니파일럿이 더 부드럽고 여유로운 가속을 적용합니다. 지원되는 차량에서는 주행 화면의 온로드 설정에서 이러한 가속 성향을 순환하여 선택할 수 있습니다.</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>끄기</translation>
+    </message>
+    <message>
+        <source>Lite</source>
+        <translation>라이트</translation>
+    </message>
+    <message>
+        <source>Full</source>
+        <translation>전체</translation>
+    </message>
+    <message>
+        <source>dashy</source>
+        <translation>대시</translation>
+    </message>
+    <message>
+        <source>dashy - dragonpilot&apos;s all-in-one system hub for you.
+
+Visit http://&lt;device_ip&gt;:5088 to access.
+
+Off - Turn off dashy completely.
+Lite: File Manager only.
+Full: File Manager + Live Stream.</source>
+        <translation>대시 - 드래곤파일럿의 올인원 시스템 허브입니다.
+
+접속 주소: http://&lt;장치_IP&gt;:5088
+
+끄기 - 대시 기능 완전 종료.
+라이트: 파일 관리자만 사용.
+풀: 파일 관리자 + 실시간 스트리밍.</translation>
+    </message>
+    <message>
+        <source>Strict</source>
+        <translation>엄격함</translation>
+    </message>
+    <message>
+        <source>Moderate</source>
+        <translation>보통</translation>
+    </message>
+    <message>
+        <source>Lenient</source>
+        <translation>관대함</translation>
+    </message>
+    <message>
+        <source>Distraction Detection Level</source>
+        <translation>주의산만 감지 수준</translation>
+    </message>
+    <message>
+        <source>Set how sensitive the driver distraction detection should be. Strict: Very sensitive, warns on minor distractions. Moderate: Balanced between sensitivity and false positives. Lenient: Only alerts on clear distractions. Off: Disable Driver Distraction Detection and Control.</source>
+        <translation>운전자 주의 산만 감지 민감도를 설정합니다. 엄격: 매우 민감하게 작동하여 사소한 주의 산만에도 경고합니다. 보통: 민감도와 오작동 간 균형을 유지합니다. 관대: 명백한 주의 산만 상황에서만 경고합니다. 끔: 운전자 주의 산만 감지 및 제어 기능을 비활성화합니다.</translation>
+    </message>
 </context>
 <context>
     <name>TreeOptionDialog</name>
@@ -2311,6 +3212,10 @@ Warning: You are on a metered connection!</source>
     <message>
         <source>Cancel</source>
         <translation>취소</translation>
+    </message>
+    <message>
+        <source>Favorites</source>
+        <translation>즐겨찾기</translation>
     </message>
 </context>
 <context>
@@ -2354,6 +3259,64 @@ Warning: You are on a metered connection!</source>
     <message>
         <source>Display useful metrics below the chevron that tracks the lead car (only applicable to cars with openpilot longitudinal control).</source>
         <translation>앞차를 추적하는 역삼각형 아래에 유용한 측정 지표를 표시합니다. (openpilot 가감속 제어 기능이 있는 차량에만 해당됩니다)</translation>
+    </message>
+    <message>
+        <source>Enable Tesla Rainbow Mode</source>
+        <translation>테슬라 레인보우 모드 활성화</translation>
+    </message>
+    <message>
+        <source>Enable the rainbow mode, which displays a rainbow effect on the screen.</source>
+        <translation type="vanished">무지개 모드를 활성화하면 화면에 무지개 효과가 표시됩니다.</translation>
+    </message>
+    <message>
+        <source>A beautiful rainbow effect on the path the model wants to take.</source>
+        <translation>모델이 가고자 하는 경로에 아름다운 무지개 효과가 나타납니다.</translation>
+    </message>
+    <message>
+        <source>It</source>
+        <translation>그것</translation>
+    </message>
+    <message>
+        <source>does not</source>
+        <translation>아니요</translation>
+    </message>
+    <message>
+        <source>affect driving in any way.</source>
+        <translation>운전에 어떤 영향도 미치지 않습니다.</translation>
+    </message>
+    <message>
+        <source>Developer UI</source>
+        <translation>개발자 UI</translation>
+    </message>
+    <message>
+        <source>Display real-time parameters and metrics from various sources.</source>
+        <translation>다양한 소스의 실시간 매개변수와 지표를 표시합니다.</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation>좌회전</translation>
+    </message>
+    <message>
+        <source>Right &amp;&amp;
+Bottom</source>
+        <translation>오른쪽 &amp;&amp;
+아래</translation>
+    </message>
+    <message>
+        <source>Enable Standstill Timer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show a timer on the HUD when the car is at a standstill.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Road Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Displays the name of the road the car is traveling on. The OpenStreetMap database of the location must be downloaded from the OSM panel to fetch the road name.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

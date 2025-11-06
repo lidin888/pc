@@ -1,7 +1,13 @@
 Version 0.10.1 (2025-09-08)
 ========================
-* Record driving feedback using LKAS button
-* Honda City 2023 support thanks to drFritz!
+* New driving model
+  * World Model: removed global localization inputs
+  * World Model: 2x the number of parameters
+  * World Model: trained on 4x the number of segments
+  * Driving Vision Model: trained on 4x the number of segments
+* Honda City 2023 support thanks to vanillagorillaa and drFritz!
+* Honda N-Box 2018 support thanks to miettal!
+* Honda Odyssey 2021-25 support thanks to csouers and MVL!
 
 Version 0.10.0 (2025-08-05)
 ========================
@@ -318,7 +324,7 @@ Version 0.8.12 (2021-12-15)
    * Improved audio amplifier configuration
    * System reliability improvements
    * Update Python to 3.8.10
- * Raw logs upload moved to connect.comma.ai
+ * Raw logs upload moved to stable.konik.ai
  * Fixed HUD alerts on newer Honda Bosch thanks to csouers!
  * Audi Q3 2020-21 support thanks to jyoung8607!
  * Lexus RC 2020 support thanks to ErichMoraga!
