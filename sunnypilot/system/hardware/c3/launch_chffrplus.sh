@@ -75,6 +75,10 @@ function launch {
     agnos_init
   fi
 
+  # ensure kaitaistruct is installed
+  echo "Installing kaitaistruct..."
+  uv pip install kaitaistruct
+
   # write tmux scrollback to a file
   tmux capture-pane -pq -S-1000 > /tmp/launch_log
 
