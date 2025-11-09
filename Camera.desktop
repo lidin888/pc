@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=CamBlindSpot
+GenericName=CamBlindSpot
+Comment=openpilot is an operating system for robotics
+Exec=gnome-terminal -e "bash -c '/home/op/launch_cam.sh;$SHELL'"
+Terminal=false
+Type=Application
+Icon=/home/op/logo.ico
