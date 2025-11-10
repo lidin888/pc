@@ -13,23 +13,23 @@ from openpilot.selfdrive.locationd.helpers import PointBuckets, ParameterEstimat
 
 HISTORY = 5  # secs
 POINTS_PER_BUCKET = 1500
-MIN_POINTS_TOTAL = 2000  # 降低最低点数要求
+MIN_POINTS_TOTAL = 4000
 MIN_POINTS_TOTAL_QLOG = 600
 FIT_POINTS_TOTAL = 2000
 FIT_POINTS_TOTAL_QLOG = 600
-MIN_VEL = 8  # m/s 降低最低速度要求
+MIN_VEL = 15  # m/s
 FRICTION_FACTOR = 1.5  # ~85% of data coverage
-FACTOR_SANITY = 0.5  # 放宽参数合理性检查
-FACTOR_SANITY_QLOG = 0.7
-FRICTION_SANITY = 0.8  # 放宽摩擦系数检查
-FRICTION_SANITY_QLOG = 1.0
-STEER_MIN_THRESHOLD = 0.01  # 降低方向盘扭矩阈值
+FACTOR_SANITY = 0.3
+FACTOR_SANITY_QLOG = 0.5
+FRICTION_SANITY = 0.5
+FRICTION_SANITY_QLOG = 0.8
+STEER_MIN_THRESHOLD = 0.02
 MIN_FILTER_DECAY = 50
 MAX_FILTER_DECAY = 250
-LAT_ACC_THRESHOLD = 2.0  # 放宽横向加速度阈值
+LAT_ACC_THRESHOLD = 1
 STEER_BUCKET_BOUNDS = [(-0.5, -0.3), (-0.3, -0.2), (-0.2, -0.1), (-0.1, 0), (0, 0.1), (0.1, 0.2), (0.2, 0.3), (0.3, 0.5)]
-MIN_BUCKET_POINTS = np.array([50, 150, 300, 300, 300, 300, 150, 50])  # 降低每个桶的最低点数要求
-MIN_ENGAGE_BUFFER = 1  # secs 减少激活缓冲时间
+MIN_BUCKET_POINTS = np.array([100, 300, 500, 500, 500, 500, 300, 100])
+MIN_ENGAGE_BUFFER = 2  # secs
 
 VERSION = 1  # bump this to invalidate old parameter caches
 ALLOWED_CARS = ['toyota', 'hyundai', 'rivian', 'honda', 'subaru', 'volkswagen', 'chrysler', 'ford', 'gm', 'mazda', 'nissan', 'tesla']  # 添加所有品牌支持
