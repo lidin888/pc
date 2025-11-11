@@ -8,6 +8,7 @@ from openpilot.system.ui.lib.application import gui_app
 from openpilot.system.ui.lib.multilang import tr, tr_noop
 from openpilot.system.ui.widgets import DialogResult
 from openpilot.selfdrive.ui.ui_state import ui_state
+import os
 
 PERSONALITY_TO_INT = log.LongitudinalPersonality.schema.enumerants
 
@@ -118,6 +119,12 @@ class TogglesLayout(Widget):
 
     self._toggles = {}
     self._locked_toggles = set()
+
+    # rick - hide them
+    if "LITE" in os.environ:
+      for key in ['AlwaysOnDM', 'RecordFront', 'RecordAudio']:
+          self._toggle_defs.pop(key, None)
+
     for param, (title, desc, icon, needs_restart) in self._toggle_defs.items():
       toggle = toggle_item(
         title,

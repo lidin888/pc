@@ -94,3 +94,6 @@ Pipfile
 # Ignore all local history of files
 .history
 .ionide
+
+# rick - keep panda_tici standalone
+panda_tici/
