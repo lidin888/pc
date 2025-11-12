@@ -52,12 +52,13 @@ class FontWeight(StrEnum):
   EXTRA_BOLD = "Inter-ExtraBold.ttf"
   BLACK = "Inter-Black.ttf"
   UNIFONT = "unifont.otf"
+  CHINA = "china.ttf"
 
 
 def font_fallback(font: rl.Font) -> rl.Font:
   """Fall back to unifont for languages that require it."""
   if multilang.requires_unifont():
-    return gui_app.font(FontWeight.UNIFONT)
+    return gui_app.font(FontWeight.CHINA)
   return font
 
 
