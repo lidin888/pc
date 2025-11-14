@@ -76,22 +76,27 @@ def and_(*fns):
 procs = [
   DaemonProcess("manage_athenad", "system.athena.manage_athenad", "AthenadPid", enabled=not disable_connect),
 
-  NativeProcess("loggerd", "system/loggerd", ["./loggerd"], logging),
-  NativeProcess("encoderd", "system/loggerd", ["./encoderd"], only_onroad),
-  NativeProcess("stream_encoderd", "system/loggerd", ["./encoderd", "--stream"], or_(notcar, and_(dashy_with_video, only_onroad))),
+  # NativeProcess("loggerd", "system/loggerd", ["./loggerd"], logging),
+  # NativeProcess("encoderd", "system/loggerd", ["./encoderd"], only_onroad),
+  NativeProcess("stream_encoderd", "system/loggerd", ["./encoderd", "--stream"], notcar),
   PythonProcess("logmessaged", "system.logmessaged", always_run),
 
   NativeProcess("camerad", "system/camerad", ["./camerad"], driverview, enabled=not WEBCAM),
-  PythonProcess("webcamerad", "tools.webcam.camerad", driverview, enabled=WEBCAM),
-  PythonProcess("proclogd", "system.proclogd", only_onroad, enabled=platform.system() != "Darwin"),
-  PythonProcess("journald", "system.journald", only_onroad, platform.system() != "Darwin"),
-  PythonProcess("micd", "system.micd", iscar, enabled="LITE" not in os.environ),
+  # PythonProcess("webcamerad", "tools.webcam.camerad", driverview, enabled=WEBCAM),
+  # PythonProcess("proclogd", "system.proclogd", only_onroad, enabled=platform.system() != "Darwin"),
+  # PythonProcess("journald", "system.journald", only_onroad, platform.system() != "Darwin"),
+  # PythonProcess("micd", "system.micd", iscar, enabled="LITE" not in os.environ),
+  NativeProcess("camerad", "tools/webcam", ["./camerad"], driverview),
+  NativeProcess("logcatd", "system/logcatd", ["./logcatd"], only_onroad),
+  NativeProcess("proclogd", "system/proclogd", ["./proclogd"], only_onroad),
+  PythonProcess("micd", "system.micd", iscar),
   PythonProcess("timed", "system.timed", always_run, enabled=not PC),
 
   PythonProcess("modeld", "selfdrive.modeld.modeld", only_onroad),
   PythonProcess("dmonitoringmodeld", "selfdrive.modeld.dmonitoringmodeld", driverview, enabled=(WEBCAM or not PC) and "LITE" not in os.environ),
 
-  PythonProcess("sensord", "system.sensord.sensord", only_onroad, enabled=not PC),
+  # PythonProcess("sensord", "system.sensord.sensord", only_onroad, enabled=not PC),
+  NativeProcess("sensord", "system/sensord", ["./sensord_jy62"], only_onroad, enabled=PC),
   PythonProcess("ui", "selfdrive.ui.ui", always_run),
   PythonProcess("soundd", "selfdrive.ui.soundd", only_onroad),
   PythonProcess("beepd", "dragonpilot.selfdrive.ui.beepd", beep, enabled=TICI),
@@ -123,11 +128,11 @@ procs = [
   PythonProcess("feedbackd", "selfdrive.ui.feedback.feedbackd", only_onroad, enabled="LITE" not in os.environ),
 
   # debug procs
-  NativeProcess("bridge", "cereal/messaging", ["./bridge"], or_(notcar, and_(dashy_with_video, only_onroad))),
-  PythonProcess("webrtcd", "system.webrtc.webrtcd", or_(notcar, and_(dashy_with_video, only_onroad))),
-  PythonProcess("webjoystick", "tools.bodyteleop.web", notcar),
-  PythonProcess("joystick", "tools.joystick.joystick_control", and_(joystick, iscar)),
-  PythonProcess("dashy", "dragonpilot.dashy.backend.server", dashy),
+  # NativeProcess("bridge", "cereal/messaging", ["./bridge"], or_(notcar, and_(dashy_with_video, only_onroad))),
+  # PythonProcess("webrtcd", "system.webrtc.webrtcd", or_(notcar, and_(dashy_with_video, only_onroad))),
+  # PythonProcess("webjoystick", "tools.bodyteleop.web", notcar),
+  # PythonProcess("joystick", "tools.joystick.joystick_control", and_(joystick, iscar)),
+  # PythonProcess("dashy", "dragonpilot.dashy.backend.server", dashy),
 ]
 
 managed_processes = {p.name: p for p in procs}
