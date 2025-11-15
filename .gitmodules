@@ -4,8 +4,7 @@
   branch = master-tici
 [submodule "opendbc"]
   path = opendbc_repo
-  url = https://github.com/mouxangithub/opendbc.git
-  branch = c3-tici
+  url = https://github.com/MM-X/opendbc-sny.git
 [submodule "msgq"]
   path = msgq_repo
   url = https://github.com/sunnypilot/msgq.git
