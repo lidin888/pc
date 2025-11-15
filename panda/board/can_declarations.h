@@ -1,5 +1,8 @@
 #pragma once
 
+// Define macro to prevent conflicts with opendbc safety header
+#define __PANDA_BOARD_CAN_DECLARATIONS_H__
+
 // bump this when changing the CAN packet
 #define CAN_PACKET_VERSION 4
 
