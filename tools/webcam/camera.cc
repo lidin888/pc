@@ -482,9 +482,9 @@ void camera::saving_loop() {
         // Configure codec parameters
         codec_ctx->width = m_width;
         codec_ctx->height = m_height;
-        codec_ctx->time_base = {1, 20}; // 20 FPS
+        codec_ctx->time_base = {1, 30}; // 30 FPS
         codec_ctx->pix_fmt = AV_PIX_FMT_YUVJ420P; // MJPEG uses YUVJ420P
-        codec_ctx->framerate = {20, 1}; // Explicitly set framerate
+        codec_ctx->framerate = {30, 1}; // Explicitly set framerate
 
         // Set JPEG quality
         AVDictionary* opts = nullptr;
@@ -504,8 +504,8 @@ void camera::saving_loop() {
         stream->codecpar->codec_type = AVMEDIA_TYPE_VIDEO;
         stream->codecpar->width = m_width;
         stream->codecpar->height = m_height;
-        stream->time_base = {1, 20};
-        stream->r_frame_rate = {20, 1}; // Explicitly set stream framerate
+        stream->time_base = {1, 30};
+        stream->r_frame_rate = {30, 1}; // Explicitly set stream framerate
 
         // Open output file
         if (avio_open(&fmt_ctx->pb, filename.c_str(), AVIO_FLAG_WRITE) < 0) {
@@ -616,7 +616,7 @@ void camera::saving_loop() {
         auto current_time = std::chrono::steady_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(current_time - last_switch_time).count();
         if (elapsed >= 60) {
-            if (frame_count % 20 == 0) { // Log every second
+            if (frame_count % 30 == 0) { // Log every second
                 std::cout << "After " << frame_count << " frames, creating new video" << std::endl;
             }
             now = std::chrono::system_clock::now();
