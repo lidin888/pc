@@ -76,8 +76,8 @@ def and_(*fns):
 procs = [
   DaemonProcess("manage_athenad", "system.athena.manage_athenad", "AthenadPid", enabled=not disable_connect),
 
-  # NativeProcess("loggerd", "system/loggerd", ["./loggerd"], logging),
-  # NativeProcess("encoderd", "system/loggerd", ["./encoderd"], only_onroad),
+  NativeProcess("loggerd", "system/loggerd", ["./loggerd"], logging),
+  NativeProcess("encoderd", "system/loggerd", ["./encoderd"], only_onroad),
   NativeProcess("stream_encoderd", "system/loggerd", ["./encoderd", "--stream"], notcar),
   PythonProcess("logmessaged", "system.logmessaged", always_run),
 
@@ -96,7 +96,7 @@ procs = [
   PythonProcess("dmonitoringmodeld", "selfdrive.modeld.dmonitoringmodeld", driverview, enabled=(WEBCAM or not PC) and "LITE" not in os.environ),
 
   PythonProcess("sensord", "system.sensord.sensord", only_onroad, enabled=not PC),
-  NativeProcess("sensord_jy62", "system/sensord", ["./sensord_jy62"], only_onroad),
+  NativeProcess("sensord_jy62", "system/sensord", ["bash", "-c", "echo 'Starting sensord_jy62...'; sudo rm -f /dev/shm/gyroscope /dev/shm/accelerometer && echo 'Cleaned shared memory files, starting sensord_jy62...' && exec ./sensord_jy62"], only_onroad),
   PythonProcess("ui", "selfdrive.ui.ui", always_run),
   PythonProcess("soundd", "selfdrive.ui.soundd", only_onroad),
   PythonProcess("beepd", "dragonpilot.selfdrive.ui.beepd", beep, enabled=TICI),

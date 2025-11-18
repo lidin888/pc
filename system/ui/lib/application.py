@@ -28,7 +28,27 @@ ENABLE_VSYNC = os.getenv("ENABLE_VSYNC", "0") == "1"
 SHOW_FPS = os.getenv("SHOW_FPS") == "1"
 SHOW_TOUCHES = os.getenv("SHOW_TOUCHES") == "1"
 STRICT_MODE = os.getenv("STRICT_MODE") == "1"
-SCALE = float(os.getenv("SCALE", "1.0"))
+# 自动检测屏幕分辨率并设置合适的缩放比例
+DEFAULT_SCALE = 1.0
+try:
+    import subprocess
+    # 尝试获取屏幕分辨率
+    result = subprocess.run(['xrandr'], capture_output=True, text=True)
+    if result.returncode == 0:
+        for line in result.stdout.split('\n'):
+            if '*' in line and 'connected' in line:
+                # 解析分辨率，例如 "1920x1080"
+                resolution = line.split()[0]
+                if 'x' in resolution:
+                    width, height = map(int, resolution.split('x'))
+                    # 如果屏幕分辨率小于1920x1080，调整缩放
+                    if width < 1920 or height < 1080:
+                        DEFAULT_SCALE = min(width / 1920.0, height / 1080.0)
+                    break
+except:
+    pass
+
+SCALE = float(os.getenv("SCALE", str(DEFAULT_SCALE)))
 
 DEFAULT_TEXT_SIZE = 60
 DEFAULT_TEXT_COLOR = rl.WHITE
@@ -181,9 +201,13 @@ class GuiApplication:
     flags = rl.ConfigFlags.FLAG_MSAA_4X_HINT
     if ENABLE_VSYNC:
       flags |= rl.ConfigFlags.FLAG_VSYNC_HINT
+    # 添加全屏模式标志以解决显示不完整的问题
+    flags |= rl.ConfigFlags.FLAG_FULLSCREEN_MODE
     rl.set_config_flags(flags)
 
     rl.init_window(self._scaled_width, self._scaled_height, title)
+    
+    # 在全屏模式下调整缩放以确保完整显示
     if self._scale != 1.0:
       rl.set_mouse_scale(1 / self._scale, 1 / self._scale)
       self._render_texture = rl.load_render_texture(self._width, self._height)
@@ -462,4 +486,4 @@ class GuiApplication:
       os._exit(1)
 
 
-gui_app = GuiApplication(2160, 1080)
+gui_app = GuiApplication(1920, 1080)
