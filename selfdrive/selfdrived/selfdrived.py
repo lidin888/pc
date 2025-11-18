@@ -502,6 +502,10 @@ class SelfdriveD(CruiseHelper):
     if not self.enabled:
       self.mismatch_counter = 0
 
+    # Reset mismatch counter during gas/steering override to prevent false controlsMismatch
+    if self.events.contains(ET.OVERRIDE_LONGITUDINAL) or self.events.contains(ET.OVERRIDE_LATERAL):
+      self.mismatch_counter = 0
+
     # All pandas not in silent mode must have controlsAllowed when openpilot is enabled
     if self.enabled and any(not ps.controlsAllowed for ps in self.sm['pandaStates']
            if ps.safetyModel not in IGNORED_SAFETY_MODES):
