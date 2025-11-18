@@ -30,6 +30,9 @@ class CarSpecificEvents:
   def __init__(self, CP: structs.CarParams):
     self.CP = CP
 
+    from common.params import Params
+    self.disengage_on_accelerator = Params().get_bool("DisengageOnAccelerator")
+    
     self.steering_unpressed = 0
     self.low_speed_alert = False
     self.no_steer_warning = False
@@ -40,13 +43,13 @@ class CarSpecificEvents:
       events = Events()
 
     elif self.CP.brand == 'ford':
-      events = self.create_common_events(CS, CS_prev, extra_gears=[GearShifter.low, GearShifter.manumatic])
+      events = self.create_common_events(CS, CS_prev, extra_gears=[GearShifter.low, GearShifter.manumatic], disengage_on_accelerator=self.disengage_on_accelerator)
 
     elif self.CP.brand == 'nissan':
-      events = self.create_common_events(CS, CS_prev, extra_gears=[GearShifter.brake])
+      events = self.create_common_events(CS, CS_prev, extra_gears=[GearShifter.brake], disengage_on_accelerator=self.disengage_on_accelerator)
 
     elif self.CP.brand == 'chrysler':
-      events = self.create_common_events(CS, CS_prev, extra_gears=[GearShifter.low])
+      events = self.create_common_events(CS, CS_prev, extra_gears=[GearShifter.low], disengage_on_accelerator=self.disengage_on_accelerator)
 
       # Low speed steer alert hysteresis logic
       if self.CP.minSteerSpeed > 0. and CS.vEgo < (self.CP.minSteerSpeed + 0.5):
@@ -57,7 +60,7 @@ class CarSpecificEvents:
         events.add(EventName.belowSteerSpeed)
 
     elif self.CP.brand == 'honda':
-      events = self.create_common_events(CS, CS_prev, extra_gears=[GearShifter.sport], pcm_enable=False)
+      events = self.create_common_events(CS, CS_prev, extra_gears=[GearShifter.sport], pcm_enable=False, disengage_on_accelerator=self.disengage_on_accelerator)
 
       if self.CP.pcmCruise and CS.vEgo < self.CP.minEnableSpeed:
         events.add(EventName.belowEngageSpeed)
@@ -79,7 +82,7 @@ class CarSpecificEvents:
 
     elif self.CP.brand == 'toyota':
       # TODO: when we check for unexpected disengagement, check gear not S1, S2, S3
-      events = self.create_common_events(CS, CS_prev, extra_gears=[GearShifter.sport])
+      events = self.create_common_events(CS, CS_prev, extra_gears=[GearShifter.sport], disengage_on_accelerator=self.disengage_on_accelerator)
 
       if self.CP.openpilotLongitudinalControl:
         if CS.cruiseState.standstill and not CS.brakePressed:
@@ -96,7 +99,7 @@ class CarSpecificEvents:
     elif self.CP.brand == 'gm':
       events = self.create_common_events(CS, CS_prev, extra_gears=[GearShifter.sport, GearShifter.low,
                                                                    GearShifter.eco, GearShifter.manumatic],
-                                         pcm_enable=self.CP.pcmCruise)
+                                         pcm_enable=self.CP.pcmCruise, disengage_on_accelerator=self.disengage_on_accelerator)
 
       # Enabling at a standstill with brake is allowed
       # TODO: verify 17 Volt can enable for the first time at a stop and allow for all GMs
@@ -108,7 +111,7 @@ class CarSpecificEvents:
 
     elif self.CP.brand == 'volkswagen':
       events = self.create_common_events(CS, CS_prev, extra_gears=[GearShifter.eco, GearShifter.sport, GearShifter.manumatic],
-                                         pcm_enable=self.CP.pcmCruise)
+                                         pcm_enable=self.CP.pcmCruise, disengage_on_accelerator=self.disengage_on_accelerator)
 
       if self.CP.openpilotLongitudinalControl:
         if CS.vEgo < self.CP.minEnableSpeed + 0.5:
@@ -122,15 +125,15 @@ class CarSpecificEvents:
 
     elif self.CP.brand == 'hyundai':
       events = self.create_common_events(CS, CS_prev, extra_gears=(GearShifter.sport, GearShifter.manumatic),
-                                         pcm_enable=self.CP.pcmCruise, allow_button_cancel=False)
+                                         pcm_enable=self.CP.pcmCruise, allow_button_cancel=False, disengage_on_accelerator=self.disengage_on_accelerator)
 
     else:
-      events = self.create_common_events(CS, CS_prev)
+      events = self.create_common_events(CS, CS_prev, disengage_on_accelerator=self.disengage_on_accelerator)
 
     return events
 
   def create_common_events(self, CS: structs.CarState, CS_prev: car.CarState, extra_gears=None, pcm_enable=True,
-                           allow_button_cancel=True):
+                           allow_button_cancel=True, disengage_on_accelerator=True):
     events = Events()
 
     if CS.doorOpen:
@@ -168,7 +171,7 @@ class CarSpecificEvents:
       events.add(EventName.steerDisengage)
     if CS.brakePressed and CS.standstill:
       events.add(EventName.preEnableStandstill)
-    if CS.gasPressed:
+    if CS.gasPressed and not disengage_on_accelerator:
       events.add(EventName.gasPressedOverride)
     if CS.vehicleSensorsInvalid:
       events.add(EventName.vehicleSensorsInvalid)
