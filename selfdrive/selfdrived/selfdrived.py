@@ -504,7 +504,8 @@ class SelfdriveD(CruiseHelper):
       self.cruise_mismatch_counter = 0
 
     # Reset mismatch counter during gas/steering override to prevent false controlsMismatch
-    if self.events.contains(ET.OVERRIDE_LONGITUDINAL) or self.events.contains(ET.OVERRIDE_LATERAL):
+    # Only reset if counter is not too high to avoid masking real issues
+    if (self.events.contains(ET.OVERRIDE_LONGITUDINAL) or self.events.contains(ET.OVERRIDE_LATERAL)) and self.mismatch_counter < 100:
       self.mismatch_counter = 0
       self.cruise_mismatch_counter = 0
 
