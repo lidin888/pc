@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
 import os
 from openpilot.system.hardware import TICI
-os.environ['DEV'] = 'QCOM' if TICI else 'CPU'
-USBGPU = "USBGPU" in os.environ
-if USBGPU:
-  os.environ['DEV'] = 'AMD'
-  os.environ['AMD_IFACE'] = 'USB'
+os.environ['DEV'] = 'QCOM' if TICI else 'CL'
 from tinygrad.tensor import Tensor
 from tinygrad.dtype import dtypes
 import time
