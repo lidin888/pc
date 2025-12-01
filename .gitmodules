@@ -17,6 +17,13 @@
 [submodule "tinygrad"]
   path = tinygrad_repo
   url = https://github.com/liruifeng1120/tinygrad.git
+  url = https://github.com/liruifeng1120/neural-network-data.git
+>>>>>>> 65406184f353e68a082281ca20c0045e88868d7a
+
 [submodule "sunnypilot/neural_network_data"]
   path = sunnypilot/neural_network_data
   url = https://github.com/liruifeng1120/neural-network-data.git
+
+=======
+  url = https://github.com/liruifeng1120/neural-network-data.git
+>>>>>>> 65406184f353e68a082281ca20c0045e88868d7a
