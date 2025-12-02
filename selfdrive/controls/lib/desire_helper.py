@@ -3,7 +3,7 @@ from openpilot.common.conversions import Conversions as CV
 from openpilot.common.realtime import DT_MDL
 import numpy as np
 from openpilot.selfdrive.modeld.constants import ModelConstants
-from openpilot.selfdrive.carrot.config import UnifiedParams
+from openpilot.common.params import Params
 from collections import deque
 #new
 from openpilot.selfdrive.selfdrived.events import Events
@@ -103,7 +103,7 @@ class ExistCounter:
 
 class DesireHelper:
   def __init__(self):
-    self.params = UnifiedParams()
+    self.params = Params()
     self.frame = 0
     self.lane_change_state = LaneChangeState.off
     self.lane_change_direction = LaneChangeDirection.none
