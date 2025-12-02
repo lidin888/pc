@@ -11,7 +11,6 @@ AlertSize = log.SelfdriveState.AlertSize
 AlertStatus = log.SelfdriveState.AlertStatus
 VisualAlert = car.CarControl.HUDControl.VisualAlert
 AudibleAlert = car.CarControl.HUDControl.AudibleAlert
-AudibleAlertSP = custom.SelfdriveStateSP.AudibleAlert
 EventNameSP = custom.OnroadEventSP.EventName
 
 
@@ -59,7 +58,7 @@ def speed_limit_pre_active_alert(CP: car.CarParams, CS: car.CarState, sm: messag
     "Speed Limit Assist: Activation Required",
     alert_2_str,
     AlertStatus.normal, AlertSize.mid,
-    Priority.LOW, VisualAlert.none, AudibleAlertSP.promptSingleLow, .1)
+    Priority.LOW, VisualAlert.none, AudibleAlert.none, .1)
 
 
 class EventsSP(EventsBase):
@@ -203,7 +202,7 @@ EVENTS_SP: dict[int, dict[str, Alert | AlertCallbackType]] = {
       "Automatically adjusting to the posted speed limit",
       "",
       AlertStatus.normal, AlertSize.small,
-      Priority.LOW, VisualAlert.none, AudibleAlertSP.promptSingleHigh, 5.),
+      Priority.LOW, VisualAlert.none, AudibleAlert.none, 5.),
   },
 
   EventNameSP.speedLimitChanged: {
@@ -211,7 +210,7 @@ EVENTS_SP: dict[int, dict[str, Alert | AlertCallbackType]] = {
       "Set speed changed",
       "",
       AlertStatus.normal, AlertSize.small,
-      Priority.LOW, VisualAlert.none, AudibleAlertSP.promptSingleHigh, 5.),
+      Priority.LOW, VisualAlert.none, AudibleAlert.none, 5.),
   },
 
   EventNameSP.speedLimitPreActive: {
@@ -223,7 +222,7 @@ EVENTS_SP: dict[int, dict[str, Alert | AlertCallbackType]] = {
       "Automatically adjusting to the last speed limit",
       "",
       AlertStatus.normal, AlertSize.small,
-      Priority.LOW, VisualAlert.none, AudibleAlertSP.promptSingleHigh, 5.),
+      Priority.LOW, VisualAlert.none, AudibleAlert.none, 5.),
   },
 
   EventNameSP.e2eChime: {
@@ -231,14 +230,6 @@ EVENTS_SP: dict[int, dict[str, Alert | AlertCallbackType]] = {
       "",
       "",
       AlertStatus.normal, AlertSize.none,
-      Priority.MID, VisualAlert.none, AudibleAlert.prompt, 3.),
-  },
-
-  EventNameSP.laneChangeRoadEdge: {
-    ET.WARNING: Alert(
-      "Lane Change Unavailable: Road Edge",
-      "",
-      AlertStatus.userPrompt, AlertSize.small,
-      Priority.LOW, VisualAlert.none, AudibleAlert.prompt, 0.1),
+      Priority.MID, VisualAlert.none, AudibleAlert.prompt, 0.1),
   },
 }

@@ -21,10 +21,10 @@ from openpilot.selfdrive.selfdrived.helpers import ExcessiveActuationCheck
 from openpilot.selfdrive.selfdrived.state import StateMachine
 from openpilot.selfdrive.selfdrived.alertmanager import AlertManager, set_offroad_alert
 
+from openpilot.system.hardware import HARDWARE
 from openpilot.system.version import get_build_metadata
 
 from openpilot.sunnypilot.mads.mads import ModularAssistiveDrivingSystem
-from openpilot.sunnypilot import get_sanitize_int_param
 from openpilot.sunnypilot.selfdrive.car.car_specific import CarSpecificEventsSP
 from openpilot.sunnypilot.selfdrive.car.cruise_helpers import CruiseHelper
 from openpilot.sunnypilot.selfdrive.car.intelligent_cruise_button_management.controller import IntelligentCruiseButtonManagement
@@ -44,7 +44,6 @@ LaneChangeDirection = log.LaneChangeDirection
 EventName = log.OnroadEvent.EventName
 ButtonType = car.CarState.ButtonEvent.Type
 SafetyModel = car.CarParams.SafetyModel
-TurnDirection = custom.ModelDataV2SP.TurnDirection
 
 IGNORED_SAFETY_MODES = (SafetyModel.silent, SafetyModel.noOutput)
 
@@ -132,17 +131,18 @@ class SelfdriveD(CruiseHelper):
     self.logged_comm_issue = None
     self.not_running_prev = None
     self.experimental_mode = False
-    self.personality = get_sanitize_int_param(
-      "LongitudinalPersonality",
-      min(log.LongitudinalPersonality.schema.enumerants.values()),
-      max(log.LongitudinalPersonality.schema.enumerants.values()),
-      self.params
-    )
+    self.personality = self.params.get("LongitudinalPersonality", return_default=True)
     self.recalibrating_seen = False
     self.state_machine = StateMachine()
     self.rk = Ratekeeper(100, print_delay_threshold=None)
 
-    self.ignored_processes = {'mapd', }
+    # some comma three with NVMe experience NVMe dropouts mid-drive that
+    # cause loggerd to crash on write, so ignore it only on that platform
+    self.ignored_processes = set()
+    nvme_expected = os.path.exists('/dev/nvme0n1') or (not os.path.isfile("/persist/comma/living-in-the-moment"))
+    if HARDWARE.get_device_type() == 'tici' and nvme_expected:
+      self.ignored_processes = {'loggerd', }
+    self.ignored_processes.update({'mapd'})
 
     # Determine startup event
     is_remote = build_metadata.openpilot.comma_remote or build_metadata.openpilot.sunnypilot_remote
@@ -292,15 +292,9 @@ class SelfdriveD(CruiseHelper):
     # Handle lane change
     if self.sm['modelV2'].meta.laneChangeState == LaneChangeState.preLaneChange:
       direction = self.sm['modelV2'].meta.laneChangeDirection
-      mdv2sp = self.sm['modelDataV2SP']
-
-      if (CS.leftBlindspot and direction == LaneChangeDirection.left) or \
-            (CS.rightBlindspot and direction == LaneChangeDirection.right):
+      if ((CS.leftBlindspot or self.sm['modelDataV2SP'].leftLaneChangeEdgeBlock) and direction == LaneChangeDirection.left) or \
+            ((CS.rightBlindspot or self.sm['modelDataV2SP'].rightLaneChangeEdgeBlock) and direction == LaneChangeDirection.right):
         self.events.add(EventName.laneChangeBlocked)
-
-      elif mdv2sp.leftLaneChangeEdgeBlock or mdv2sp.rightLaneChangeEdgeBlock:
-        self.events_sp.add(custom.OnroadEventSP.EventName.laneChangeRoadEdge)
-
       else:
         if direction == LaneChangeDirection.left:
           self.events.add(EventName.preLaneChangeLeft)
@@ -312,9 +306,9 @@ class SelfdriveD(CruiseHelper):
 
     # Handle lane turn
     lane_turn_direction = self.sm['modelDataV2SP'].laneTurnDirection
-    if lane_turn_direction == TurnDirection.turnLeft:
+    if lane_turn_direction == custom.ModelDataV2SP.TurnDirection.turnLeft:
       self.events_sp.add(custom.OnroadEventSP.EventName.laneTurnLeft)
-    elif lane_turn_direction == TurnDirection.turnRight:
+    elif lane_turn_direction == custom.ModelDataV2SP.TurnDirection.turnRight:
       self.events_sp.add(custom.OnroadEventSP.EventName.laneTurnRight)
 
     for i, pandaState in enumerate(self.sm['pandaStates']):
@@ -433,7 +427,7 @@ class SelfdriveD(CruiseHelper):
     # GPS checks
     gps_ok = self.sm.recv_frame[self.gps_location_service] > 0 and (self.sm.frame - self.sm.recv_frame[self.gps_location_service]) * DT_CTRL < 2.0
     if not gps_ok and self.sm['livePose'].inputsOK and (self.distance_traveled > 1500):
-      pass#self.events.add(EventName.noGps)
+      self.events.add(EventName.noGps)
     if gps_ok:
       self.distance_traveled = 0
     self.distance_traveled += abs(CS.vEgo) * DT_CTRL
