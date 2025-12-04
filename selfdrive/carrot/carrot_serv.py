@@ -264,6 +264,7 @@ class CarrotServ:
     self.lidar_lblind = False
     self.lidar_rblind = False
     #new
+    self.atcType = "none"
 
     self.update_params()
 
