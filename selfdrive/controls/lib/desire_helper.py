@@ -578,6 +578,7 @@ class DesireHelper:
     #目前只有现代的carState里有这个leftLaneLine/rightLaneLine，但是大部车没有这个信息，包括Santa Fe，所以lane_line_info为0
     lane_line_info = carstate.leftLaneLine if blinker_state == BLINKER_LEFT else carstate.rightLaneLine
 
+    car_side_blind = False #NEW
     if desire_enabled:
       lane_exist_counter = self.lane_exist_left_count.counter if blinker_state == BLINKER_LEFT else self.lane_exist_right_count.counter #左侧或右侧车道存在的时间
       lane_available = self.available_left_lane if blinker_state == BLINKER_LEFT else self.available_right_lane #车道存在标志
@@ -588,7 +589,10 @@ class DesireHelper:
 
       carrot_left_blind = carrotMan.leftBlind
       carrot_right_blind = carrotMan.rightBlind
+      car_left_blind = (carrot_left_blind & 0x04) #车身侧面盲区
+      car_right_blind = (carrot_right_blind & 0x04) #车身侧面盲区
       carrot_blind = carrot_left_blind if blinker_state == BLINKER_LEFT else carrot_right_blind
+      car_side_blind = car_left_blind if blinker_state == BLINKER_LEFT else car_right_blind
 
       radar = radarState.leadLeft if blinker_state == BLINKER_LEFT else radarState.leadRight
       side_object_dist = radar.dRel + radar.vLead * 3.0 if radar.status else 255
@@ -811,9 +815,12 @@ class DesireHelper:
       if self.turn_disable_count > 0:
         self.turn_direction = TurnDirection.none
         self.lane_change_direction = LaneChangeDirection.none
-      else:
+      elif not car_side_blind: #车身处无障碍物
         self.turn_direction = TurnDirection.turnLeft if blinker_state == BLINKER_LEFT else TurnDirection.turnRight #转弯方向
         self.lane_change_direction = self.turn_direction #LaneChangeDirection.none
+      else: #车身处有障碍物
+        if 0 == (self.frame % int(2 / DT_MDL)):
+          self.lane_change_audio(True, 6, 0) # 播报盲区有车
       desire_enabled = False
     elif self.desire_disable_count > 0: # Turn后一段时间内无法变更车道,此变量在check_desire_state函数里计算，如果车辆在转弯，则一直把desire_disable_count设置为2秒的计数值
       if self.lane_change_state != LaneChangeState.off:
