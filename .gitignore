@@ -81,6 +81,12 @@ sunnypilot/modeld*/models/*.pkl
 
 build/
 
+# Build output directories
+board/obj/
+board/*.o
+board/*.os
+tests/libpanda/
+
 !**/.gitkeep
 
 poetry.toml
