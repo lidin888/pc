@@ -120,7 +120,7 @@ def get_default_params():
     ("LongActuatorDelay", "20"),
     ("VEgoStopping", "50"),
     ("RadarReactionFactor", "100"),
-    ("EnableRadarTracks", "0"),
+    ("EnableRadarTracks", "1"),
     ("RadarLatFactor", "0"),
     ("EnableCornerRadar", "0"),
     ("HyundaiCameraSCC", "0"),
