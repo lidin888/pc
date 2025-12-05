@@ -87,6 +87,15 @@ board/*.o
 board/*.os
 tests/libpanda/
 
+# Panda build artifacts
+panda/board/obj/
+panda/board/jungle/obj/
+panda/tests/hitl/known_bootstub/
+panda/**/*.bin
+panda/**/*.hex
+panda/**/*.elf
+panda/**/*.map
+
 !**/.gitkeep
 
 poetry.toml
