@@ -24,7 +24,7 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget *par
 
   experimental_btn = new ExperimentalButton(this);
   main_layout->addWidget(experimental_btn, 0, Qt::AlignTop | Qt::AlignRight);
-  
+
   record_timer = std::make_shared<QTimer>();
 	QObject::connect(record_timer.get(), &QTimer::timeout, [=]() {
     if(recorder) {
@@ -35,7 +35,7 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget *par
 
 	recorder = new ScreenRecoder(this);
 	main_layout->addWidget(recorder, 0, Qt::AlignBottom | Qt::AlignRight);
-  
+
 }
 
 void AnnotatedCameraWidget::updateState(const UIState &s) {
@@ -171,9 +171,9 @@ void AnnotatedCameraWidget::paintEvent(QPaintEvent *event) {
     bool has_wide_cam = available_streams.count(VISION_STREAM_WIDE_ROAD);
     if (has_wide_cam) {
       float v_ego = sm["carState"].getCarState().getVEgo();
-      if ((v_ego < 1) || available_streams.size() == 1) {
+      if ((v_ego < 10) || available_streams.size() == 1) {
         wide_cam_requested = true;
-      } else if (v_ego > 6) {
+      } else if (v_ego > 15) {
         wide_cam_requested = false;
       }
       //wide_cam_requested = wide_cam_requested && sm["selfdriveState"].getSelfdriveState().getExperimentalMode();
@@ -192,7 +192,7 @@ void AnnotatedCameraWidget::paintEvent(QPaintEvent *event) {
   model.draw(painter, rect());
   painter.beginNativePainting();
   try {
-      ui_draw(s, &model, width(), height());      
+      ui_draw(s, &model, width(), height());
   } catch (const std::exception &e) {
 	LOGE("ui_nvg_draw failed: %s", e.what());
     print_stack_trace();
