@@ -38,7 +38,7 @@
 #define COLOR_OCHRE nvgRGBA(218, 111, 37, 255)
 #define COLOR_OCHRE_ALPHA(x) nvgRGBA(218, 111, 37, x)
 #define COLOR_GREEN nvgRGBA(0, 203, 0, 255)
-#define COLOR_GREEN_ALPHA(x) nvgRGBA(0, 153, 0, x)
+#define COLOR_GREEN_ALPHA(x) nvgRGBA(0, 255, 0, x)
 #define COLOR_BLUE nvgRGBA(0, 0, 255, 255)
 #define COLOR_BLUE_ALPHA(x) nvgRGBA(0, 0, 255, x)
 #define COLOR_ORANGE nvgRGBA(255, 175, 3, 255)
@@ -785,14 +785,14 @@ public:
                 ui_draw_text(s, x + w, disp_y, str, 40, text_color, BOLD);
             }
         }
-        QPolygonF tf_vertext;
+        /*QPolygonF tf_vertext;
         if (tf_distance > 0) {
           tf_vertext.push_back(tf_vertex_left);
           tf_vertext.push_back(tf_vertex_right);
           ui_draw_line(s, tf_vertext, nullptr, nullptr, 3.0, COLOR_WHITE);
           sprintf(str, "%.1f(%.2f)", tf_distance, t_follow);
           ui_draw_text(s, tf_vertex_right.x(), tf_vertex_right.y(), str, 25, COLOR_WHITE, BOLD);
-        }
+        }*/
 
 
         float px[7], py[7];
@@ -943,11 +943,11 @@ public:
           int alpha = (lane_line_probs[i] > 0.3) ? 220 : 0;
           int stroke = 0.0;
           if (i == 1) {
-            color = (left_lane_line >= 20) ? COLOR_YELLOW_ALPHA(alpha) : COLOR_WHITE_ALPHA(alpha);
+            color = (left_lane_line >= 20) ? COLOR_YELLOW_ALPHA(alpha) : COLOR_GREEN_ALPHA(alpha);
             stroke = (left_lane_line >= 20) ? 1.0 : 0.0;
           }
-          else if (i == 2) color = (right_lane_line >= 20) ? COLOR_YELLOW_ALPHA(alpha) : COLOR_WHITE_ALPHA(alpha);
-          else color = COLOR_WHITE_ALPHA(alpha);
+          else if (i == 2) color = (right_lane_line >= 20) ? COLOR_YELLOW_ALPHA(alpha) : COLOR_GREEN_ALPHA(alpha);
+          else color = COLOR_GREEN_ALPHA(alpha);
           ui_draw_line(s, lane_line_vertices[i], &color, nullptr, stroke);
           if ((i == 1) && (left_lane_line%10 == 4)) {
             ui_draw_line(s, lane_line_vertices_for_double, &color, nullptr, stroke);
@@ -2487,13 +2487,14 @@ public:
     int     disp_timer = 0;
     float cpuTemp = 0.0f;
     float cpuUsage = 0.0f;
+    float gpuUsage = 0.0f;
     int   memoryUsage = 0;
     float freeSpace = 0.0f;
     float voltage = 0.0f;
     void drawHud(UIState* s) {
         int show_device_state = params.getInt("ShowDeviceState");
         blink_timer = (blink_timer + 1) % 16;
-        disp_timer = (disp_timer + 1) % 64;
+        disp_timer = (disp_timer + 1) % 240;
         nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_BOTTOM);
 
         int x = 140;// 120;
@@ -2574,16 +2575,16 @@ public:
         const SubMaster& sm = *(s->sm);
 
         // draw gap info
-        char driving_mode_str[32] = "연비";
+        char driving_mode_str[32] = "经济";
         int driving_mode = myDrivingMode;// params.getInt("MyDrivingMode");
         NVGcolor mode_color = COLOR_GREEN_ALPHA(210);
         NVGcolor text_color = COLOR_WHITE;
         switch (driving_mode) {
-        case 1: strcpy(driving_mode_str, tr("ECO").toStdString().c_str()); mode_color = COLOR_GREEN_ALPHA(210);  break;
-        case 2: strcpy(driving_mode_str, tr("SAFE").toStdString().c_str()); mode_color = COLOR_ORANGE_ALPHA(210);  text_color = COLOR_WHITE;  break;
-        case 3: strcpy(driving_mode_str, tr("NORM").toStdString().c_str()); mode_color = COLOR_GREY_ALPHA(210);  text_color = COLOR_WHITE;  break;
-        case 4: strcpy(driving_mode_str, tr("FAST").toStdString().c_str()); mode_color = COLOR_RED_ALPHA(210);  break;
-        default: strcpy(driving_mode_str, tr("ERRM").toStdString().c_str()); break;
+        case 1: strcpy(driving_mode_str, tr("经 济").toStdString().c_str()); mode_color = COLOR_GREEN_ALPHA(210);  break;
+        case 2: strcpy(driving_mode_str, tr("安 全").toStdString().c_str()); mode_color = COLOR_ORANGE_ALPHA(210);  text_color = COLOR_WHITE;  break;
+        case 3: strcpy(driving_mode_str, tr("标 准").toStdString().c_str()); mode_color = COLOR_BLUE_ALPHA(210);  text_color = COLOR_WHITE;  break;
+        case 4: strcpy(driving_mode_str, tr("运 动").toStdString().c_str()); mode_color = COLOR_RED_ALPHA(210);  break;
+        default: strcpy(driving_mode_str, tr("错 误").toStdString().c_str()); break;
         }
         int dx = bx - 50;
         int dy = by + 175;
@@ -2612,7 +2613,7 @@ public:
         //float ddx = 70 / 4.;
         float ddy = 80 / 4.;
 #ifdef __UI_TEST
-        gap = 3;
+        gap = 4;
 #endif
         for (int i = 0; i < gap; i++) {
             //ui_fill_rect(s->vg, { (int)(dx + i * ddx), (int)dy, (int)ddx - 2, 48 }, COLOR_GREEN_ALPHA(180), 4, 3);
@@ -2707,19 +2708,31 @@ public:
             dx = bx - 35;
             dy = by - 200;
             mode_color = COLOR_GREEN_ALPHA(190);
-            ui_fill_rect(s->vg, { dx - 65, dy - 38, 130, 90 }, (cpuTemp>80 && blink_timer<=8)?COLOR_RED : mode_color, 15, 2);
+            ui_fill_rect(s->vg, { dx - 65, dy - 38, 130, 90 }, (cpuTemp>90 && blink_timer<=8)?COLOR_RED : mode_color, 15, 2);
+            if (disp_timer < 120) {
             ui_draw_text(s, dx, dy-5, "CPU", 25, COLOR_WHITE, BOLD);
             sprintf(str, "%.0f\u00B0C", cpuTemp);
             ui_draw_text(s, dx, dy + 40, str, 40, COLOR_WHITE, BOLD);
+            } else {
+                ui_draw_text(s, dx, dy-5, "CPU", 25, COLOR_WHITE, BOLD);
+                sprintf(str, "%.0f%%", cpuUsage);
+                ui_draw_text(s, dx, dy + 40, str, 40, COLOR_WHITE, BOLD);
+            }
 
             dx += 150;
             ui_fill_rect(s->vg, { dx - 65, dy - 38, 130, 90 }, (memoryUsage > 85 && blink_timer <= 8) ? COLOR_RED : mode_color, 15, 2);
+            if (disp_timer < 120) {
+                ui_draw_text(s, dx, dy-5, "GPU", 25, COLOR_WHITE, BOLD);
+                sprintf(str, "%.0f%%", gpuUsage);
+                ui_draw_text(s, dx, dy + 40, str, 40, COLOR_WHITE, BOLD);
+            } else {
             ui_draw_text(s, dx, dy-5, "MEM", 25, COLOR_WHITE, BOLD);
             sprintf(str, "%d%%", memoryUsage);
             ui_draw_text(s, dx, dy + 40, str, 40, COLOR_WHITE, BOLD);
+            }
 
             dx += 150;
-            if (disp_timer < 32) {
+            if (disp_timer < 120) {
               ui_fill_rect(s->vg, { dx - 65, dy - 38, 130, 90 }, mode_color, 15, 2);
               ui_draw_text(s, dx, dy - 5, "DISK", 25, COLOR_WHITE, BOLD);
               sprintf(str, "%.0f%%", 100 - freeSpace);
@@ -2875,6 +2888,7 @@ public:
         memoryUsage = deviceState.getMemoryUsagePercent();
         const auto cpuTempC = deviceState.getCpuTempC();
         const auto cpuUsagePercent = deviceState.getCpuUsagePercent();
+        gpuUsage = deviceState.getGpuUsagePercent();
         cpuTemp = 0.0f;
         if (cpuTempC.size() > 0) {
             for (int i = 0; i < cpuTempC.size(); i++) {
@@ -2882,15 +2896,13 @@ public:
             }
             cpuTemp /= static_cast<float>(cpuTempC.size());
         }
-
         cpuUsage = 0.0f;
         if (cpuUsagePercent.size() > 0) {
-            int cpu_size = 0;
-            for (cpu_size = 0; cpu_size < cpuUsagePercent.size(); cpu_size++) {
-                if (cpuUsagePercent[cpu_size] <= 0) break;
-                cpuUsage += cpuUsagePercent[cpu_size];
+            float total_usage = 0.0f;
+            for (int i = 0; i < cpuUsagePercent.size(); i++) {
+                total_usage += cpuUsagePercent[i];
             }
-            if (cpu_size > 0) cpuUsage /= cpu_size;
+            cpuUsage = total_usage / cpuUsagePercent.size();
         }
 
         auto peripheralState = sm["peripheralState"].getPeripheralState();
