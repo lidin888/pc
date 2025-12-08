@@ -190,8 +190,8 @@ class AmapNaviServ:
     self.sideRelDistTime = 1.
     self.sidevRelDistTime = 1.
     self.disableBlindSpot = False
-    self.dynamicBlindRange = 1
-    self.dynamicBlindDistance = 1
+    self.dynamicBlindRange = 0
+    self.dynamicBlindDistance = 0
     self.lf_object_detected_count = 0
     self.lb_object_detected_count = 0
     self.rf_object_detected_count = 0
