@@ -601,9 +601,9 @@ class AmapNaviServ:
                       last_seen = old_info.get("last_seen", None)
                       now = time.time()
                       if last_dis_timems is not None and dist_timems is not None and (dist_timems - last_dis_timems) > 150:
-                        print(f"lidar data interval time large than 150ms({last_dis_timems}->{dist_timems})")
+                        print(f"lidar{detect_side} data interval time large than 150ms({dist_timems-last_dis_timems})")
                       if last_seen is not None and (now - last_seen) > 0.15:
-                        print(f"lidar last_seen time large than 0.15s({last_seen}->{now})")
+                        print(f"lidar{detect_side} last_seen time large than 0.15s({now-last_seen})")
 
                   #更新客户端信息
 
@@ -877,7 +877,12 @@ class AmapNaviServ:
                 # 向所有客户端发送数据
                 for ip, info in self.clients_copy.items():
                   try:
-                    port = info.get("port", self.broadcast_port)
+                    port_val = info.get("port", self.broadcast_port)
+                    if port_val is not None:
+                      port = int(port_val)
+                    else:
+                      port = self.broadcast_port
+                    #port = self.broadcast_port
                     device_type = info.get("device", None)
                     detect_side = info.get("detect_side", None)
 
