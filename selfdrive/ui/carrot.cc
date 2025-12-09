@@ -1412,9 +1412,9 @@ public:
         bool leftFrontBlind = meta.getLeftFrontBlind();
         bool rightFrontBlind = meta.getRightFrontBlind();
         auto carrotMan = sm["carrotMan"].getCarrotMan();
-        auto amapNavi = sm["amapNavi"].getAmapNavi();
-        bool carrotLeftBlind = carrotMan.getLeftBlind() || amapNavi.getLeftBlind();
-        bool carrotRightBlind = carrotMan.getRightBlind() || amapNavi.getRightBlind();
+        //auto amapNavi = sm["amapNavi"].getAmapNavi();
+        bool carrotLeftBlind = carrotMan.getLeftBlind();// || amapNavi.getLeftBlind();
+        bool carrotRightBlind = carrotMan.getRightBlind();// || amapNavi.getRightBlind();
         /*
         auto laneChangeState = meta.getLaneChangeState();
         auto laneChangeDirection = meta.getLaneChangeDirection();
