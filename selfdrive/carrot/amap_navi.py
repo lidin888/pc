@@ -991,9 +991,10 @@ class AmapNaviServ:
     # 判定规则：
     # 1) 未来距离过小（可调阈值 3~5m，我设成 4m)
     # 2) 当前距离小于速度比例阈值（如：d < v * 1.0）
+    danger_dist = max(v_ego_mps * min_drel_scale, 10)
     risk = (
-      future_dist < v_ego_mps * min_drel_scale or
-      drel < v_ego_mps * min_drel_scale
+      future_dist < danger_dist or
+      drel < danger_dist
     )
 
     return risk
