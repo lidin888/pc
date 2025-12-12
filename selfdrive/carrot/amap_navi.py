@@ -457,7 +457,7 @@ class AmapNaviServ:
   def _data_deal_thread(self):
     _clients = {}
     _active_clients = {}
-    rk = Ratekeeper(20, print_delay_threshold=None) #50Hz
+    rk = Ratekeeper(20, print_delay_threshold=0.02) #50Hz
 
     while True:
       try:
@@ -1424,7 +1424,7 @@ class AmapNaviServ:
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
     frame = 0
-    rk = Ratekeeper(10, print_delay_threshold=None)
+    rk = Ratekeeper(10, print_delay_threshold=0.03)
     broadcast_cnt = 0
 
     while True:
