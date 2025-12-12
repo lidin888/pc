@@ -1448,13 +1448,7 @@ class AmapNaviServ:
                 self.clients = {}  # 修改: 本地 IP 变化时清空客户端
 
             # 消息
-            navi_msg = navi_dat = lidar_msg = lidar_dat = None
-
-            blinker_msg = self.make_blinker_message()
-            blinker_dat = blinker_msg.encode('utf-8')
-
-            broadcast_msg = self.make_broadcast_message()
-            broadcast_dat = broadcast_msg.encode('utf-8')
+            navi_msg = navi_dat = lidar_msg = lidar_dat = blinker_msg = blinker_dat = None
 
             if self.active_clients:
               if self.clients_copy:
@@ -1488,15 +1482,21 @@ class AmapNaviServ:
                         if (self.shared_data.showDebugLog & 32) > 0:
                           print(f"sendto {ip} (lidar): {lidar_dat}")
                     else:  # 其他
-                      sock.sendto(blinker_dat, (ip, port))
-                      if (self.shared_data.showDebugLog & 32) > 0:
-                        print(f"sendto {ip} (blinker): {blinker_dat}")
+                      if blinker_msg is None:
+                        blinker_msg = self.make_blinker_message()
+                        blinker_dat = blinker_msg.encode('utf-8')
+                      if blinker_dat is not None:
+                        sock.sendto(blinker_dat, (ip, port))
+                        if (self.shared_data.showDebugLog & 32) > 0:
+                          print(f"sendto {ip} (blinker): {blinker_dat}")
                   except Exception as e:
                     if (self.shared_data.showDebugLog & 32) > 0:
                       print(f"sendto {ip} failed: {e}")
 
             # 每2秒广播一次自己的ip和端口
             if frame % 20 == 0:
+              broadcast_msg = self.make_broadcast_message()
+              broadcast_dat = broadcast_msg.encode('utf-8')
               if self.broadcast_ip is not None and broadcast_dat is not None:
                 self.broadcast_ip = self.navi_get_broadcast_address()
                 sock.sendto(broadcast_dat, (self.broadcast_ip, self.broadcast_port))
