@@ -1678,20 +1678,21 @@ class AmapNaviServ:
           event_type_val = model_event_type & 255
           event_type_id = int((model_event_type - event_type_val) / 256)
           msg['sound'] = event_type_val
+          print(f"------sound index {event_type_val}")
       #倒计时
       if hasattr(meta, 'leftSec'):
         sec_count_down = meta.leftSec
         if self.sec_count_down != sec_count_down:
           self.sec_count_down = sec_count_down
-          if sec_count_down == 0:
-            #new_alert = AudibleAlert.longDisengaged
+          if sec_count_down == 0: #AudibleAlert.longDisengaged
             msg['sound'] = 26
-          elif 0 < sec_count_down <= 10:
-            #new_alert = getattr(AudibleAlert, f'audio{sec_count_down}')
+            print(f"------sound index {msg['sound']}")
+          elif 0 < sec_count_down <= 10: #audio_x
             msg['sound'] = 30 + sec_count_down
-          elif sec_count_down == 11:
-            #new_alert = AudibleAlert.promptDistracted
+            print(f"------sound index {msg['sound']}")
+          elif sec_count_down == 11: #promptDistracted
             msg['sound'] = 23
+            print(f"------sound index {msg['sound']}")
       #转向灯状态
       if hasattr(meta, 'blinker'):
         msg['blinker'] = meta.blinker
