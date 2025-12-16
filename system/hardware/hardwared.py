@@ -49,7 +49,7 @@ THERMAL_BANDS = OrderedDict({
 })
 
 # Override to highest thermal band when offroad and above this temp
-OFFROAD_DANGER_TEMP = 75
+OFFROAD_DANGER_TEMP = 95
 
 prev_offroad_states: dict[str, tuple[bool, str | None]] = {}
 
@@ -172,7 +172,7 @@ def update_restart_condition(current_time, restart_triggered_ts, params, onroad_
       if softRestartTriggered == 2:
         print("Parameter set to default")
         set_default_params()
-        
+
       params.put_int("SoftRestartTriggered", 0)
       restart_triggered_ts = current_time
   return restart_triggered_ts
