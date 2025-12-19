@@ -39,7 +39,7 @@ def get_default_params():
     ("MapboxStyle", "0"),
 
 
-    ("LongitudinalPersonalityMax", "4"),
+    ("LongitudinalPersonalityMax", "3"),
     ("ShowDebugUI", "1"),
     ("ShowTpms", "1"),
     ("ShowDateTime", "1"),
