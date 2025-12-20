@@ -1,6 +1,7 @@
 [submodule "panda"]
   path = panda
   url = https://github.com/lidin888/panda.git
+	branch = tn
 [submodule "opendbc"]
   path = opendbc_repo
   url = https://github.com/lidin888/opendbc.git
