@@ -59,7 +59,6 @@ view_ops = {
   "aten.squeeze.dim": Tensor.squeeze,
   "aten.unsqueeze": Tensor.unsqueeze,
   "aten.detach": Tensor.detach,
-  "aten.select.int": lambda self, dim, idx: self[(slice(None),) * (dim%self.ndim) + (idx,)],
 }
 
 for k,v in view_ops.items(): torch.library.impl(k.replace("aten.", "aten::"), "privateuseone")(wrap_view_op(v))
@@ -128,12 +127,6 @@ def _linalg_eigh(self, UPLO: str = 'U'):
   w, v = torch.linalg.eigh(self.cpu(), UPLO=UPLO)
   return w.tiny(), v.tiny()
 
-@torch.library.impl("aten::_linalg_det", "privateuseone")
-# TODO: move to tinygrad
-def _linalg_det(self: torch.Tensor):
-  result = aten._linalg_det(self.cpu())
-  return result[0].tiny(), result[1].tiny(), result[2].tiny()
-
 def upsample_backward(grad_out, output_size, input_size, *args, f=None): return f(grad_out.cpu(), output_size, input_size, *args).tiny()
 
 for i in [
@@ -177,27 +170,21 @@ def cached_to_movement_ops(shape, st) -> list:
 
 from tinygrad.shape.shapetracker import ShapeTracker, View
 from extra.to_movement_ops import to_movement_ops, apply_mop, MovementOps
-
-@wrap_view_op
-def _as_strided(tensor:Tensor, size, stride, storage_offset=None):
-  # multiple as_strided do not compound
-  base = canonical_base(tensor)
-  # TODO: this is heavyweight
-  st = ShapeTracker(base.uop.st.views + (View.create(tuple(size), tuple(stride), storage_offset),))
-  ret = base
-  if TORCH_DEBUG >= 1: print("**** as_strided", tensor.shape, size, stride, st)
-  if prod(size) == 1: return ret.flatten()[storage_offset].reshape(size)
-  for mo in cached_to_movement_ops(tuple(base.shape), st): ret = apply_mop(ret, mo)
-  return ret
-
 @torch.library.impl("aten::as_strided", "privateuseone")
 def as_strided(tensor:torch.Tensor, size, stride, storage_offset=None):
   storage_offset = storage_offset or tensor.storage_offset()
+  @wrap_view_op
+  def _as_strided(tensor:Tensor, size, stride, storage_offset=None):
+    # multiple as_strided do not compound
+    base = canonical_base(tensor)
+    # TODO: this is heavyweight
+    st = ShapeTracker(base.uop.st.views + (View.create(tuple(size), tuple(stride), storage_offset),))
+    ret = base
+    if TORCH_DEBUG >= 1: print("**** as_strided", tensor.shape, size, stride, st)
+    if prod(size) == 1: return ret.flatten()[storage_offset].reshape(size)
+    for mo in cached_to_movement_ops(tuple(base.shape), st): ret = apply_mop(ret, mo)
+    return ret
   return _as_strided(tensor, size, stride, storage_offset)
-
-@torch.library.impl("aten::_reshape_alias", "privateuseone")
-def _reshape_alias(tensor:torch.Tensor, size, stride):
-  return _as_strided(tensor, size, stride)
 
 @torch.library.impl("aten::empty_strided", "privateuseone")
 def empty_strided(size, stride, dtype, layout=None, device=None, pin_memory=False):
@@ -229,18 +216,15 @@ def max_unpool2d(self:torch.Tensor, indices:torch.Tensor, output_size):
 
 @torch.library.impl("aten::arange", "privateuseone")
 def arange(end, dtype=None, device=None, pin_memory=None):
-  has_float = isinstance(end, float)
-  return wrap(Tensor.arange(0, end, dtype=_from_torch_dtype(dtype or (torch.get_default_dtype() if has_float else torch.int64))))
+  return wrap(Tensor.arange(0, end, dtype=_from_torch_dtype(dtype or torch.get_default_dtype())))
 
 @torch.library.impl("aten::arange.start", "privateuseone")
 def arange_start(start, end, dtype=None, device=None, pin_memory=None):
-  has_float = any(isinstance(x, float) for x in (start, end))
-  return wrap(Tensor.arange(start, end, dtype=_from_torch_dtype(dtype or (torch.get_default_dtype() if has_float else torch.int64))))
+  return wrap(Tensor.arange(start, end, dtype=_from_torch_dtype(dtype or torch.get_default_dtype())))
 
 @torch.library.impl("aten::arange.start_step", "privateuseone")
 def arange_start_step(start, end, step, dtype=None, device=None, pin_memory=None):
-  has_float = any(isinstance(x, float) for x in (start, end, step))
-  return wrap(Tensor.arange(start, end, step, dtype=_from_torch_dtype(dtype or (torch.get_default_dtype() if has_float else torch.int64))))
+  return wrap(Tensor.arange(start, end, step, dtype=_from_torch_dtype(dtype or torch.get_default_dtype())))
 
 @torch.library.impl("aten::convolution_overrideable", "privateuseone")
 def convolution_overrideable(input, weight, bias, stride, padding, dilation, transposed, output_padding, groups):
@@ -367,17 +351,11 @@ def sort_values(input, dim=-1, descending=False, stable=True, values=None, indic
   unwrap(indices).assign(out_indices.cast(dtypes.int64))
   return wrap(out_values), wrap(out_indices)
 
-@torch.library.impl("aten::_linalg_svd", "privateuseone")
-def _linalg_svd(self, full_matrices=False):
-  U, S, Vh = unwrap(self).svd(full_matrices)
-  return wrap(U), wrap(S), wrap(Vh)
-
 # register some decompositions
 from torch._decomp import get_decompositions
 decomps = [
   aten.native_batch_norm, aten.native_batch_norm_backward,
   aten.native_layer_norm_backward,
-  aten.linalg_cross,
   aten.addmm,
   aten.addcmul,
   aten.addcdiv,
@@ -387,11 +365,9 @@ decomps = [
   aten.elu,  # elu has a scale + input_scale param
   aten.elu_backward,
   aten.softplus,
-  aten.logaddexp,
   aten.threshold,
   aten.nll_loss_forward,
   aten.nll_loss_backward,
-  aten.nll_loss2d_backward,
   # AttributeError: 'int' object has no attribute '_broadcasted'
   aten.sigmoid_backward,
   aten.tanh_backward,
@@ -400,7 +376,6 @@ decomps = [
   aten.softshrink,
   aten.hardshrink,
   aten.log_sigmoid_forward,
-  aten.log_sigmoid_backward,
   aten.isneginf,
   aten.isposinf,
   aten.nan_to_num,
@@ -434,7 +409,6 @@ decomps = [
   #aten.lgamma,
   # this needs copy_strided
   #aten.lerp,
-  aten.norm,
 ]
 for k,v in get_decompositions(decomps).items():
   key = str(k._schema).split("(")[0]
@@ -496,7 +470,6 @@ tiny_backend_out = {**{f"aten.{x}.out":getattr(Tensor,x) for x in simple_tensor_
   "aten.fmax.out": lambda input,other: Tensor.where(input.isnan() & ~other.isnan(), other, Tensor.where(~input.isnan() & other.isnan(), input, Tensor.maximum(input, other))),
   "aten.fmin.out": lambda input,other: Tensor.where(input.isnan() & ~other.isnan(), other, Tensor.where(~input.isnan() & other.isnan(), input, Tensor.minimum(input, other))),
   "aten.amax.out": lambda self,dim=None: self.max(axis=dim),
-  "aten.amin.out": lambda self,dim=None: self.min(axis=dim),
   # TODO: this gets the shape wrong
   #"aten.arange.start_out": Tensor.arange,
   "aten.lerp.Scalar_out": Tensor.lerp,

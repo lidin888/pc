@@ -1,14 +1,13 @@
 import unittest
 from tinygrad import Tensor
-from tinygrad.helpers import getenv, GlobalCounters, EMULATE
-from tinygrad.engine.realize import lower_schedule_item, ProgramSpec, get_program
+from tinygrad.helpers import getenv, GlobalCounters
+from tinygrad.engine.realize import lower_schedule_item, ProgramSpec
 from tinygrad.renderer import Estimates
 from tinygrad.codegen import full_rewrite
 from tinygrad.uop.ops import Ops, UOp
 from tinygrad.dtype import dtypes
-from tinygrad.codegen.opt import Opt, OptOps, KernelOptError
+from tinygrad.opt.kernel import Kernel, Opt, OptOps, KernelOptError
 from tinygrad.device import Device
-from tinygrad.renderer.ptx import PTXRenderer
 
 def flops_mem(uops, ignore_indexing=False):
   est = Estimates.from_uops(uops, ignore_indexing)
@@ -21,7 +20,6 @@ def get_stats(x:Tensor):
   ei = lower_schedule_item(si)
   return ei.prg.estimates.ops, ei.prg.estimates.mem
 
-@unittest.skipIf(Device.DEFAULT == "WEBGPU", "webgpu does extra load/store for packed types")
 class TestMemoryCount(unittest.TestCase):
   def test_add(self):
     a = Tensor.empty(1024, 1024, dtype=dtypes.uint8)
@@ -88,7 +86,6 @@ class TestUOpsStatsMatmulHalf(unittest.TestCase):
     expected_ops = N ** 3 * 2
     self.assertEqual(expected_ops, GlobalCounters.global_ops)
 
-  @unittest.skipIf(EMULATE.value=="INTEL", "intel gets 524288 != 524352")
   def test_bigger_matmul_half(self): self.test_simple_matmul_half(64)
 
   def test_batched_matmul_half(self, N=16):
@@ -100,6 +97,7 @@ class TestUOpsStatsMatmulHalf(unittest.TestCase):
     self.assertEqual(expected_ops, GlobalCounters.global_ops)
 
 class TestUOpsStats(unittest.TestCase):
+  @unittest.skipIf(getenv("PTX"), "wrong in PTX")
   def test_simple_add(self):
     a = Tensor.empty(100,100)
     b = Tensor.empty(100,100)
@@ -111,6 +109,7 @@ class TestUOpsStats(unittest.TestCase):
     # NOTE; ops also include indexing ops
     assert expected_ops <= ops and ops <= expected_ops * 2
 
+  @unittest.skipIf(getenv("PTX"), "wrong in PTX")
   def test_simple_add_sq(self):
     a = Tensor.empty(100,100)
     b = Tensor.empty(100,100)
@@ -159,7 +158,7 @@ class TestUOpsStats(unittest.TestCase):
     self.assertEqual(flops_mem(uops), flops_mem(uops_fma))
 
 N = 64
-@unittest.skipIf(isinstance(Device[Device.DEFAULT].renderer, PTXRenderer), "wrong in PTX") # maybe?
+@unittest.skipIf(getenv("PTX"), "wrong in PTX") # maybe?
 class TestStatsOptimized(unittest.TestCase):
   @classmethod
   def setUpClass(cls):
@@ -174,60 +173,75 @@ class TestStatsOptimized(unittest.TestCase):
     self.assertEqual(p.estimates.mem, 3*N*N*4) # 3 NxN mats with floats
 
   def test_gemm(self):
-    p = get_program(self.ast_gemm, opts=[])
+    p = Kernel(self.ast_gemm).to_program()
     self.check_gemm(p)
     self.assertEqual(p.estimates.lds, 2*N*N*N*4 + 4*N*N)
 
   def test_gemm_tc_unroll(self):
-    try:
-      p = get_program(self.ast_gemm, opts=[Opt(OptOps.TC, 0, (-1, 0, 1)), Opt(OptOps.UNROLL, 0, 2)])
-    except KernelOptError:
-      raise unittest.SkipTest("no tensor cores")
+    k = Kernel(self.ast_gemm)
+    if not k.apply_tensor_cores(): self.skipTest("no tensor cores")
+    k.apply_opt(Opt(OptOps.UNROLL, 0, 2))
+    p = k.to_program()
     print(p.src)
     self.check_gemm(p)
 
   # this is a good lesson about why UPCASTing is a good idea
 
   def test_gemm_one_upcasted(self):
-    p = get_program(self.ast_gemm, opts=[Opt(OptOps.UPCAST, 0, 4)])
+    k = Kernel(self.ast_gemm)
+    k.apply_opt(Opt(OptOps.UPCAST, 0, 4))
+    p = k.to_program()
     self.check_gemm(p)
     self.assertEqual(p.estimates.lds, N*N*N*4 + N*N*N*4//4 + 4*N*N)
 
   def test_gemm_upcasted(self):
-    p = get_program(self.ast_gemm, opts=[Opt(OptOps.UPCAST, 0, 4), Opt(OptOps.UPCAST, 1, 4), Opt(OptOps.UNROLL, 0, 4)])
+    k = Kernel(self.ast_gemm)
+    k.apply_opt(Opt(OptOps.UPCAST, 0, 4))
+    k.apply_opt(Opt(OptOps.UPCAST, 1, 4))
+    k.apply_opt(Opt(OptOps.UNROLL, 0, 4))
+    p = k.to_program()
     self.check_gemm(p)
     self.assertEqual(p.estimates.lds, 2*N*N*N*4//4 + 4*N*N)
 
   def test_gemm_upcasted_locals(self):
+    k = Kernel(self.ast_gemm)
+    k.apply_opt(Opt(OptOps.UPCAST, 0, 4))
+    k.apply_opt(Opt(OptOps.UPCAST, 1, 4))
     try:
-      p = get_program(self.ast_gemm, opts=[Opt(OptOps.UPCAST, 0, 4), Opt(OptOps.UPCAST, 1, 4),
-                                           Opt(OptOps.LOCAL, 0, 4),  Opt(OptOps.LOCAL, 1, 4)])
+      k.apply_opt(Opt(OptOps.LOCAL, 0, 5))
+      k.apply_opt(Opt(OptOps.LOCAL, 1, 5))
     except KernelOptError:
       raise unittest.SkipTest("no locals")
+    p = k.to_program()
     self.check_gemm(p)
     self.assertEqual(p.estimates.lds, 2*N*N*N*4//4 + 4*N*N)
 
   def test_gemm_group(self):
+    k = Kernel(self.ast_gemm)
     try:
-      p = get_program(self.ast_gemm, opts=[Opt(OptOps.GROUP, 0, 4)])
+      k.apply_opt(Opt(OptOps.GROUP, 0, 4))
     except KernelOptError:
       raise unittest.SkipTest("no locals")
     SZ = N*N*4
+    p = k.to_program()
     # NOTE: these are sort of wrong. they aren't honoring the IF statement
     self.check_gemm(p, extra_flops=SZ*4)
     self.assertEqual(p.estimates.lds, 2*N*N*N*4 + SZ*4 + (SZ*4 + 4*N*N)*4)
 
   def test_reduce(self):
-    p = get_program(self.ast_reduce, opts=[])
+    k = Kernel(self.ast_reduce)
+    p = k.to_program()
     print(p.name, p.estimates.ops, p.estimates.mem, p.estimates.lds)
     self.assertEqual(p.estimates.ops, N*N)
     self.assertEqual(p.estimates.mem, N*N*4 + 4)
 
   def test_reduce_group(self):
+    k = Kernel(self.ast_reduce)
     try:
-      p = get_program(self.ast_reduce, opts=[Opt(OptOps.GROUP, 0, 50)])
+      k.apply_opt(Opt(OptOps.GROUP, 0, 50))
     except KernelOptError:
       raise unittest.SkipTest("no locals")
+    p = k.to_program()
     # NOTE: these are wrong, they don't respect the if statement
     print(p.name, p.estimates.ops, p.estimates.mem, p.estimates.lds)
 
