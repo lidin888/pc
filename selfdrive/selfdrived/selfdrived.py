@@ -320,7 +320,14 @@ class SelfdriveD(CruiseHelper):
         safety_mismatch = pandaState.safetyModel not in IGNORED_SAFETY_MODES
 
       # safety mismatch allows some time for pandad to set the safety mode and publish it back from panda
-      if (safety_mismatch and self.sm.frame*DT_CTRL > 10.) or pandaState.safetyRxChecksInvalid or self.mismatch_counter >= 200:
+      # For Toyota TSS2 with openpilot longitudinal, PCM may temporarily disengage cruise on gas press
+      # This causes temporary mismatch, so we increase the threshold to avoid false positives
+      mismatch_threshold = 200
+      if self.CP.brand == 'toyota' and self.CP.openpilotLongitudinalControl:
+        # Toyota TSS2: Allow longer mismatch duration to handle PCM cruise state changes
+        mismatch_threshold = 400  # ~8 seconds at 100Hz
+
+      if (safety_mismatch and self.sm.frame*DT_CTRL > 10.) or pandaState.safetyRxChecksInvalid or self.mismatch_counter >= mismatch_threshold:
         self.events.add(EventName.controlsMismatch)
 
       if log.PandaState.FaultType.relayMalfunction in pandaState.faults:
