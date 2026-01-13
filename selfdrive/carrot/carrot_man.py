@@ -317,12 +317,24 @@ class CarrotMan:
     #获取共享数据
     self.carrot_serv.ext_blinker = self.amap_navi.shared_data.ext_blinker
     self.carrot_serv.ext_state = self.amap_navi.shared_data.ext_state
+    self.carrot_serv.left_lane = True if self.amap_navi.shared_data.left_lane > 0 else False
+    self.carrot_serv.right_lane = True if self.amap_navi.shared_data.right_lane > 0 else False
     self.carrot_serv.left_blind = self.amap_navi.shared_data.left_blind
     self.carrot_serv.right_blind = self.amap_navi.shared_data.right_blind
     self.carrot_serv.lidar_lblind = self.amap_navi.shared_data.lidar_lblind
     self.carrot_serv.lidar_rblind = self.amap_navi.shared_data.lidar_rblind
     self.carrot_serv.lidar_car_lblind = self.amap_navi.shared_data.lidar_car_lblind
     self.carrot_serv.lidar_car_rblind = self.amap_navi.shared_data.lidar_car_rblind
+    self.carrot_serv.lidar_lvalid = self.amap_navi.shared_data.lidar_l
+    self.carrot_serv.lidar_rvalid = self.amap_navi.shared_data.lidar_r
+    self.carrot_serv.lf_drel = self.amap_navi.shared_data.main_lf_drel
+    self.carrot_serv.lb_drel = self.amap_navi.shared_data.main_lb_drel
+    self.carrot_serv.rf_drel = self.amap_navi.shared_data.main_rf_drel
+    self.carrot_serv.rb_drel = self.amap_navi.shared_data.main_rb_drel
+    self.carrot_serv.lf_vrel = self.amap_navi.shared_data.lf_vrel
+    self.carrot_serv.lb_vrel = self.amap_navi.shared_data.lb_vrel
+    self.carrot_serv.rf_vrel = self.amap_navi.shared_data.rf_vrel
+    self.carrot_serv.rb_vrel = self.amap_navi.shared_data.rb_vrel
 
     #获取共享数据中的控制命令
     if self.shared_cmd_index_last != self.amap_navi.shared_data.cmd_index:

