@@ -1394,7 +1394,7 @@ protected:
         return true;
     }
 public:
-    void draw(const UIState* s) {
+    void draw(const UIState* s,int show_lane_info) {
         if (!make_data(s)) return;
 
         NVGcolor color_red = nvgRGBA(255, 0, 0, 60); //红色
@@ -1404,6 +1404,14 @@ public:
         NVGcolor icon_color_red = nvgRGBA(255, 0, 0, 150); //红色
         NVGcolor icon_color_yellow = nvgRGBA(255, 215, 0, 150); //黄色
         NVGcolor icon_color_blue = nvgRGBA(0, 0, 255, 150); //蓝色
+
+        // 绿色
+        NVGcolor color_green = nvgRGBA(0, 255, 0, 60);        // 绿色
+        NVGcolor icon_color_green = nvgRGBA(0, 255, 0, 150); // 绿色（图标）
+
+        // 紫色
+        NVGcolor color_purple = nvgRGBA(138, 43, 226, 60);        // 紫色（BlueViolet）
+        NVGcolor icon_color_purple = nvgRGBA(138, 43, 226, 150); // 紫色（图标）
 
         NVGcolor red_arrow_color = nvgRGBA(255, 0, 0, 200);
         NVGcolor yellow_arrow_color = nvgRGBA(255, 215, 0, 200);
@@ -1422,55 +1430,70 @@ public:
         //bool carrotLeftBlind = carrotMan.getLeftBlind() || amapNavi.getLeftBlind();
         //bool carrotRightBlind = carrotMan.getRightBlind() || amapNavi.getRightBlind();
         auto amapNavi = sm["amapNavi"].getAmapNavi();
-        bool carrotLeftBlind = amapNavi.getLeftBlind();
-        bool carrotRightBlind = amapNavi.getRightBlind();
-        /*
+        int carrotLeftBlind = amapNavi.getLeftBlind();
+        int carrotRightBlind = amapNavi.getRightBlind();
+
         auto laneChangeState = meta.getLaneChangeState();
         auto laneChangeDirection = meta.getLaneChangeDirection();
         bool rightLaneChange = (laneChangeState == cereal::LaneChangeState::PRE_LANE_CHANGE) &&
             (laneChangeDirection == cereal::LaneChangeDirection::RIGHT);
         bool leftLaneChange = (laneChangeState == cereal::LaneChangeState::PRE_LANE_CHANGE) &&
             (laneChangeDirection == cereal::LaneChangeDirection::LEFT);
-        */
 
 #if 0
         //TEST
         leftFrontBlind = true;
         rightFrontBlind = true;
-        carrotLeftBlind = true;
-        carrotRightBlind = true;
+        carrotLeftBlind = 1;
+        carrotRightBlind = 1;
         left_blindspot = 1;
         right_blindspot = 1;
 #endif
-        if (left_blindspot) {
-            ui_draw_bsd(s, lane_barrier_vertices[0], &color_red, false);
-        }
-        else if (carrotLeftBlind) {
-            ui_draw_bsd(s, lane_barrier_vertices[0], &color_blue, false);
-        }
-        else if (leftFrontBlind) {
-            ui_draw_bsd(s, lane_barrier_vertices[0], &color_yellow, false);
+        if(leftLaneChange || show_lane_info == 2){
+            if (left_blindspot) {
+                ui_draw_bsd(s, lane_barrier_vertices[0], &color_red, false);
+            }
+            else if (carrotLeftBlind > 0) {
+                if(0 != (carrotLeftBlind & 8)){ //实线
+                    ui_draw_bsd(s, lane_barrier_vertices[0], &color_green, false);
+                }else if(0 != (carrotLeftBlind & 2)){ //摄像头盲区
+                    ui_draw_bsd(s, lane_barrier_vertices[0], &color_purple, false);
+                }else{ //激光雷达盲区
+                    ui_draw_bsd(s, lane_barrier_vertices[0], &color_blue, false);
+                }
+            }
+            else if (leftFrontBlind) {
+                ui_draw_bsd(s, lane_barrier_vertices[0], &color_yellow, false);
+            }
         }
 
-        if (right_blindspot) {
-            ui_draw_bsd(s, lane_barrier_vertices[1], &color_red, true);
-        }
-        else if (carrotRightBlind) {
-            ui_draw_bsd(s, lane_barrier_vertices[1], &color_blue, true);
-        }
-        else if (rightFrontBlind){
-            ui_draw_bsd(s, lane_barrier_vertices[1], &color_yellow, true);
+        if(rightLaneChange || show_lane_info == 2){
+            if (right_blindspot) {
+                ui_draw_bsd(s, lane_barrier_vertices[1], &color_red, true);
+            }
+            else if (carrotRightBlind > 0) {
+                if(0 != (carrotRightBlind & 8)){ //实线
+                    ui_draw_bsd(s, lane_barrier_vertices[1], &color_green, true);
+                }else if(0 != (carrotRightBlind & 2)){ //摄像头盲区
+                    ui_draw_bsd(s, lane_barrier_vertices[1], &color_purple, true);
+                }else{ //激光雷达盲区
+                    ui_draw_bsd(s, lane_barrier_vertices[1], &color_blue, true);
+                }
+            }
+            else if (rightFrontBlind){
+                ui_draw_bsd(s, lane_barrier_vertices[1], &color_yellow, true);
+            }
         }
 
         int center_x = s->fb_w / 2;
-        int circle_radius = 30;
-        int vertical_spacing = 80;
+        int circle_radius = 46;
+        int vertical_spacing = 100;
         int horizontal_offset = 150;
-        int top_y = 20;
-        int arrow_body_width = 14;
-        int arrow_body_length = 15;
-        int arrow_head_width = 30;
-        int arrow_head_length = 12;
+        int top_y = 10;
+        int arrow_body_width = 22;
+        int arrow_body_length = 23;
+        int arrow_head_width = 46;
+        int arrow_head_length = 19;
 
         // 计算整个箭头的总长度
         int total_arrow_length = arrow_body_length + arrow_head_length;
@@ -1485,18 +1508,21 @@ public:
             nvgCircle(s->vg, cx, cy, circle_radius);
             nvgFillColor(s->vg, icon_color_yellow);
             nvgFill(s->vg);
-            nvgBeginPath(s->vg);
-            nvgRect(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy - arrow_body_width/2,
-                    arrow_body_length, arrow_body_width);
-            nvgFillColor(s->vg, red_arrow_color);
-            nvgFill(s->vg);
-            nvgBeginPath(s->vg);
-            nvgMoveTo(s->vg, cx - total_arrow_length/2, cy);
-            nvgLineTo(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy - arrow_head_width/2);
-            nvgLineTo(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy + arrow_head_width/2);
-            nvgClosePath(s->vg);
-            nvgFillColor(s->vg, red_arrow_color);
-            nvgFill(s->vg);
+            if(show_lane_info >= 1)
+            {
+                nvgBeginPath(s->vg);
+                nvgRect(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy - arrow_body_width/2,
+                        arrow_body_length, arrow_body_width);
+                nvgFillColor(s->vg, red_arrow_color);
+                nvgFill(s->vg);
+                nvgBeginPath(s->vg);
+                nvgMoveTo(s->vg, cx - total_arrow_length/2, cy);
+                nvgLineTo(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy - arrow_head_width/2);
+                nvgLineTo(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy + arrow_head_width/2);
+                nvgClosePath(s->vg);
+                nvgFillColor(s->vg, red_arrow_color);
+                nvgFill(s->vg);
+            }
 
             icon_show = true;
         }
@@ -1507,18 +1533,21 @@ public:
             nvgCircle(s->vg, cx, cy, circle_radius);
             nvgFillColor(s->vg, icon_color_yellow);
             nvgFill(s->vg);
-            nvgBeginPath(s->vg);
-            nvgRect(s->vg, cx - total_arrow_length/2, cy - arrow_body_width/2,
-                    arrow_body_length, arrow_body_width);
-            nvgFillColor(s->vg, red_arrow_color);
-            nvgFill(s->vg);
-            nvgBeginPath(s->vg);
-            nvgMoveTo(s->vg, cx + total_arrow_length/2, cy);
-            nvgLineTo(s->vg, cx + total_arrow_length/2 - arrow_head_length, cy - arrow_head_width/2);
-            nvgLineTo(s->vg, cx + total_arrow_length/2 - arrow_head_length, cy + arrow_head_width/2);
-            nvgClosePath(s->vg);
-            nvgFillColor(s->vg, red_arrow_color);
-            nvgFill(s->vg);
+            if(show_lane_info >= 1)
+            {
+                nvgBeginPath(s->vg);
+                nvgRect(s->vg, cx - total_arrow_length/2, cy - arrow_body_width/2,
+                        arrow_body_length, arrow_body_width);
+                nvgFillColor(s->vg, red_arrow_color);
+                nvgFill(s->vg);
+                nvgBeginPath(s->vg);
+                nvgMoveTo(s->vg, cx + total_arrow_length/2, cy);
+                nvgLineTo(s->vg, cx + total_arrow_length/2 - arrow_head_length, cy - arrow_head_width/2);
+                nvgLineTo(s->vg, cx + total_arrow_length/2 - arrow_head_length, cy + arrow_head_width/2);
+                nvgClosePath(s->vg);
+                nvgFillColor(s->vg, red_arrow_color);
+                nvgFill(s->vg);
+            }
 
             icon_show = true;
         }
@@ -1529,47 +1558,65 @@ public:
         }
 
         icon_show = false;
-        if (carrotLeftBlind) {
+        if (carrotLeftBlind > 0) {
             int cx = center_x - horizontal_offset;
             int cy = top_y + circle_radius;  // 保持在中间
             nvgBeginPath(s->vg);
             nvgCircle(s->vg, cx, cy, circle_radius);
-            nvgFillColor(s->vg, icon_color_blue);
+            if(0 != (carrotLeftBlind & 8)){ //实线
+                nvgFillColor(s->vg, icon_color_green);
+            }else if(0 != (carrotLeftBlind & 2)){ //摄像头盲区
+                nvgFillColor(s->vg, icon_color_purple);
+            }else{ //激光雷达盲区
+                nvgFillColor(s->vg, icon_color_blue);
+            }
             nvgFill(s->vg);
-            nvgBeginPath(s->vg);
-            nvgRect(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy - arrow_body_width/2,
-                    arrow_body_length, arrow_body_width);
-            nvgFillColor(s->vg, red_arrow_color);
-            nvgFill(s->vg);
-            nvgBeginPath(s->vg);
-            nvgMoveTo(s->vg, cx - total_arrow_length/2, cy);
-            nvgLineTo(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy - arrow_head_width/2);
-            nvgLineTo(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy + arrow_head_width/2);
-            nvgClosePath(s->vg);
-            nvgFillColor(s->vg, red_arrow_color);
-            nvgFill(s->vg);
+            if(show_lane_info >= 1)
+            {
+                nvgBeginPath(s->vg);
+                nvgRect(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy - arrow_body_width/2,
+                        arrow_body_length, arrow_body_width);
+                nvgFillColor(s->vg, red_arrow_color);
+                nvgFill(s->vg);
+                nvgBeginPath(s->vg);
+                nvgMoveTo(s->vg, cx - total_arrow_length/2, cy);
+                nvgLineTo(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy - arrow_head_width/2);
+                nvgLineTo(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy + arrow_head_width/2);
+                nvgClosePath(s->vg);
+                nvgFillColor(s->vg, red_arrow_color);
+                nvgFill(s->vg);
+            }
 
             icon_show = true;
         }
-        if (carrotRightBlind) {
+        if (carrotRightBlind > 0) {
             int cx = center_x + horizontal_offset;
             int cy = top_y + circle_radius;  // 保持在中间
             nvgBeginPath(s->vg);
             nvgCircle(s->vg, cx, cy, circle_radius);
-            nvgFillColor(s->vg, icon_color_blue);
+            if(0 != (carrotRightBlind & 8)){ //实线
+                nvgFillColor(s->vg, icon_color_green);
+            }else if(0 != (carrotRightBlind & 2)){ //摄像头盲区
+                nvgFillColor(s->vg, icon_color_purple);
+            }else{ //激光雷达盲区
+                nvgFillColor(s->vg, icon_color_blue);
+            }
             nvgFill(s->vg);
-            nvgBeginPath(s->vg);
-            nvgRect(s->vg, cx - total_arrow_length/2, cy - arrow_body_width/2,
-                    arrow_body_length, arrow_body_width);
-            nvgFillColor(s->vg, red_arrow_color);
-            nvgFill(s->vg);
-            nvgBeginPath(s->vg);
-            nvgMoveTo(s->vg, cx + total_arrow_length/2, cy);
-            nvgLineTo(s->vg, cx + total_arrow_length/2 - arrow_head_length, cy - arrow_head_width/2);
-            nvgLineTo(s->vg, cx + total_arrow_length/2 - arrow_head_length, cy + arrow_head_width/2);
-            nvgClosePath(s->vg);
-            nvgFillColor(s->vg, red_arrow_color);
-            nvgFill(s->vg);
+            if(show_lane_info >= 1)
+            {
+                nvgBeginPath(s->vg);
+                nvgRect(s->vg, cx - total_arrow_length/2, cy - arrow_body_width/2,
+                        arrow_body_length, arrow_body_width);
+                nvgFillColor(s->vg, red_arrow_color);
+                nvgFill(s->vg);
+                nvgBeginPath(s->vg);
+                nvgMoveTo(s->vg, cx + total_arrow_length/2, cy);
+                nvgLineTo(s->vg, cx + total_arrow_length/2 - arrow_head_length, cy - arrow_head_width/2);
+                nvgLineTo(s->vg, cx + total_arrow_length/2 - arrow_head_length, cy + arrow_head_width/2);
+                nvgClosePath(s->vg);
+                nvgFillColor(s->vg, red_arrow_color);
+                nvgFill(s->vg);
+            }
 
             icon_show = true;
         }
@@ -1587,18 +1634,21 @@ public:
             nvgCircle(s->vg, cx, cy, circle_radius);
             nvgFillColor(s->vg, icon_color_red);
             nvgFill(s->vg);
-            nvgBeginPath(s->vg);
-            nvgRect(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy - arrow_body_width/2,
-                    arrow_body_length, arrow_body_width);
-            nvgFillColor(s->vg, yellow_arrow_color);
-            nvgFill(s->vg);
-            nvgBeginPath(s->vg);
-            nvgMoveTo(s->vg, cx - total_arrow_length/2, cy);
-            nvgLineTo(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy - arrow_head_width/2);
-            nvgLineTo(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy + arrow_head_width/2);
-            nvgClosePath(s->vg);
-            nvgFillColor(s->vg, yellow_arrow_color);
-            nvgFill(s->vg);
+            if(show_lane_info >= 1)
+            {
+                nvgBeginPath(s->vg);
+                nvgRect(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy - arrow_body_width/2,
+                        arrow_body_length, arrow_body_width);
+                nvgFillColor(s->vg, yellow_arrow_color);
+                nvgFill(s->vg);
+                nvgBeginPath(s->vg);
+                nvgMoveTo(s->vg, cx - total_arrow_length/2, cy);
+                nvgLineTo(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy - arrow_head_width/2);
+                nvgLineTo(s->vg, cx - total_arrow_length/2 + arrow_head_length, cy + arrow_head_width/2);
+                nvgClosePath(s->vg);
+                nvgFillColor(s->vg, yellow_arrow_color);
+                nvgFill(s->vg);
+            }
 
             icon_show = true;
         }
@@ -1609,18 +1659,21 @@ public:
             nvgCircle(s->vg, cx, cy, circle_radius);
             nvgFillColor(s->vg, icon_color_red);
             nvgFill(s->vg);
-            nvgBeginPath(s->vg);
-            nvgRect(s->vg, cx - total_arrow_length/2, cy - arrow_body_width/2,
-                    arrow_body_length, arrow_body_width);
-            nvgFillColor(s->vg, yellow_arrow_color);
-            nvgFill(s->vg);
-            nvgBeginPath(s->vg);
-            nvgMoveTo(s->vg, cx + total_arrow_length/2, cy);
-            nvgLineTo(s->vg, cx + total_arrow_length/2 - arrow_head_length, cy - arrow_head_width/2);
-            nvgLineTo(s->vg, cx + total_arrow_length/2 - arrow_head_length, cy + arrow_head_width/2);
-            nvgClosePath(s->vg);
-            nvgFillColor(s->vg, yellow_arrow_color);
-            nvgFill(s->vg);
+            if(show_lane_info >= 1)
+            {
+                nvgBeginPath(s->vg);
+                nvgRect(s->vg, cx - total_arrow_length/2, cy - arrow_body_width/2,
+                        arrow_body_length, arrow_body_width);
+                nvgFillColor(s->vg, yellow_arrow_color);
+                nvgFill(s->vg);
+                nvgBeginPath(s->vg);
+                nvgMoveTo(s->vg, cx + total_arrow_length/2, cy);
+                nvgLineTo(s->vg, cx + total_arrow_length/2 - arrow_head_length, cy - arrow_head_width/2);
+                nvgLineTo(s->vg, cx + total_arrow_length/2 - arrow_head_length, cy + arrow_head_width/2);
+                nvgClosePath(s->vg);
+                nvgFillColor(s->vg, yellow_arrow_color);
+                nvgFill(s->vg);
+            }
 
             icon_show = true;
         }
@@ -3078,7 +3131,7 @@ void ui_draw(UIState *s, ModelRenderer* model_renderer, int w, int h) {
 
   drawPlot.draw(s);
 
-  drawBlindSpot.draw(s);
+  drawBlindSpot.draw(s,show_lane_info);
 
   if(draw_carrot)
     drawCarrot.drawRadarInfo(s);
