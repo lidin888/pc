@@ -6,5 +6,5 @@ sudo chmod 777 /dev/bus/usb/*
 # 运行op
 cd /data/openpilot &&
 source .venv/bin/activate &&
-USE_WEBCAM=1 USE_CAMPATH=1 ROAD_CAM=0 WIDE_CAM=2 NO_DM=0 JY62=1 system/manager/manager.py
+QT_QPA_PLATFORM=xcb USE_WEBCAM=1 USE_CAMPATH=1 ROAD_CAM=0 WIDE_CAM=2 NO_DM=0 JY62=2 system/manager/manager.py
 
