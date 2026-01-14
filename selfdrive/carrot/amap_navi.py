@@ -492,9 +492,9 @@ class AmapNaviServ:
           for ip, info in _clients.items():
             try:
               device_type = info.get("device", None)
-              detect_side = info.get("detect_side", None)
+              detect_side = info.get("detect_side", 0)
 
-              if device_type == "lidar" or device_type == "camera":  # 雷达或摄像头
+              if device_type is not None and (device_type == "lidar" or device_type == "camera"):  # 雷达或摄像头
                 #设备是否在线标志
                 if device_type == "lidar":
                   if (detect_side & 1) > 0: lidar_l = True
@@ -506,7 +506,7 @@ class AmapNaviServ:
                 #检查数据是否超时
                 if device_type == "lidar":
                   self.lidar_data_timeout(ip, info)
-                if device_type == "lidar":
+                if device_type == "camera":
                   self.camera_data_timeout(ip, info)
 
                 # 获取盲区状态
@@ -799,6 +799,7 @@ class AmapNaviServ:
         # 摄像头盲区信号
         if resp == "cam_blind":
           camera_data = True
+          detect_side = json_obj.get("detect_side", 0)
           if "left_blind" in json_obj:
             left_blind = json_obj.get("left_blind")
           if "right_blind" in json_obj:
@@ -904,7 +905,7 @@ class AmapNaviServ:
           if last_dis_timems is not None and dist_timems is not None and (dist_timems - last_dis_timems) > 80:
             print(f"$$$$$$$${'left' if detect_side == 1 else 'right'} lidar{lidar_id} interval > {dist_timems - last_dis_timems}ms")
           last_seen = old_info.get("last_seen", None)
-          if last_seen is not None and (now - last_seen) > 0.2:
+          if last_seen is not None and (now - last_seen) > 0.3:
             print(f"========={'left' if detect_side == 1 else 'right'} lidar{lidar_id} interval > {now - last_seen}")
     except Exception as e:
       print(f"Process json 'resp' error: {e}")
@@ -994,6 +995,7 @@ class AmapNaviServ:
             "port": int(json_obj.get("port", self.broadcast_port)),
             "last_seen": now,
             "device": device,
+            "detect_side": json_obj.get("detect_side", old_info.get("detect_side", 0)),
             # 盲区状态更新(本次未更新则保留上次的)
             "left_blind": left_blind if left_blind is not None else old_info.get("left_blind", False),
             "right_blind": right_blind if right_blind is not None else old_info.get("right_blind", False),
