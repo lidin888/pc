@@ -1015,6 +1015,18 @@
         <translation>取消openpilot以关机</translation>
     </message>
     <message>
+        <source>Auto Shutdown on Disconnect</source>
+        <translation>断开连接自动关机</translation>
+    </message>
+    <message>
+        <source>Auto poweroff when Panda disconnects</source>
+        <translation>Panda 断开连接时自动关机</translation>
+    </message>
+    <message>
+        <source>Disconnect Delay (sec)</source>
+        <translation>断开延时(秒)</translation>
+    </message>
+    <message>
         <source>Reset</source>
         <translation type="vanished">重置</translation>
     </message>

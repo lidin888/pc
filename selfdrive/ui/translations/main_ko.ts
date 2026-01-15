@@ -1076,6 +1076,18 @@
         <source>Are you sure you want to reset %1?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Auto Shutdown on Disconnect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto poweroff when Panda disconnects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disconnect Delay (sec)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DrawCarrot</name>

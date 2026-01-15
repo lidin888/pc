@@ -1001,6 +1001,18 @@
         <translation>Desactivar para apagar</translation>
     </message>
     <message>
+        <source>Auto Shutdown on Disconnect</source>
+        <translation>Auto Shutdown on Disconnect</translation>
+    </message>
+    <message>
+        <source>Auto poweroff when Panda disconnects</source>
+        <translation>Auto poweroff when Panda disconnects</translation>
+    </message>
+    <message>
+        <source>Disconnect Delay (sec)</source>
+        <translation>Disconnect Delay (sec)</translation>
+    </message>
+    <message>
         <source>ReCalibration</source>
         <translation type="unfinished"></translation>
     </message>

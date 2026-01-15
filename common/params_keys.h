@@ -302,4 +302,8 @@ inline static std::unordered_map<std::string, uint32_t> keys = {
 
     {"HardwareC3xLite", PERSISTENT},
     {"ShareData", PERSISTENT}
+
+    // 断开连接自动关机功能
+    {"EnableDisconnectShutdown", PERSISTENT},
+    {"DisconnectShutdownDelay", PERSISTENT},
 };

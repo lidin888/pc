@@ -184,6 +184,10 @@ def get_default_params():
     ("NNFF", "0"),
     ("NNFFLite", "0"),
     ("ShareData", "0"),
+
+    # 断开连接自动关机功能
+    ("EnableDisconnectShutdown", "0"),  # 默认关闭，需要手动启用
+    ("DisconnectShutdownDelay", "5"),  # 断开连接后延时 5 秒关机
   ]
   return default_params
 

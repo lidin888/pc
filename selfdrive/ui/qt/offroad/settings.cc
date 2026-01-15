@@ -206,6 +206,10 @@ DevicePanel::DevicePanel(SettingsWindow *parent) : ListWidget(parent) {
 
   addItem(power_layout);
 
+  // 断开连接自动关机控制
+  addItem(new CValueControl("EnableDisconnectShutdown", tr("Auto Shutdown on Disconnect"), tr("Auto poweroff when Panda disconnects"), 0, 1, 1));
+  addItem(new CValueControl("DisconnectShutdownDelay", tr("Disconnect Delay (sec)"), "", 1, 60, 1));
+
   QHBoxLayout* init_layout = new QHBoxLayout();
   init_layout->setSpacing(30);
 
