@@ -127,6 +127,7 @@ class SelfdriveD(CruiseHelper):
     self.last_steering_pressed_frame = 0
     self.distance_traveled = 0
     self.last_functional_fan_frame = 0
+    self.gas_pressed_end_frame = 0  # Track when gas was released for delayed mismatch counting
     self.events_prev = []
     self.logged_comm_issue = None
     self.not_running_prev = None
@@ -504,10 +505,15 @@ class SelfdriveD(CruiseHelper):
     controls_allowed_false = any(not ps.controlsAllowed for ps in self.sm['pandaStates']
                                 if ps.safetyModel not in IGNORED_SAFETY_MODES)
 
+    # Track gas pressed state for delayed mismatch counting (1 second delay after gas release)
+    if self.CP.brand == 'toyota' and self.CP.openpilotLongitudinalControl and CS.gasPressed:
+      self.gas_pressed_end_frame = self.sm.frame + 100  # Delay for 1 second (100 frames at 100Hz)
+
     if self.enabled and controls_allowed_false:
       # Skip mismatch counter for Toyota TSS2 + openpilot longitudinal when gas is pressed
-      # Gas press causes PCM cruise pause -> controlsAllowed=false, but this is expected behavior
-      if not (self.CP.brand == 'toyota' and self.CP.openpilotLongitudinalControl and CS.gasPressed):
+      # or within 1 second after gas release to allow PCM time to resume cruise
+      if not (self.CP.brand == 'toyota' and self.CP.openpilotLongitudinalControl and
+              (CS.gasPressed or self.sm.frame < self.gas_pressed_end_frame)):
         self.mismatch_counter += 1
 
     return CS
