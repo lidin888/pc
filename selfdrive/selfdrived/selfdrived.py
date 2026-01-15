@@ -499,9 +499,16 @@ class SelfdriveD(CruiseHelper):
       self.mismatch_counter = 0
 
     # All pandas not in silent mode must have controlsAllowed when openpilot is enabled
-    if self.enabled and any(not ps.controlsAllowed for ps in self.sm['pandaStates']
-                            if ps.safetyModel not in IGNORED_SAFETY_MODES):
-      self.mismatch_counter += 1
+    # For Toyota TSS2 with openpilot longitudinal, gas pedal press causes PCM cruise to pause
+    # This temporarily sets controlsAllowed to false. Don't count this as a mismatch.
+    controls_allowed_false = any(not ps.controlsAllowed for ps in self.sm['pandaStates']
+                                if ps.safetyModel not in IGNORED_SAFETY_MODES)
+
+    if self.enabled and controls_allowed_false:
+      # Skip mismatch counter for Toyota TSS2 + openpilot longitudinal when gas is pressed
+      # Gas press causes PCM cruise pause -> controlsAllowed=false, but this is expected behavior
+      if not (self.CP.brand == 'toyota' and self.CP.openpilotLongitudinalControl and CS.gasPressed):
+        self.mismatch_counter += 1
 
     return CS
 
