@@ -291,8 +291,8 @@ class AmapNaviServ:
       meta = modelV2.meta
 
       atc_type = carrotMan.atcType
-      laneWidthLeft = round(meta.laneWidthLeft, 1)
-      laneWidthRight = round(meta.laneWidthRight, 1)
+      laneWidthLeft = min(3.5, round(meta.laneWidthLeft, 1))
+      laneWidthRight = min(3.5, round(meta.laneWidthRight, 1))
       #distanceToRoadEdgeLeft = round(meta.distanceToRoadEdgeLeft, 1)
       #distanceToRoadEdgeRight = round(meta.distanceToRoadEdgeRight, 1)
 
