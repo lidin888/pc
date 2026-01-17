@@ -3059,6 +3059,14 @@ Bottom</source>
         <source>Show a indicator on the left side of the screen to indicate acceleration and braking.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Display Turn Signals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When enabled, visual turn indicators are drawn on the HUD.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WiFiPromptWidget</name>
