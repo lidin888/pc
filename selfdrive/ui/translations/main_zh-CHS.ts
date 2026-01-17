@@ -3495,6 +3495,14 @@ Bottom</source>
         <source>Show a indicator on the left side of the screen to indicate acceleration and braking.</source>
         <translation>在屏幕左侧显示一个指示器，用于表示加速和制动状态。</translation>
     </message>
+    <message>
+        <source>Display Turn Signals</source>
+        <translation>显示转向灯</translation>
+    </message>
+    <message>
+        <source>When enabled, visual turn indicators are drawn on the HUD.</source>
+        <translation>启用后，会在平视显示器上绘制视觉转向指示器。</translation>
+    </message>
 </context>
 <context>
     <name>WiFiPromptWidget</name>

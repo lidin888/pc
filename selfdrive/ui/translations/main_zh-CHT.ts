@@ -3474,6 +3474,14 @@ Bottom</source>
         <source>Show a indicator on the left side of the screen to indicate acceleration and braking.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Display Turn Signals</source>
+        <translation>顯示轉向燈</translation>
+    </message>
+    <message>
+        <source>When enabled, visual turn indicators are drawn on the HUD.</source>
+        <translation>啟用後，會在平視顯示器上繪製視覺轉向指示器。</translation>
+    </message>
 </context>
 <context>
     <name>WiFiPromptWidget</name>
