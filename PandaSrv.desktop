@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=PandaSrv
+GenericName=PandaSrv
+Comment=openpilot is an operating system for robotics
+Exec=gnome-terminal -e "bash -c '/home/op/stoppandasrv.sh;$SHELL'"
+Terminal=false
+Type=Application
+Icon=/home/op/logo.ico
