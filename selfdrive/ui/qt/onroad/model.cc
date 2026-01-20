@@ -58,7 +58,7 @@ void ModelRenderer::update_model(const cereal::ModelDataV2::Reader &model, const
   int max_idx = get_path_length_idx(lane_lines[0], max_distance);
   for (int i = 0; i < std::size(lane_line_vertices); i++) {
     lane_line_probs[i] = line_probs[i];
-    mapLineToPolygon(lane_lines[i], 0.05 * lane_line_probs[i], 0, &lane_line_vertices[i], max_idx);
+    mapLineToPolygon(lane_lines[i], 0.025 * lane_line_probs[i], 0, &lane_line_vertices[i], max_idx);
   }
 
   // update road edges
@@ -66,7 +66,7 @@ void ModelRenderer::update_model(const cereal::ModelDataV2::Reader &model, const
   const auto &edge_stds = model.getRoadEdgeStds();
   for (int i = 0; i < std::size(road_edge_vertices); i++) {
     road_edge_stds[i] = edge_stds[i];
-    mapLineToPolygon(road_edges[i], 0.05, 0, &road_edge_vertices[i], max_idx);
+    mapLineToPolygon(road_edges[i], 0.025, 0, &road_edge_vertices[i], max_idx);
   }
 
   // update path
@@ -81,8 +81,7 @@ void ModelRenderer::update_model(const cereal::ModelDataV2::Reader &model, const
 void ModelRenderer::drawLaneLines(QPainter &painter) {
   // lanelines
   for (int i = 0; i < std::size(lane_line_vertices); ++i) {
-    // 修改车道线颜色为 #00FF00 (绿色)
-    painter.setBrush(QColor::fromRgbF(0.0, 1.0, 0.0, std::clamp<float>(lane_line_probs[i], 0.0, 0.7)));
+    painter.setBrush(QColor::fromRgbF(0.9, 0.0, 0.98, std::clamp<float>(lane_line_probs[i], 0.0, 0.7)));
     painter.drawPolygon(lane_line_vertices[i]);
   }
 
