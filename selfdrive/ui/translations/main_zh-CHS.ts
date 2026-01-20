@@ -3299,11 +3299,11 @@ Full: File Manager + Live Stream.</source>
     </message>
     <message>
         <source>Toyota: Enforce Stock Longitudinal Control</source>
-        <translation type="unfinished"></translation>
+        <translation>丰田：强制使用原厂纵向控制</translation>
     </message>
     <message>
         <source>When enabled, sunnypilot will not take over control of gas and brakes. Factory Toyota longitudinal control will be used.</source>
-        <translation type="unfinished"></translation>
+        <translation>启用后，sunnypilot不会接管油门和刹车控制。将使用丰田原厂纵向控制。</translation>
     </message>
 </context>
 <context>
