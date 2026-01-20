@@ -1010,6 +1010,10 @@ LIGHT</source>
 DEPARTING</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>STOPPED</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HyundaiSettings</name>
@@ -1932,6 +1936,34 @@ Warning: You are on a metered connection!</source>
     <message>
         <source>Time remaining: </source>
         <translation>Temps restant :</translation>
+    </message>
+    <message>
+        <source>Search Country</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter search keywords, or leave blank to list all countries.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Country</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter search keywords, or leave blank to list all states.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No results found for keywords: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3255,6 +3287,14 @@ Complet : Gestionnaire de fichiers + Flux en direct.</translation>
 **Indulgent** : Alerte uniquement pour les distractions évidentes.
 **Désactivé** : Désactive la détection et le contrôle de distraction du conducteur.</translation>
     </message>
+    <message>
+        <source>Toyota: Enforce Stock Longitudinal Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When enabled, sunnypilot will not take over control of gas and brakes. Factory Toyota longitudinal control will be used.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TorqueLateralControlCustomParams</name>
@@ -3479,6 +3519,10 @@ Bas</translation>
     </message>
     <message>
         <source>When enabled, visual turn indicators are drawn on the HUD.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When enabled, the speedometer on the onroad screen is not displayed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

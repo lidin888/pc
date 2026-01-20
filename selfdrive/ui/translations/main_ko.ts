@@ -1014,6 +1014,10 @@ LIGHT</source>
 DEPARTING</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>STOPPED</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HyundaiSettings</name>
@@ -1937,6 +1941,34 @@ Warning: You are on a metered connection!</source>
     <message>
         <source>Time remaining: </source>
         <translation>남은 시간: </translation>
+    </message>
+    <message>
+        <source>Search Country</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter search keywords, or leave blank to list all countries.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Country</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter search keywords, or leave blank to list all states.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No results found for keywords: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3257,6 +3289,14 @@ Full: File Manager + Live Stream.</source>
         <source>Set how sensitive the driver distraction detection should be. Strict: Very sensitive, warns on minor distractions. Moderate: Balanced between sensitivity and false positives. Lenient: Only alerts on clear distractions. Off: Disable Driver Distraction Detection and Control.</source>
         <translation>운전자 주의 산만 감지 민감도를 설정합니다. 엄격: 매우 민감하게 작동하여 사소한 주의 산만에도 경고합니다. 보통: 민감도와 오작동 간 균형을 유지합니다. 관대: 명백한 주의 산만 상황에서만 경고합니다. 끔: 운전자 주의 산만 감지 및 제어 기능을 비활성화합니다.</translation>
     </message>
+    <message>
+        <source>Toyota: Enforce Stock Longitudinal Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When enabled, sunnypilot will not take over control of gas and brakes. Factory Toyota longitudinal control will be used.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TorqueLateralControlCustomParams</name>
@@ -3481,6 +3521,10 @@ Bottom</source>
     </message>
     <message>
         <source>When enabled, visual turn indicators are drawn on the HUD.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When enabled, the speedometer on the onroad screen is not displayed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

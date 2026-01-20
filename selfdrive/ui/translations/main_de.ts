@@ -1009,6 +1009,10 @@ LIGHT</source>
 DEPARTING</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>STOPPED</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HyundaiSettings</name>
@@ -1931,6 +1935,34 @@ Warning: You are on a metered connection!</source>
     <message>
         <source>Time remaining: </source>
         <translation>Verbleibende Zeit:</translation>
+    </message>
+    <message>
+        <source>Search Country</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter search keywords, or leave blank to list all countries.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Country</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter search keywords, or leave blank to list all states.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No results found for keywords: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3263,6 +3295,14 @@ Voll: Dateimanager + Live-Stream.</translation>
         <source>Set how sensitive the driver distraction detection should be. Strict: Very sensitive, warns on minor distractions. Moderate: Balanced between sensitivity and false positives. Lenient: Only alerts on clear distractions. Off: Disable Driver Distraction Detection and Control.</source>
         <translation>Legen Sie fest, wie empfindlich die Ablenkungserkennung des Fahrers sein soll. Streng: Sehr empfindlich, warnt bei geringfügigen Ablenkungen. Mäßig: Ausgewogen zwischen Empfindlichkeit und Fehlalarmen. Nachsichtig: Warnt nur bei eindeutigen Ablenkungen. Aus: Deaktiviert die Ablenkungserkennung und -kontrolle des Fahrers.</translation>
     </message>
+    <message>
+        <source>Toyota: Enforce Stock Longitudinal Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When enabled, sunnypilot will not take over control of gas and brakes. Factory Toyota longitudinal control will be used.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TorqueLateralControlCustomParams</name>
@@ -3487,6 +3527,10 @@ Unten</translation>
     </message>
     <message>
         <source>When enabled, visual turn indicators are drawn on the HUD.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When enabled, the speedometer on the onroad screen is not displayed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
