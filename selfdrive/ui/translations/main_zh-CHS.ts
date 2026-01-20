@@ -3218,14 +3218,6 @@ Restart comma to have openpilot use the key</source>
         <translation>不知道，油门和刹车有问题。</translation>
     </message>
     <message>
-        <source>Toyota: Stock Toyota Longitudinal</source>
-        <translation>丰田：原装丰田纵向系统</translation>
-    </message>
-    <message>
-        <source>This feature will allow sunnypilot to use the stock Toyota longitudinal control instead of the sunnypilot longitudinal control. </source>
-        <translation>此功能将允许sunnypilot使用原厂丰田纵向控制，而不是sunnypilot纵向控制。</translation>
-    </message>
-    <message>
         <source>Sport</source>
         <translation>运动</translation>
     </message>

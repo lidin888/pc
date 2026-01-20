@@ -3204,9 +3204,6 @@ Redémarrez comma pour qu&apos;openpilot utilise la clé</translation>
         <translation>Je ne sais pas, quelque chose comme accélérateur et frein.</translation>
     </message>
     <message>
-        <source>Toyota: Stock Toyota Longitudinal</source>
-        <translation>Toyota : Longitudinale Toyota d&apos;origine</translation>
-    </message>
     <message>
         <source>This feature will allow sunnypilot to use the stock Toyota longitudinal control instead of the sunnypilot longitudinal control. </source>
         <translation>Cette fonctionnalité permettra à sunnypilot d&apos;utiliser le contrôle longitudinal d&apos;origine de Toyota au lieu du contrôle longitudinal de sunnypilot.</translation>

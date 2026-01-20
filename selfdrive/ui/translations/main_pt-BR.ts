@@ -2894,9 +2894,6 @@ Full: File Manager + Live Stream.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Toyota: Stock Toyota Longitudinal</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>This feature will allow sunnypilot to use the stock Toyota longitudinal control instead of the sunnypilot longitudinal control. </source>
         <translation type="unfinished"></translation>

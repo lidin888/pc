@@ -3210,9 +3210,6 @@ Restart comma to have openpilot use the key</source>
         <translation>뭔가 가속과 브레이크 같은 거요</translation>
     </message>
     <message>
-        <source>Toyota: Stock Toyota Longitudinal</source>
-        <translation>토요타: 기본 토요타 종방향</translation>
-    </message>
     <message>
         <source>This feature will allow sunnypilot to use the stock Toyota longitudinal control instead of the sunnypilot longitudinal control. </source>
         <translation>이 기능은 써니파일롯이 자체 종방향 제어 대신 토요타 기본 종방향 제어를 사용할 수 있도록 합니다.</translation>

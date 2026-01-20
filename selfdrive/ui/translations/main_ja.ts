@@ -3250,9 +3250,6 @@ commaを再起動して、openpilotにキーを使用させてください</tran
         <translation>何か、アクセルとブレーキについてかな</translation>
     </message>
     <message>
-        <source>Toyota: Stock Toyota Longitudinal</source>
-        <translation>トヨタ：標準トヨタ縦制御</translation>
-    </message>
     <message>
         <source>This feature will allow sunnypilot to use the stock Toyota longitudinal control instead of the sunnypilot longitudinal control. </source>
         <translation>この機能により、sunnypilotはsunnypilotの縦方向制御ではなく、トヨタ純正の縦方向制御を使用できるようになります。</translation>

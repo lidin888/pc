@@ -70,14 +70,6 @@ TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
       false,
     },
     {
-      "ToyotaStockLongitudinal",
-      tr("Toyota: Stock Toyota Longitudinal"),
-      tr("This feature will allow sunnypilot to use the stock Toyota longitudinal control instead of the sunnypilot longitudinal control. "
-         ""),
-      "../assets/offroad/icon_blank.png",
-      false,
-    },
-    {
       "ToyotaEnforceStockLongitudinal",
       tr("Toyota: Enforce Stock Longitudinal Control"),
       tr("When enabled, sunnypilot will not take over control of gas and brakes. Factory Toyota longitudinal control will be used."),

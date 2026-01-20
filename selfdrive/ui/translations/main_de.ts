@@ -3216,9 +3216,6 @@ Starten Sie comma neu, damit openpilot den Schlüssel verwendet.</translation>
         <translation>Ich weiß nicht, etwas Gas und Bremse</translation>
     </message>
     <message>
-        <source>Toyota: Stock Toyota Longitudinal</source>
-        <translation>Toyota: Standard-Toyota-Längssteuerung</translation>
-    </message>
     <message>
         <source>This feature will allow sunnypilot to use the stock Toyota longitudinal control instead of the sunnypilot longitudinal control. </source>
         <translation>Diese Funktion ermöglicht es sunnypilot, die serienmäßige Toyota-Längsregelung anstelle der sunnypilot-Längsregelung zu verwenden.</translation>
