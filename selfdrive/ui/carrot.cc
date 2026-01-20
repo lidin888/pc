@@ -2011,6 +2011,20 @@ public:
             active_carrot = carrot_man.getActiveCarrot();
             apply_speed = carrot_man.getDesiredSpeed();
             apply_source = QString::fromStdString(carrot_man.getDesiredSource());
+            // 将英文source转换为中文
+            if (apply_source == "atc") apply_source = "转弯";
+            else if (apply_source == "atc2") apply_source = "下弯";
+            else if (apply_source == "hda") apply_source = "高速辅助";
+            else if (apply_source == "bump") apply_source = "减速带";
+            else if (apply_source == "section") apply_source = "区间测速";
+            else if (apply_source == "police") apply_source = "警察";
+            else if (apply_source == "waze") apply_source = "Waze";
+            else if (apply_source == "cam") apply_source = "摄像头";
+            else if (apply_source == "road") apply_source = "道路限速";
+            else if (apply_source == "vturn") apply_source = "转弯速度";
+            else if (apply_source == "route") apply_source = "路线速度";
+            else if (apply_source == "model") apply_source = "模型速度";
+            else if (apply_source == "gas") apply_source = "油门";
             if (apply_speed >= v_cruise) apply_source = "";
             szPosRoadName = QString::fromStdString(carrot_man.getSzPosRoadName());
             nRoadLimitSpeed = carrot_man.getNRoadLimitSpeed();
