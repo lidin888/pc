@@ -78,6 +78,13 @@ TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
       false,
     },
     {
+      "ToyotaEnforceStockLongitudinal",
+      tr("Toyota: Enforce Stock Longitudinal Control"),
+      tr("When enabled, sunnypilot will not take over control of gas and brakes. Factory Toyota longitudinal control will be used."),
+      "../assets/offroad/icon_blank.png",
+      false,
+    },
+    {
       "DisengageOnAccelerator",
       tr("Disengage on Accelerator Pedal"),
       tr("When enabled, pressing the accelerator pedal will disengage sunnypilot."),
