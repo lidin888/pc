@@ -135,14 +135,6 @@ Bitte seien Sie vorsichtig bei der Verwendung dieser Funktion. Verwenden Sie den
 <context>
     <name>Brightness</name>
     <message>
-        <source>Brightness</source>
-        <translation type="vanished">Helligkeit</translation>
-    </message>
-    <message>
-        <source>Overrides the brightness of the device.</source>
-        <translation type="vanished">Überschreibt die Helligkeit des Geräts.</translation>
-    </message>
-    <message>
         <source>Auto (Dark)</source>
         <translation>Automatisch (Dunkel)</translation>
     </message>
@@ -168,121 +160,6 @@ Bitte seien Sie vorsichtig bei der Verwendung dieser Funktion. Verwenden Sie den
     <message>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
-    </message>
-</context>
-<context>
-    <name>DecControllerSubpanel</name>
-    <message>
-        <source>Reset to Defaults</source>
-        <translation type="vanished">Auf Standardeinstellungen zurücksetzen</translation>
-    </message>
-    <message>
-        <source>FCW Detection</source>
-        <translation type="vanished">FCW-Erkennung</translation>
-    </message>
-    <message>
-        <source>Use blended mode when FCW is detected in the road ahead.</source>
-        <translation type="vanished">Verwenden Sie den Mischmodus, wenn ein FCW auf der Straße vor Ihnen erkannt wird.</translation>
-    </message>
-    <message>
-        <source>Enable at Standstill</source>
-        <translation type="vanished">Aktivieren im Stand</translation>
-    </message>
-    <message>
-        <source>Use blended mode when the vehicle is at a standstill.</source>
-        <translation type="vanished">Verwenden Sie den Mischmodus, wenn das Fahrzeug steht.</translation>
-    </message>
-    <message>
-        <source>Follow Lead Vehicle</source>
-        <translation type="vanished">Folge dem vorausfahrenden Fahrzeug</translation>
-    </message>
-    <message>
-        <source>Model Slow Down Detection</source>
-        <translation type="vanished">Modell-Erkennung für Geschwindigkeitsreduzierung</translation>
-    </message>
-    <message>
-        <source>Below Cruise Speed Detection</source>
-        <translation type="vanished">Unterhalb der Tempomat-Geschwindigkeitserkennung</translation>
-    </message>
-    <message>
-        <source>Lead Vehicle Detection</source>
-        <translation type="vanished">Fahrzeugerkennung voraus</translation>
-    </message>
-    <message>
-        <source>Use blended mode when a lead vehicle is detected and significantly slowing.</source>
-        <translation type="vanished">Verwenden Sie den Mischmodus, wenn ein vorausfahrendes Fahrzeug erkannt wird und deutlich langsamer wird.</translation>
-    </message>
-    <message>
-        <source>Significantly Slower Lead Detection</source>
-        <translation type="vanished">Deutlich langsamere Leitobjekterkennung</translation>
-    </message>
-    <message>
-        <source>Stopped Lead Detection</source>
-        <translation type="vanished">Angehaltene Leitfahrzeug-Erkennung</translation>
-    </message>
-    <message>
-        <source>Distance-Based Switching</source>
-        <translation type="vanished">Abstandsbasierte Umschaltung</translation>
-    </message>
-    <message>
-        <source>Use blended mode when the distance to the lead vehicle is below the specified threshold.</source>
-        <translation type="vanished">Verwenden Sie den gemischten Modus, wenn der Abstand zum vorausfahrenden Fahrzeug unter den festgelegten Schwellenwert fällt.</translation>
-    </message>
-    <message>
-        <source>Distance Threshold</source>
-        <translation type="vanished">Abstandsschwelle</translation>
-    </message>
-    <message>
-        <source>Distance from lead vehicle in meters below which blended mode will be used.</source>
-        <translation type="vanished">Abstand zum vorausfahrenden Fahrzeug in Metern, unter dem der gemischte Modus verwendet wird.</translation>
-    </message>
-    <message>
-        <source>Speed-Based Switching</source>
-        <translation type="vanished">Geschwindigkeitsbasierte Umschaltung</translation>
-    </message>
-    <message>
-        <source>Use blended mode when the vehicle speed is below the specified threshold.</source>
-        <translation type="vanished">Verwenden Sie den Blended-Modus, wenn die Fahrzeuggeschwindigkeit unter dem festgelegten Schwellenwert liegt.</translation>
-    </message>
-    <message>
-        <source>Speed Threshold</source>
-        <translation type="vanished">Geschwindigkeitsschwelle</translation>
-    </message>
-    <message>
-        <source>Speed in km/h below which blended mode will be used.</source>
-        <translation type="vanished">Geschwindigkeit in km/h, unterhalb derer der Mischmodus verwendet wird.</translation>
-    </message>
-    <message>
-        <source>Currently active. Prefers ACC with weighted confidence when following a lead vehicle for normal scenarios. If the model wants to slowdown significantly, it will still trigger blended mode.</source>
-        <translation type="vanished">Aktiv. Bevorzugt ACC mit gewichteter Zuverlässigkeit beim Folgen eines vorausfahrenden Fahrzeugs in normalen Situationen. Wenn das Modell deutlich abbremsen möchte, wird weiterhin der Blended-Modus aktiviert.</translation>
-    </message>
-    <message>
-        <source>Disabled when Follow Lead Vehicle is active. Follow Lead mode overrides this when a lead vehicle is present (except during imminent slowdown scenarios).</source>
-        <translation type="vanished">Deaktiviert, wenn &quot;Fahrzeug folgen&quot; aktiv ist. Der &quot;Fahrzeug folgen&quot;-Modus überschreibt dies, wenn ein vorausfahrendes Fahrzeug vorhanden ist (außer bei unmittelbaren Verlangsamungsszenarien).</translation>
-    </message>
-    <message>
-        <source>Disabled when Follow Lead Vehicle is active. Follow Lead mode overrides this when a lead vehicle is present.</source>
-        <translation type="vanished">Deaktiviert, wenn &quot;Fahrzeug folgen&quot; aktiv ist. Der &quot;Fahrzeug folgen&quot;-Modus überschreibt dies, wenn ein vorausfahrendes Fahrzeug vorhanden ist.</translation>
-    </message>
-    <message>
-        <source>When enabled, prefers ACC mode when following a lead vehicle for normal scenarios. Model wants to stop now situations still trigger blended mode.</source>
-        <translation type="vanished">Wenn aktiviert, bevorzugt es den ACC-Modus beim Folgen eines vorausfahrenden Fahrzeugs in normalen Situationen. In &quot;Modell möchte jetzt anhalten&quot;-Situationen wird weiterhin der Blended-Modus ausgelöst.</translation>
-    </message>
-    <message>
-        <source>Model slow down detection and below cruise speed detection must be enabled to use this mode.</source>
-        <translation type="vanished">Modell zur Erkennung von Verlangsamungen und Erkennung unter der Reisegeschwindigkeit muss aktiviert sein, um diesen Modus zu verwenden.</translation>
-    </message>
-    <message>
-        <source>Use blended mode when the model detects a slow down scenario ahead.</source>
-        <translation type="vanished">Verwenden Sie den Mischmodus, wenn das Modell eine Verlangsamungssituation voraus erkennt.</translation>
-    </message>
-    <message>
-        <source>Use blended mode when driving significantly slower than the set cruise speed.</source>
-        <translation type="vanished">Verwenden Sie den Blended-Modus, wenn Sie deutlich langsamer als die eingestellte Reisegeschwindigkeit fahren.</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zurück</translation>
     </message>
 </context>
 <context>
@@ -374,14 +251,6 @@ Dadurch wird nur die Sichtbarkeit der Steuerungen umgeschaltet; der tatsächlich
     <message>
         <source>Quickboot mode requires updates to be disabled.&lt;br&gt;Enable &apos;Disable Updates&apos; in the Software panel first.</source>
         <translation>Der Schnellstartmodus erfordert, dass Updates deaktiviert sind.&lt;br&gt;Aktivieren Sie zuerst &apos;Updates deaktivieren&apos; im Software-Panel.</translation>
-    </message>
-    <message>
-        <source>Use Raylib UI</source>
-        <translation type="vanished">Verwende Raylib-Benutzeroberfläche</translation>
-    </message>
-    <message>
-        <source>Enables or disables the use of Raylib for UI rendering. Changing this will trigger a UI restart.</source>
-        <translation type="vanished">Aktiviert oder deaktiviert die Verwendung von Raylib für die UI-Darstellung. Eine Änderung führt zu einem Neustart der Benutzeroberfläche.</translation>
     </message>
     <message>
         <source>Enable Copyparty service</source>
@@ -606,16 +475,6 @@ Steering lag calibration is complete.</source>
         <translation>Aufwachverhalten</translation>
     </message>
     <message>
-        <source>Interactivity Timeout</source>
-        <translation type="vanished">Interaktivitäts-Timeout</translation>
-    </message>
-    <message>
-        <source>Apply a custom timeout for settings UI.
-This is the time after which settings UI closes automatically if user is not interacting with the screen.</source>
-        <translation type="vanished">Wenden Sie einen benutzerdefinierten Timeout für die Einstellungsoberfläche an.
-Dies ist die Zeit, nach der sich die Einstellungsoberfläche automatisch schließt, wenn der Benutzer nicht mit dem Bildschirm interagiert.</translation>
-    </message>
-    <message>
         <source>Reboot</source>
         <translation>Neustart</translation>
     </message>
@@ -660,10 +519,6 @@ Dies ist die Zeit, nach der sich die Einstellungsoberfläche automatisch schlie�
         <translation>Immer Ausfahrt verlassen</translation>
     </message>
     <message>
-        <source>Always Offroad</source>
-        <translation type="vanished">Immer Offroad</translation>
-    </message>
-    <message>
         <source>⁍ Default: Device will boot/wake-up normally &amp; will be ready to engage.</source>
         <translation>⁍ Standard: Das Gerät startet/wacht normal auf und ist einsatzbereit.</translation>
     </message>
@@ -682,26 +537,6 @@ Dies ist die Zeit, nach der sich die Einstellungsoberfläche automatisch schlie�
     <message>
         <source>Offroad</source>
         <translation>Offroad</translation>
-    </message>
-    <message>
-        <source>Git Pull &amp; Reboot</source>
-        <translation type="vanished">Git-Pull &amp; Neustart</translation>
-    </message>
-    <message>
-        <source>Git pull &amp; Reboot?</source>
-        <translation type="vanished">Git-Pull &amp; Neustart?</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation type="vanished">Ja</translation>
-    </message>
-    <message>
-        <source>Failed to start update process.</source>
-        <translation type="vanished">Update-Prozess konnte nicht gestartet werden.</translation>
-    </message>
-    <message>
-        <source>Update process started. Device will reboot if updates are applied.</source>
-        <translation type="vanished">Aktualisierungsprozess gestartet. Das Gerät wird neu starten, wenn Updates installiert werden.</translation>
     </message>
     <message>
         <source>Onroad Uploads</source>
@@ -900,46 +735,6 @@ Der Firehose-Modus ermöglicht es Ihnen, Ihre Trainingsdaten-Uploads zu maximier
         <source>MAX</source>
         <translation>MAX</translation>
     </message>
-    <message>
-        <source>SPEED</source>
-        <translation type="vanished">GESCHWINDIGKEIT</translation>
-    </message>
-    <message>
-        <source>LIMIT</source>
-        <translation type="vanished">BEGRENZUNG</translation>
-    </message>
-    <message>
-        <source>AHEAD</source>
-        <translation type="vanished">VORNE</translation>
-    </message>
-    <message>
-        <source>IGNORED</source>
-        <translation type="vanished">IGNORIERT</translation>
-    </message>
-    <message>
-        <source>PREPARING</source>
-        <translation type="vanished">VORBEREITEN</translation>
-    </message>
-    <message>
-        <source>ADAPTING</source>
-        <translation type="vanished">ANPASSEN</translation>
-    </message>
-    <message>
-        <source>ACTIVE</source>
-        <translation type="vanished">AKTIV</translation>
-    </message>
-    <message>
-        <source>TURN AHEAD</source>
-        <translation type="vanished">ABBIEGEN VORAUS</translation>
-    </message>
-    <message>
-        <source>TURNING</source>
-        <translation type="vanished">ABBIEGEN</translation>
-    </message>
-    <message>
-        <source>TURN EXIT</source>
-        <translation type="vanished">ABFAHRT ABBIEGEN</translation>
-    </message>
 </context>
 <context>
     <name>HudRendererSP</name>
@@ -966,18 +761,6 @@ Der Firehose-Modus ermöglicht es Ihnen, Ihre Trainingsdaten-Uploads zu maximier
     <message>
         <source>AHEAD</source>
         <translation>VORNE</translation>
-    </message>
-    <message>
-        <source>PREPARING</source>
-        <translation type="vanished">VORBEREITEN</translation>
-    </message>
-    <message>
-        <source>ADAPTING</source>
-        <translation type="vanished">ANPASSEN</translation>
-    </message>
-    <message>
-        <source>ACTIVE</source>
-        <translation type="vanished">AKTIV</translation>
     </message>
     <message>
         <source>Near</source>
@@ -1055,20 +838,6 @@ DEPARTING</source>
     <message>
         <source>Fine-tune your driving experience by adjusting acceleration smoothness with openpilot longitudinal control.</source>
         <translation>Passen Sie Ihr Fahrerlebnis an, indem Sie die Beschleunigungsglätte mit der openpilot-Längsregelung einstellen.</translation>
-    </message>
-    <message>
-        <source>Bookmark</source>
-        <translation type="vanished">Lesezeichen</translation>
-    </message>
-    <message>
-        <source>Steering Custom ☆ Button</source>
-        <translation type="vanished">Lenkung Benutzerdefiniert ☆ Taste</translation>
-    </message>
-    <message>
-        <source>Customize the steering wheel custom/star button for openpilot control.
-This will not disable OEM functionality.</source>
-        <translation type="vanished">Passen Sie die benutzerdefinierte/Stern-Taste am Lenkrad für die openpilot-Steuerung an.
-Dadurch wird die OEM-Funktionalität nicht deaktiviert.</translation>
     </message>
 </context>
 <context>
@@ -1189,10 +958,6 @@ Dadurch wird die OEM-Funktionalität nicht deaktiviert.</translation>
         <translation>Diese Plattform unterstützt begrenzte MADS-Einstellungen.</translation>
     </message>
     <message>
-        <source>Customize Lane Turn</source>
-        <translation type="vanished">Lane Turn anpassen</translation>
-    </message>
-    <message>
         <source>Enforce Torque Lateral Control</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1250,34 +1015,6 @@ Dadurch wird die OEM-Funktionalität nicht deaktiviert.</translation>
     <message>
         <source>Controls following distance and braking behavior: Relaxed (longer distance, gentler braking), Standard (balanced), Aggressive (shorter distance, firmer braking). Fine-tune your comfort level in traffic situations.</source>
         <translation>Regelt den Abstand und das Bremsverhalten: Entspannt (größerer Abstand, sanfteres Bremsen), Standard (ausgewogen), Dynamisch (kürzerer Abstand, festeres Bremsen). Passen Sie Ihren Komfort im Verkehrsgeschehen fein ab.</translation>
-    </message>
-    <message>
-        <source>Speed Limit Control (SLC)</source>
-        <translation type="vanished">Geschwindigkeitsbegrenzungsregelung (SLC)</translation>
-    </message>
-    <message>
-        <source>When you engage ACC, you will be prompted to set the cruising speed to the speed limit of the road adjusted by the Offset and Source Policy specified, or the current driving speed. The maximum cruising speed will always be the MAX set speed.</source>
-        <translation type="vanished">Wenn Sie den ACC aktivieren, werden Sie aufgefordert, die Reisegeschwindigkeit auf die durch den festgelegten Offset und die Quellenrichtlinie angepasste Geschwindigkeitsbegrenzung der Straße oder die aktuelle Fahrgeschwindigkeit einzustellen. Die maximale Reisegeschwindigkeit ist stets die eingestellte MAX-Geschwindigkeit.</translation>
-    </message>
-    <message>
-        <source>Vision Turn Speed Controller</source>
-        <translation type="vanished">Visuelle Kurvengeschwindigkeitsregelung</translation>
-    </message>
-    <message>
-        <source>Also known as V-TSC, this controller automatically slows down for curvature while OP longitudinal is engaged.</source>
-        <translation type="vanished">Auch bekannt als V-TSC, dieser Regler verlangsamt automatisch bei Kurvenfahrten, wenn die OP-Längsführung aktiviert ist.</translation>
-    </message>
-    <message>
-        <source>Enable Dynamic Experimental Control</source>
-        <translation type="vanished">Dynamische experimentelle Steuerung aktivieren</translation>
-    </message>
-    <message>
-        <source>Enable toggle to allow the model to determine when to use sunnypilot ACC or sunnypilot End to End Longitudinal.</source>
-        <translation type="vanished">Aktivieren Sie den Schalter, um dem Modell zu erlauben, zu entscheiden, wann sonniger Pilot ACC oder sonniger Pilot End-to-End-Längsregelung verwendet wird.</translation>
-    </message>
-    <message>
-        <source>Customize DEC</source>
-        <translation type="vanished">DEC anpassen</translation>
     </message>
     <message>
         <source>Smart Cruise Control - Vision</source>
@@ -1565,18 +1302,6 @@ Der Standardwert für die Softwareverzögerung beträgt 0,2.</translation>
     <message>
         <source>Total Delay:</source>
         <translation>Gesamtverzögerung:</translation>
-    </message>
-    <message>
-        <source>Use Lane Turn Desires</source>
-        <translation type="vanished">Fahrspurwechselwünsche verwenden</translation>
-    </message>
-    <message>
-        <source>Adjust Lane Turn Speed</source>
-        <translation type="vanished">Längsgeschwindigkeit in Kurven anpassen</translation>
-    </message>
-    <message>
-        <source>Set the maximum speed for lane turn desires. Default is 19 %1.</source>
-        <translation type="vanished">Setze die Höchstgeschwindigkeit für Fahrspurwechselwünsche fest. Standardmäßig ist 19 %1.</translation>
     </message>
 </context>
 <context>
@@ -2353,18 +2078,6 @@ Data</source>
         <translation>TEMP</translation>
     </message>
     <message>
-        <source>HIGH</source>
-        <translation type="vanished">HOCH</translation>
-    </message>
-    <message>
-        <source>GOOD</source>
-        <translation type="vanished">GUT</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="vanished">OK</translation>
-    </message>
-    <message>
         <source>VEHICLE</source>
         <translation>FAHRZEUG</translation>
     </message>
@@ -2565,130 +2278,6 @@ Data</source>
     <message>
         <source>Please enable always offroad mode or turn off vehicle to adjust these toggles</source>
         <translation>Bitte aktiviere den ständigen Offroad-Modus oder schalte das Fahrzeug aus, um diese Schalter anzupassen.</translation>
-    </message>
-</context>
-<context>
-    <name>SpeedLimitControl</name>
-    <message>
-        <source>Customize SLC</source>
-        <translation type="vanished">SLC anpassen</translation>
-    </message>
-</context>
-<context>
-    <name>SpeedLimitControlPolicy</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zurück</translation>
-    </message>
-    <message>
-        <source>Speed Limit Source</source>
-        <translation type="vanished">Geschwindigkeitsbegrenzungsquelle</translation>
-    </message>
-    <message>
-        <source>⦿ Car Only: Use Speed Limit data only from Car</source>
-        <translation type="vanished">⦿ Nur Auto: Verwende ausschließlich Tempolimit-Daten vom Auto</translation>
-    </message>
-    <message>
-        <source>⦿ Map Only: Use Speed Limit data only from OpenStreetMaps</source>
-        <translation type="vanished">⦿ Nur Karte: Verwende Geschwindigkeitsbegrenzungsdaten ausschließlich von OpenStreetMaps</translation>
-    </message>
-    <message>
-        <source>⦿ Car First: Use Speed Limit data from Car if available, else use from OpenStreetMaps</source>
-        <translation type="vanished">⦿ Auto zuerst: Verwende Geschwindigkeitsbegrenzungsdaten vom Auto, falls verfügbar, andernfalls von OpenStreetMaps</translation>
-    </message>
-    <message>
-        <source>⦿ Map First: Use Speed Limit data from OpenStreetMaps if available, else use from Car</source>
-        <translation type="vanished">⦿ Karte zuerst: Verwende Geschwindigkeitsbegrenzungsdaten von OpenStreetMaps, falls verfügbar, andernfalls vom Fahrzeug</translation>
-    </message>
-    <message>
-        <source>⦿ Combined: Use combined Speed Limit data from Car &amp; OpenStreetMaps</source>
-        <translation type="vanished">⦿ Kombiniert: Kombinierte Tempolimit-Daten von Auto &amp; OpenStreetMaps verwenden</translation>
-    </message>
-</context>
-<context>
-    <name>SpeedLimitControlSubpanel</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zurück</translation>
-    </message>
-    <message>
-        <source>Customize Warning</source>
-        <translation type="vanished">Warnung anpassen</translation>
-    </message>
-    <message>
-        <source>Customize Source</source>
-        <translation type="vanished">Quelle anpassen</translation>
-    </message>
-    <message>
-        <source>Engage Mode</source>
-        <translation type="vanished">Einschaltmodus</translation>
-    </message>
-    <message>
-        <source>Speed Limit Offset</source>
-        <translation type="vanished">Geschwindigkeitsbegrenzung Abweichung</translation>
-    </message>
-    <message>
-        <source>⦿ Auto: Automatic speed adjustment based on speed limit data</source>
-        <translation type="vanished">⦿ Automatisch: Automatische Geschwindigkeitsanpassung basierend auf Geschwindigkeitsbegrenzungsdaten</translation>
-    </message>
-    <message>
-        <source>⦿ User Confirm: Asks driver to confirm speed adjustment based on speed limit data</source>
-        <translation type="vanished">⦿ Benutzerbestätigung: Fordert den Fahrer auf, die Geschwindigkeitsanpassung basierend auf Geschwindigkeitsbegrenzungsdaten zu bestätigen</translation>
-    </message>
-    <message>
-        <source>⦿ None: No Offset</source>
-        <translation type="vanished">⦿ Keine: Kein Offset</translation>
-    </message>
-    <message>
-        <source>⦿ Fixed: Adds a fixed offset [Speed Limit + Offset]</source>
-        <translation type="vanished">⦿ Behoben: Fügt einen festen Versatz [Geschwindigkeitsbegrenzung + Versatz] hinzu</translation>
-    </message>
-    <message>
-        <source>⦿ Percent: Adds a percent offset [Speed Limit + (Offset % Speed Limit)]</source>
-        <translation type="vanished">⦿ Prozent: Fügt einen prozentualen Versatz hinzu [Tempolimit + (Versatz % Tempolimit)]</translation>
-    </message>
-</context>
-<context>
-    <name>SpeedLimitControlWarning</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zurück</translation>
-    </message>
-    <message>
-        <source>Speed Limit Warning</source>
-        <translation type="vanished">Geschwindigkeitsbegrenzung Warnung</translation>
-    </message>
-    <message>
-        <source>Warning Offset</source>
-        <translation type="vanished">Warnungsversatz</translation>
-    </message>
-    <message>
-        <source>N/A</source>
-        <translation type="vanished">Keine Eingabe erkannt. Bitte geben Sie einen Text zur Übersetzung ein.</translation>
-    </message>
-    <message>
-        <source>⦿ Off: No Warning</source>
-        <translation type="vanished">⦿ Aus: Keine Warnung</translation>
-    </message>
-    <message>
-        <source>⦿ Display: Speed Limit Sign will visually alert</source>
-        <translation type="vanished">⦿ Anzeige: Tempolimit-Schild wird optisch warnen</translation>
-    </message>
-    <message>
-        <source>⦿ Chime: Speed Limit Sign will visually alert along with an audible chime</source>
-        <translation type="vanished">⦿ Akustisches Signal: Geschwindigkeitsbegrenzungsschild warnt visuell mit akustischem Signal</translation>
-    </message>
-    <message>
-        <source>⦿ None: No Offset</source>
-        <translation type="vanished">⦿ Kein: Kein Versatz</translation>
-    </message>
-    <message>
-        <source>⦿ Fixed: Adds a fixed offset [Speed Limit + Offset]</source>
-        <translation type="vanished">⦿ Behoben: Fügt einen festen Offset [Geschwindigkeitsbegrenzung + Offset] hinzu</translation>
-    </message>
-    <message>
-        <source>⦿ Percent: Adds a percent offset [Speed Limit + (Offset % Speed Limit)]</source>
-        <translation type="vanished">⦿ Prozent: Fügt einen prozentualen Versatz hinzu [Geschwindigkeitsbegrenzung + (Versatz % Geschwindigkeitsbegrenzung)]</translation>
     </message>
 </context>
 <context>
@@ -3216,11 +2805,6 @@ Starten Sie comma neu, damit openpilot den Schlüssel verwendet.</translation>
         <translation>Ich weiß nicht, etwas Gas und Bremse</translation>
     </message>
     <message>
-    <message>
-        <source>This feature will allow sunnypilot to use the stock Toyota longitudinal control instead of the sunnypilot longitudinal control. </source>
-        <translation>Diese Funktion ermöglicht es sunnypilot, die serienmäßige Toyota-Längsregelung anstelle der sunnypilot-Längsregelung zu verwenden.</translation>
-    </message>
-    <message>
         <source>Sport</source>
         <translation>Sport</translation>
     </message>
@@ -3415,10 +2999,6 @@ Voll: Dateimanager + Live-Stream.</translation>
     <message>
         <source>Enable Tesla Rainbow Mode</source>
         <translation>Tesla-Regenbogenmodus aktivieren</translation>
-    </message>
-    <message>
-        <source>Enable the rainbow mode, which displays a rainbow effect on the screen.</source>
-        <translation type="vanished">Aktiviere den Regenbogenmodus, der einen Regenbogeneffekt auf dem Bildschirm anzeigt.</translation>
     </message>
     <message>
         <source>A beautiful rainbow effect on the path the model wants to take.</source>

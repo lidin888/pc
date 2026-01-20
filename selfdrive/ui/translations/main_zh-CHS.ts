@@ -135,14 +135,6 @@ Please use caution when using this feature. Only use the blinker when traffic an
 <context>
     <name>Brightness</name>
     <message>
-        <source>Brightness</source>
-        <translation type="vanished">亮度</translation>
-    </message>
-    <message>
-        <source>Overrides the brightness of the device.</source>
-        <translation type="vanished">覆盖设备的亮度设置。</translation>
-    </message>
-    <message>
         <source>Auto (Dark)</source>
         <translation>自动（暗色）</translation>
     </message>
@@ -168,121 +160,6 @@ Please use caution when using this feature. Only use the blinker when traffic an
     <message>
         <source>Cancel</source>
         <translation>取消</translation>
-    </message>
-</context>
-<context>
-    <name>DecControllerSubpanel</name>
-    <message>
-        <source>Reset to Defaults</source>
-        <translation type="vanished">恢复默认设置</translation>
-    </message>
-    <message>
-        <source>FCW Detection</source>
-        <translation type="vanished">前碰撞警告检测</translation>
-    </message>
-    <message>
-        <source>Use blended mode when FCW is detected in the road ahead.</source>
-        <translation type="vanished">在前方检测到FCW时使用混合模式。</translation>
-    </message>
-    <message>
-        <source>Enable at Standstill</source>
-        <translation type="vanished">启用静止状态</translation>
-    </message>
-    <message>
-        <source>Use blended mode when the vehicle is at a standstill.</source>
-        <translation type="vanished">当车辆停止时，使用混合模式。</translation>
-    </message>
-    <message>
-        <source>Follow Lead Vehicle</source>
-        <translation type="vanished">跟随前车</translation>
-    </message>
-    <message>
-        <source>Model Slow Down Detection</source>
-        <translation type="vanished">模型减速检测</translation>
-    </message>
-    <message>
-        <source>Below Cruise Speed Detection</source>
-        <translation type="vanished">低于巡航速度检测</translation>
-    </message>
-    <message>
-        <source>Lead Vehicle Detection</source>
-        <translation type="vanished">前车检测</translation>
-    </message>
-    <message>
-        <source>Use blended mode when a lead vehicle is detected and significantly slowing.</source>
-        <translation type="vanished">在检测到前车并且明显减速时使用混合模式。</translation>
-    </message>
-    <message>
-        <source>Significantly Slower Lead Detection</source>
-        <translation type="vanished">明显较慢的前车检测</translation>
-    </message>
-    <message>
-        <source>Stopped Lead Detection</source>
-        <translation type="vanished">停止领导检测</translation>
-    </message>
-    <message>
-        <source>Distance-Based Switching</source>
-        <translation type="vanished">基于距离的切换</translation>
-    </message>
-    <message>
-        <source>Use blended mode when the distance to the lead vehicle is below the specified threshold.</source>
-        <translation type="vanished">当与前车的距离低于指定阈值时，使用混合模式。</translation>
-    </message>
-    <message>
-        <source>Distance Threshold</source>
-        <translation type="vanished">距离阈值</translation>
-    </message>
-    <message>
-        <source>Distance from lead vehicle in meters below which blended mode will be used.</source>
-        <translation type="vanished">低于该距离（单位为米）时将使用混合模式的前车距离。</translation>
-    </message>
-    <message>
-        <source>Speed-Based Switching</source>
-        <translation type="vanished">基于速度的切换</translation>
-    </message>
-    <message>
-        <source>Use blended mode when the vehicle speed is below the specified threshold.</source>
-        <translation type="vanished">当车速低于指定阈值时，使用混合模式。</translation>
-    </message>
-    <message>
-        <source>Speed Threshold</source>
-        <translation type="vanished">速度阈值</translation>
-    </message>
-    <message>
-        <source>Speed in km/h below which blended mode will be used.</source>
-        <translation type="vanished">低于此速度（公里/小时）将使用混合模式。</translation>
-    </message>
-    <message>
-        <source>Currently active. Prefers ACC with weighted confidence when following a lead vehicle for normal scenarios. If the model wants to slowdown significantly, it will still trigger blended mode.</source>
-        <translation type="vanished">当前激活。在正常情况下跟随前车时，倾向于使用带权重置信度的ACC。如果模型需要明显减速，仍将触发混合模式。</translation>
-    </message>
-    <message>
-        <source>Disabled when Follow Lead Vehicle is active. Follow Lead mode overrides this when a lead vehicle is present (except during imminent slowdown scenarios).</source>
-        <translation type="vanished">当跟随前车模式激活时禁用。当有前车存在时，跟随前车模式将覆盖此设置（紧急减速情形除外）。</translation>
-    </message>
-    <message>
-        <source>Disabled when Follow Lead Vehicle is active. Follow Lead mode overrides this when a lead vehicle is present.</source>
-        <translation type="vanished">当跟随前车模式激活时禁用。当存在前车时，跟随前车模式将覆盖此设置。</translation>
-    </message>
-    <message>
-        <source>When enabled, prefers ACC mode when following a lead vehicle for normal scenarios. Model wants to stop now situations still trigger blended mode.</source>
-        <translation type="vanished">启用后，在正常情况下跟随前车时优先使用 ACC 模式。模型希望立即停止的情况仍将触发混合模式。</translation>
-    </message>
-    <message>
-        <source>Model slow down detection and below cruise speed detection must be enabled to use this mode.</source>
-        <translation type="vanished">必须启用模型减速检测和低于巡航速度检测才能使用此模式。</translation>
-    </message>
-    <message>
-        <source>Use blended mode when the model detects a slow down scenario ahead.</source>
-        <translation type="vanished">当模型检测到前方减速情况时，使用混合模式。</translation>
-    </message>
-    <message>
-        <source>Use blended mode when driving significantly slower than the set cruise speed.</source>
-        <translation type="vanished">当行驶速度明显低于设定的巡航速度时，使用混合模式。</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">返回</translation>
     </message>
 </context>
 <context>
@@ -374,14 +251,6 @@ This only toggles the visibility of the controls; it does not toggle the actual 
     <message>
         <source>Quickboot mode requires updates to be disabled.&lt;br&gt;Enable &apos;Disable Updates&apos; in the Software panel first.</source>
         <translation>快速启动模式需要禁用更新。&lt;br&gt;请先在软件面板中启用“禁用更新”。</translation>
-    </message>
-    <message>
-        <source>Use Raylib UI</source>
-        <translation type="vanished">使用 Raylib UI</translation>
-    </message>
-    <message>
-        <source>Enables or disables the use of Raylib for UI rendering. Changing this will trigger a UI restart.</source>
-        <translation type="vanished">启用或禁用使用 Raylib 进行 UI 渲染。更改此设置将触发 UI 重启。</translation>
     </message>
     <message>
         <source>Enable Copyparty service</source>
@@ -610,16 +479,6 @@ Steering lag calibration is complete.</source>
         <translation>唤醒行为</translation>
     </message>
     <message>
-        <source>Interactivity Timeout</source>
-        <translation type="vanished">交互超时</translation>
-    </message>
-    <message>
-        <source>Apply a custom timeout for settings UI.
-This is the time after which settings UI closes automatically if user is not interacting with the screen.</source>
-        <translation type="vanished">为设置界面应用自定义超时时间。
-如果用户未与屏幕交互，设置界面将在该时间后自动关闭。</translation>
-    </message>
-    <message>
         <source>Reboot</source>
         <translation>重启</translation>
     </message>
@@ -664,10 +523,6 @@ This is the time after which settings UI closes automatically if user is not int
         <translation>退出“始终离线”模式</translation>
     </message>
     <message>
-        <source>Always Offroad</source>
-        <translation type="vanished">始终离线</translation>
-    </message>
-    <message>
         <source>⁍ Default: Device will boot/wake-up normally &amp; will be ready to engage.</source>
         <translation>⁍ 默认：设备将正常启动/唤醒，并准备就绪。</translation>
     </message>
@@ -686,26 +541,6 @@ This is the time after which settings UI closes automatically if user is not int
     <message>
         <source>Offroad</source>
         <translation>离线</translation>
-    </message>
-    <message>
-        <source>Git Pull &amp; Reboot</source>
-        <translation type="vanished">Git拉取和重启</translation>
-    </message>
-    <message>
-        <source>Git pull &amp; Reboot?</source>
-        <translation type="vanished">是否进行Git拉取和重启?</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation type="vanished">是的</translation>
-    </message>
-    <message>
-        <source>Failed to start update process.</source>
-        <translation type="vanished">更新重启失败</translation>
-    </message>
-    <message>
-        <source>Update process started. Device will reboot if updates are applied.</source>
-        <translation type="vanished">更新进程已启动。如果应用更新，设备将重启。</translation>
     </message>
     <message>
         <source>Onroad Uploads</source>
@@ -903,46 +738,6 @@ Firehose模式允许您最大化训练数据上传以改善openpilot的驾驶模
         <source>MAX</source>
         <translation>最高定速</translation>
     </message>
-    <message>
-        <source>SPEED</source>
-        <translation type="vanished">速度</translation>
-    </message>
-    <message>
-        <source>LIMIT</source>
-        <translation type="vanished">限制</translation>
-    </message>
-    <message>
-        <source>AHEAD</source>
-        <translation type="vanished">前方</translation>
-    </message>
-    <message>
-        <source>IGNORED</source>
-        <translation type="vanished">已忽略</translation>
-    </message>
-    <message>
-        <source>PREPARING</source>
-        <translation type="vanished">准备中</translation>
-    </message>
-    <message>
-        <source>ADAPTING</source>
-        <translation type="vanished">适应中</translation>
-    </message>
-    <message>
-        <source>ACTIVE</source>
-        <translation type="vanished">激活状态</translation>
-    </message>
-    <message>
-        <source>TURN AHEAD</source>
-        <translation type="vanished">前方转弯</translation>
-    </message>
-    <message>
-        <source>TURNING</source>
-        <translation type="vanished">转向</translation>
-    </message>
-    <message>
-        <source>TURN EXIT</source>
-        <translation type="vanished">出口转弯</translation>
-    </message>
 </context>
 <context>
     <name>HudRendererSP</name>
@@ -969,18 +764,6 @@ Firehose模式允许您最大化训练数据上传以改善openpilot的驾驶模
     <message>
         <source>AHEAD</source>
         <translation>前方</translation>
-    </message>
-    <message>
-        <source>PREPARING</source>
-        <translation type="vanished">准备中</translation>
-    </message>
-    <message>
-        <source>ADAPTING</source>
-        <translation type="vanished">正在适配</translation>
-    </message>
-    <message>
-        <source>ACTIVE</source>
-        <translation type="vanished">激活</translation>
     </message>
     <message>
         <source>Near</source>
@@ -1060,20 +843,6 @@ DEPARTING</source>
     <message>
         <source>Fine-tune your driving experience by adjusting acceleration smoothness with openpilot longitudinal control.</source>
         <translation>通过调整 openpilot 纵向控制的加速平稳性，优化您的驾驶体验。</translation>
-    </message>
-    <message>
-        <source>Bookmark</source>
-        <translation type="vanished">书签</translation>
-    </message>
-    <message>
-        <source>Steering Custom ☆ Button</source>
-        <translation type="vanished">自定义方向盘 ☆ 按钮</translation>
-    </message>
-    <message>
-        <source>Customize the steering wheel custom/star button for openpilot control.
-This will not disable OEM functionality.</source>
-        <translation type="vanished">自定义方向盘上的自定义/星形按钮以控制openpilot。
-这不会禁用原厂功能。</translation>
     </message>
 </context>
 <context>
@@ -1195,10 +964,6 @@ This will not disable OEM functionality.</source>
         <translation>此平台支持有限的MADS设置。</translation>
     </message>
     <message>
-        <source>Customize Lane Turn</source>
-        <translation type="vanished">自定义车道转向</translation>
-    </message>
-    <message>
         <source>Enforce Torque Lateral Control</source>
         <translation>启用扭矩横向控制</translation>
     </message>
@@ -1256,34 +1021,6 @@ This will not disable OEM functionality.</source>
     <message>
         <source>Controls following distance and braking behavior: Relaxed (longer distance, gentler braking), Standard (balanced), Aggressive (shorter distance, firmer braking). Fine-tune your comfort level in traffic situations.</source>
         <translation>控制跟车距离和制动行为：轻松（较长距离，更温和的制动）、标准（平衡）、积极（较短距离，更坚定的制动）。在交通情况中微调您的舒适度。</translation>
-    </message>
-    <message>
-        <source>Speed Limit Control (SLC)</source>
-        <translation type="vanished">速度限制控制 (SLC)</translation>
-    </message>
-    <message>
-        <source>When you engage ACC, you will be prompted to set the cruising speed to the speed limit of the road adjusted by the Offset and Source Policy specified, or the current driving speed. The maximum cruising speed will always be the MAX set speed.</source>
-        <translation type="vanished">当您启动ACC时，系统会提示您根据指定的偏移量和来源政策调整道路速度限制或当前行驶速度来设置巡航速度。最大巡航速度将始终是设定的最高速度。</translation>
-    </message>
-    <message>
-        <source>Vision Turn Speed Controller</source>
-        <translation type="vanished">视觉转向速度控制器</translation>
-    </message>
-    <message>
-        <source>Also known as V-TSC, this controller automatically slows down for curvature while OP longitudinal is engaged.</source>
-        <translation type="vanished">也被称为V-TSC，当OP纵向控制启动时，该控制器会自动减速以适应道路弯曲。</translation>
-    </message>
-    <message>
-        <source>Enable Dynamic Experimental Control</source>
-        <translation type="vanished">启用动态实验控制</translation>
-    </message>
-    <message>
-        <source>Enable toggle to allow the model to determine when to use sunnypilot ACC or sunnypilot End to End Longitudinal.</source>
-        <translation type="vanished">启用开关以允许模型决定何时使用sunnypilot ACC或sunnypilot端到端纵向控制。</translation>
-    </message>
-    <message>
-        <source>Customize DEC</source>
-        <translation type="vanished">自定义 DEC</translation>
     </message>
     <message>
         <source>Intelligent Cruise Button Management (ICBM) (Alpha)</source>
@@ -1571,22 +1308,6 @@ The default software delay value is 0.2</source>
     <message>
         <source>Total Delay:</source>
         <translation>总延迟：</translation>
-    </message>
-    <message>
-        <source>Use Lane Turn Desires</source>
-        <translation type="vanished">使用车道转向意愿</translation>
-    </message>
-    <message>
-        <source>Adjust Lane Turn Speed</source>
-        <translation type="vanished">调整车道转弯速度</translation>
-    </message>
-    <message>
-        <source>Set the maximum speed for lane turn desires. Default is 19 %1.</source>
-        <translation type="vanished">设置变道期望的最大速度。默认值为19 %1。</translation>
-    </message>
-    <message>
-        <source>If you’re driving at 20 mph (32 km/h) or below and have your blinker on, the car will plan a turn in that direction at the nearest drivable path. This prevents situations (like at red lights) where the car might plan the wrong turn direction.</source>
-        <translation type="vanished">如果你以20英里/小时（32公里/小时）或更低的速度行驶并开启了转向灯，车辆会在最近的可行驶路径上计划向该方向转弯。这可以避免车辆在红灯等情况下规划错误的转弯方向。</translation>
     </message>
 </context>
 <context>
@@ -2566,130 +2287,6 @@ Data</source>
     </message>
 </context>
 <context>
-    <name>SpeedLimitControl</name>
-    <message>
-        <source>Customize SLC</source>
-        <translation type="vanished">自定义SLC</translation>
-    </message>
-</context>
-<context>
-    <name>SpeedLimitControlPolicy</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">返回</translation>
-    </message>
-    <message>
-        <source>Speed Limit Source</source>
-        <translation type="vanished">速度限制来源</translation>
-    </message>
-    <message>
-        <source>⦿ Car Only: Use Speed Limit data only from Car</source>
-        <translation type="vanished">⦿ 仅限汽车：仅使用来自汽车的速度限制数据</translation>
-    </message>
-    <message>
-        <source>⦿ Map Only: Use Speed Limit data only from OpenStreetMaps</source>
-        <translation type="vanished">⦿ 仅地图：仅使用来自OpenStreetMaps的速度限制数据</translation>
-    </message>
-    <message>
-        <source>⦿ Car First: Use Speed Limit data from Car if available, else use from OpenStreetMaps</source>
-        <translation type="vanished">⦿ 优先使用车辆数据：如果车辆的限速数据可用，则使用车辆的数据，否则使用OpenStreetMaps的数据。</translation>
-    </message>
-    <message>
-        <source>⦿ Map First: Use Speed Limit data from OpenStreetMaps if available, else use from Car</source>
-        <translation type="vanished">⦿ 优先使用地图：如果可用，使用OpenStreetMaps的速度限制数据，否则使用汽车的数据。</translation>
-    </message>
-    <message>
-        <source>⦿ Combined: Use combined Speed Limit data from Car &amp; OpenStreetMaps</source>
-        <translation type="vanished">⦿ 组合：使用来自汽车和OpenStreetMaps的组合速度限制数据</translation>
-    </message>
-</context>
-<context>
-    <name>SpeedLimitControlSubpanel</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">返回</translation>
-    </message>
-    <message>
-        <source>Customize Warning</source>
-        <translation type="vanished">自定义警告</translation>
-    </message>
-    <message>
-        <source>Customize Source</source>
-        <translation type="vanished">自定义来源</translation>
-    </message>
-    <message>
-        <source>Engage Mode</source>
-        <translation type="vanished">启动模式</translation>
-    </message>
-    <message>
-        <source>Speed Limit Offset</source>
-        <translation type="vanished">速度限制偏移</translation>
-    </message>
-    <message>
-        <source>⦿ Auto: Automatic speed adjustment based on speed limit data</source>
-        <translation type="vanished">⦿ 自动：基于限速数据的自动速度调整</translation>
-    </message>
-    <message>
-        <source>⦿ User Confirm: Asks driver to confirm speed adjustment based on speed limit data</source>
-        <translation type="vanished">⦿ 用户确认：要求驾驶员根据速度限制数据确认速度调整</translation>
-    </message>
-    <message>
-        <source>⦿ None: No Offset</source>
-        <translation type="vanished">⦿ 无偏移</translation>
-    </message>
-    <message>
-        <source>⦿ Fixed: Adds a fixed offset [Speed Limit + Offset]</source>
-        <translation type="vanished">⦿ 固定：增加固定偏移量 [速度限制 + 偏移]</translation>
-    </message>
-    <message>
-        <source>⦿ Percent: Adds a percent offset [Speed Limit + (Offset % Speed Limit)]</source>
-        <translation type="vanished">⦿ 百分比：添加百分比偏移量 [速度限制 + (偏移百分比 x 速度限制)]</translation>
-    </message>
-</context>
-<context>
-    <name>SpeedLimitControlWarning</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">返回</translation>
-    </message>
-    <message>
-        <source>Speed Limit Warning</source>
-        <translation type="vanished">速度限制警告</translation>
-    </message>
-    <message>
-        <source>Warning Offset</source>
-        <translation type="vanished">警告偏移</translation>
-    </message>
-    <message>
-        <source>N/A</source>
-        <translation type="vanished">不适用</translation>
-    </message>
-    <message>
-        <source>⦿ Off: No Warning</source>
-        <translation type="vanished">⦿ 关闭：无警告</translation>
-    </message>
-    <message>
-        <source>⦿ Display: Speed Limit Sign will visually alert</source>
-        <translation type="vanished">⦿ 显示：速度限制标志将进行视觉提醒</translation>
-    </message>
-    <message>
-        <source>⦿ Chime: Speed Limit Sign will visually alert along with an audible chime</source>
-        <translation type="vanished">⦿ 提示音：速度限制标志将视觉上提示并伴有声音提示</translation>
-    </message>
-    <message>
-        <source>⦿ None: No Offset</source>
-        <translation type="vanished">⦿ 无偏移: 没有偏移</translation>
-    </message>
-    <message>
-        <source>⦿ Fixed: Adds a fixed offset [Speed Limit + Offset]</source>
-        <translation type="vanished">⦿ 固定：添加固定偏移量 [速度限制 + 偏移量]</translation>
-    </message>
-    <message>
-        <source>⦿ Percent: Adds a percent offset [Speed Limit + (Offset % Speed Limit)]</source>
-        <translation type="vanished">⦿ 百分比：添加百分比偏移量 [速度限制 + (偏移量 % 速度限制)]</translation>
-    </message>
-</context>
-<context>
     <name>SpeedLimitPolicy</name>
     <message>
         <source>Back</source>
@@ -2725,10 +2322,6 @@ Data</source>
     <message>
         <source>Back</source>
         <translation>返回</translation>
-    </message>
-    <message>
-        <source>Speed Limit Mode</source>
-        <translation type="vanished">限速模式</translation>
     </message>
     <message>
         <source>Customize Source</source>
@@ -3414,10 +3007,6 @@ Full: File Manager + Live Stream.</source>
         <translation>启用特斯拉彩虹模式</translation>
     </message>
     <message>
-        <source>Enable the rainbow mode, which displays a rainbow effect on the screen.</source>
-        <translation type="vanished">启用彩虹模式，屏幕上将显示彩虹效果。</translation>
-    </message>
-    <message>
         <source>A beautiful rainbow effect on the path the model wants to take.</source>
         <translation>模型预测路径上呈现出一道美丽的彩虹效果。</translation>
     </message>
@@ -3432,18 +3021,6 @@ Full: File Manager + Live Stream.</source>
     <message>
         <source>affect driving in any way.</source>
         <translation>不影响驾驶。</translation>
-    </message>
-    <message>
-        <source>Bottom
- Only</source>
-        <translation type="vanished">底部
-仅限</translation>
-    </message>
-    <message>
-        <source>Bottom
-and Right</source>
-        <translation type="vanished">底部
-和右侧</translation>
     </message>
     <message>
         <source>Developer UI</source>

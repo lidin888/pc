@@ -162,13 +162,6 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
 </context>
 <context>
-    <name>DecControllerSubpanel</name>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Voltar</translation>
-    </message>
-</context>
-<context>
     <name>DeclinePage</name>
     <message>
         <source>Back</source>
@@ -741,10 +734,6 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
         <source>MAX</source>
         <translation>LIMITE</translation>
     </message>
-    <message>
-        <source>ACTIVE</source>
-        <translation type="obsolete">ATIVO</translation>
-    </message>
 </context>
 <context>
     <name>HudRendererSP</name>
@@ -759,10 +748,6 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     <message>
         <source>MAX</source>
         <translation type="unfinished">LIMITE</translation>
-    </message>
-    <message>
-        <source>ACTIVE</source>
-        <translation type="obsolete">ATIVO</translation>
     </message>
     <message>
         <source>SPEED</source>
@@ -2086,18 +2071,6 @@ Data</source>
         <translation>TEMP</translation>
     </message>
     <message>
-        <source>HIGH</source>
-        <translation type="vanished">ALTA</translation>
-    </message>
-    <message>
-        <source>GOOD</source>
-        <translation type="vanished">BOA</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="vanished">OK</translation>
-    </message>
-    <message>
         <source>VEHICLE</source>
         <translation>VEÍCULO</translation>
     </message>
@@ -2297,31 +2270,6 @@ Data</source>
     <message>
         <source>Please enable always offroad mode or turn off vehicle to adjust these toggles</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SpeedLimitControlPolicy</name>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Voltar</translation>
-    </message>
-</context>
-<context>
-    <name>SpeedLimitControlSubpanel</name>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Voltar</translation>
-    </message>
-</context>
-<context>
-    <name>SpeedLimitControlWarning</name>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Voltar</translation>
-    </message>
-    <message>
-        <source>N/A</source>
-        <translation type="obsolete">N/A</translation>
     </message>
 </context>
 <context>
@@ -2891,11 +2839,6 @@ Full: File Manager + Live Stream.</source>
     </message>
     <message>
         <source>idk something gas and brake</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-    <message>
-        <source>This feature will allow sunnypilot to use the stock Toyota longitudinal control instead of the sunnypilot longitudinal control. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>

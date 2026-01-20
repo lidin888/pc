@@ -2061,18 +2061,6 @@ Data</source>
         <translation>SICAKLIK</translation>
     </message>
     <message>
-        <source>HIGH</source>
-        <translation type="vanished">YÜKSEK</translation>
-    </message>
-    <message>
-        <source>GOOD</source>
-        <translation type="vanished">İYİ</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="vanished">TAMAM</translation>
-    </message>
-    <message>
         <source>VEHICLE</source>
         <translation>ARAÇ</translation>
     </message>
@@ -2272,13 +2260,6 @@ Data</source>
     <message>
         <source>Please enable always offroad mode or turn off vehicle to adjust these toggles</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SpeedLimitControlWarning</name>
-    <message>
-        <source>N/A</source>
-        <translation type="obsolete">N/A</translation>
     </message>
 </context>
 <context>
@@ -2848,11 +2829,6 @@ Full: File Manager + Live Stream.</source>
     </message>
     <message>
         <source>idk something gas and brake</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-    <message>
-        <source>This feature will allow sunnypilot to use the stock Toyota longitudinal control instead of the sunnypilot longitudinal control. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
