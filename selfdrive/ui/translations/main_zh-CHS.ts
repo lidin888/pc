@@ -2062,15 +2062,15 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     <name>MapETA</name>
     <message>
         <source>eta</source>
-        <translation>预计到达</translation>
+        <translation type="vanished">预计到达</translation>
     </message>
     <message>
         <source>min</source>
-        <translation>分钟</translation>
+        <translation type="vanished">分钟</translation>
     </message>
     <message>
         <source>hr</source>
-        <translation>小时</translation>
+        <translation type="vanished">小时</translation>
     </message>
 </context>
 <context>

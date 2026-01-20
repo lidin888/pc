@@ -1395,21 +1395,6 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     </message>
 </context>
 <context>
-    <name>MapETA</name>
-    <message>
-        <source>eta</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>min</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>hr</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MapSettings</name>
     <message>
         <source>NAVIGATION</source>
