@@ -162,3 +162,7 @@ void SpeedLimitSettings::refresh() {
 void SpeedLimitSettings::showEvent(QShowEvent *event) {
   refresh();
 }
+
+void SpeedLimitSettings::hideEvent(QHideEvent *event) {
+  setCurrentWidget(subPanelFrame);
+}
