@@ -2553,10 +2553,10 @@ public:
             }
             if (show_datetime == 1 || show_datetime == 3) {
                 //strftime(str, sizeof(str), "%m-%d-%a", local);
-                const char* weekdays_ko[] = { "일", "월", "화", "수", "목", "금", "토" };
+                const char* weekdays_zh[] = { "日", "一", "二", "三", "四", "五", "六" };
                 strftime(str, sizeof(str), "%m-%d", local); // 날짜만 가져옴
-                int weekday_index = local->tm_wday; // tm_wday: 0=일, 1=월, ..., 6=토
-                snprintf(str + strlen(str), sizeof(str) - strlen(str), "(%s)", weekdays_ko[weekday_index]);
+                int weekday_index = local->tm_wday; // tm_wday: 0=日, 1=一, ..., 6=六
+                snprintf(str + strlen(str), sizeof(str) - strlen(str), "(%s)", weekdays_zh[weekday_index]);
 
                 ui_draw_text(s, x, y + 70, str, 60, COLOR_WHITE, BOLD, 3.0f, 8.0f);
                 nav_y += 70;
