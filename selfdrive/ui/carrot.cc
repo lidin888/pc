@@ -739,11 +739,11 @@ public:
         else if (longActive) {
             if (xState == 3 || xState == 5) {      //XState.e2eStop, XState.e2eStopped
                 if (v_ego < 1.0) {
-                    sprintf(str, "%s", (trafficState >= 1000) ? tr("Signal Error").toStdString().c_str(): tr("Signal Ready").toStdString().c_str());
+                    sprintf(str, "%s", (trafficState >= 1000) ? "信号错误": "信号就绪");
                     ui_draw_text(s, x, disp_y, str, disp_size, COLOR_WHITE, BOLD);
                 }
                 else {
-                    ui_draw_text(s, x, disp_y, tr("Signal slowing").toStdString().c_str(), disp_size, COLOR_WHITE, BOLD);
+                    ui_draw_text(s, x, disp_y, "信号减速", disp_size, COLOR_WHITE, BOLD);
                 }
 #if 0
                 else if (getStopDist() > 0.5) {
@@ -755,7 +755,7 @@ public:
 #endif
             }
             else if (xState == 4) {     //XState.e2ePrepare
-				      ui_draw_text(s, x, disp_y, "E2E주행중", disp_size, COLOR_WHITE, BOLD);
+				      ui_draw_text(s, x, disp_y, "E2E行驶中", disp_size, COLOR_WHITE, BOLD);
 			      }
             else if (xState == 0 || xState == 1 || xState == 2) {     //XState.lead
                 draw_dist = true;
