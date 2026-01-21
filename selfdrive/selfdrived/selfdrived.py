@@ -328,11 +328,11 @@ class SelfdriveD(CruiseHelper):
         safety_mismatch = pandaState.safetyModel not in IGNORED_SAFETY_MODES
 
       # safety mismatch allows some time for pandad to set the safety mode and publish it back from panda
-      # For Toyota TSS2 with openpilot longitudinal, PCM may temporarily disengage cruise on gas press
+      # For Toyota TSS2/Volkswagen/BYD with openpilot longitudinal, PCM may temporarily disengage cruise on gas press
       # This causes temporary mismatch, so we increase the threshold to avoid false positives
       mismatch_threshold = 200
-      if self.CP.brand == 'toyota' and self.CP.openpilotLongitudinalControl:
-        # Toyota TSS2: Allow longer mismatch duration to handle PCM cruise state changes
+      if self.CP.brand in ('toyota', 'volkswagen', 'byd') and self.CP.openpilotLongitudinalControl:
+        # Toyota TSS2/Volkswagen/BYD: Allow longer mismatch duration to handle PCM cruise state changes
         mismatch_threshold = 400  # ~8 seconds at 100Hz
 
       if (safety_mismatch and self.sm.frame*DT_CTRL > 10.) or pandaState.safetyRxChecksInvalid or self.mismatch_counter >= mismatch_threshold:
@@ -512,10 +512,10 @@ class SelfdriveD(CruiseHelper):
     controls_allowed_false = any(not ps.controlsAllowed for ps in self.sm['pandaStates']
                                 if ps.safetyModel not in IGNORED_SAFETY_MODES)
 
-    # More robust solution: Track controlsAllowed state changes for Toyota TSS2
+    # More robust solution: Track controlsAllowed state changes for Toyota TSS2/Volkswagen/BYD
     # If controlsAllowed transitions from true -> false while gas is pressed or was recently pressed,
     # it's likely due to PCM cruise pause, not a real mismatch.
-    if self.CP.brand == 'toyota' and self.CP.openpilotLongitudinalControl:
+    if self.CP.brand in ('toyota', 'volkswagen', 'byd') and self.CP.openpilotLongitudinalControl:
       # Detect if controlsAllowed just became false while gas is/was pressed
       if controls_allowed_false and not self.controls_allowed_prev:
         # If gas was pressed in the last 2 seconds, assume it's PCM pause
@@ -532,10 +532,10 @@ class SelfdriveD(CruiseHelper):
         self.gas_pressed_end_frame = self.sm.frame
 
     if self.enabled and controls_allowed_false:
-      # Skip mismatch counter for Toyota TSS2 + openpilot longitudinal when:
+      # Skip mismatch counter for Toyota TSS2/Volkswagen/BYD + openpilot longitudinal when:
       # 1. controlsAllowed just became false due to gas press (PCM pause)
       # 2. Within 2 seconds after the transition (allowing PCM to recover)
-      skip_count = (self.CP.brand == 'toyota' and self.CP.openpilotLongitudinalControl and
+      skip_count = (self.CP.brand in ('toyota', 'volkswagen', 'byd') and self.CP.openpilotLongitudinalControl and
                     (self.sm.frame - self.gas_pressed_end_frame) < 200)
 
       if not skip_count:
