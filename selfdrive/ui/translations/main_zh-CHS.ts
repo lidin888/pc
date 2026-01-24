@@ -2266,15 +2266,15 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     <name>PathEndDrawer</name>
     <message>
         <source>Signal Error</source>
-        <translation>信号错误</translation>
+        <translation type="vanished">信号错误</translation>
     </message>
     <message>
         <source>Signal Ready</source>
-        <translation>信号就绪</translation>
+        <translation type="vanished">信号就绪</translation>
     </message>
     <message>
         <source>Signal slowing</source>
-        <translation>信号减速</translation>
+        <translation type="vanished">信号减速</translation>
     </message>
 </context>
 <context>

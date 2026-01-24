@@ -1588,21 +1588,6 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     </message>
 </context>
 <context>
-    <name>PathEndDrawer</name>
-    <message>
-        <source>Signal Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Signal Ready</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Signal slowing</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PrimeAdWidget</name>
     <message>
         <source>Upgrade Now</source>
