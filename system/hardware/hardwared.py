@@ -220,8 +220,8 @@ def hardware_thread(end_event, hw_queue) -> None:
   fan_controller = None
 
   restart_triggered_ts = 0.
-  # 添加：记录上次检测到 Panda 连接的时间
-  last_panda_connected_ts = time.monotonic()
+  # 添加：记录上次检测到 Panda 连接的时间（初始化为 None，表示从未连接过）
+  last_panda_connected_ts = None
   # 添加：是否启用断开连接自动关机（可通过参数控制）
   enable_disconnect_shutdown = params.get_bool("EnableDisconnectShutdown")
   # 添加：断开连接后关机的延时时间（秒），默认 5 秒
@@ -251,6 +251,11 @@ def hardware_thread(end_event, hw_queue) -> None:
         if TICI:
           fan_controller = TiciFanController()
 
+      # 添加：首次检测到 Panda 连接时，记录时间戳
+      if last_panda_connected_ts is None and peripheral_panda_present:
+        last_panda_connected_ts = time.monotonic()
+        cloudlog.info("Panda connected for the first time, recording timestamp")
+
     elif (time.monotonic() - sm.recv_time['pandaStates']) > DISCONNECT_TIMEOUT:
       if onroad_conditions["ignition"]:
         onroad_conditions["ignition"] = False
@@ -264,8 +269,8 @@ def hardware_thread(end_event, hw_queue) -> None:
       # 检查当前是否有 Panda 连接
       panda_connected = peripheral_panda_present and (time.monotonic() - sm.recv_time['pandaStates']) <= DISCONNECT_TIMEOUT
 
-      if not panda_connected and not onroad_conditions["ignition"]:
-        # Panda 未连接且未点火
+      if not panda_connected and not onroad_conditions["ignition"] and last_panda_connected_ts is not None:
+        # Panda 未连接且未点火，并且曾经连接过
         disconnect_duration = time.monotonic() - last_panda_connected_ts
         if disconnect_duration >= disconnect_shutdown_delay:
           # 达到关机延时，执行关机
@@ -469,7 +474,7 @@ def hardware_thread(end_event, hw_queue) -> None:
       # save last one before going onroad
       if rising_edge_started:
         try:
-          params.put("LastOffroadStatusPacket", json.dumps(dat))
+          params.put("LastOffroadStatusPacket", dat)
         except Exception:
           cloudlog.exception("failed to save offroad status")
 
