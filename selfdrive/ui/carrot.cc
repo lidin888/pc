@@ -1200,15 +1200,15 @@ protected:
             bool is_kor = s->language == "main_ko";
             bool is_chinese = s->language == "main_zh-CHS"; // 修正为正确的简体中文语言代码
             // 翻译为中文：预计到达: X.X分钟(XX:XX) 또는 保持韩语/英语
-            sprintf(str, "%s: %.1f%s(%02d:%02d)", 
-                   (is_kor)?"도착":(is_chinese?"预计到达":"ETA"), 
-                   (float)nGoPosTime / 60., 
-                   (is_kor)?"분":(is_chinese?"分钟":"MIN"), 
+            sprintf(str, "%s: %.1f%s(%02d:%02d)",
+                   (is_kor)?"도착":(is_chinese?"到达":"ETA"),
+                   (float)nGoPosTime / 60.,
+                   (is_kor)?"분":(is_chinese?"分钟":"MIN"),
                    local->tm_hour, local->tm_min);
             ui_draw_text(s, tbt_x + 190, tbt_y + 80, str, 50, COLOR_WHITE, BOLD);
             // 翻译距离单位为中文
-            sprintf(str, "%.1f%s", 
-                   nGoPosDist / 1000. * ((s->scene.is_metric)?1:KM_TO_MILE), 
+            sprintf(str, "%.1f%s",
+                   nGoPosDist / 1000. * ((s->scene.is_metric)?1:KM_TO_MILE),
                    (s->scene.is_metric) ? (is_chinese?"公里":"km") : "mile");
             ui_draw_text(s, tbt_x + 190 + 120, tbt_y + 130, str, 50, COLOR_WHITE, BOLD);
         }
