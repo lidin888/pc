@@ -18,7 +18,7 @@ from openpilot.common.params import Params
 
 #new
 from openpilot.selfdrive.controls.lib.dec.longitudinal_planner import LongitudinalPlannerSP
-
+from openpilot.selfdrive.carrot.config import UnifiedParams
 
 LON_MPC_STEP = 0.2  # first step is 0.2s
 A_CRUISE_MIN = -2.0 #-1.2
@@ -86,7 +86,12 @@ class LongitudinalPlanner(LongitudinalPlannerSP): #new
 
     self.v_cruise_kph = 0.0
 
-    self.params = Params()
+    #self.params = Params()
+    #new
+    self.params = UnifiedParams()
+    self.frame = 0
+    self.DynamicExperimentalSpeed = -1
+    #new
 
   @staticmethod
   def parse_model(model_msg):
@@ -111,10 +116,17 @@ class LongitudinalPlanner(LongitudinalPlannerSP): #new
   def update(self, sm, carrot):
     #self.mpc.mode = 'blended' if sm['selfdriveState'].experimentalMode else 'acc'
     #new
+    v_ego = sm['carState'].vEgo
+    if self.frame % 100 == 0:
+      self.DynamicExperimentalSpeed = self.params.get_int("DynamicExperimentalSpeed")
+    self.frame += 1
     self.mpc.mode = 'blended' if sm['selfdriveState'].experimentalMode else 'acc'
-    LongitudinalPlannerSP.update(self, sm)
-    if dec_mpc_mode := self.get_mpc_mode():
-      self.mpc.mode = dec_mpc_mode
+    if self.DynamicExperimentalSpeed == 0: #设定值为0表示动态实验模式
+      LongitudinalPlannerSP.update(self, sm)
+      if dec_mpc_mode := self.get_mpc_mode():
+        self.mpc.mode = dec_mpc_mode
+    elif self.DynamicExperimentalSpeed > 0 and v_ego < self.DynamicExperimentalSpeed: #设置值大于1表示速度条件实验模式
+      self.mpc.mode = 'blended' #速度低于设定值时，强制进入实验模式
     #new
 
     if len(sm['carControl'].orientationNED) == 3:
