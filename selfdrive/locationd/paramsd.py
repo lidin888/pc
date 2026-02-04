@@ -64,25 +64,29 @@ class ParamsLearner:
       self.roll = np.clip(roll, self.roll - ROLL_MAX_DELTA, self.roll + ROLL_MAX_DELTA)
 
       if self.active:
-        if msg.posenetOK:
+        small_curve = abs(self.steering_angle) < 5.0  # 方向盘小
+        small_yaw = abs(self.yaw_rate) < math.radians(8)  # yaw_rate 小
+        allow_learn = small_curve and small_yaw and msg.posenetOK
+
+        if allow_learn:
+          # === 只有在小弯 + yaw 小时才喂观测 ===
           self.kf.predict_and_observe(t,
                                       ObservationKind.ROAD_FRAME_YAW_RATE,
                                       np.array([[-self.yaw_rate]]),
-                                      np.array([np.atleast_2d(self.yaw_rate_std**2)]))
+                                      np.array([np.atleast_2d(self.yaw_rate_std ** 2)]))
 
           self.kf.predict_and_observe(t,
                                       ObservationKind.ROAD_ROLL,
                                       np.array([[self.roll]]),
-                                      np.array([np.atleast_2d(roll_std**2)]))
-        self.kf.predict_and_observe(t, ObservationKind.ANGLE_OFFSET_FAST, np.array([[0]]))
+                                      np.array([np.atleast_2d(roll_std ** 2)]))
 
-        # We observe the current stiffness and steer ratio (with a high observation noise) to bound
-        # the respective estimate STD. Otherwise the STDs keep increasing, causing rapid changes in the
-        # states in longer routes (especially straight stretches).
-        stiffness = float(self.kf.x[States.STIFFNESS].item())
-        steer_ratio = float(self.kf.x[States.STEER_RATIO].item())
-        self.kf.predict_and_observe(t, ObservationKind.STIFFNESS, np.array([[stiffness]]))
-        self.kf.predict_and_observe(t, ObservationKind.STEER_RATIO, np.array([[steer_ratio]]))
+          stiffness = float(self.kf.x[States.STIFFNESS].item())
+          steer_ratio = float(self.kf.x[States.STEER_RATIO].item())
+          self.kf.predict_and_observe(t, ObservationKind.STIFFNESS, np.array([[stiffness]]))
+          self.kf.predict_and_observe(t, ObservationKind.STEER_RATIO, np.array([[steer_ratio]]))
+
+        # ANGLE_OFFSET_FAST 仍然允许回零（不影响长期学习）
+        self.kf.predict_and_observe(t, ObservationKind.ANGLE_OFFSET_FAST, np.array([[0]]))
 
     elif which == 'carState':
       self.steering_angle = msg.steeringAngleDeg
