@@ -19,5 +19,6 @@
   path = sunnypilot/neural_network_data
   url = https://github.com/sunnypilot/neural-network-data.git
 [submodule "tinygrad_repo"]
-  branch = bft
-  url = https://github.com/lidin888/tinygrad.git
+	branch = bft
+	url = https://github.com/lidin888/tinygrad.git
+	path = tinygrad_repo
