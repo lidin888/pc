@@ -44,6 +44,10 @@ class ParamsLearner:
     self.roll = 0.0
     self.steering_angle = 0.0
 
+    #new
+    self.CustomSteerOffset = False
+    self.SteerAngleOffset = 0.0
+
   def handle_log(self, t, which, msg):
     if which == 'liveLocationKalman':
       self.yaw_rate = msg.angularVelocityCalibrated.value[2]
@@ -66,7 +70,7 @@ class ParamsLearner:
       if self.active:
         small_curve = abs(self.steering_angle) < 5.0  # 方向盘小
         small_yaw = abs(self.yaw_rate) < math.radians(8)  # yaw_rate 小
-        allow_learn = small_curve and small_yaw and msg.posenetOK
+        allow_learn = small_curve and small_yaw and msg.posenetOK and not self.CustomSteerOffset #自定义方向盘偏移时不学习
 
         if allow_learn:
           # === 只有在小弯 + yaw 小时才喂观测 ===
@@ -130,10 +134,6 @@ def main():
 
   min_sr, max_sr = 0.5 * CP.steerRatio, 2.0 * CP.steerRatio
 
-  #自定义方向盘偏移
-  CustomSteerOffset = params_reader.get_bool("CustomSteerOffset")
-  SteerAngleOffset = params_reader.get_float("SteerAngleOffset") / 10.0
-
   params = params_reader.get("LiveParameters")
 
   # Check if car model matches
@@ -183,13 +183,17 @@ def main():
   params_memory = Params("/dev/shm/params")
   params_memory.remove("LastGPSPosition")
 
+  #自定义方向盘偏移
+  learner.CustomSteerOffset = params_reader.get_bool("CustomSteerOffset")
+  learner.SteerAngleOffset = params_reader.get_float("SteerAngleOffset") / 10.0
+
   frame = 0
   while True:
     #读取自定义方向盘角度
     frame += 1
     if (frame % 100) == 0:
-      CustomSteerOffset = params_reader.get_bool("CustomSteerOffset")
-      SteerAngleOffset = params_reader.get_float("SteerAngleOffset") / 10.0
+      learner.CustomSteerOffset = params_reader.get_bool("CustomSteerOffset")
+      learner.SteerAngleOffset = params_reader.get_float("SteerAngleOffset") / 10.0
 
     sm.update()
     if sm.all_checks():
@@ -219,8 +223,8 @@ def main():
                           angle_offset - MAX_ANGLE_OFFSET_DELTA, angle_offset + MAX_ANGLE_OFFSET_DELTA)
 
       #如果有自定义方向盘偏移，则使用方向盘偏移
-      if CustomSteerOffset:
-        angle_offset_average = SteerAngleOffset
+      if learner.CustomSteerOffset:
+        angle_offset_average = learner.SteerAngleOffset
         angle_offset = angle_offset_average
 
       roll = np.clip(float(x[States.ROAD_ROLL].item()), roll - ROLL_MAX_DELTA, roll + ROLL_MAX_DELTA)
