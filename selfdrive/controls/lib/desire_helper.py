@@ -1011,7 +1011,7 @@ class DesireHelper:
                 trigger_type = -2
                 trigger_name = "bsd block"
                 # 播报盲区有车
-                if 0 == (self.frame % int(2 / DT_MDL)):
+                if 0 == (self.frame % int(2 / DT_MDL)) and is_car_blind and (not atc_desire_enabled or self.atc_turn_cnt >= 0):
                   self.lane_change_audio(True, 6, 0)
                 #设置自动变道盲区受阻标志(为了在carrotMan中代码进行加减速处理)
                 steer_angle = 0
