@@ -164,7 +164,8 @@ class UnifiedParams:
             "AutoEnTurnNewLaneTimeH": 0,
             "AutoEnTurnNewLaneTime": 0,
             "NewLaneWidthDiff": 8,
-            "DynamicExperimentalSpeed": 0,
+            "DynamicExperimentalSpeed": -5,
+            "DynamicExperimentalLatA": 0,
         }
 
     def get_bool(self, key, default=False):
