@@ -44,10 +44,6 @@ class ParamsLearner:
     self.roll = 0.0
     self.steering_angle = 0.0
 
-    #new
-    self.CustomSteerOffset = False
-    self.SteerAngleOffset = 0.0
-
   def handle_log(self, t, which, msg):
     if which == 'liveLocationKalman':
       self.yaw_rate = msg.angularVelocityCalibrated.value[2]
@@ -68,36 +64,36 @@ class ParamsLearner:
       self.roll = np.clip(roll, self.roll - ROLL_MAX_DELTA, self.roll + ROLL_MAX_DELTA)
 
       if self.active:
-        small_curve = abs(self.steering_angle) < 5.0  # 方向盘小
-        small_yaw = abs(self.yaw_rate) < math.radians(8)  # yaw_rate 小
-        allow_learn = small_curve and small_yaw and msg.posenetOK and not self.CustomSteerOffset #自定义方向盘偏移时不学习
-
-        if allow_learn:
-          # === 只有在小弯 + yaw 小时才喂观测 ===
+        if msg.posenetOK:
           self.kf.predict_and_observe(t,
                                       ObservationKind.ROAD_FRAME_YAW_RATE,
                                       np.array([[-self.yaw_rate]]),
-                                      np.array([np.atleast_2d(self.yaw_rate_std ** 2)]))
+                                      np.array([np.atleast_2d(self.yaw_rate_std**2)]))
 
           self.kf.predict_and_observe(t,
                                       ObservationKind.ROAD_ROLL,
                                       np.array([[self.roll]]),
-                                      np.array([np.atleast_2d(roll_std ** 2)]))
-
-          stiffness = float(self.kf.x[States.STIFFNESS].item())
-          steer_ratio = float(self.kf.x[States.STEER_RATIO].item())
-          self.kf.predict_and_observe(t, ObservationKind.STIFFNESS, np.array([[stiffness]]))
-          self.kf.predict_and_observe(t, ObservationKind.STEER_RATIO, np.array([[steer_ratio]]))
-
-        # ANGLE_OFFSET_FAST 仍然允许回零（不影响长期学习）
+                                      np.array([np.atleast_2d(roll_std**2)]))
         self.kf.predict_and_observe(t, ObservationKind.ANGLE_OFFSET_FAST, np.array([[0]]))
+
+        # We observe the current stiffness and steer ratio (with a high observation noise) to bound
+        # the respective estimate STD. Otherwise the STDs keep increasing, causing rapid changes in the
+        # states in longer routes (especially straight stretches).
+        stiffness = float(self.kf.x[States.STIFFNESS].item())
+        steer_ratio = float(self.kf.x[States.STEER_RATIO].item())
+        self.kf.predict_and_observe(t, ObservationKind.STIFFNESS, np.array([[stiffness]]))
+        self.kf.predict_and_observe(t, ObservationKind.STEER_RATIO, np.array([[steer_ratio]]))
 
     elif which == 'carState':
       self.steering_angle = msg.steeringAngleDeg
       self.speed = msg.vEgo
 
+      #new
+      MAX_STRAIGHT_YAW_RATE = 0.05  # rad/s, 约2.8°/s，可根据实际调整
+      straight_road = abs(self.yaw_rate) < MAX_STRAIGHT_YAW_RATE
+      #new
       in_linear_region = abs(self.steering_angle) < 45
-      self.active = self.speed > MIN_ACTIVE_SPEED and in_linear_region
+      self.active = self.speed > MIN_ACTIVE_SPEED and in_linear_region and straight_road
 
       if self.active:
         self.kf.predict_and_observe(t, ObservationKind.STEER_ANGLE, np.array([[math.radians(msg.steeringAngleDeg)]]))
@@ -183,18 +179,7 @@ def main():
   params_memory = Params("/dev/shm/params")
   params_memory.remove("LastGPSPosition")
 
-  #自定义方向盘偏移
-  learner.CustomSteerOffset = params_reader.get_bool("CustomSteerOffset")
-  learner.SteerAngleOffset = params_reader.get_float("SteerAngleOffset") / 10.0
-
-  frame = 0
   while True:
-    #读取自定义方向盘角度
-    frame += 1
-    if (frame % 100) == 0:
-      learner.CustomSteerOffset = params_reader.get_bool("CustomSteerOffset")
-      learner.SteerAngleOffset = params_reader.get_float("SteerAngleOffset") / 10.0
-
     sm.update()
     if sm.all_checks():
       for which in sorted(sm.updated.keys(), key=lambda x: sm.logMonoTime[x]):
@@ -221,12 +206,6 @@ def main():
                                   angle_offset_average - MAX_ANGLE_OFFSET_DELTA, angle_offset_average + MAX_ANGLE_OFFSET_DELTA)
       angle_offset = np.clip(math.degrees(x[States.ANGLE_OFFSET].item() + x[States.ANGLE_OFFSET_FAST].item()),
                           angle_offset - MAX_ANGLE_OFFSET_DELTA, angle_offset + MAX_ANGLE_OFFSET_DELTA)
-
-      #如果有自定义方向盘偏移，则使用方向盘偏移
-      if learner.CustomSteerOffset:
-        angle_offset_average = learner.SteerAngleOffset
-        angle_offset = angle_offset_average
-
       roll = np.clip(float(x[States.ROAD_ROLL].item()), roll - ROLL_MAX_DELTA, roll + ROLL_MAX_DELTA)
       roll_std = float(P[States.ROAD_ROLL].item())
       if learner.active and learner.speed > LOW_ACTIVE_SPEED:
