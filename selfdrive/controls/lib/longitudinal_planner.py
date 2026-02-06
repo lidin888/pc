@@ -147,7 +147,7 @@ class LongitudinalPlanner(LongitudinalPlannerSP): #new
     # 条件开（进入实验模式）
     cond_speed_on = (
       self.DynamicExperimentalSpeed > 0 and
-      v_ego_kph < self.DynamicExperimentalSpeed
+      5 < v_ego_kph < max(10, self.DynamicExperimentalSpeed)
     )
 
     cond_lat_on = (
@@ -157,12 +157,12 @@ class LongitudinalPlanner(LongitudinalPlannerSP): #new
     # 条件关（退出实验模式，加迟滞）
     cond_speed_off = (
       self.DynamicExperimentalSpeed > 0 and
-      v_ego_kph > self.DynamicExperimentalSpeed + self._exp_hyst_speed
+      (v_ego_kph < 2 or v_ego_kph > self.DynamicExperimentalSpeed + self._exp_hyst_speed)
     )
 
     cond_lat_off = (
       self.DynamicExperimentalLatA > 0 and
-      max_pred_lat_acc <= max(0.1, self.DynamicExperimentalLatA - self._exp_hyst_latA)
+      max_pred_lat_acc <= max(0.3, self.DynamicExperimentalLatA - self._exp_hyst_latA)
     )
 
     enter_exp = cond_speed_on or cond_lat_on
