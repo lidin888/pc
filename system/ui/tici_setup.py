@@ -80,56 +80,56 @@ class Setup(Widget):
     self.warning = gui_app.texture("icons/warning.png", 150, 150)
     self.checkmark = gui_app.texture("icons/circled_check.png", 100, 100)
 
-    self._low_voltage_title_label = Label("WARNING: Low Voltage", TITLE_FONT_SIZE, FontWeight.MEDIUM, rl.GuiTextAlignment.TEXT_ALIGN_LEFT,
+    self._low_voltage_title_label = Label("警告: 电压过低", TITLE_FONT_SIZE, FontWeight.MEDIUM, rl.GuiTextAlignment.TEXT_ALIGN_LEFT,
                                           text_color=rl.Color(255, 89, 79, 255), text_padding=20)
-    self._low_voltage_body_label = Label("Power your device in a car with a harness or proceed at your own risk.", BODY_FONT_SIZE,
+    self._low_voltage_body_label = Label("请使用线束在车辆中为设备供电,否则风险自负。", BODY_FONT_SIZE,
                                          text_alignment=rl.GuiTextAlignment.TEXT_ALIGN_LEFT, text_padding=20)
-    self._low_voltage_continue_button = Button("Continue", self._low_voltage_continue_button_callback)
-    self._low_voltage_poweroff_button = Button("Power Off", HARDWARE.shutdown)
+    self._low_voltage_continue_button = Button("继续", self._low_voltage_continue_button_callback)
+    self._low_voltage_poweroff_button = Button("关机", HARDWARE.shutdown)
 
     self._getting_started_button = Button("", self._getting_started_button_callback, button_style=ButtonStyle.PRIMARY, border_radius=0)
-    self._getting_started_title_label = Label("Getting Started", TITLE_FONT_SIZE, FontWeight.BOLD, rl.GuiTextAlignment.TEXT_ALIGN_LEFT, text_padding=20)
-    self._getting_started_body_label = Label("Before we get on the road, let's finish installation and cover some details.",
+    self._getting_started_title_label = Label("入门指南", TITLE_FONT_SIZE, FontWeight.BOLD, rl.GuiTextAlignment.TEXT_ALIGN_LEFT, text_padding=20)
+    self._getting_started_body_label = Label("在上路之前,让我们完成安装并了解一些详情。",
                                              BODY_FONT_SIZE, text_alignment=rl.GuiTextAlignment.TEXT_ALIGN_LEFT, text_padding=20)
 
     self._software_selection_openpilot_button = ButtonRadio("openpilot", self.checkmark, font_size=BODY_FONT_SIZE, text_padding=80)
-    self._software_selection_custom_software_button = ButtonRadio("Custom Software", self.checkmark, font_size=BODY_FONT_SIZE, text_padding=80)
-    self._software_selection_continue_button = Button("Continue", self._software_selection_continue_button_callback,
+    self._software_selection_custom_software_button = ButtonRadio("自定义软件", self.checkmark, font_size=BODY_FONT_SIZE, text_padding=80)
+    self._software_selection_continue_button = Button("继续", self._software_selection_continue_button_callback,
                                                       button_style=ButtonStyle.PRIMARY)
     self._software_selection_continue_button.set_enabled(False)
-    self._software_selection_back_button = Button("Back", self._software_selection_back_button_callback)
-    self._software_selection_title_label = Label("Choose Software to Use", TITLE_FONT_SIZE, FontWeight.BOLD, rl.GuiTextAlignment.TEXT_ALIGN_LEFT,
+    self._software_selection_back_button = Button("返回", self._software_selection_back_button_callback)
+    self._software_selection_title_label = Label("选择要使用的软件", TITLE_FONT_SIZE, FontWeight.BOLD, rl.GuiTextAlignment.TEXT_ALIGN_LEFT,
                                                  text_padding=20)
 
-    self._download_failed_reboot_button = Button("Reboot device", HARDWARE.reboot)
-    self._download_failed_startover_button = Button("Start over", self._download_failed_startover_button_callback, button_style=ButtonStyle.PRIMARY)
-    self._download_failed_title_label = Label("Download Failed", TITLE_FONT_SIZE, FontWeight.BOLD, rl.GuiTextAlignment.TEXT_ALIGN_LEFT, text_padding=20)
+    self._download_failed_reboot_button = Button("重启设备", HARDWARE.reboot)
+    self._download_failed_startover_button = Button("重新开始", self._download_failed_startover_button_callback, button_style=ButtonStyle.PRIMARY)
+    self._download_failed_title_label = Label("下载失败", TITLE_FONT_SIZE, FontWeight.BOLD, rl.GuiTextAlignment.TEXT_ALIGN_LEFT, text_padding=20)
     self._download_failed_url_label = Label("", 52, FontWeight.NORMAL, rl.GuiTextAlignment.TEXT_ALIGN_LEFT, text_padding=20)
     self._download_failed_body_label = Label("", BODY_FONT_SIZE, text_alignment=rl.GuiTextAlignment.TEXT_ALIGN_LEFT, text_padding=20)
 
-    self._network_setup_back_button = Button("Back", self._network_setup_back_button_callback)
-    self._network_setup_continue_button = Button("Waiting for internet", self._network_setup_continue_button_callback,
+    self._network_setup_back_button = Button("返回", self._network_setup_back_button_callback)
+    self._network_setup_continue_button = Button("等待网络连接", self._network_setup_continue_button_callback,
                                                  button_style=ButtonStyle.PRIMARY)
     self._network_setup_continue_button.set_enabled(False)
-    self._network_setup_title_label = Label("Connect to Wi-Fi", TITLE_FONT_SIZE, FontWeight.BOLD, rl.GuiTextAlignment.TEXT_ALIGN_LEFT, text_padding=20)
+    self._network_setup_title_label = Label("连接 Wi-Fi", TITLE_FONT_SIZE, FontWeight.BOLD, rl.GuiTextAlignment.TEXT_ALIGN_LEFT, text_padding=20)
 
-    self._custom_software_warning_continue_button = Button("Scroll to continue", self._custom_software_warning_continue_button_callback,
+    self._custom_software_warning_continue_button = Button("滚动继续", self._custom_software_warning_continue_button_callback,
                                                            button_style=ButtonStyle.PRIMARY)
     self._custom_software_warning_continue_button.set_enabled(False)
-    self._custom_software_warning_back_button = Button("Back", self._custom_software_warning_back_button_callback)
-    self._custom_software_warning_title_label = Label("WARNING: Custom Software", 81, FontWeight.BOLD, rl.GuiTextAlignment.TEXT_ALIGN_LEFT,
+    self._custom_software_warning_back_button = Button("返回", self._custom_software_warning_back_button_callback)
+    self._custom_software_warning_title_label = Label("警告: 自定义软件", 81, FontWeight.BOLD, rl.GuiTextAlignment.TEXT_ALIGN_LEFT,
                                                       text_color=rl.Color(255, 89, 79, 255),
                                                       text_padding=60)
-    self._custom_software_warning_body_label = Label("Use caution when installing third-party software.\n\n"
-                                                     + "⚠️ It has not been tested by comma.\n\n"
-                                                     + "⚠️ It may not comply with relevant safety standards.\n\n"
-                                                     + "⚠️ It may cause damage to your device and/or vehicle.\n\n"
-                                                     + "If you'd like to proceed, use https://flash.comma.ai "
-                                                     + "to restore your device to a factory state later.",
+    self._custom_software_warning_body_label = Label("安装第三方软件时请谨慎。\n\n"
+                                                     + "⚠️ 未经过 comma 测试。\n\n"
+                                                     + "⚠️ 可能不符合相关安全标准。\n\n"
+                                                     + "⚠️ 可能对您的设备和/或车辆造成损坏。\n\n"
+                                                     + "如果想要继续,请使用 https://flash.comma.ai "
+                                                     + "稍后将设备恢复到出厂状态。",
                                                      68, text_alignment=rl.GuiTextAlignment.TEXT_ALIGN_LEFT, text_padding=60)
     self._custom_software_warning_body_scroll_panel = GuiScrollPanel()
 
-    self._downloading_body_label = Label("Downloading...", TITLE_FONT_SIZE, FontWeight.MEDIUM, text_padding=20)
+    self._downloading_body_label = Label("下载中...", TITLE_FONT_SIZE, FontWeight.MEDIUM, text_padding=20)
 
     try:
       with open("/sys/class/hwmon/hwmon1/in1_input") as f:
@@ -255,7 +255,7 @@ class Setup(Widget):
     # Check network connectivity status
     continue_enabled = self.network_connected.is_set()
     self._network_setup_continue_button.set_enabled(continue_enabled)
-    continue_text = ("Continue" if self.wifi_connected.is_set() else "Continue without Wi-Fi") if continue_enabled else "Waiting for internet"
+    continue_text = ("继续" if self.wifi_connected.is_set() else "不使用 Wi-Fi 继续") if continue_enabled else "等待网络连接"
     self._network_setup_continue_button.set_text(continue_text)
     self._network_setup_continue_button.render(rl.Rectangle(rect.x + MARGIN + button_width + BUTTON_SPACING, button_y, button_width, BUTTON_HEIGHT))
 
@@ -322,7 +322,7 @@ class Setup(Widget):
     self._custom_software_warning_continue_button.render(rl.Rectangle(rect.x + MARGIN * 2 + button_width, button_y, button_width, BUTTON_HEIGHT))
     if offset < (rect.height - warn_rect.height):
       self._custom_software_warning_continue_button.set_enabled(True)
-      self._custom_software_warning_continue_button.set_text("Continue")
+      self._custom_software_warning_continue_button.set_text("继续")
 
   def render_custom_software(self):
     def handle_keyboard_result(result):
@@ -338,7 +338,7 @@ class Setup(Widget):
         self.state = SetupState.SOFTWARE_SELECTION
 
     self.keyboard.reset(min_text_size=1)
-    self.keyboard.set_title("Enter URL", "for Custom Software")
+    self.keyboard.set_title("输入 URL", "用于自定义软件")
     self.keyboard.set_callback(handle_keyboard_result)
     gui_app.push_widget(self.keyboard)
 
@@ -405,7 +405,7 @@ class Setup(Widget):
         is_elf = header == b'\x7fELF'
 
       if not is_elf:
-        self.download_failed(self.download_url, "No custom software found at this URL.")
+        self.download_failed(self.download_url, "在此 URL 未找到自定义软件。")
         return
 
       # AGNOS might try to execute the installer before this process exits.
@@ -425,7 +425,7 @@ class Setup(Widget):
         error_msg = e.read().decode("utf-8")
         self.download_failed(self.download_url, error_msg)
     except Exception:
-      error_msg = "Ensure the entered URL is valid, and the device's internet connection is good."
+      error_msg = "请确保输入的 URL 有效,且设备网络连接良好。"
       self.download_failed(self.download_url, error_msg)
 
   def download_failed(self, url: str, reason: str):
@@ -436,7 +436,7 @@ class Setup(Widget):
 
 def main():
   try:
-    gui_app.init_window("Setup", 20)
+    gui_app.init_window("设置", 20)
     setup = Setup()
     gui_app.push_widget(setup)
     for _ in gui_app.render():

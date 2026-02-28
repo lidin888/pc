@@ -1,0 +1,8 @@
+Import('env', 'arch', 'messaging', 'common', 'visionipc')
+
+libs = [common, 'OpenCL', messaging, visionipc, "turbojpeg", "avformat", "avcodec", "avutil", "swscale"]
+#sudo apt install -y libturbojpeg0-dev
+
+if arch == "x86_64":
+  camera_obj = env.Object([ 'camera.cc', 'camerad.cc'])
+  env.Program('camerad', ['main.cc', camera_obj], LIBS=libs)

@@ -37,13 +37,13 @@ class Reset(Widget):
     self._previous_reset_state = None
     self._reset_state = ResetState.NONE
 
-    self._cancel_button = SmallButton("cancel")
+    self._cancel_button = SmallButton("取消")
     self._cancel_button.set_click_callback(gui_app.request_close)
 
-    self._reboot_button = FullRoundedButton("reboot")
+    self._reboot_button = FullRoundedButton("重启")
     self._reboot_button.set_click_callback(self._do_reboot)
 
-    self._confirm_slider = SmallSlider("reset", self._confirm)
+    self._confirm_slider = SmallSlider("重置", self._confirm)
 
   def _do_reboot(self):
     if PC:
@@ -78,7 +78,7 @@ class Reset(Widget):
 
   def _render(self, rect: rl.Rectangle):
     label_rect = rl.Rectangle(rect.x + 8, rect.y + 8, rect.width, 50)
-    gui_label(label_rect, "factory reset", 48, font_weight=FontWeight.BOLD,
+    gui_label(label_rect, "恢复出厂设置", 48, font_weight=FontWeight.BOLD,
               color=rl.Color(255, 255, 255, int(255 * 0.9)))
 
     text_rect = rl.Rectangle(rect.x + 8, rect.y + 56, rect.width - 8 * 2, rect.height - 80)
@@ -90,7 +90,7 @@ class Reset(Widget):
       self._cancel_button.set_visible(self._confirm_slider.slider_percentage < 0.8)
 
       if self._mode == ResetMode.RECOVER:
-        self._cancel_button.set_text("reboot")
+        self._cancel_button.set_text("重启")
         self._cancel_button.render(rl.Rectangle(
           rect.x + 8,
           rect.y + rect.height - self._cancel_button.rect.height,
@@ -121,12 +121,12 @@ class Reset(Widget):
 
   def _get_body_text(self):
     if self._reset_state == ResetState.RESETTING:
-      return "Resetting device... This may take up to a minute."
+      return "正在重置设备...这可能需要一分钟。"
     if self._reset_state == ResetState.FAILED:
-      return "Reset failed. Reboot to try again."
+      return "重置失败。重启后重试。"
     if self._mode == ResetMode.RECOVER:
-      return "Unable to mount data partition. It may be corrupted."
-    return "All content and settings will be erased."
+      return "无法挂载数据分区。它可能已损坏。"
+    return "所有内容和设置将被擦除。"
 
 
 def main():
@@ -137,7 +137,7 @@ def main():
     elif sys.argv[1] == "--format":
       mode = ResetMode.FORMAT
 
-  gui_app.init_window("System Reset")
+  gui_app.init_window("系统重置")
   reset = Reset(mode)
 
   if mode == ResetMode.FORMAT:

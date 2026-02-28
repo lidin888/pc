@@ -63,7 +63,7 @@ class TextWindow(Widget):
     self._scroll_panel = GuiScrollPanel()
     self._scroll_panel._offset_filter_y.x = -max(self._content_rect.height - self._textarea_rect.height, 0)
 
-    button_text = "Exit" if PC else "Reboot"
+    button_text = "退出" if PC else "重启"
     self._button = Button(button_text, click_callback=self._on_button_clicked, button_style=ButtonStyle.TRANSPARENT_WHITE_BORDER, font_size=FONT_SIZE)
 
   @staticmethod
@@ -88,7 +88,7 @@ class TextWindow(Widget):
 
 if __name__ == "__main__":
   text = sys.argv[1] if len(sys.argv) > 1 else DEMO_TEXT
-  gui_app.init_window("Text Viewer")
+  gui_app.init_window("文本查看器")
   text_window = TextWindow(text)
   for _ in gui_app.render():
     text_window.render(rl.Rectangle(0, 0, gui_app.width, gui_app.height))

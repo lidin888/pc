@@ -106,7 +106,7 @@ class StartPage(Widget):
   def __init__(self):
     super().__init__()
 
-    self._title = UnifiedLabel("start", 64, text_color=rl.Color(255, 255, 255, int(255 * 0.9)),
+    self._title = UnifiedLabel("开始", 64, text_color=rl.Color(255, 255, 255, int(255 * 0.9)),
                                font_weight=FontWeight.DISPLAY, alignment=rl.GuiTextAlignment.TEXT_ALIGN_CENTER,
                                alignment_vertical=rl.GuiTextAlignmentVertical.TEXT_ALIGN_MIDDLE)
 
@@ -127,9 +127,9 @@ class SoftwareSelectionPage(Widget):
                use_custom_software_callback: Callable):
     super().__init__()
 
-    self._openpilot_slider = LargerSlider("slide to use\nopenpilot", use_openpilot_callback)
+    self._openpilot_slider = LargerSlider("滑动使用\nopenpilot", use_openpilot_callback)
     self._openpilot_slider.set_enabled(lambda: self.enabled)
-    self._custom_software_slider = LargerSlider("slide to use\ncustom software", use_custom_software_callback, green=False)
+    self._custom_software_slider = LargerSlider("滑动使用\n自定义软件", use_custom_software_callback, green=False)
     self._custom_software_slider.set_enabled(lambda: self.enabled)
 
   def reset(self):
@@ -193,14 +193,14 @@ class TermsPage(Widget):
   ITEM_SPACING = 20
 
   def __init__(self, continue_callback: Callable, back_callback: Callable | None = None,
-               back_text: str = "back", continue_text: str = "accept"):
+               back_text: str = "返回", continue_text: str = "接受"):
     super().__init__()
 
     # TODO: use Scroller
     self._scroll_panel = GuiScrollPanel2(horizontal=False)
 
     self._continue_text = continue_text
-    self._continue_slider: bool = continue_text in ("reboot", "power off")
+    self._continue_slider: bool = continue_text in ("重启", "关机")
     self._continue_button: WideRoundedButton | FullRoundedButton | SmallSlider
     if self._continue_slider:
       self._continue_button = SmallSlider(continue_text, confirm_callback=continue_callback)
@@ -312,15 +312,15 @@ class CustomSoftwareWarningPage(TermsPage):
   def __init__(self, continue_callback: Callable, back_callback: Callable):
     super().__init__(continue_callback, back_callback)
 
-    self._title_header = TermsHeader("use caution installing\n3rd party software",
+    self._title_header = TermsHeader("安装第三方软件时\n请谨慎",
                                      gui_app.texture("icons_mici/setup/warning.png", 66, 60))
-    self._body = UnifiedLabel("• It has not been tested by comma.\n" +
-                              "• It may not comply with relevant safety standards.\n" +
-                              "• It may cause damage to your device and/or vehicle.\n", 36, text_color=rl.Color(255, 255, 255, int(255 * 0.9)),
+    self._body = UnifiedLabel("• 未经过 comma 测试。\n" +
+                              "• 可能不符合相关安全标准。\n" +
+                              "• 可能对您的设备和/或车辆造成损坏。\n", 36, text_color=rl.Color(255, 255, 255, int(255 * 0.9)),
                               font_weight=FontWeight.ROMAN)
 
-    self._restore_header = TermsHeader("how to backup &\nrestore", gui_app.texture("icons_mici/setup/restore.png", 60, 60))
-    self._restore_body = UnifiedLabel("To restore your device to a factory state later, use https://flash.comma.ai",
+    self._restore_header = TermsHeader("如何备份和\\n恢复", gui_app.texture("icons_mici/setup/restore.png", 60, 60))
+    self._restore_body = UnifiedLabel("要稍后将设备恢复到出厂状态,请使用 https://flash.comma.ai",
                                       36, text_color=rl.Color(255, 255, 255, int(255 * 0.9)),
                                       font_weight=FontWeight.ROMAN)
 
@@ -355,7 +355,7 @@ class DownloadingPage(Widget):
   def __init__(self):
     super().__init__()
 
-    self._title_label = UnifiedLabel("downloading", 64, text_color=rl.Color(255, 255, 255, int(255 * 0.9)),
+    self._title_label = UnifiedLabel("下载中", 64, text_color=rl.Color(255, 255, 255, int(255 * 0.9)),
                                      font_weight=FontWeight.DISPLAY)
     self._progress_label = UnifiedLabel("", 128, text_color=rl.Color(255, 255, 255, int(255 * 0.9 * 0.35)),
                                         font_weight=FontWeight.ROMAN, alignment_vertical=rl.GuiTextAlignmentVertical.TEXT_ALIGN_BOTTOM)
@@ -382,7 +382,7 @@ class DownloadingPage(Widget):
 
 
 class FailedPage(Widget):
-  def __init__(self, reboot_callback: Callable, retry_callback: Callable, title: str = "download failed"):
+  def __init__(self, reboot_callback: Callable, retry_callback: Callable, title: str = "下载失败"):
     super().__init__()
 
     self._title_label = UnifiedLabel(title, 64, text_color=rl.Color(255, 255, 255, int(255 * 0.9)),
@@ -390,7 +390,7 @@ class FailedPage(Widget):
     self._reason_label = UnifiedLabel("", 36, text_color=rl.Color(255, 255, 255, int(255 * 0.9 * 0.65)),
                                       font_weight=FontWeight.ROMAN)
 
-    self._reboot_button = SmallRedPillButton("reboot")
+    self._reboot_button = SmallRedPillButton("重启")
     self._reboot_button.set_click_callback(reboot_callback)
     self._reboot_button.set_enabled(lambda: self.enabled)  # for nav stack
 
@@ -438,7 +438,7 @@ class NetworkSetupPage(Widget):
 
     self._no_wifi_txt = gui_app.texture("icons_mici/settings/network/wifi_strength_slash.png", 58, 50)
     self._wifi_full_txt = gui_app.texture("icons_mici/settings/network/wifi_strength_full.png", 58, 50)
-    self._waiting_text = "waiting for internet..."
+    self._waiting_text = "等待网络连接..."
     self._network_header = TermsHeader(self._waiting_text, self._no_wifi_txt)
 
     back_txt = gui_app.texture("icons_mici/setup/back_new.png", 37, 32)
@@ -446,17 +446,17 @@ class NetworkSetupPage(Widget):
     self._back_button.set_click_callback(back_callback)
     self._back_button.set_enabled(lambda: self.enabled)  # for nav stack
 
-    self._wifi_button = SmallerRoundedButton("wifi")
+    self._wifi_button = SmallerRoundedButton("Wi-Fi")
     self._wifi_button.set_click_callback(lambda: gui_app.push_widget(self._wifi_ui))
     self._wifi_button.set_enabled(lambda: self.enabled)
 
-    self._continue_button = WidishRoundedButton("continue")
+    self._continue_button = WidishRoundedButton("继续")
     self._continue_button.set_enabled(False)
     self._continue_button.set_click_callback(continue_callback)
 
   def set_has_internet(self, has_internet: bool):
     if has_internet:
-      self._network_header.set_title("connected to internet")
+      self._network_header.set_title("已连接到互联网")
       self._network_header.set_icon(self._wifi_full_txt)
       self._continue_button.set_enabled(self.enabled)
     else:
@@ -597,7 +597,7 @@ class Setup(Widget):
         if url:
           self.download(url)
 
-      keyboard = BigInputDialog("custom software URL", confirm_callback=handle_keyboard_result)
+      keyboard = BigInputDialog("自定义软件 URL", confirm_callback=handle_keyboard_result)
       gui_app.push_widget(keyboard)
 
   def close(self):
@@ -674,7 +674,7 @@ class Setup(Widget):
         is_elf = header == b'\x7fELF'
 
       if not is_elf:
-        self.download_failed(self.download_url, "No custom software found at this URL.")
+        self.download_failed(self.download_url, "在此 URL 未找到自定义软件。")
         return
 
       # AGNOS might try to execute the installer before this process exits.
@@ -691,10 +691,10 @@ class Setup(Widget):
 
     except urllib.error.HTTPError as e:
       if e.code == 409:
-        error_msg = "Incompatible sunnypilot version"
+        error_msg = "sunnypilot 版本不兼容"
         self.download_failed(self.download_url, error_msg)
     except Exception:
-      error_msg = "Invalid URL"
+      error_msg = "无效的 URL"
       self.download_failed(self.download_url, error_msg)
 
   def download_failed(self, url: str, reason: str):
@@ -714,7 +714,7 @@ def main():
       cloudlog.exception("Failed to set core affinity for setup process")
 
   try:
-    gui_app.init_window("Setup")
+    gui_app.init_window("设置")
     setup = Setup()
     gui_app.push_widget(setup)
     for _ in gui_app.render():

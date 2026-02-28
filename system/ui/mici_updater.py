@@ -30,7 +30,7 @@ class Updater(Widget):
     self.current_screen = Screen.PROMPT
 
     self.progress_value = 0
-    self.progress_text = "loading"
+    self.progress_text = "加载中"
     self.process = None
     self.update_thread = None
     self._wifi_manager = WifiManager()
@@ -44,17 +44,17 @@ class Updater(Widget):
     self._network_monitor.start()
 
     # Buttons
-    self._continue_button = FullRoundedButton("continue")
+    self._continue_button = FullRoundedButton("继续")
     self._continue_button.set_click_callback(lambda: self.set_current_screen(Screen.WIFI))
 
-    self._title_label = UnifiedLabel("update required", 48, text_color=rl.Color(255, 115, 0, 255),
+    self._title_label = UnifiedLabel("需要更新", 48, text_color=rl.Color(255, 115, 0, 255),
                                      font_weight=FontWeight.DISPLAY)
-    self._subtitle_label = UnifiedLabel("The download size is approximately 1GB.", 36,
+    self._subtitle_label = UnifiedLabel("下载大小约为 1GB。", 36,
                                         text_color=rl.Color(255, 255, 255, int(255 * 0.9)),
                                         font_weight=FontWeight.ROMAN)
 
     self._update_failed_page = FailedPage(HARDWARE.reboot, self._update_failed_retry_callback,
-                                          title="update failed")
+                                          title="更新失败")
 
   def _network_setup_back_callback(self):
     self.set_current_screen(Screen.PROMPT)
@@ -85,7 +85,7 @@ class Updater(Widget):
   def install_update(self):
     self.set_current_screen(Screen.PROGRESS)
     self.progress_value = 0
-    self.progress_text = "downloading"
+    self.progress_text = "下载中"
 
     # Start the update process in a separate thread
     self.update_thread = threading.Thread(target=self._run_update_process)
@@ -181,7 +181,7 @@ def main():
   manifest_path = sys.argv[2]
 
   try:
-    gui_app.init_window("System Update")
+    gui_app.init_window("系统更新")
     updater = Updater(updater_path, manifest_path)
     gui_app.push_widget(updater)
     for _ in gui_app.render():

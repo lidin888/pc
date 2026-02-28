@@ -39,17 +39,17 @@ class Updater(Widget):
     self.current_screen = Screen.PROMPT
 
     self.progress_value = 0
-    self.progress_text = "Loading..."
+    self.progress_text = "加载中..."
     self.show_reboot_button = False
     self.process = None
     self.update_thread = None
     self.wifi_manager_ui = WifiManagerUI(WifiManager())
 
     # Buttons
-    self._wifi_button = Button("Connect to Wi-Fi", click_callback=lambda: self.set_current_screen(Screen.WIFI))
-    self._install_button = Button("Install", click_callback=self.install_update, button_style=ButtonStyle.PRIMARY)
-    self._back_button = Button("Back", click_callback=lambda: self.set_current_screen(Screen.PROMPT))
-    self._reboot_button = Button("Reboot", click_callback=lambda: HARDWARE.reboot())
+    self._wifi_button = Button("连接 Wi-Fi", click_callback=lambda: self.set_current_screen(Screen.WIFI))
+    self._install_button = Button("安装", click_callback=self.install_update, button_style=ButtonStyle.PRIMARY)
+    self._back_button = Button("返回", click_callback=lambda: self.set_current_screen(Screen.PROMPT))
+    self._reboot_button = Button("重启", click_callback=lambda: HARDWARE.reboot())
 
   def set_current_screen(self, screen: Screen):
     self.current_screen = screen
@@ -57,7 +57,7 @@ class Updater(Widget):
   def install_update(self):
     self.set_current_screen(Screen.PROGRESS)
     self.progress_value = 0
-    self.progress_text = "Downloading..."
+    self.progress_text = "下载中..."
     self.show_reboot_button = False
 
     # Start the update process in a separate thread
@@ -85,17 +85,17 @@ class Updater(Widget):
     if exit_code == 0:
       HARDWARE.reboot()
     else:
-      self.progress_text = "Update failed"
+      self.progress_text = "更新失败"
       self.show_reboot_button = True
 
   def render_prompt_screen(self, rect: rl.Rectangle):
     # Title
     title_rect = rl.Rectangle(MARGIN + 50, 250, rect.width - MARGIN * 2 - 100, TITLE_FONT_SIZE * FONT_SCALE)
-    gui_label(title_rect, "Update Required", TITLE_FONT_SIZE, font_weight=FontWeight.BOLD)
+    gui_label(title_rect, "需要更新", TITLE_FONT_SIZE, font_weight=FontWeight.BOLD)
 
     # Description
-    desc_text = ("An operating system update is required. Connect your device to Wi-Fi for the fastest update experience. " +
-                 "The download size is approximately 1GB.")
+    desc_text = ("需要操作系统更新。将设备连接到 Wi-Fi 可获得最快的更新体验。 " +
+                 "下载大小约为 1GB。")
 
     desc_rect = rl.Rectangle(MARGIN + 50, 250 + TITLE_FONT_SIZE * FONT_SCALE + 75, rect.width - MARGIN * 2 - 100, BODY_FONT_SIZE * FONT_SCALE * 4)
     gui_text_box(desc_rect, desc_text, BODY_FONT_SIZE)
@@ -160,7 +160,7 @@ def main():
   manifest_path = sys.argv[2]
 
   try:
-    gui_app.init_window("System Update")
+    gui_app.init_window("系统更新")
     gui_app.push_widget(Updater(updater_path, manifest_path))
     for _ in gui_app.render():
       pass

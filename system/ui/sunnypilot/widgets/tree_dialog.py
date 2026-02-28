@@ -166,6 +166,7 @@ class TreeOptionDialog(MultiOptionDialog):
 
   def _build_visible_items(self, reset_scroll=True):
     self.visible_items = []
+    default_ref = tr("Default")
 
     # Pinned selected item at the very top (if any)
     if getattr(self, "selection_node", None) is not None:

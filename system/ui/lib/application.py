@@ -31,7 +31,8 @@ MOUSE_THREAD_RATE = 140  # touch controller runs at 140Hz
 MAX_TOUCH_SLOTS = 2
 TOUCH_HISTORY_TIMEOUT = 3.0  # Seconds before touch points fade out
 
-BIG_UI = os.getenv("BIG", "0") == "1"
+BIG_UI = os.getenv("BIG", "1" if PC else "0") == "1"
+ENABLE_FULLSCREEN = os.getenv("FULLSCREEN", "1" if PC else "0") == "1"
 ENABLE_VSYNC = os.getenv("ENABLE_VSYNC", "0") == "1"
 SHOW_FPS = os.getenv("SHOW_FPS") == "1"
 SHOW_TOUCHES = os.getenv("SHOW_TOUCHES") == "1"
@@ -89,7 +90,7 @@ DEFAULT_TEXT_COLOR = rl.Color(255, 255, 255, int(255 * 0.9))
 
 # Qt draws fonts accounting for ascent/descent differently, so compensate to match old styles
 # The real scales for the fonts below range from 1.212 to 1.266
-FONT_SCALE = 1.242 if BIG_UI else 1.16
+FONT_SCALE = 1.1 if BIG_UI else 1.0
 
 ASSETS_DIR = files("openpilot.selfdrive").joinpath("assets")
 FONT_DIR = ASSETS_DIR.joinpath("fonts")
@@ -101,7 +102,7 @@ class FontWeight(StrEnum):
   MEDIUM = "Inter-Medium.fnt"
   BOLD = "Inter-Bold.fnt"
   SEMI_BOLD = "Inter-SemiBold.fnt"
-  UNIFONT = "unifont.fnt"
+  UNIFONT = "unifont-china.fnt"
   AUDIOWIDE = "Audiowide-Regular.fnt"
 
   # Small UI fonts
@@ -273,6 +274,8 @@ class GuiApplication(GuiApplicationExt):
       atexit.register(self.close)
 
       flags = rl.ConfigFlags.FLAG_MSAA_4X_HINT
+      if ENABLE_FULLSCREEN:
+        flags |= rl.ConfigFlags.FLAG_FULLSCREEN_MODE
       if ENABLE_VSYNC:
         flags |= rl.ConfigFlags.FLAG_VSYNC_HINT
       rl.set_config_flags(flags)
@@ -783,10 +786,24 @@ class GuiApplication(GuiApplicationExt):
 
   @staticmethod
   def _default_width() -> int:
+    if ENABLE_FULLSCREEN:
+      # Use monitor resolution in fullscreen mode with margin
+      rl.init_window(1, 1, "")
+      w = rl.get_monitor_width(0)
+      rl.close_window()
+      # Leave margin to prevent content from being cut off
+      return max(w - 20, 2160) if w > 0 else 2160
     return 2160 if GuiApplication.big_ui() else 536
 
   @staticmethod
   def _default_height() -> int:
+    if ENABLE_FULLSCREEN:
+      # Use monitor resolution in fullscreen mode with margin
+      rl.init_window(1, 1, "")
+      h = rl.get_monitor_height(0)
+      rl.close_window()
+      # Leave margin to prevent content from being cut off
+      return max(h - 20, 1080) if h > 0 else 1080
     return 1080 if GuiApplication.big_ui() else 240
 
   @staticmethod

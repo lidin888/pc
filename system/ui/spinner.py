@@ -103,7 +103,7 @@ def _read_stdin():
 
 
 def main():
-  gui_app.init_window("Spinner")
+  gui_app.init_window("加载中")
   spinner = Spinner()
   for _ in gui_app.render():
     text_list = _read_stdin()

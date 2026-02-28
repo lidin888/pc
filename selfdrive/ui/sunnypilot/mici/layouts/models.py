@@ -58,7 +58,7 @@ class ModelsLayoutMici(NavScroller):
 
     for folder in sorted(folders.keys(), key=lambda f: max((bundle.index for bundle in folders[f]), default=-1), reverse=True):
       if folder.lower() in ["release models", "master models"]:
-        btn = BigButton(folder.lower(), "", "")
+        btn = BigButton(tr("release models"), "", "")
         btn.set_click_callback(lambda f=folder: self._select_folder(f))
         folder_buttons.append(btn)
     self._show_selection_view(folder_buttons, self._reset_main_view)
@@ -105,7 +105,7 @@ class ModelsLayoutMici(NavScroller):
 
     manager = self.model_manager
     if manager.selectedBundle and manager.selectedBundle.status == custom.ModelManagerSP.DownloadStatus.downloading:
-      self.current_model_btn.set_value("downloading...")
+      self.current_model_btn.set_value(tr("downloading..."))
       self.cancel_download_btn.set_visible(True)
     else:
       self.current_model_btn.set_value(manager.activeBundle.internalName.lower() if manager.activeBundle else tr("default model"))

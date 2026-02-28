@@ -170,7 +170,7 @@ class SunnylinkLayoutMici(NavScroller):
             (restore_status == custom.BackupManagerSP.Status.idle and restore_progress == 100.0)):
         self._restore_in_progress = False
         gui_app.push_widget(BigConfirmationDialogV2(
-          title="slide to restart", icon="icons_mici/settings/device/reboot.png",
+          title=tr("slide to restart"), icon="icons_mici/settings/device/reboot.png",
           confirm_callback=lambda: gui_app.request_close()))
 
     else:

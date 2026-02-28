@@ -93,7 +93,10 @@ function install_python_deps() {
   uv self update || true
 
   echo "installing python packages..."
-  uv sync --frozen --all-extras
+  # Remove .egg-info files that cause uninstall issues with vendored packages
+  find .venv -name "*.egg-info" -type f -delete 2>/dev/null || true
+  find .venv -name "*.egg-info" -type d -exec rm -rf {} + 2>/dev/null || true
+  uv sync --all-extras
   source .venv/bin/activate
 
   if [[ "$(uname)" == 'Darwin' ]]; then
