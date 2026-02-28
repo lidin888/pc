@@ -787,23 +787,23 @@ class GuiApplication(GuiApplicationExt):
   @staticmethod
   def _default_width() -> int:
     if ENABLE_FULLSCREEN:
-      # Use monitor resolution in fullscreen mode with margin
+      # Use monitor resolution in fullscreen mode (auto-adaptive)
       rl.init_window(1, 1, "")
       w = rl.get_monitor_width(0)
       rl.close_window()
-      # Leave margin to prevent content from being cut off
-      return max(w - 20, 2160) if w > 0 else 2160
+      # Use actual monitor width, no fixed minimum
+      return w if w > 0 else 1920
     return 2160 if GuiApplication.big_ui() else 536
 
   @staticmethod
   def _default_height() -> int:
     if ENABLE_FULLSCREEN:
-      # Use monitor resolution in fullscreen mode with margin
+      # Use monitor resolution in fullscreen mode (auto-adaptive)
       rl.init_window(1, 1, "")
       h = rl.get_monitor_height(0)
       rl.close_window()
-      # Leave margin to prevent content from being cut off
-      return max(h - 20, 1080) if h > 0 else 1080
+      # Use actual monitor height, no fixed minimum
+      return h if h > 0 else 1080
     return 1080 if GuiApplication.big_ui() else 240
 
   @staticmethod
