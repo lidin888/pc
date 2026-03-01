@@ -54,12 +54,11 @@ class PoseKalman(KalmanFilter):
                0.005**2, 0.005**2, 0.005**2])
 
   # 根据平台适配陀螺仪噪声配置
-  # 基于官方Datasheet精确计算，使用相同的安全系数（4.73x）
   if PC:
     # PC平台使用JY62陀螺仪（WT901SD模块，内置MPU6050）
-    # 官方规格：噪声密度5.0 mdps/√Hz，零偏20 mdps，温度漂移0.07 deg/s/°C
-    # 计算值：0.02346 rad/s (1.34°/s)，安全系数4.73x
-    gyro_obs_noise = 0.111007  # rad/s (6.36°/s, 基于MPU6050官方Datasheet)
+    # 注意：实际测试发现噪声配置需要调整，避免学习到过大的偏移值
+    # 使用较小的噪声值以提高姿态估计精度
+    gyro_obs_noise = 0.05  # rad/s (2.86°/s, 根据实际测试调整)
   else:
     # TICI平台使用LSM6DS3陀螺仪
     # 官方规格：噪声密度3.8 mdps/√Hz，零偏10 mdps，温度漂移0.03 deg/s/°C
