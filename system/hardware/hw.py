@@ -13,7 +13,7 @@ class Paths:
 
   @staticmethod
   def params() -> str:
-    return os.environ.get("PARAMS_ROOT", os.path.join(Paths.comma_home(), "sunnypilot", "params"))
+    return os.environ.get("PARAMS_ROOT", os.path.join(Paths.comma_home(), "params"))
 
   @staticmethod
   def log_root() -> str:

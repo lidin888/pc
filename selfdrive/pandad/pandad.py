@@ -14,6 +14,17 @@ from openpilot.common.swaglog import cloudlog
 
 from openpilot.sunnypilot.selfdrive.pandad.rivian_long_flasher import flash_rivian_long
 
+# Define F4 device types since panda submodule removed F4 support
+F4_DEVICES = [
+  b'\x03',  # PANDA
+  b'\x04',  # PANDA_EON
+  b'\x05',  # PANDA_BLACK
+  b'\x06',  # UNO
+  b'\x07',  # DOS
+  b'\x08',  # WHITE
+]
+Panda.F4_DEVICES = F4_DEVICES
+
 
 def get_expected_signature() -> bytes:
   try:
