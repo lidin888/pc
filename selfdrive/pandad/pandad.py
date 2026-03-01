@@ -62,7 +62,8 @@ def flash_panda(panda_serial: str) -> Panda:
     raise AssertionError
 
   panda_signature = panda.get_signature()
-  if panda_signature != fw_signature:
+  # Skip signature check for F4 devices since firmware was removed
+  if panda.get_type() not in Panda.F4_DEVICES and panda_signature != fw_signature:
     cloudlog.info("Version mismatch after flashing, exiting")
     raise AssertionError
 
@@ -143,20 +144,24 @@ def main() -> None:
       # log panda fw version
       params.put("PandaSignatures", panda.get_signature())
 
-      # skip health check if the detected panda is not supported
+      # For F4 devices, skip health check but still run pandad
+      is_f4_device = panda.get_type() in Panda.F4_DEVICES
       supported_panda = check_panda_support(panda)
-      if not supported_panda:
+      if not supported_panda and not is_f4_device:
         cloudlog.warning(f"Panda {panda.get_usb_serial()} is not supported (hw_type: {panda.get_type()}), skipping health check...")
         continue
 
-      # check health for lost heartbeat
-      health = panda.health()
-      if health["heartbeat_lost"]:
-        params.put_bool("PandaHeartbeatLost", True)
-        cloudlog.event("heartbeat lost", deviceState=health, serial=panda.get_usb_serial())
-      if health["som_reset_triggered"]:
-        params.put_bool("PandaSomResetTriggered", True)
-        cloudlog.event("panda.som_reset_triggered", health=health, serial=panda.get_usb_serial())
+      if is_f4_device:
+        print("F4 device detected, skipping health check but starting pandad...")
+      else:
+        # check health for lost heartbeat
+        health = panda.health()
+        if health["heartbeat_lost"]:
+          params.put_bool("PandaHeartbeatLost", True)
+          cloudlog.event("heartbeat lost", deviceState=health, serial=panda.get_usb_serial())
+        if health["som_reset_triggered"]:
+          params.put_bool("PandaSomResetTriggered", True)
+          cloudlog.event("panda.som_reset_triggered", health=health, serial=panda.get_usb_serial())
 
       if first_run:
         # reset panda to ensure we're in a good state

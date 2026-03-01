@@ -4,6 +4,7 @@
 #include <bitset>
 #include <cassert>
 #include <cerrno>
+#include <iostream>
 #include <memory>
 #include <thread>
 #include <utility>
@@ -46,10 +47,13 @@ bool process_mads_heartbeat(SubMaster *sm) {
 }
 
 Panda *connect(std::string serial) {
+  std::cerr << "connect() called with serial: " << serial << std::endl;
   std::unique_ptr<Panda> panda;
   try {
     panda = std::make_unique<Panda>(serial);
+    std::cerr << "Panda created successfully" << std::endl;
   } catch (std::exception &e) {
+    std::cerr << "Panda creation failed: " << e.what() << std::endl;
     return nullptr;
   }
 
@@ -59,19 +63,30 @@ Panda *connect(std::string serial) {
   }
   //panda->enable_deepsleep();
 
-  for (int i = 0; i < PANDA_CAN_CNT; i++) {
-    panda->set_can_fd_auto(i, true);
+  // F4 devices don't support CAN-FD, only set for H7 devices
+  // F4 device types: whitePanda=1, greyPanda=2, blackPanda=3, pedal=4, uno=5, dos=6
+  auto hw_type_val = static_cast<uint16_t>(panda->hw_type);
+  bool is_f4_device = (hw_type_val >= 1 && hw_type_val <= 6);
+  std::cerr << "DEBUG: hw_type_val = " << hw_type_val << ", is_f4_device = " << is_f4_device << std::endl;
+  if (!is_f4_device) {
+    for (int i = 0; i < PANDA_CAN_CNT; i++) {
+      panda->set_can_fd_auto(i, true);
+    }
   }
 
   bool is_supported_panda = std::find(SUPPORTED_PANDA_TYPES.begin(), SUPPORTED_PANDA_TYPES.end(), panda->hw_type) != SUPPORTED_PANDA_TYPES.end();
 
-  if (!is_supported_panda) {
+  if (!is_supported_panda && !is_f4_device) {
     LOGW("panda %s is not supported (hw_type: %i), skipping firmware check...", panda->hw_serial().c_str(), static_cast<uint16_t>(panda->hw_type));
     return panda.release();
   }
 
-  if (!panda->up_to_date() && !getenv("BOARDD_SKIP_FW_CHECK")) {
+  if (!panda->up_to_date() && !getenv("BOARDD_SKIP_FW_CHECK") && is_supported_panda) {
     throw std::runtime_error("Panda firmware out of date. Run pandad.py to update.");
+  }
+
+  if (is_f4_device) {
+    std::cerr << "C++ F4 device detected: " << panda->hw_serial() << " (hw_type: " << static_cast<uint16_t>(panda->hw_type) << ")" << std::endl;
   }
 
   return panda.release();
