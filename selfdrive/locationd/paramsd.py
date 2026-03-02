@@ -22,6 +22,8 @@ OFFSET_MAX = 10.0
 OFFSET_LOWERED_MAX = 8.0
 MIN_ACTIVE_SPEED = 1.0
 LOW_ACTIVE_SPEED = 10.0
+# 在大转弯时暂停参数学习的yaw rate阈值（rad/s），约29度/秒
+MAX_YAW_RATE_FOR_LEARNING = 0.5
 
 
 class VehicleParamsLearner:
@@ -91,7 +93,10 @@ class VehicleParamsLearner:
       self.observed_roll = np.clip(roll, self.observed_roll - ROLL_MAX_DELTA, self.observed_roll + ROLL_MAX_DELTA)
 
       if self.active:
-        if msg.posenetOK:
+        # 在大转弯时暂停参数学习，避免yaw rate误差导致angleOffset漂移
+        learning_active = abs(self.observed_yaw_rate) < MAX_YAW_RATE_FOR_LEARNING
+
+        if msg.posenetOK and learning_active:
           self.kf.predict_and_observe(t,
                                       ObservationKind.ROAD_FRAME_YAW_RATE,
                                       np.array([[-self.observed_yaw_rate]]),
@@ -108,8 +113,9 @@ class VehicleParamsLearner:
         # states in longer routes (especially straight stretches).
         stiffness = float(self.kf.x[States.STIFFNESS].item())
         steer_ratio = float(self.kf.x[States.STEER_RATIO].item())
-        self.kf.predict_and_observe(t, ObservationKind.STIFFNESS, np.array([[stiffness]]))
-        self.kf.predict_and_observe(t, ObservationKind.STEER_RATIO, np.array([[steer_ratio]]))
+        if learning_active:
+          self.kf.predict_and_observe(t, ObservationKind.STIFFNESS, np.array([[stiffness]]))
+          self.kf.predict_and_observe(t, ObservationKind.STEER_RATIO, np.array([[steer_ratio]]))
 
     elif which == 'liveCalibration':
       self.calibrator.feed_live_calib(msg)
