@@ -51,8 +51,9 @@ def tg_compile(flags, model_name):
 for model_name in ['driving_vision', 'driving_policy', 'dmonitoring_model']:
   flags = {
     'larch64': 'DEV=QCOM',
+    'aarch64': 'DEV=QCOM DEFAULT_FLOAT=float16',
     'Darwin': 'DEV=GPU IMAGE=0',
-  }.get(arch, 'DEV=GPU IMAGE=0')
+  }.get(arch, 'DEV=GPU IMAGE=0 DEFAULT_FLOAT=float16')
   tg_compile(flags, model_name)
 
 # Compile BIG model if USB GPU is available
