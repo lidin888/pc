@@ -8,7 +8,7 @@ if arch == "Darwin":
   base_frameworks.append('QtCharts')
   base_frameworks.append('QtSerialBus')
 else:
-  base_libs.append('OpenCL')
+  # Don't add OpenCL to base_libs here, will add after av libraries
   base_libs.append('Qt5Charts')
   base_libs.append('Qt5SerialBus')
 
@@ -16,7 +16,14 @@ qt_libs = ['qt_util'] + base_libs
 
 cabana_env = qt_env.Clone()
 
-cabana_libs = [widgets, cereal, messaging, visionipc, replay_lib, 'avutil', 'avcodec', 'avformat', 'bz2', 'zstd', 'curl', 'yuv', 'usb-1.0'] + qt_libs
+# OpenCL must be linked after libavutil to satisfy its OpenCL 1.0 dependencies
+# Use --no-as-needed and --allow-shlib-undefined to handle versioned symbols
+av_libs = [widgets, cereal, messaging, visionipc, replay_lib, 'avutil', 'avcodec', 'avformat', 'bz2', 'zstd', 'curl', 'yuv', 'usb-1.0']
+if arch != "Darwin":
+  # Add flags to handle libavutil's OpenCL versioning issue
+  cabana_env['LINKFLAGS'].extend(['-Wl,--no-as-needed', '-Wl,--allow-shlib-undefined'])
+  av_libs.append('OpenCL')
+cabana_libs = av_libs + qt_libs
 opendbc_path = '-DOPENDBC_FILE_PATH=\'"%s"\'' % (cabana_env.Dir("../../opendbc/dbc").abspath)
 cabana_env['CXXFLAGS'] += [opendbc_path]
 

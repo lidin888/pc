@@ -161,7 +161,7 @@ else:
 
 # no --as-needed on mac linker
 if arch != "Darwin":
-  ldflags += ["-Wl,--as-needed", "-Wl,--no-undefined"]
+  ldflags += ["-Wl,--as-needed", "-Wl,--copy-dt-needed-entries"]
 
 if not GetOption('stock_ui'):
   cflags += ["-DSUNNYPILOT"]
@@ -357,7 +357,7 @@ SConscript(['rednose/SConscript'])
 # Build system services
 SConscript([
   'system/ubloxd/SConscript',
-  'system/loggerd/SConscript',
+  # 'system/loggerd/SConscript',  # Disabled for QCOM GPU support
 ])
 if arch != "Darwin":
   SConscript([

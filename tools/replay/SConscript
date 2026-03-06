@@ -6,16 +6,26 @@ replay_env['CCFLAGS'] += ['-Wno-deprecated-declarations']
 base_frameworks = []
 base_libs = [common, messaging, cereal, visionipc, 'm', 'ssl', 'crypto', 'pthread']
 
+# Move OpenCL to end to satisfy libavutil's OpenCL 1.0 symbol requirements
 if arch == "Darwin":
   base_frameworks.append('OpenCL')
 else:
-  base_libs.append('OpenCL')
+  # Don't add OpenCL to base_libs here, will add to replay_libs at the end
+  pass
 
 replay_lib_src = ["replay.cc", "consoleui.cc", "camera.cc", "filereader.cc", "logreader.cc", "framereader.cc",
                   "route.cc", "util.cc", "seg_mgr.cc", "timeline.cc", "api.cc"]
 replay_lib = replay_env.Library("replay", replay_lib_src, LIBS=base_libs, FRAMEWORKS=base_frameworks)
 Export('replay_lib')
-replay_libs = [replay_lib, 'avutil', 'avcodec', 'avformat', 'bz2', 'zstd', 'curl', 'yuv', 'ncurses'] + base_libs
+# OpenCL must be linked after libavutil to satisfy its OpenCL 1.0 dependencies
+# Use --no-as-needed and --allow-shlib-undefined to handle versioned symbols
+av_libs = ['avutil', 'avcodec', 'avformat', 'bz2', 'zstd', 'curl', 'yuv', 'ncurses']
+if arch != "Darwin":
+  # Add OpenCL with special flags to handle libavutil's OpenCL versioning issue
+  replay_libs = [replay_lib] + av_libs + base_libs + ['OpenCL']
+  replay_env['LINKFLAGS'].extend(['-Wl,--no-as-needed', '-Wl,--allow-shlib-undefined'])
+else:
+  replay_libs = [replay_lib] + av_libs + base_libs
 replay_env.Program("replay", ["main.cc"], LIBS=replay_libs, FRAMEWORKS=base_frameworks)
 
 if GetOption('extras'):

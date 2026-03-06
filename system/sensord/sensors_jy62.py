@@ -6,6 +6,7 @@ Follows the official sensord pattern but for UART-based sensor
 
 import time
 import threading
+import sys
 import serial
 from openpilot.common.swaglog import cloudlog
 from openpilot.common.realtime import config_realtime_process, Ratekeeper
@@ -127,7 +128,7 @@ class JY62_UART(Sensor):
 
         类型:
         0x51: 加速度数据 - [0x55][0x51][TimeL][TimeH][AxL][AxH][AyL][AyH][AzL][AzH][CheckSum]
-        0x52: 角速度 - 忽略
+        0x52: 角速度 - [0x55][0x52][WxL][WxH][WyL][WyH][WzL][WzH][...][CheckSum]
         0x53: 温度/指南针 - [0x55][0x53][...]
         """
         if not self.ser:
@@ -169,6 +170,7 @@ class JY62_UART(Sensor):
                     az_raw = self._parse_int16(self.buffer[8], self.buffer[9])
 
                     self.buffer = self.buffer[11:]
+                    # print(f"DEBUG: 解析加速度帧: X={ax_raw}, Y={ay_raw}, Z={az_raw}")
                     return {'ax': ax_raw, 'ay': ay_raw, 'az': az_raw}
 
                 elif frame_type == 0x52:
@@ -182,6 +184,7 @@ class JY62_UART(Sensor):
                     wz_raw = self._parse_int16(self.buffer[6], self.buffer[7])
 
                     self.buffer = self.buffer[11:]
+                    # print(f"DEBUG: 解析角速度帧: X={wx_raw}, Y={wy_raw}, Z={wz_raw}")
                     return {'wx': wx_raw, 'wy': wy_raw, 'wz': wz_raw}
 
                 elif frame_type == 0x53:
@@ -307,6 +310,8 @@ def polling_loop(sensor: JY62_UART, service: str, event: threading.Event) -> Non
     rk = Ratekeeper(SERVICE_LIST[service].frequency, print_delay_threshold=None)
 
     cloudlog.info("JY62 polling loop started")
+    print("JY62 polling loop started")
+    sys.stdout.flush()
 
     # only print debug info at ~1Hz, not every iteration
     last_print = time.monotonic()
@@ -328,7 +333,8 @@ def polling_loop(sensor: JY62_UART, service: str, event: threading.Event) -> Non
                     now = time.monotonic()
                     if now - last_print >= 1.0:
                         accel = evt.acceleration
-                        # debug accel values removed to save output
+                        print(f"加速度 XYZ: X={accel.v[0]:.3f} Y={accel.v[1]:.3f} Z={accel.v[2]:.3f}")
+                        sys.stdout.flush()
                         last_print = now
                 except JY62_UART.DataNotReady:
                     pass
@@ -341,13 +347,16 @@ def polling_loop(sensor: JY62_UART, service: str, event: threading.Event) -> Non
                         msg_gyro.gyroscope = evt_gyro
                         pm.send('gyroscope', msg_gyro)
 
-                        now = time.monotonic()
-                        if now - last_print >= 1.0:
+                        gyro_print_time = time.monotonic()
+                        if gyro_print_time - last_print >= 1.0:
                             gyro = evt_gyro.gyroUncalibrated
-                            # debug gyro values removed
-                            last_print = now
+                            print(f"陀螺仪 XYZ: X={gyro.v[0]:.3f} Y={gyro.v[1]:.3f} Z={gyro.v[2]:.3f}")
+                            sys.stdout.flush()
+                            last_print = gyro_print_time
                 except JY62_UART.DataNotReady:
                     pass
+                except Exception as e:
+                    cloudlog.error(f"陀螺仪错误: {e}")
             else:
                 evt = sensor.get_event()
                 if not sensor.is_data_valid():
@@ -372,10 +381,12 @@ def main() -> None:
 
     cloudlog.info("sensord_jy62 main() started")
     print("sensord_jy62 main() started")
+    sys.stdout.flush()
 
     try:
         sensor = JY62_UART(port="/dev/ttyUSB0", baudrate=115200)
         print("JY62 sensor created successfully")
+        sys.stdout.flush()
 
         # Reset sensor
         try:
@@ -387,8 +398,11 @@ def main() -> None:
         try:
             sensor.init()
             print("JY62 sensor initialized successfully")
+            sys.stdout.flush()
         except Exception as e:
             cloudlog.exception(f"Error initializing sensor: {e}")
+            print(f"Error initializing sensor: {e}")
+            sys.stdout.flush()
             return
 
         # Create exit event and polling thread
@@ -402,6 +416,7 @@ def main() -> None:
         try:
             polling_thread.start()
             print("JY62 polling thread started")
+            sys.stdout.flush()
 
             # Keep main thread alive
             while polling_thread.is_alive():
@@ -418,12 +433,14 @@ def main() -> None:
             try:
                 sensor.shutdown()
                 print("JY62 sensor shutdown complete")
+                sys.stdout.flush()
             except Exception as e:
                 cloudlog.exception(f"Error shutting down sensor: {e}")
 
     except Exception as e:
         cloudlog.exception(f"Fatal error in JY62 sensord: {e}")
         print(f"Fatal error: {e}")
+        sys.stdout.flush()
         raise
 
 
