@@ -106,15 +106,15 @@ procs = [
   DaemonProcess("manage_athenad", "system.athena.manage_athenad", "AthenadPid"),
 
   # NativeProcess("loggerd", "system/loggerd", ["./loggerd"], logging),
-  # NativeProcess("encoderd", "system/loggerd", ["./encoderd"], only_onroad),
-  NativeProcess("stream_encoderd", "system/loggerd", ["./encoderd", "--stream"], notcar),
+  #NativeProcess("encoderd", "system/loggerd", ["./encoderd"], only_onroad, ),
+  #NativeProcess("stream_encoderd", "system/loggerd", ["./encoderd", "--stream"], notcar),
   PythonProcess("logmessaged", "system.logmessaged", always_run),
 
-  NativeProcess("usbcamerad", "tools/webcam", ["./camerad"], driverview, enabled=USBCAM),
-  # NativeProcess("camerad", "system/camerad", ["./camerad"], driverview, enabled=not WEBCAM),
-  PythonProcess("webcamerad", "tools.webcam.camerad", driverview, enabled=WEBCAM),
-  NativeProcess("logcatd", "system/logcatd", ["./logcatd"], only_onroad, platform.system() != "Darwin"),
-  NativeProcess("proclogd", "system/proclogd", ["./proclogd"], only_onroad, platform.system() != "Darwin"),
+  NativeProcess("camerad", "system/camerad", ["./camerad"], driverview,
+                env={"USE_WEBCAM": "1", "ROAD_CAM_PATH": "/dev/video0"} if (WEBCAM or PC) else None),
+  #PythonProcess("webcamerad", "tools.webcam.camerad", driverview, enabled=WEBCAM),
+  NativeProcess("logcatd", "system/logcatd", ["./logcatd"], only_onroad),
+  NativeProcess("proclogd", "system/proclogd", ["./proclogd"], only_onroad),
   PythonProcess("micd", "system.micd", iscar),
   PythonProcess("timed", "system.timed", always_run, enabled=not PC),
 

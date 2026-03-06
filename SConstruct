@@ -365,7 +365,7 @@ if arch != "Darwin":
     'system/proclogd/SConscript',
   ])
 
-if arch == "larch64":
+if arch in ["larch64", "aarch64"]:
   SConscript(['system/camerad/SConscript'])
 
 # Build openpilot

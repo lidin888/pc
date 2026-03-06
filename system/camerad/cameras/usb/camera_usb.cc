@@ -272,23 +272,86 @@ int CameraUSB::stop() {
   return ret;
 }
 
-// 使用libyuv的MJPGToNV12函数进行转换
+// 使用jpeg库将MJPEG解码为RGB，然后转换为NV12
 static int mjpeg_to_nv12(const uint8_t *jpeg_data, size_t jpeg_size, uint8_t *nv12_data, int width, int height) {
-  // 分离NV12的Y平面和UV平面
+  struct jpeg_decompress_struct cinfo;
+  struct jpeg_error_mgr jerr;
+  JSAMPARRAY buffer;
+  int row_stride;
+
+  // 初始化JPEG解压对象
+  cinfo.err = jpeg_std_error(&jerr);
+  jpeg_create_decompress(&cinfo);
+
+  // 设置JPEG数据源
+  jpeg_mem_src(&cinfo, jpeg_data, jpeg_size);
+
+  // 读取JPEG头
+  jpeg_read_header(&cinfo, TRUE);
+
+  // 开始解压
+  jpeg_start_decompress(&cinfo);
+
+  // 分配缓冲区
+  row_stride = cinfo.output_width * cinfo.output_components;
+  buffer = (*cinfo.mem->alloc_sarray)((j_common_ptr)&cinfo, JPOOL_IMAGE, row_stride, 1);
+
+  // 分配临时RGB缓冲区
+  uint8_t *rgb_buffer = new uint8_t[width * height * 3];
+
+  // 逐行读取JPEG数据到RGB缓冲区
+  int y = 0;
+  while (cinfo.output_scanline < cinfo.output_height) {
+    jpeg_read_scanlines(&cinfo, buffer, 1);
+    memcpy(&rgb_buffer[y * width * 3], buffer[0], row_stride);
+    y++;
+  }
+
+  // 完成解压
+  jpeg_finish_decompress(&cinfo);
+  jpeg_destroy_decompress(&cinfo);
+
+  // RGB到NV12转换
   uint8_t *nv12_y = nv12_data;
   uint8_t *nv12_uv = nv12_data + width * height;
 
-  // 使用libyuv将MJPG直接转换为NV12
-  int ret = libyuv::MJPGToNV12(jpeg_data, jpeg_size,
-                              nv12_y, width,
-                              nv12_uv, width,
-                              width, height,
-                              width, height);
-
-  if (ret != 0) {
-    std::cerr << "MJPGToNV12 failed: " << ret << std::endl;
-    return ret;
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width; j++) {
+      int idx = i * width + j;
+      uint8_t r = rgb_buffer[idx * 3];
+      uint8_t g = rgb_buffer[idx * 3 + 1];
+      uint8_t b = rgb_buffer[idx * 3 + 2];
+      // Y = 0.299R + 0.587G + 0.114B
+      nv12_y[idx] = (uint8_t)(0.299 * r + 0.587 * g + 0.114 * b);
+    }
   }
+
+  // UV平面（2x2子采样）
+  for (int i = 0; i < height; i += 2) {
+    for (int j = 0; j < width; j += 2) {
+      int idx0 = i * width + j;
+      int idx1 = i * width + (j + 1);
+      int idx2 = (i + 1) * width + j;
+      int idx3 = (i + 1) * width + (j + 1);
+
+      // 计算四个像素的平均RGB值
+      int r_avg = (rgb_buffer[idx0 * 3] + rgb_buffer[idx1 * 3] +
+                   rgb_buffer[idx2 * 3] + rgb_buffer[idx3 * 3]) / 4;
+      int g_avg = (rgb_buffer[idx0 * 3 + 1] + rgb_buffer[idx1 * 3 + 1] +
+                   rgb_buffer[idx2 * 3 + 1] + rgb_buffer[idx3 * 3 + 1]) / 4;
+      int b_avg = (rgb_buffer[idx0 * 3 + 2] + rgb_buffer[idx1 * 3 + 2] +
+                   rgb_buffer[idx2 * 3 + 2] + rgb_buffer[idx3 * 3 + 2]) / 4;
+
+      // U = -0.169R - 0.331G + 0.500B + 128
+      // V = 0.500R - 0.419G - 0.081B + 128
+      int uv_idx = (i / 2) * (width / 2) + (j / 2);
+      nv12_uv[uv_idx * 2] = (uint8_t)(-0.169 * r_avg - 0.331 * g_avg + 0.500 * b_avg + 128);
+      nv12_uv[uv_idx * 2 + 1] = (uint8_t)(0.500 * r_avg - 0.419 * g_avg - 0.081 * b_avg + 128);
+    }
+  }
+
+  // 释放临时缓冲区
+  delete[] rgb_buffer;
 
   return 0;
 }

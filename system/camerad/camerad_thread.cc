@@ -1,4 +1,3 @@
-#ifndef QCOM2
 
 #include "system/camerad/cameras/camera_common.h"
 #include "system/camerad/cameras/mipi/camera_mipi.h"
@@ -428,4 +427,3 @@ void camerad_thread() {
     thread.join();
   }
 }
-#endif
