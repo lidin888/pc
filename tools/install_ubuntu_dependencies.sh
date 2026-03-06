@@ -55,9 +55,8 @@ function install_ubuntu_common_requirements() {
     libsqlite3-dev \
     libsystemd-dev \
     locales \
-    opencl-headers \
-    ocl-icd-libopencl1 \
-    ocl-icd-opencl-dev \
+    qcom-adreno-cl1 \
+    qcom-adreno-cl-dev \
     portaudio19-dev \
     qttools5-dev-tools \
     libqt5svg5-dev \
