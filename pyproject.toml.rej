@@ -1,0 +1,21 @@
+--- pyproject.toml
++++ pyproject.toml
+@@ -16,10 +16,8 @@ dependencies = [
+   "sympy",        # rednose + friends
+   "crcmod",       # cars + qcomgpsd
+   "tqdm",         # cars (fw_versions.py) on start + many one-off uses
+-
+   # hardwared
+   "smbus2", # configuring amp
+-
+   # core
+   "cffi",
+   "scons",
+@@ -27,7 +25,6 @@ dependencies = [
+   "Cython",
+   "setuptools",
+   "numpy < 2.0.0",
+-
+   # body / webrtcd
+   "aiohttp",
+   "aiortc",

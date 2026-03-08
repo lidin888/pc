@@ -1,0 +1,351 @@
+scons: building terminated because of errors.
+(openpilot) dengjian@dengjian-XiaoXinPro-14-IAH5R:~/openpilot$ tools/op.sh build
+Checking system → [✔]
+Running command → scons │
+────────────────────────┘
+
+scons: Reading SConscript files ...
+Building for WSL2. Removing Screen Recorder
+scons: done reading SConscript files.
+scons: Building targets ...
+selfdrive/ui/update_translations.py
+Scanning directory '/home/dengjian/openpilot/selfdrive/ui'...
+Updating 'selfdrive/ui/translations/main_en.ts'...
+    Found 402 source text(s) (398 new and 4 already existing)
+Stripping non plural forms in 'selfdrive/ui/translations/main_en.ts'...
+Scanning directory '/home/dengjian/openpilot/selfdrive/ui'...
+Updating 'selfdrive/ui/translations/main_de.ts'...
+    Found 402 source text(s) (0 new and 402 already existing)
+Scanning directory '/home/dengjian/openpilot/selfdrive/ui'...
+Updating 'selfdrive/ui/translations/main_fr.ts'...
+    Found 402 source text(s) (0 new and 402 already existing)
+Scanning directory '/home/dengjian/openpilot/selfdrive/ui'...
+Updating 'selfdrive/ui/translations/main_pt-BR.ts'...
+    Found 402 source text(s) (0 new and 402 already existing)
+Scanning directory '/home/dengjian/openpilot/selfdrive/ui'...
+Updating 'selfdrive/ui/translations/main_es.ts'...
+    Found 402 source text(s) (0 new and 402 already existing)
+Scanning directory '/home/dengjian/openpilot/selfdrive/ui'...
+Updating 'selfdrive/ui/translations/main_tr.ts'...
+    Found 402 source text(s) (0 new and 402 already existing)
+Scanning directory '/home/dengjian/openpilot/selfdrive/ui'...
+Updating 'selfdrive/ui/translations/main_ar.ts'...
+    Found 402 source text(s) (0 new and 402 already existing)
+Scanning directory '/home/dengjian/openpilot/selfdrive/ui'...
+Updating 'selfdrive/ui/translations/main_th.ts'...
+    Found 402 source text(s) (0 new and 402 already existing)
+Scanning directory '/home/dengjian/openpilot/selfdrive/ui'...
+Updating 'selfdrive/ui/translations/main_zh-CHT.ts'...
+    Found 402 source text(s) (0 new and 402 already existing)
+Scanning directory '/home/dengjian/openpilot/selfdrive/ui'...
+Updating 'selfdrive/ui/translations/main_zh-CHS.ts'...
+    Found 402 source text(s) (0 new and 402 already existing)
+Scanning directory '/home/dengjian/openpilot/selfdrive/ui'...
+clang++ -o selfdrive/ui/qt/offroad/settings.o -c -std=c++1z -D_REENTRANT -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_MESSAGELOGCONTEXT -Wno-deprecated-declarations -DWSL2 -g -fPIC -O2 -Wunused -Werror -Wshadow -Wno-unknown-warning-option -Wno-inconsistent-missing-override -Wno-c99-designator -Wno-reorder-init-list -Wno-vla-cxx-extension -DENABLE_MAPS -I. -Ithird_party/acados/include -Ithird_party/acados/include/blasfeo/include -Ithird_party/acados/include/hpipm/include -Ithird_party/catch2/include -Ithird_party/libyuv/include -Ithird_party/json11 -Ithird_party/linux/include -Ithird_party/snpe/include -Ithird_party/nanovg -Ithird_party -Imsgq -Ithird_party/maplibre-native-qt/include -Ithird_party/maplibre-native-qt/x86_64/include -I/usr/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtConcurrent -I/usr/include/x86_64-linux-gnu/qt5/QtQml -I/usr/include/x86_64-linux-gnu/qt5/QtQuickWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtLocation -I/usr/include/x86_64-linux-gnu/qt5/QtPositioning -I/usr/include/x86_64-linux-gnu/qt5/QtDBus -I/usr/include/x86_64-linux-gnu/qt5/QtXml -Ithird_party/qrcode -Iselfdrive/ui/qt/screenrecorder/openmax/include selfdrive/ui/qt/offroad/settings.cc
+Updating 'selfdrive/ui/translations/main_ko.ts'...
+    Found 402 source text(s) (0 new and 402 already existing)
+Scanning directory '/home/dengjian/openpilot/selfdrive/ui'...
+clang++ -o selfdrive/ui/sunnypilot/qt/offroad/settings/moc_spp_settings_panel.o -c -std=c++1z -D_REENTRANT -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_MESSAGELOGCONTEXT -Wno-deprecated-declarations -DWSL2 -g -fPIC -O2 -Wunused -Werror -Wshadow -Wno-unknown-warning-option -Wno-inconsistent-missing-override -Wno-c99-designator -Wno-reorder-init-list -Wno-vla-cxx-extension -DENABLE_MAPS -I. -Ithird_party/acados/include -Ithird_party/acados/include/blasfeo/include -Ithird_party/acados/include/hpipm/include -Ithird_party/catch2/include -Ithird_party/libyuv/include -Ithird_party/json11 -Ithird_party/linux/include -Ithird_party/snpe/include -Ithird_party/nanovg -Ithird_party -Imsgq -Ithird_party/maplibre-native-qt/include -Ithird_party/maplibre-native-qt/x86_64/include -I/usr/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtConcurrent -I/usr/include/x86_64-linux-gnu/qt5/QtQml -I/usr/include/x86_64-linux-gnu/qt5/QtQuickWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtLocation -I/usr/include/x86_64-linux-gnu/qt5/QtPositioning -I/usr/include/x86_64-linux-gnu/qt5/QtDBus -I/usr/include/x86_64-linux-gnu/qt5/QtXml -Ithird_party/qrcode -Iselfdrive/ui/qt/screenrecorder/openmax/include selfdrive/ui/sunnypilot/qt/offroad/settings/moc_spp_settings_panel.cc
+Updating 'selfdrive/ui/translations/main_ja.ts'...
+    Found 402 source text(s) (0 new and 402 already existing)
+clang++ -o selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.o -c -std=c++1z -D_REENTRANT -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_MESSAGELOGCONTEXT -Wno-deprecated-declarations -DWSL2 -g -fPIC -O2 -Wunused -Werror -Wshadow -Wno-unknown-warning-option -Wno-inconsistent-missing-override -Wno-c99-designator -Wno-reorder-init-list -Wno-vla-cxx-extension -DENABLE_MAPS -I. -Ithird_party/acados/include -Ithird_party/acados/include/blasfeo/include -Ithird_party/acados/include/hpipm/include -Ithird_party/catch2/include -Ithird_party/libyuv/include -Ithird_party/json11 -Ithird_party/linux/include -Ithird_party/snpe/include -Ithird_party/nanovg -Ithird_party -Imsgq -Ithird_party/maplibre-native-qt/include -Ithird_party/maplibre-native-qt/x86_64/include -I/usr/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtConcurrent -I/usr/include/x86_64-linux-gnu/qt5/QtQml -I/usr/include/x86_64-linux-gnu/qt5/QtQuickWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtLocation -I/usr/include/x86_64-linux-gnu/qt5/QtPositioning -I/usr/include/x86_64-linux-gnu/qt5/QtDBus -I/usr/include/x86_64-linux-gnu/qt5/QtXml -Ithird_party/qrcode -Iselfdrive/ui/qt/screenrecorder/openmax/include selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/moc_spp_settings_panel.cc:10:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:34:3: error: unknown type name 'ToggleControlSP'; did you mean 'ToggleControl'?
+   34 |   ToggleControlSP *lane_turn_desire_toggle;
+      |   ^~~~~~~~~~~~~~~
+      |   ToggleControl
+./selfdrive/ui/qt/widgets/controls.h:117:7: note: 'ToggleControl' declared here
+  117 | class ToggleControl : public AbstractControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/moc_spp_settings_panel.cc:10:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:35:3: error: unknown type name 'OptionControlSP'; did you mean 'ButtonControl'?
+   35 |   OptionControlSP *lane_turn_value_control;
+      |   ^~~~~~~~~~~~~~~
+      |   ButtonControl
+./selfdrive/ui/qt/widgets/controls.h:99:7: note: 'ButtonControl' declared here
+   99 | class ButtonControl : public AbstractControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/moc_spp_settings_panel.cc:10:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:36:3: error: unknown type name 'ToggleControlSP'; did you mean 'ToggleControl'?
+   36 |   ToggleControlSP *lagd_toggle_control;
+      |   ^~~~~~~~~~~~~~~
+      |   ToggleControl
+./selfdrive/ui/qt/widgets/controls.h:117:7: note: 'ToggleControl' declared here
+  117 | class ToggleControl : public AbstractControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:8:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:34:3: error: unknown type name 'ToggleControlSP'; did you mean 'ToggleControl'?
+   34 |   ToggleControlSP *lane_turn_desire_toggle;
+      |   ^~~~~~~~~~~~~~~
+      |   ToggleControl
+./selfdrive/ui/qt/widgets/controls.h:117:7: note: 'ToggleControl' declared here
+  117 | class ToggleControl : public AbstractControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/moc_spp_settings_panel.cc:10:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:37:3: error: unknown type name 'OptionControlSP'; did you mean 'ButtonControl'?
+   37 |   OptionControlSP *delay_control;
+      |   ^~~~~~~~~~~~~~~
+      |   ButtonControl
+./selfdrive/ui/qt/widgets/controls.h:99:7: note: 'ButtonControl' declared here
+   99 | class ButtonControl : public AbstractControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:8:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:35:3: error: unknown type name 'OptionControlSP'; did you mean 'ButtonControl'?
+   35 |   OptionControlSP *lane_turn_value_control;
+      |   ^~~~~~~~~~~~~~~
+      |   ButtonControl
+./selfdrive/ui/qt/widgets/controls.h:99:7: note: 'ButtonControl' declared here
+   99 | class ButtonControl : public AbstractControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/moc_spp_settings_panel.cc:10:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:40:3: error: unknown type name 'ParamControlSP'; did you mean 'ParamControl'?
+   40 |   ParamControlSP *toyota_drive_mode;
+      |   ^~~~~~~~~~~~~~
+      |   ParamControl
+./selfdrive/ui/qt/widgets/controls.h:143:7: note: 'ParamControl' declared here
+  143 | class ParamControl : public ToggleControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:8:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:36:3: error: unknown type name 'ToggleControlSP'; did you mean 'ToggleControl'?
+   36 |   ToggleControlSP *lagd_toggle_control;
+      |   ^~~~~~~~~~~~~~~
+      |   ToggleControl
+./selfdrive/ui/qt/widgets/controls.h:117:7: note: 'ToggleControl' declared here
+  117 | class ToggleControl : public AbstractControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/moc_spp_settings_panel.cc:10:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:41:3: error: unknown type name 'ParamControlSP'; did you mean 'ParamControl'?
+   41 |   ParamControlSP *toyota_auto_hold;
+      |   ^~~~~~~~~~~~~~
+      |   ParamControl
+./selfdrive/ui/qt/widgets/controls.h:143:7: note: 'ParamControl' declared here
+  143 | class ParamControl : public ToggleControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:8:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:37:3: error: unknown type name 'OptionControlSP'; did you mean 'ButtonControl'?
+   37 |   OptionControlSP *delay_control;
+      |   ^~~~~~~~~~~~~~~
+      |   ButtonControl
+./selfdrive/ui/qt/widgets/controls.h:99:7: note: 'ButtonControl' declared here
+   99 | class ButtonControl : public AbstractControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/moc_spp_settings_panel.cc:10:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:42:3: error: unknown type name 'ParamControlSP'; did you mean 'ParamControl'?
+   42 |   ParamControlSP *toyota_enhanced_bsm;
+      |   ^~~~~~~~~~~~~~
+      |   ParamControl
+./selfdrive/ui/qt/widgets/controls.h:143:7: note: 'ParamControl' declared here
+  143 | class ParamControl : public ToggleControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:8:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:40:3: error: unknown type name 'ParamControlSP'; did you mean 'ParamControl'?
+   40 |   ParamControlSP *toyota_drive_mode;
+      |   ^~~~~~~~~~~~~~
+      |   ParamControl
+./selfdrive/ui/qt/widgets/controls.h:143:7: note: 'ParamControl' declared here
+  143 | class ParamControl : public ToggleControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/moc_spp_settings_panel.cc:10:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:43:3: error: unknown type name 'ParamControlSP'; did you mean 'ParamControl'?
+   43 |   ParamControlSP *toyota_tss2_long;
+      |   ^~~~~~~~~~~~~~
+      |   ParamControl
+./selfdrive/ui/qt/widgets/controls.h:143:7: note: 'ParamControl' declared here
+  143 | class ParamControl : public ToggleControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:8:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:41:3: error: unknown type name 'ParamControlSP'; did you mean 'ParamControl'?
+   41 |   ParamControlSP *toyota_auto_hold;
+      |   ^~~~~~~~~~~~~~
+      |   ParamControl
+./selfdrive/ui/qt/widgets/controls.h:143:7: note: 'ParamControl' declared here
+  143 | class ParamControl : public ToggleControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/moc_spp_settings_panel.cc:10:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:44:3: error: unknown type name 'ParamControlSP'; did you mean 'ParamControl'?
+   44 |   ParamControlSP *toyota_stock_long;
+      |   ^~~~~~~~~~~~~~
+      |   ParamControl
+./selfdrive/ui/qt/widgets/controls.h:143:7: note: 'ParamControl' declared here
+  143 | class ParamControl : public ToggleControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:8:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:42:3: error: unknown type name 'ParamControlSP'; did you mean 'ParamControl'?
+   42 |   ParamControlSP *toyota_enhanced_bsm;
+      |   ^~~~~~~~~~~~~~
+      |   ParamControl
+./selfdrive/ui/qt/widgets/controls.h:143:7: note: 'ParamControl' declared here
+  143 | class ParamControl : public ToggleControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:8:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:43:3: error: unknown type name 'ParamControlSP'; did you mean 'ParamControl'?
+   43 |   ParamControlSP *toyota_tss2_long;
+      |   ^~~~~~~~~~~~~~
+      |   ParamControl
+./selfdrive/ui/qt/widgets/controls.h:143:7: note: 'ParamControl' declared here
+  143 | class ParamControl : public ToggleControl {
+      |       ^
+In file included from selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:8:
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:44:3: error: unknown type name 'ParamControlSP'; did you mean 'ParamControl'?
+   44 |   ParamControlSP *toyota_stock_long;
+      |   ^~~~~~~~~~~~~~
+      |   ParamControl
+./selfdrive/ui/qt/widgets/controls.h:143:7: note: 'ParamControl' declared here
+  143 | class ParamControl : public ToggleControl {
+      |       ^
+9 errors generated.
+scons: *** [selfdrive/ui/sunnypilot/qt/offroad/settings/moc_spp_settings_panel.o] Error 1
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:35:33: error: unknown type name 'ToggleControlSP'; did you mean 'ToggleControl'?
+   35 |   lane_turn_desire_toggle = new ToggleControlSP("LaneTurnDesire", tr("使用车道转向意图"),
+      |                                 ^~~~~~~~~~~~~~~
+      |                                 ToggleControl
+./selfdrive/ui/qt/widgets/controls.h:117:7: note: 'ToggleControl' declared here
+  117 | class ToggleControl : public AbstractControl {
+      |       ^
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:45:33: error: unknown type name 'OptionControlSP'; did you mean 'ButtonControl'?
+   45 |   lane_turn_value_control = new OptionControlSP("LaneTurnValue", tr("调整转向速度"),
+      |                                 ^~~~~~~~~~~~~~~
+      |                                 ButtonControl
+./selfdrive/ui/qt/widgets/controls.h:99:7: note: 'ButtonControl' declared here
+   99 | class ButtonControl : public AbstractControl {
+      |       ^
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:45:33: error: no matching constructor for initialization of 'ButtonControl'
+   45 |   lane_turn_value_control = new OptionControlSP("LaneTurnValue", tr("调整转向速度"),
+      |                                 ^               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   46 |     tr("设置车道转向意图的最大速度。默认值为19 %1。").arg(is_metric_initial ? "km/h" : "mph"),
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   47 |     "../assets/offroad/icon_shell.png", {5 * 100, max_value_mph * 100}, per_value_change_scaled, false, nullptr, true, true);
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./selfdrive/ui/qt/widgets/controls.h:103:3: note: candidate constructor not viable: requires at most 4 arguments, but 10 were provided
+  103 |   ButtonControl(const QString &title, const QString &text, const QString &desc = "", QWidget *parent = nullptr);
+      |   ^             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./selfdrive/ui/qt/widgets/controls.h:99:7: note: candidate constructor (the implicit copy constructor) not viable: requires 1 argument, but 10 were provided
+   99 | class ButtonControl : public AbstractControl {
+      |       ^~~~~~~~~~~~~
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:53:37: error: use of undeclared identifier 'ToggleControlSP'; did you mean 'ToggleControl'?
+   53 |   connect(lane_turn_desire_toggle, &ToggleControlSP::toggleFlipped, this, &SPPSettingsPanel::refreshLaneTurnValueControl);
+      |                                     ^~~~~~~~~~~~~~~
+      |                                     ToggleControl
+./selfdrive/ui/qt/widgets/controls.h:117:7: note: 'ToggleControl' declared here
+  117 | class ToggleControl : public AbstractControl {
+      |       ^
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:54:37: error: use of undeclared identifier 'OptionControlSP'; did you mean 'ButtonControl'?
+   54 |   connect(lane_turn_value_control, &OptionControlSP::updateLabels, this, &SPPSettingsPanel::refreshLaneTurnValueControl);
+      |                                     ^~~~~~~~~~~~~~~
+      |                                     ButtonControl
+./selfdrive/ui/qt/widgets/controls.h:99:7: note: 'ButtonControl' declared here
+   99 | class ButtonControl : public AbstractControl {
+      |       ^
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:54:54: error: no member named 'updateLabels' in 'ButtonControl'
+   54 |   connect(lane_turn_value_control, &OptionControlSP::updateLabels, this, &SPPSettingsPanel::refreshLaneTurnValueControl);
+      |                                     ~~~~~~~~~~~~~~~~~^
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:57:29: error: unknown type name 'ToggleControlSP'; did you mean 'ToggleControl'?
+   57 |   lagd_toggle_control = new ToggleControlSP("LagdToggle", tr("实时学习转向延迟"),
+      |                             ^~~~~~~~~~~~~~~
+      |                             ToggleControl
+./selfdrive/ui/qt/widgets/controls.h:117:7: note: 'ToggleControl' declared here
+  117 | class ToggleControl : public AbstractControl {
+      |       ^
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:68:23: error: unknown type name 'OptionControlSP'; did you mean 'ButtonControl'?
+   68 |   delay_control = new OptionControlSP("LagdToggleDelay", tr("调整软件延迟"),
+      |                       ^~~~~~~~~~~~~~~
+      |                       ButtonControl
+./selfdrive/ui/qt/widgets/controls.h:99:7: note: 'ButtonControl' declared here
+   99 | class ButtonControl : public AbstractControl {
+      |       ^
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:68:23: error: no matching constructor for initialization of 'ButtonControl'
+   68 |   delay_control = new OptionControlSP("LagdToggleDelay", tr("调整软件延迟"),
+      |                       ^               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   69 |                                      tr("当关闭实时学习转向延迟时调整软件延迟。"
+      |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   70 |                                         "\n默认软件延迟值为0.2秒"),
+      |                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   71 |                                      "../assets/offroad/icon_road.png", {0, liveDelayMaxInt}, 1, false, nullptr, true, true);
+      |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./selfdrive/ui/qt/widgets/controls.h:103:3: note: candidate constructor not viable: requires at most 4 arguments, but 10 were provided
+  103 |   ButtonControl(const QString &title, const QString &text, const QString &desc = "", QWidget *parent = nullptr);
+      |   ^             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./selfdrive/ui/qt/widgets/controls.h:99:7: note: candidate constructor (the implicit copy constructor) not viable: requires 1 argument, but 10 were provided
+   99 | class ButtonControl : public AbstractControl {
+      |       ^~~~~~~~~~~~~
+selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.cc:74:18: error: no member named 'refresh' in 'ButtonControl'
+   74 |   delay_control->refresh();
+      |   ~~~~~~~~~~~~~  ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+scons: *** [selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.o] Error 1
+In file included from selfdrive/ui/qt/offroad/settings.cc:20:
+./selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:34:3: error: unknown type name 'ToggleControlSP'; did you mean 'ToggleControl'?
+   34 |   ToggleControlSP *lane_turn_desire_toggle;
+      |   ^~~~~~~~~~~~~~~
+      |   ToggleControl
+./selfdrive/ui/qt/widgets/controls.h:117:7: note: 'ToggleControl' declared here
+  117 | class ToggleControl : public AbstractControl {
+      |       ^
+In file included from selfdrive/ui/qt/offroad/settings.cc:20:
+./selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:35:3: error: unknown type name 'OptionControlSP'; did you mean 'ButtonControl'?
+   35 |   OptionControlSP *lane_turn_value_control;
+      |   ^~~~~~~~~~~~~~~
+      |   ButtonControl
+./selfdrive/ui/qt/widgets/controls.h:99:7: note: 'ButtonControl' declared here
+   99 | class ButtonControl : public AbstractControl {
+      |       ^
+In file included from selfdrive/ui/qt/offroad/settings.cc:20:
+./selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:36:3: error: unknown type name 'ToggleControlSP'; did you mean 'ToggleControl'?
+   36 |   ToggleControlSP *lagd_toggle_control;
+      |   ^~~~~~~~~~~~~~~
+      |   ToggleControl
+./selfdrive/ui/qt/widgets/controls.h:117:7: note: 'ToggleControl' declared here
+  117 | class ToggleControl : public AbstractControl {
+      |       ^
+In file included from selfdrive/ui/qt/offroad/settings.cc:20:
+./selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:37:3: error: unknown type name 'OptionControlSP'; did you mean 'ButtonControl'?
+   37 |   OptionControlSP *delay_control;
+      |   ^~~~~~~~~~~~~~~
+      |   ButtonControl
+./selfdrive/ui/qt/widgets/controls.h:99:7: note: 'ButtonControl' declared here
+   99 | class ButtonControl : public AbstractControl {
+      |       ^
+In file included from selfdrive/ui/qt/offroad/settings.cc:20:
+./selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:40:3: error: unknown type name 'ParamControlSP'; did you mean 'ParamControl'?
+   40 |   ParamControlSP *toyota_drive_mode;
+      |   ^~~~~~~~~~~~~~
+      |   ParamControl
+./selfdrive/ui/qt/widgets/controls.h:143:7: note: 'ParamControl' declared here
+  143 | class ParamControl : public ToggleControl {
+      |       ^
+In file included from selfdrive/ui/qt/offroad/settings.cc:20:
+./selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:41:3: error: unknown type name 'ParamControlSP'; did you mean 'ParamControl'?
+   41 |   ParamControlSP *toyota_auto_hold;
+      |   ^~~~~~~~~~~~~~
+      |   ParamControl
+./selfdrive/ui/qt/widgets/controls.h:143:7: note: 'ParamControl' declared here
+  143 | class ParamControl : public ToggleControl {
+      |       ^
+In file included from selfdrive/ui/qt/offroad/settings.cc:20:
+./selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:42:3: error: unknown type name 'ParamControlSP'; did you mean 'ParamControl'?
+   42 |   ParamControlSP *toyota_enhanced_bsm;
+      |   ^~~~~~~~~~~~~~
+      |   ParamControl
+./selfdrive/ui/qt/widgets/controls.h:143:7: note: 'ParamControl' declared here
+  143 | class ParamControl : public ToggleControl {
+      |       ^
+In file included from selfdrive/ui/qt/offroad/settings.cc:20:
+./selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:43:3: error: unknown type name 'ParamControlSP'; did you mean 'ParamControl'?
+   43 |   ParamControlSP *toyota_tss2_long;
+      |   ^~~~~~~~~~~~~~
+      |   ParamControl
+./selfdrive/ui/qt/widgets/controls.h:143:7: note: 'ParamControl' declared here
+  143 | class ParamControl : public ToggleControl {
+      |       ^
+In file included from selfdrive/ui/qt/offroad/settings.cc:20:
+./selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h:44:3: error: unknown type name 'ParamControlSP'; did you mean 'ParamControl'?
+   44 |   ParamControlSP *toyota_stock_long;
+      |   ^~~~~~~~~~~~~~
+      |   ParamControl
+./selfdrive/ui/qt/widgets/controls.h:143:7: note: 'ParamControl' declared here
+  143 | class ParamControl : public ToggleControl {
+      |       ^
+9 errors generated.
+scons: *** [selfdrive/ui/qt/offroad/settings.o] Error 1
+scons: building terminated because of errors.

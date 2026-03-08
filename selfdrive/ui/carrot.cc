@@ -622,6 +622,7 @@ protected:
     }
 };
 class PathEndDrawer : ModelDrawer {
+    Q_OBJECT
 private:
     QPointF path_end_left_vertex;
     QPointF path_end_right_vertex;
@@ -637,10 +638,13 @@ private:
     bool    lead_status = false;
     float   radarDist = 0.0;
     float   visionDist = 0.0;
+    float   filtered_radarDist = 0.0;
+    float   filtered_visionDist = 0.0;
     int     xState = 0;
     int     trafficState = 0;
 
     float   v_ego = 0.0;
+    float   lead_v_rel = 0.0;
     bool    brakeHoldActive = false;
     int    softHoldActive = 0;
     int    carrotCruise = 0;
@@ -682,20 +686,47 @@ protected:
         float z = line.getZ()[idx];
 
         auto leadsV3 = model.getLeadsV3()[0];
-        visionDist = leadsV3.getProb() > .5 ? leadsV3.getX()[0] - 1.52 : 0.0;
+        float new_visionDist = leadsV3.getProb() > .5 ? leadsV3.getX()[0] - 1.52 : 0.0;
+        // Apply low-pass filter to vision distance
+        if (new_visionDist > 0.0) {
+            filtered_visionDist = filtered_visionDist * 0.7 + new_visionDist * 0.3;
+        } else if (filtered_visionDist > 0.0) {
+            // Gradually decay if no vision data
+            filtered_visionDist *= 0.95;
+            if (filtered_visionDist < 0.5) {
+                filtered_visionDist = 0.0;
+            }
+        }
+        visionDist = filtered_visionDist;
 
         auto lead_one = sm["radarState"].getRadarState().getLeadOne();
         lead_status = lead_one.getStatus();
+        float new_radarDist = 0.0;
         if (lead_status) {
             z = line.getZ()[get_path_length_idx(line, lead_one.getDRel())];
             max_distance = lead_one.getDRel();
             y = -lead_one.getYRel();
             radarTrackId = lead_one.getRadarTrackId();
-            radarDist = (lead_one.getRadar()) ? lead_one.getDRel() : 0;
+            new_radarDist = (lead_one.getRadar()) ? lead_one.getDRel() : 0;
+            lead_v_rel = lead_one.getVRel();
         }
         else {
             radarTrackId = -1;
-            radarDist = 0;
+        }
+        // Apply low-pass filter to radar distance
+        if (new_radarDist > 0.0) {
+            filtered_radarDist = filtered_radarDist * 0.8 + new_radarDist * 0.2;
+        } else if (filtered_radarDist > 0.0) {
+            // Gradually decay if no radar data
+            filtered_radarDist *= 0.9;
+            if (filtered_radarDist < 0.5) {
+                filtered_radarDist = 0.0;
+            }
+        }
+        radarDist = filtered_radarDist;
+        // Maintain lead_status if we still have filtered radar data
+        if (filtered_radarDist > 0.0) {
+            lead_status = true;
         }
         _model->mapToScreen(max_distance, y - 1.2, z + 1.22, &path_end_left_vertex);
         _model->mapToScreen(max_distance, y + 1.2, z + 1.22, &path_end_right_vertex);
@@ -824,17 +855,23 @@ public:
             float dist = radarDist * (s->scene.is_metric ? 1 : METER_TO_FOOT);
             NVGcolor text_color = (xState==0) ? COLOR_WHITE : (xState==1) ? COLOR_GREY : COLOR_GREEN;
             if (dist > 0.0) {
-                sprintf(str, "%.1f", dist);
+                // 计算前车绝对速度并转换为显示单位
+                float lead_speed = (v_ego + lead_v_rel) * (s->scene.is_metric ? MS_TO_KPH : MS_TO_MPH);
+
+                // 显示距离和速度
+                sprintf(str, "R:%.1f%s\n%.0f%s", dist, s->scene.is_metric ? "m" : "ft", lead_speed, s->scene.is_metric ? "km/h" : "mph");
                 wStr = 32 * (strlen(str) + 0);
-                ui_fill_rect(s->vg, { (int)(x - w - wStr / 2), (int)(disp_y - 35), wStr, 42 }, isLeadSCC() ? COLOR_RED : COLOR_ORANGE, 15);
-                ui_draw_text(s, x - w, disp_y, str, 40, text_color, BOLD);
+                ui_fill_rect(s->vg, { (int)(x - w - wStr / 2), (int)(disp_y - 55), wStr, 62 }, isLeadSCC() ? COLOR_RED : COLOR_ORANGE, 15);
+                ui_draw_text(s, x - w, disp_y - 10, str, 30, text_color, BOLD);
             }
             dist = visionDist * (s->scene.is_metric ? 1 : METER_TO_FOOT);
             if (dist > 0.0) {
-                sprintf(str, "%.1f", dist);
+                // 视觉信号标签下移，避免被雷达信号标签挡住
+                int vision_disp_y = disp_y + 30;
+                sprintf(str, "V:%.1f%s", dist, s->scene.is_metric ? "m" : "ft");
                 wStr = 32 * (strlen(str) + 0);
-                ui_fill_rect(s->vg, { (int)(x + w - wStr / 2), (int)(disp_y - 35), wStr, 42 }, COLOR_BLUE, 15);
-                ui_draw_text(s, x + w, disp_y, str, 40, text_color, BOLD);
+                ui_fill_rect(s->vg, { (int)(x + w - wStr / 2), (int)(vision_disp_y - 35), wStr, 42 }, COLOR_BLUE, 15);
+                ui_draw_text(s, x + w, vision_disp_y, str, 40, text_color, BOLD);
             }
         }
         /*QPolygonF tf_vertext;

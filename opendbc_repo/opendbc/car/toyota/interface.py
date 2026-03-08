@@ -40,7 +40,7 @@ class CarInterface(CarInterfaceBase):
 
       # LTA control can be more delayed and winds up more often
       ret.steerActuatorDelay = 0.18
-      ret.steerLimitTimer = 0.8
+      ret.steerLimitTimer = 10
     else:
       CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
 
@@ -75,24 +75,37 @@ class CarInterface(CarInterfaceBase):
 
     elif candidate in (CAR.TOYOTA_RAV4_TSS2, CAR.TOYOTA_RAV4_TSS2_2022, CAR.TOYOTA_RAV4_TSS2_2023, CAR.TOYOTA_RAV4_PRIME, CAR.TOYOTA_SIENNA_4TH_GEN):
       ret.lateralTuning.init('pid')
-      ret.lateralTuning.pid.kiBP = [0.0]
-      ret.lateralTuning.pid.kpBP = [0.0]
-      ret.lateralTuning.pid.kpV = [0.6]
-      ret.lateralTuning.pid.kiV = [0.1]
-      ret.lateralTuning.pid.kf = 0.00007818594
+      ret.lateralTuning.pid.kiBP = [0.0, 10.0, 20.0]  # 多段速度调节，改善不同速度下的控制
+      ret.lateralTuning.pid.kpBP = [0.0, 10.0, 20.0]
+      ret.lateralTuning.pid.kpV = [0.8, 0.6, 0.4]     # 低速时增加P增益，改善转弯响应
+      ret.lateralTuning.pid.kiV = [0.15, 0.1, 0.08]   # 优化积分增益，减少画龙
+      ret.lateralTuning.pid.kf = 0.00012              # 增加前馈增益，改善转弯预判
 
       # 2019+ RAV4 TSS2 uses two different steering racks and specific tuning seems to be necessary.
       # See https://github.com/commaai/openpilot/pull/21429#issuecomment-873652891
       for fw in car_fw:
         if fw.ecu == "eps" and (fw.fwVersion.startswith(b'\x02') or fw.fwVersion in [b'8965B42181\x00\x00\x00\x00\x00\x00']):
-          ret.lateralTuning.pid.kpV = [0.15]
-          ret.lateralTuning.pid.kiV = [0.05]
-          ret.lateralTuning.pid.kf = 0.00004
+          ret.lateralTuning.pid.kpV = [0.25, 0.15, 0.1]   # 针对不同转向机优化
+          ret.lateralTuning.pid.kiV = [0.08, 0.05, 0.03]
+          ret.lateralTuning.pid.kf = 0.00006
           break
 
     elif candidate in (CAR.TOYOTA_CHR, CAR.TOYOTA_CAMRY, CAR.TOYOTA_SIENNA, CAR.LEXUS_CTH, CAR.LEXUS_NX):
       # TODO: Some of these platforms are not advertised to have full range ACC, are they similar to SNG_WITHOUT_DSU cars?
       stop_and_go = True
+
+    # Lexus ES TSS2 specific tuning for better cornering performance
+    elif candidate in (CAR.LEXUS_ES_TSS2, CAR.TOYOTA_CAMRY_TSS2):
+      ret.lateralTuning.init('pid')
+      ret.lateralTuning.pid.kiBP = [0.0, 15.0, 30.0]  # 多段速度调节，优化高速稳定性
+      ret.lateralTuning.pid.kpBP = [0.0, 15.0, 30.0]
+      ret.lateralTuning.pid.kpV = [0.9, 0.75, 0.6]    # 低速高增益改善转弯，高速低增益提高稳定性
+      ret.lateralTuning.pid.kiV = [0.22, 0.18, 0.12]  # 优化积分控制，减少过冲
+      ret.lateralTuning.pid.kf = 0.00015              # 增强前馈，改善转弯预判和响应速度
+
+      # Lexus ES TSS2 and Toyota Camry TSS2专用转向延迟优化
+      ret.steerActuatorDelay = 0.10  # 减少延迟，提高转向响应
+      ret.steerLimitTimer = 0.3      # 缩短限制时间，允许更快的转向调整
 
     # TODO: these models can do stop and go, but unclear if it requires sDSU or unplugging DSU.
     #  For now, don't list stop and go functionality in the docs

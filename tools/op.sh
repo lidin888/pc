@@ -52,6 +52,12 @@ function op_run_command() {
 # be default, assume openpilot dir is in current directory
 OPENPILOT_ROOT=$(pwd)
 function op_get_openpilot_dir() {
+  # 如果指定了--standalone模式，直接使用当前目录
+  if [[ ! -z "$STANDALONE" ]]; then
+    return 0
+  fi
+
+  # 原有的路径查找逻辑
   while [[ "$OPENPILOT_ROOT" != '/' ]];
   do
     if find "$OPENPILOT_ROOT/launch_openpilot.sh" -maxdepth 1 -mindepth 1 &> /dev/null; then
@@ -73,6 +79,19 @@ function op_install_post_commit() {
 
 function op_check_openpilot_dir() {
   echo "Checking for openpilot directory..."
+
+  # 独立模式下，检查必要的构建文件是否存在
+  if [[ ! -z "$STANDALONE" ]]; then
+    if [[ -f "$OPENPILOT_ROOT/SConstruct" ]] || [[ -f "$OPENPILOT_ROOT/pyproject.toml" ]]; then
+      echo -e " ↳ [${GREEN}✔${NC}] Standalone mode: project files found in current directory."
+      return 0
+    else
+      echo -e " ↳ [${RED}✗${NC}] Standalone mode: no project files found in current directory!"
+      return 1
+    fi
+  fi
+
+  # 原有逻辑
   if [[ -f "$OPENPILOT_ROOT/launch_openpilot.sh" ]]; then
     echo -e " ↳ [${GREEN}✔${NC}] openpilot found."
     return 0
@@ -93,22 +112,32 @@ function op_check_git() {
     echo -e " ↳ [${GREEN}✔${NC}] git found."
   fi
 
-  echo "Checking for git lfs files..."
-  if [[ $(file -b $OPENPILOT_ROOT/selfdrive/modeld/models/dmonitoring_model.onnx) == "data" ]]; then
-    echo -e " ↳ [${GREEN}✔${NC}] git lfs files found."
-  else
-    echo -e " ↳ [${RED}✗${NC}] git lfs files not found! Run 'git lfs pull'"
-    return 1
-  fi
-
-  echo "Checking for git submodules..."
-  for name in $(git config --file .gitmodules --get-regexp path | awk '{ print $2 }' | tr '\n' ' '); do
-    if [[ -z $(ls $OPENPILOT_ROOT/$name) ]]; then
-      echo -e " ↳ [${RED}✗${NC}] git submodule $name not found! Run 'git submodule update --init --recursive'"
+  # 独立模式下跳过git lfs检查
+  if [[ -z "$STANDALONE" ]]; then
+    echo "Checking for git lfs files..."
+    if [[ $(file -b $OPENPILOT_ROOT/selfdrive/modeld/models/dmonitoring_model.onnx) == "data" ]]; then
+      echo -e " ↳ [${GREEN}✔${NC}] git lfs files found."
+    else
+      echo -e " ↳ [${RED}✗${NC}] git lfs files not found! Run 'git lfs pull'"
       return 1
     fi
-  done
-  echo -e " ↳ [${GREEN}✔${NC}] git submodules found."
+  else
+    echo "Standalone mode: Skipping git lfs check..."
+  fi
+
+  # 独立模式下跳过git子模块检查
+  if [[ -z "$STANDALONE" ]]; then
+    echo "Checking for git submodules..."
+    for name in $(git config --file .gitmodules --get-regexp path | awk '{ print $2 }' | tr '\n' ' '); do
+      if [[ -z $(ls $OPENPILOT_ROOT/$name) ]]; then
+        echo -e " ↳ [${RED}✗${NC}] git submodule $name not found! Run 'git submodule update --init --recursive'"
+        return 1
+      fi
+    done
+    echo -e " ↳ [${GREEN}✔${NC}] git submodules found."
+  else
+    echo "Standalone mode: Skipping git submodules check..."
+  fi
 }
 
 function op_check_os() {
@@ -205,40 +234,50 @@ function op_setup() {
   op_check_openpilot_dir
   op_check_os
 
-  echo "Installing dependencies..."
-  st="$(date +%s)"
-  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    SETUP_SCRIPT="tools/ubuntu_setup.sh"
-  elif [[ "$OSTYPE" == "darwin"* ]]; then
-    SETUP_SCRIPT="tools/mac_setup.sh"
+  # 独立模式下，可选地跳过某些步骤
+  if [[ -z "$STANDALONE" ]]; then
+    echo "Installing dependencies..."
+    st="$(date +%s)"
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+      SETUP_SCRIPT="tools/ubuntu_setup.sh"
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+      SETUP_SCRIPT="tools/mac_setup.sh"
+    fi
+    if ! $OPENPILOT_ROOT/$SETUP_SCRIPT; then
+      echo -e " ↳ [${RED}✗${NC}] Dependencies installation failed!"
+      loge "ERROR_DEPENDENCIES_INSTALLATION"
+      return 1
+    fi
+    et="$(date +%s)"
+    echo -e " ↳ [${GREEN}✔${NC}] Dependencies installed successfully in $((et - st)) seconds."
+  else
+    echo "Standalone mode: Skipping system dependencies installation..."
   fi
-  if ! $OPENPILOT_ROOT/$SETUP_SCRIPT; then
-    echo -e " ↳ [${RED}✗${NC}] Dependencies installation failed!"
-    loge "ERROR_DEPENDENCIES_INSTALLATION"
-    return 1
-  fi
-  et="$(date +%s)"
-  echo -e " ↳ [${GREEN}✔${NC}] Dependencies installed successfully in $((et - st)) seconds."
 
-  echo "Getting git submodules..."
-  st="$(date +%s)"
-  if ! git submodule update --filter=blob:none --jobs 4 --init --recursive; then
-    echo -e " ↳ [${RED}✗${NC}] Getting git submodules failed!"
-    loge "ERROR_GIT_SUBMODULES"
-    return 1
-  fi
-  et="$(date +%s)"
-  echo -e " ↳ [${GREEN}✔${NC}] Submodules installed successfully in $((et - st)) seconds."
+  # Git子模块（在独立模式下可选）
+  if [[ -d ".git" ]] && [[ -z "$STANDALONE" || ! -z "$FORCE_GIT" ]]; then
+    echo "Getting git submodules..."
+    st="$(date +%s)"
+    if ! git submodule update --filter=blob:none --jobs 4 --init --recursive; then
+      echo -e " ↳ [${RED}✗${NC}] Getting git submodules failed!"
+      loge "ERROR_GIT_SUBMODULES"
+      return 1
+    fi
+    et="$(date +%s)"
+    echo -e " ↳ [${GREEN}✔${NC}] Submodules installed successfully in $((et - st)) seconds."
 
-  echo "Pulling git lfs files..."
-  st="$(date +%s)"
-  if ! git lfs pull; then
-    echo -e " ↳ [${RED}✗${NC}] Pulling git lfs files failed!"
-    loge "ERROR_GIT_LFS"
-    return 1
+    echo "Pulling git lfs files..."
+    st="$(date +%s)"
+    if ! git lfs pull; then
+      echo -e " ↳ [${RED}✗${NC}] Pulling git lfs files failed!"
+      loge "ERROR_GIT_LFS"
+      return 1
+    fi
+    et="$(date +%s)"
+    echo -e " ↳ [${GREEN}✔${NC}] Files pulled successfully in $((et - st)) seconds."
+  else
+    echo "Standalone mode: Skipping git operations..."
   fi
-  et="$(date +%s)"
-  echo -e " ↳ [${GREEN}✔${NC}] Files pulled successfully in $((et - st)) seconds."
 
   op_check
 }
@@ -406,6 +445,10 @@ function op_default() {
   echo -e "${BOLD}${UNDERLINE}Options:${NC}"
   echo -e "  ${BOLD}-d, --dir${NC}"
   echo "          Specify the openpilot directory you want to use"
+  echo -e "  ${BOLD}--standalone${NC}"
+  echo "          Enable standalone mode for independent compilation"
+  echo -e "  ${BOLD}--force-git${NC}"
+  echo "          Force git operations even in standalone mode"
   echo -e "  ${BOLD}--dry${NC}"
   echo "          Don't actually run anything, just print what would be run"
   echo -e "  ${BOLD}-n, --no-verify${NC}"
@@ -421,6 +464,9 @@ function op_default() {
   echo ""
   echo "  op juggle --demo"
   echo "          Run PlotJuggler on the demo route"
+  echo ""
+  echo "  op --standalone build"
+  echo "          Compile in standalone mode (current directory only)"
 }
 
 
@@ -428,6 +474,8 @@ function _op() {
   # parse Options
   case $1 in
     -d | --dir )       shift 1; OPENPILOT_ROOT="$1"; shift 1 ;;
+    --standalone )     shift 1; STANDALONE="1" ;;
+    --force-git )      shift 1; FORCE_GIT="1" ;;
     --dry )            shift 1; DRY="1" ;;
     -n | --no-verify ) shift 1; NO_VERIFY="1" ;;
     -l | --log )       shift 1; LOG_FILE="$1" ; shift 1 ;;

@@ -1,0 +1,1368 @@
+system/loggerd/bootlog.cc: bootlog to /home/dengjian/.comma/media/0/realdata/boot/00000103--d17477b392.zst
+README.md: needs update
+camera/cam_blindspot: needs update
+cereal/custom.capnp: needs update
+cereal/log.capnp: needs update
+cereal/services.py: needs update
+common/params.cc: needs update
+common/params.h: needs update
+common/params_keys.h: needs update
+opendbc_repo/opendbc/car/car_helpers.py: needs update
+opendbc_repo/opendbc/car/interfaces.py: needs update
+opendbc_repo/opendbc/car/toyota/carcontroller.py: needs update
+opendbc_repo/opendbc/car/toyota/carstate.py: needs update
+opendbc_repo/opendbc/car/toyota/fingerprints.py: needs update
+opendbc_repo/opendbc/car/toyota/interface.py: needs update
+opendbc_repo/opendbc/car/toyota/toyotacan.py: needs update
+opendbc_repo/opendbc/car/toyota/values.py: needs update
+panda/board/obj/gitversion.h: needs update
+pyproject.toml: needs update
+selfdrive/car/card.py: needs update
+selfdrive/controls/controlsd.py: needs update
+selfdrive/controls/lib/drive_helpers.py: needs update
+selfdrive/controls/lib/latcontrol.py: needs update
+selfdrive/controls/lib/latcontrol_pid.py: needs update
+selfdrive/controls/lib/latcontrol_torque.py: needs update
+selfdrive/controls/lib/lateral_mpc_lib/lat_mpc.py: needs update
+selfdrive/locationd/locationd_jy62: needs update
+selfdrive/selfdrived/selfdrived.py: needs update
+selfdrive/ui/SConscript: needs update
+selfdrive/ui/carrot.cc: needs update
+selfdrive/ui/carrot_gpu.cc: needs update
+selfdrive/ui/qt/offroad/settings.cc: needs update
+selfdrive/ui/qt/onroad/model.cc: needs update
+selfdrive/ui/translations/main_ar.ts: needs update
+selfdrive/ui/translations/main_de.ts: needs update
+selfdrive/ui/translations/main_es.ts: needs update
+selfdrive/ui/translations/main_fr.ts: needs update
+selfdrive/ui/translations/main_ja.ts: needs update
+selfdrive/ui/translations/main_ko.ts: needs update
+selfdrive/ui/translations/main_pt-BR.ts: needs update
+selfdrive/ui/translations/main_th.ts: needs update
+selfdrive/ui/translations/main_tr.ts: needs update
+selfdrive/ui/translations/main_zh-CHS.ts: needs update
+selfdrive/ui/translations/main_zh-CHT.ts: needs update
+system/hardware/hw.h: needs update
+system/hardware/hw.py: needs update
+system/manager/manager.py: needs update
+tools/install_python_dependencies.sh: needs update
+tools/op.sh: needs update
+ * Serving Flask app 'selfdrive.frogpilot.fleetmanager.fleet_manager'
+ * Debug mode: off
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8082
+ * Running on http://10.194.32.122:8082
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+: libpng warning: iCCP: known incorrect sRGB profile
+: libpng warning: iCCP: known incorrect sRGB profile
+kj/filesystem-disk-unix.c++:1734: warning: PWD environment variable doesn't match current directory; pwd = /home/dengjian/openpilot/system/manager
+VIN 00000000000000000
+VIN 00000000000000000
+/bin/sh: 1: /data/openpilot/selfdrive/debug/debug_console_carrot.py: not found
+modeld init
+setting up CL context
+CL context ready; loading model
+models loaded in 0.5s, modeld starting
+vision stream set up, main_wide_camera: False, use_extra_client: False
+connected main cam with buffer size: 3493536 (1928 x 1208)
+{'event': 'fingerprinted', 'car_fingerprint': 'HONDA_CIVIC_2022', 'source': 2, 'fuzzy': False, 'cached': False, 'fw_count': 0, 'ecu_responses': [], 'vin_rx_addr': -1, 'vin_rx_bus': -1, 'fingerprints': '{0: {344: 8, 464: 8, 662: 4, 401: 8, 304: 8, 773: 7, 399: 7, 330: 8, 420: 8, 432: 7, 427: 3, 450: 8, 1029: 8, 882: 8, 804: 8, 467: 8, 806: 8, 380: 8, 777: 8}, 1: {}, 2: {228: 5, 780: 8, 829: 8}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {}}', 'fw_query_time': 0.009376177999911306}
+{'event': 'fingerprinted', 'car_fingerprint': 'HONDA_CIVIC_2022', 'source': 2, 'fuzzy': False, 'cached': False, 'fw_count': 0, 'ecu_responses': [], 'vin_rx_addr': -1, 'vin_rx_bus': -1, 'fingerprints': '{0: {344: 8, 464: 8, 662: 4, 401: 8, 304: 8, 773: 7, 399: 7, 330: 8, 420: 8, 432: 7, 427: 3, 450: 8, 1029: 8, 882: 8, 804: 8, 467: 8, 806: 8, 380: 8, 777: 8}, 1: {}, 2: {228: 5, 780: 8, 829: 8}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {}}', 'fw_query_time': 0.009376177999911306}
+x=1192, y=268, ey=812
+_current_carrot_display1=1
+skipping model eval. Dropped 121 frames
+{"event": "selfdrived.initialized", "dt": 0.0, "timeout": false, "canValid": true, "invalid": ["deviceState", "pandaStates", "peripheralState", "modelV2", "liveCalibration", "driverMonitoringState", "longitudinalPlan", "liveLocationKalman", "managerState", "liveParameters", "radarState", "liveTorqueParameters", "controlsState", "carControl", "driverAssistance", "alertDebug", "roadCameraState", "gpsLocation"], "not_alive": ["deviceState", "pandaStates", "peripheralState", "modelV2", "liveCalibration", "driverMonitoringState", "longitudinalPlan", "liveLocationKalman", "managerState", "liveParameters", "radarState", "liveTorqueParameters", "controlsState", "carControl", "driverAssistance", "alertDebug", "roadCameraState", "gpsLocation"], "not_freq_ok": [], "error": true}
+---[15:24:47]atc_type change, curr:none, prev:
+[0]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[10]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[20]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[30]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[40]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[50]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[60]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[70]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[80]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[90]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[100]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[110]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[120]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[130]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[140]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[150]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[160]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[170]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[180]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[190]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[200]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[210]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[220]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[230]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[240]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[250]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+skipping model eval. Dropped 1 frames
+[260]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[270]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[280]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[290]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[300]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[310]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[320]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[330]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[340]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[350]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[360]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[370]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[380]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[390]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[400]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[410]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[420]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[430]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[440]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[450]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[460]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[470]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[480]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[490]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[500]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[510]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[520]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[530]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[540]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[550]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[560]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[570]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[580]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[590]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[600]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[610]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[620]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[630]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[640]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[650]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[660]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[670]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[680]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[690]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[700]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[710]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[720]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[730]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[740]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[750]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[760]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[770]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[780]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[790]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[800]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[810]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[820]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[830]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[840]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[850]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[860]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[870]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[880]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[890]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[900]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[910]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[920]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[930]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[940]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[950]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[960]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[970]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[980]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[990]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+{"event": "process_not_running", "not_running": "{'ui'}", "error": true}
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+skipping model eval. Dropped 1 frames
+panda timed out onroad
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+{"event": "process_not_running", "not_running": "{'fleet_manager'}", "error": true}
+Killing old publisher: deviceState
+Exception in thread Thread-3 (hardware_thread):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.12/threading.py", line 1010, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/system/hardware/hardwared.py", line 427, in hardware_thread
+    pm.send("deviceState", msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: liveTorqueParameters
+crash
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/locationd/torqued.py", line 252, in main
+    pm.send('liveTorqueParameters', estimator.get_msg(valid=sm.all_checks()))
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: carOutput
+Process torqued:
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/locationd/torqued.py", line 252, in main
+    pm.send('liveTorqueParameters', estimator.get_msg(valid=sm.all_checks()))
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: liveDelay
+crash
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/locationd/lagd.py", line 393, in main
+    pm.send('liveDelay', lag_msg_dat)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Process lagd:
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/locationd/lagd.py", line 393, in main
+    pm.send('liveDelay', lag_msg_dat)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Exception in thread Thread-8 (carrot_cmd_zmq):
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 875, in carrot_cmd_zmq
+    self.send_tmux("Ekdrmsvkdlffjt7710", "onroad", send_settings = True)
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 785, in send_tmux
+    directory = git_branch + " " + car_selected + " " + Params().get("DongleId").decode('utf-8')
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'decode'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.12/threading.py", line 1010, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 907, in carrot_cmd_zmq
+    socket, poller = setup_socket()
+                     ^^^^^^^^^^^^^^
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 841, in setup_socket
+    socket.bind("tcp://*:7710")
+  File "/home/dengjian/openpilot/.venv/lib/python3.12/site-packages/zmq/sugar/socket.py", line 320, in bind
+    super().bind(addr)
+  File "_zmq.py", line 942, in zmq.backend.cython._zmq.Socket.bind
+  File "_zmq.py", line 180, in zmq.backend.cython._zmq._check_rc
+zmq.error.ZMQError: Address already in use (addr='tcp://*:7710')
+crash
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/car/card.py", line 332, in main
+    car.card_thread()
+  File "/home/dengjian/openpilot/selfdrive/car/card.py", line 320, in card_thread
+    self.step()
+  File "/home/dengjian/openpilot/selfdrive/car/card.py", line 297, in step
+    self.state_publish(CS, RD)
+  File "/home/dengjian/openpilot/selfdrive/car/card.py", line 260, in state_publish
+    self.pm.send('carOutput', co_send)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Process card:
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/car/card.py", line 332, in main
+    car.card_thread()
+  File "/home/dengjian/openpilot/selfdrive/car/card.py", line 320, in card_thread
+    self.step()
+  File "/home/dengjian/openpilot/selfdrive/car/card.py", line 297, in step
+    self.state_publish(CS, RD)
+  File "/home/dengjian/openpilot/selfdrive/car/card.py", line 260, in state_publish
+    self.pm.send('carOutput', co_send)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Waiting for CAN messages...
+SelectedCar = HONDA_CIVIC_2022
+Carrot GitBranch = b'cpv9-pc-dev', b"'1770599295 2026-02-09 09:08:15 +0800'"
+########get_nn_model_path : HONDA_CIVIC_2022 
+Estimated radar dt: 0.049940881729125974 sec
+Killing old publisher: liveCalibration
+crash
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/locationd/calibrationd.py", line 287, in main
+    calibrator.send_data(pm, sm.all_checks())
+  File "/home/dengjian/openpilot/selfdrive/locationd/calibrationd.py", line 254, in send_data
+    pm.send('liveCalibration', self.get_msg(valid))
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Process calibrationd:
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/locationd/calibrationd.py", line 287, in main
+    calibrator.send_data(pm, sm.all_checks())
+  File "/home/dengjian/openpilot/selfdrive/locationd/calibrationd.py", line 254, in send_data
+    pm.send('liveCalibration', self.get_msg(valid))
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+UI restarting, sending route
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+{"event": "process_not_running", "not_running": "{'fleet_manager', 'lane'}", "error": true}
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: selfdriveState
+Killing old publisher: controlsState
+crash
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/controls/controlsd.py", line 364, in main
+    controls.run()
+  File "/home/dengjian/openpilot/selfdrive/controls/controlsd.py", line 357, in run
+    self.publish(CC, lac_log)
+  File "/home/dengjian/openpilot/selfdrive/controls/controlsd.py", line 344, in publish
+    self.pm.send('controlsState', dat)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+crash
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/selfdrived/selfdrived.py", line 641, in main
+    s.run()
+  File "/home/dengjian/openpilot/selfdrive/selfdrived/selfdrived.py", line 631, in run
+    self.step()
+  File "/home/dengjian/openpilot/selfdrive/selfdrived/selfdrived.py", line 608, in step
+    self.publish_selfdriveState(CS)
+  File "/home/dengjian/openpilot/selfdrive/selfdrived/selfdrived.py", line 591, in publish_selfdriveState
+    self.pm.send('selfdriveState', ss_msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Process controlsd:
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/controls/controlsd.py", line 364, in main
+    controls.run()
+  File "/home/dengjian/openpilot/selfdrive/controls/controlsd.py", line 357, in run
+    self.publish(CC, lac_log)
+  File "/home/dengjian/openpilot/selfdrive/controls/controlsd.py", line 344, in publish
+    self.pm.send('controlsState', dat)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+########get_nn_model_path : HONDA_CIVIC_2022 
+Killing old publisher: radarState
+Process selfdrived:
+Traceback (most recent call last):
+crash
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/controls/radard.py", line 718, in main
+    RD.publish(pm)
+  File "/home/dengjian/openpilot/selfdrive/controls/radard.py", line 467, in publish
+    pm.send("radarState", radar_msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/selfdrived/selfdrived.py", line 641, in main
+    s.run()
+  File "/home/dengjian/openpilot/selfdrive/selfdrived/selfdrived.py", line 631, in run
+    self.step()
+  File "/home/dengjian/openpilot/selfdrive/selfdrived/selfdrived.py", line 608, in step
+    self.publish_selfdriveState(CS)
+  File "/home/dengjian/openpilot/selfdrive/selfdrived/selfdrived.py", line 591, in publish_selfdriveState
+    self.pm.send('selfdriveState', ss_msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+####ET.ENABLE event.... [10]
+#######State.disabled => enabled
+#######State.enabled => softDisabling [79, 81]
+#######State.softDisabling => enabled [79]
+#######State.enabled => softDisabling [79, 81]
+#######State.softDisabling => disabled
+Process radard:
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/controls/radard.py", line 718, in main
+    RD.publish(pm)
+  File "/home/dengjian/openpilot/selfdrive/controls/radard.py", line 467, in publish
+    pm.send("radarState", radar_msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+###RadarD.. : delay =  0.10000000149011612 3
+Killing old publisher: liveParameters
+crash
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/locationd/paramsd.py", line 263, in main
+    pm.send('liveParameters', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: lateralPlan
+crash
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/controls/plannerd.py", line 34, in main
+    lateral_planner.publish(sm, pm, carrot)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/controls/lib/lateral_planner.py", line 285, in publish
+    pm.send('lateralPlan', plan_send)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Process paramsd:
+Killing old publisher: amapNavi
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/locationd/paramsd.py", line 263, in main
+    pm.send('liveParameters', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Process plannerd:
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/openpilot/system/manager/process.py", line 41, in launcher
+    mod.main()
+  File "/home/dengjian/openpilot/selfdrive/controls/plannerd.py", line 34, in main
+    lateral_planner.publish(sm, pm, carrot)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/controls/lib/lateral_planner.py", line 285, in publish
+    pm.send('lateralPlan', plan_send)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+ use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: navInstruction
+navd.failed_to_compute
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 92, in update
+    self.send_instruction()
+  File "/home/dengjian/openpilot/selfdrive/navd/navd.py", line 227, in send_instruction
+    self.pm.send('navInstruction', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Killing old publisher: amapNavi
+Killing old publisher: carrotMan
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/selfdrive/carrot/carrot_man.py", line 416, in broadcast_version_info
+    self.carrot_serv.update_navi(remote_ip, self.sm, self.pm, vturn_speed, coords, distances, route_speed)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/carrot_serv.py", line 1498, in update_navi
+    pm.send('carrotMan', msg)
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use

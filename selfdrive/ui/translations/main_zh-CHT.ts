@@ -413,27 +413,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ClearAllParams</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>CalibrationParams</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LiveDelay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LiveTorqueParameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LiveParameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LiveParametersV2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -444,27 +424,35 @@
         <source>Are you sure you want to reset %1?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>AllCalibParams</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AllLiveParams</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DrawCarrot</name>
     <message>
-        <source>ECO</source>
+        <source>经 济</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SAFE</source>
+        <source>安 全</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NORM</source>
+        <source>标 准</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>FAST</source>
+        <source>运 动</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ERRM</source>
+        <source>错 误</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -552,6 +540,13 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     <message>
         <source>Installing...</source>
         <translation>安裝中…</translation>
+    </message>
+</context>
+<context>
+    <name>LaneChangeSettings</name>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">回上頁</translation>
     </message>
 </context>
 <context>
@@ -766,6 +761,89 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     </message>
 </context>
 <context>
+    <name>PlatformSelector</name>
+    <message>
+        <source>Vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SEARCH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search your vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter model year (e.g., 2021) and model name (Toyota Corolla):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SEARCHING</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>REMOVE</source>
+        <translation type="unfinished">移除</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This setting will take effect immediately.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This setting will take effect once the device enters offroad state.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vehicle Selector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translation type="unfinished">確認</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <source>No vehicles found for query: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unrecognized Vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fingerprinted automatically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manually selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not fingerprinted or manually selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select vehicle to force fingerprint manually.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Colors represent fingerprint status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PrimeAdWidget</name>
     <message>
         <source>Upgrade Now</source>
@@ -906,6 +984,162 @@ This may take up to a minute.</source>
     </message>
 </context>
 <context>
+    <name>SPPSettingsPanel</name>
+    <message>
+        <source>&lt;span style=&quot;font-size:14px; color:#e0e0e0&quot;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-----------------------------&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;/span&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Steering Learning Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adjust steering response and learning parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Lane Turn Desire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable lane turn desire learning to improve steering response</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adjust Steering Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the maximum speed for lane turn desire. Default is 19 %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Live Learning Steer Delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable: System automatically calculates delay (hides manual settings below).
+Disable: Need to manually set software delay below.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adjust Software Delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adjust the software delay when Live Learning Steer Delay is toggled off. Default software delay value is 0.2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delay Calculation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toyota Specific Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toyota vehicle specific adjustment options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toyota: Drive Mode Button Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link the vehicle&apos;s drive mode button with acceleration personality (Easy, Standard, Sport) for a seamless driving experience</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toyota: Auto Brake Hold (TSS2 Hybrid)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically hold the vehicle when it comes to a stop. This feature is designed for TSS2 hybrid vehicles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toyota: Enhanced BSM Support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add enhanced blind spot monitoring support for Toyota vehicles, especially Prius TSS2 and some TSS-P models</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toyota: TSS2 Longitudinal Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable optimized longitudinal control for Toyota TSS2 vehicles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toyota: Stock Longitudinal Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Toyota stock longitudinal control parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End to End Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End to end control related options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable End to End Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable end-to-end neural network control for a more natural steering experience</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End to End Force Lane Change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Force lane change control in end-to-end mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Live Learning Enabled&lt;/b&gt;&lt;br&gt;System is automatically calculating optimal steering delay.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hardware Delay: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Software Delay: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Total Delay: &lt;font color=&quot;#4fc3f7&quot;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total delay = Hardware actuator delay (0.1s) + Software delay&lt;br&gt;&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Manual Setting Mode&lt;/b&gt;&lt;br&gt;Drag the slider above to adjust software delay.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SettingsWindow</name>
     <message>
         <source>×</source>
@@ -941,6 +1175,10 @@ This may take up to a minute.</source>
     </message>
     <message>
         <source>开发</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SP设置</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1291,6 +1529,34 @@ This may take up to a minute.</source>
     </message>
 </context>
 <context>
+    <name>SteeringSettings</name>
+    <message>
+        <source>转向学习设置</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>调整转向响应和学习参数</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>调整转向速度</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>设置车道转向意图的最大速度。默认值为19 %1。</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>调整软件延迟</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>当关闭实时学习转向延迟时调整软件延迟。
+默认软件延迟值为0.2秒</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TermsPage</name>
     <message>
         <source>Decline</source>
@@ -1429,6 +1695,49 @@ This may take up to a minute.</source>
     </message>
     <message>
         <source>MoreRelaxed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ToyotaSettings</name>
+    <message>
+        <source>Toyota: Drive Mode Button Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Links car&apos;s drive mode button with acceleration personalities (Relaxed, Standard, Sport) for seamless driving experience.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toyota: Auto Brake Hold (TSS2 Hybrid)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically hold the vehicle at a stop when the lead car is stopped. This feature is specifically designed for TSS2 Hybrid vehicles.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toyota: Enhanced BSM Support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add enhanced Blind Spot Monitoring support for Toyota vehicles, particularly for Prius TSS2 and some TSS-P models.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toyota: TSS2 Custom Tune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable custom longitudinal tuning for Toyota TSS2 vehicles. This provides optimized acceleration and braking behavior for better driving experience.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toyota: Stock Toyota Longitudinal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use the stock Toyota longitudinal control instead of sunnypilot longitudinal control for a more factory-like driving experience.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

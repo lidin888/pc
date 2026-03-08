@@ -1,0 +1,3 @@
+{"event": "selfdrived.initialized", "dt": 6.01, "timeout": true, "canValid": false, "invalid": ["liveCalibration", "carOutput", "driverMonitoringState", "longitudinalPlan", "liveLocationKalman", "liveParameters", "radarState", "liveTorqueParameters", "controlsState", "carControl", "driverAssistance", "alertDebug", "gpsLocation"], "not_alive": ["carOutput", "driverMonitoringState", "longitudinalPlan", "driverAssistance", "alertDebug", "gpsLocation"], "not_freq_ok": ["carOutput", "driverMonitoringState", "longitudinalPlan", "driverAssistance", "alertDebug", "gpsLocation"], "error": true}
+{"event": "process_not_running", "not_running": "{'plannerd', 'card'}", "error": true}
+

@@ -2,7 +2,7 @@
 
 constexpr int CLIP_MARGIN = 500;
 constexpr float MIN_DRAW_DISTANCE = 10.0;
-constexpr float MAX_DRAW_DISTANCE = 100.0;
+constexpr float MAX_DRAW_DISTANCE = 200.0;
 
 int get_path_length_idx(const cereal::XYZTData::Reader &line, const float path_height) {
   const auto &line_x = line.getX();

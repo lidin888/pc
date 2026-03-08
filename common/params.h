@@ -16,6 +16,9 @@ enum ParamKeyType {
   CLEAR_ON_OFFROAD_TRANSITION = 0x10,
   DONT_LOG = 0x20,
   DEVELOPMENT_ONLY = 0x40,
+  BACKUP = 0x80,
+  CLEAR_ON_IGNITION_ON = 0x100,
+  TIME = 0x200,
   ALL = 0xFFFFFFFF
 };
 
@@ -90,3 +93,17 @@ private:
   std::future<void> future;
   SafeQueue<std::pair<std::string, std::string>> queue;
 };
+
+// TN 转向学习参数
+extern const char *ToyotaAutoHold;
+extern const char *ToyotaEnhancedBsm;
+extern const char *ToyotaTSS2Long;
+extern const char *ToyotaStockLongitudinal;
+extern const char *ToyotaDriveMode;
+extern const char *LagdToggle;
+extern const char *LagdToggleDelay;
+extern const char *LagdValueCache;
+extern const char *LaneTurnDesire;
+extern const char *LaneTurnValue;
+extern const char *EndToEndToggle;
+extern const char *EndToEndForceLaneChange;

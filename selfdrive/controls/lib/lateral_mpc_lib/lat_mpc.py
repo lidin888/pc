@@ -108,8 +108,8 @@ def gen_lat_ocp():
   # set constraints
   ocp.constraints.constr_type = 'BGH'
   ocp.constraints.idxbx = np.array([2,3])
-  ocp.constraints.ubx = np.array([np.radians(90), np.radians(50)])
-  ocp.constraints.lbx = np.array([-np.radians(90), -np.radians(50)])
+  ocp.constraints.ubx = np.array([np.radians(180), np.radians(50)])
+  ocp.constraints.lbx = np.array([-np.radians(180), -np.radians(50)])
   x0 = np.zeros((X_DIM,))
   ocp.constraints.x0 = x0
 

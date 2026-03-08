@@ -438,10 +438,11 @@ def main() -> None:
     HARDWARE.uninstall()
   elif params.get_bool("DoReboot"):
     cloudlog.warning("reboot")
-    HARDWARE.reboot()
+    #HARDWARE.reboot()
   elif params.get_bool("DoShutdown"):
-    cloudlog.warning("shutdown")
-    HARDWARE.shutdown()
+    cloudlog.warning("openpilot shutdown - only exiting manager process")
+    # 只退出manager进程，不关闭整个系统
+    # HARDWARE.shutdown()  # 注释掉硬件关机调用
 
 if __name__ == "__main__":
   unblock_stdout()

@@ -1,0 +1,104 @@
+(openpilot) dengjian@dengjian-XiaoXinPro-14-IAH5R:~/openpilot$ ./launch_standalone.sh
+启动独立模式，使用项目目录: /home/dengjian/openpilot
+环境变量设置:
+  虚拟环境: /home/dengjian/openpilot/.venv
+  USE_WEBCAM=1
+  ROAD_CAM=4
+  NO_DM=0
+  PYTHONPATH=/home/dengjian/openpilot
+  LD_LIBRARY_PATH=/home/dengjian/openpilot/third_party/acados/x86_64/lib:/home/dengjian/openpilot/selfdrive/controls/lib/longitudinal_mpc_lib/c_generated_code:/home/dengjian/openpilot/selfdrive/controls/lib/lateral_mpc_lib/c_generated_code:
+✓ 找到 libacados.so: /home/dengjian/openpilot/third_party/acados/x86_64/lib/libacados.so
+启动manager...
+README.md: needs update
+camera/cam_blindspot: needs update
+cereal/custom.capnp: needs update
+cereal/log.capnp: needs update
+common/params.cc: needs update
+common/params.h: needs update
+common/params_keys.h: needs update
+opendbc_repo/opendbc/car/toyota/carcontroller.py: needs update
+opendbc_repo/opendbc/car/toyota/carstate.py: needs update
+opendbc_repo/opendbc/car/toyota/fingerprints.py: needs update
+opendbc_repo/opendbc/car/toyota/interface.py: needs update
+opendbc_repo/opendbc/car/toyota/toyotacan.py: needs update
+opendbc_repo/opendbc/car/toyota/values.py: needs update
+panda/board/obj/gitversion.h: needs update
+pyproject.toml: needs update
+selfdrive/controls/lib/drive_helpers.py: needs update
+selfdrive/controls/lib/latcontrol.py: needs update
+selfdrive/controls/lib/latcontrol_pid.py: needs update
+selfdrive/controls/lib/latcontrol_torque.py: needs update
+selfdrive/controls/lib/lateral_mpc_lib/lat_mpc.py: needs update
+selfdrive/locationd/locationd_jy62: needs update
+selfdrive/ui/SConscript: needs update
+selfdrive/ui/carrot.cc: needs update
+selfdrive/ui/carrot_gpu.cc: needs update
+selfdrive/ui/qt/offroad/settings.cc: needs update
+selfdrive/ui/qt/offroad/settings.h: needs update
+selfdrive/ui/qt/onroad/model.cc: needs update
+selfdrive/ui/translations/main_ar.ts: needs update
+selfdrive/ui/translations/main_de.ts: needs update
+selfdrive/ui/translations/main_es.ts: needs update
+selfdrive/ui/translations/main_fr.ts: needs update
+selfdrive/ui/translations/main_ja.ts: needs update
+selfdrive/ui/translations/main_ko.ts: needs update
+selfdrive/ui/translations/main_pt-BR.ts: needs update
+selfdrive/ui/translations/main_th.ts: needs update
+selfdrive/ui/translations/main_tr.ts: needs update
+selfdrive/ui/translations/main_zh-CHS.ts: needs update
+selfdrive/ui/translations/main_zh-CHT.ts: needs update
+system/hardware/hw.h: needs update
+system/hardware/hw.py: needs update
+system/manager/manager.py: needs update
+tools/install_python_dependencies.sh: needs update
+tools/op.sh: needs update
+system/loggerd/bootlog.cc: bootlog to /home/dengjian/.comma/media/0/realdata/boot/00000088--b7f133a392.zst
+ * Serving Flask app 'selfdrive.frogpilot.fleetmanager.fleet_manager'
+ * Debug mode: off
+CarrotManager Started
+lane receive thread started...
+UDP receive thread started...
+************************************************CarrotMan init************************************************
+INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8082
+ * Running on http://192.168.3.201:8082
+INFO:werkzeug:Press CTRL+C to quit
+🌐 Web服务器启动在端口 8088
+#########carrot_cmd_zmq: thread started...
+CarrotMan <selfdrive.carrot.carrot_man.CarrotMan object at 0x78b8d4641460>
+################# waiting connection from CarrotMan route #####################
+#########carrot_man_thread: UDP thread started...
+#########kisa_app_thread: UDP thread started...
+save_toggle_values error: [Errno 2] No such file or directory: '/data/toggle_values.json'
+Panda 070026000b50503346303020 connected, version: DEV-b9146450-DEBU, signature 9fd39101cc34fbbe, expected 9fd39101cc34fbbe
+: libpng warning: iCCP: known incorrect sRGB profile
+: libpng warning: iCCP: known incorrect sRGB profile
+selfdrive/pandad/main.cc: starting pandad
+selfdrive/pandad/pandad.cc: connecting to pandas: 070026000b50503346303020
+selfdrive/pandad/panda.cc: connected to 070026000b50503346303020 over USB
+selfdrive/pandad/pandad.cc: connected to all pandas
+opening roadCameraState at /dev/video4
+Waiting for CAN messages...
+system/loggerd/loggerd.cc: logging to /home/dengjian/.comma/media/0/realdata/00000053--2fabd65b4c--0
+============================================================
+车道线服务程序
+访问: http://0.0.0.0:8888
+============================================================
+kj/filesystem-disk-unix.c++:1734: warning: PWD environment variable doesn't match current directory; pwd = /home/dengjian/openpilot/system/manager
+数据格式:  MJPG
+摄像头初始化后的FPS设置: 20.0
+Starting listener for: camerad
+/bin/sh: 1: /data/openpilot/selfdrive/debug/debug_console_carrot.py: not found
+modeld init
+setting up CL context
+CL context ready; loading model
+models loaded in 0.7s, modeld starting
+vision stream set up, main_wide_camera: False, use_extra_client: False
+connected main cam with buffer size: 3110400 (1920 x 1080)
+x=48, y=820, ey=260
+_current_carrot_display1=2
+x=315, y=951, ey=129
+x=416, y=789, ey=291
+_current_carrot_display1=3
+loggerd logmessaged webcamerad logcatd proclogd modeld locationd ui soundd calibrationd torqued controlsd selfdrived card deleter navd pandad paramsd lagd plannerd radard hardwared statsd fleet_manager carrot_man lane

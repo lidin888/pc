@@ -13,6 +13,7 @@ from collections import deque
 
 from opendbc.car.car_helpers import interfaces
 from opendbc.car.vehicle_model import VehicleModel
+from opendbc.car.toyota.values import CAR
 
 from openpilot.selfdrive.controls.lib.drive_helpers import clip_curvature, get_lag_adjusted_curvature
 from openpilot.selfdrive.controls.lib.latcontrol import LatControl, MIN_LATERAL_CONTROL_SPEED
@@ -42,6 +43,16 @@ class Controls:
     cloudlog.info("controlsd got CarParams")
 
     self.CI = interfaces[self.CP.carFingerprint](self.CP)
+
+    # SunnyPilot additions
+    try:
+        sp_flags = self.params.get_int("ToyotaFlagsSP", 0)
+    except:
+        sp_flags = 0
+
+    self.CP_SP = type('CP_SP', (), {
+        'flags': sp_flags
+    })()
 
     self.disable_dm = False
 
@@ -141,14 +152,14 @@ class Controls:
     lat_smooth_seconds = LAT_SMOOTH_SECONDS #self.params.get_float("SteerSmoothSec") * 0.01
     steer_actuator_delay = self.params.get_float("SteerActuatorDelay") * 0.01
     if steer_actuator_delay == 0.0:
-      steer_actuator_delay = self.sm['liveDelay'].lateralDelay 
+      steer_actuator_delay = self.sm['liveDelay'].lateralDelay
 
     if len(model_v2.position.yStd) > 0:
       yStd = np.interp(steer_actuator_delay + lat_smooth_seconds, ModelConstants.T_IDXS, model_v2.position.yStd)
       self.yStd = yStd * 0.02 + self.yStd * 0.98
     else:
       self.yStd = 0.0
-    
+
     if not CC.latActive:
       new_desired_curvature = self.curvature
     elif self.lanefull_mode_enabled:
@@ -194,7 +205,7 @@ class Controls:
 
       def set_hud(side_cap, name, val):
         setattr(hudControl, f"lead{side_cap}{name}", float(val if val is not None else 0.0))
-        
+
       st = self.side_state[side]
       if road_edge <= 2.0 or not leads2:
         st["main"] = {"dRel": None, "lat": None}
@@ -208,7 +219,6 @@ class Controls:
       if bsd_state:
         set_hud(side_cap, "Dist2", 1)
         set_hud(side_cap, "Lat2",  3.2)
-      # 첫 번째가 10m 이내라면 sub 업데이트 + 두 번째를 main으로
       elif len(leads2) > 1 and lead_main.dRel < 10:
         st["sub"]["dRel"] = ema(st["sub"]["dRel"], lead_main.dRel)
         st["sub"]["lat"]  = ema(st["sub"]["lat"],  abs(lead_main.dPath))
@@ -260,15 +270,44 @@ class Controls:
     lp = self.sm['longitudinalPlan']
     if self.CP.pcmCruise:
       speed_from_pcm = self.params.get_int("SpeedFromPCM")
-      if speed_from_pcm == 1: #toyota
-        hudControl.setSpeed = float(CS.vCruiseCluster * CV.KPH_TO_MS)
-      elif speed_from_pcm == 2:
-        hudControl.setSpeed = float(max(30/3.6, desired_kph * CV.KPH_TO_MS))
-      elif speed_from_pcm == 3: # honda
-        hudControl.setSpeed = setSpeed if lp.xState == 3 else float(desired_kph * CV.KPH_TO_MS)
+      # SpeedFromPCM 取值含义：
+      # 1 - 使用 PCM 巡航速度 (vCruiseCluster)
+      # 2 - 不低于 30 km/h（强制最小值）
+      # 3 - 使用纵向计划速度（setSpeed 根据 xState 决定）
+      # 其他 - 默认行为：不低于 30 km/h 并使用 setSpeed
+
+       # 根据车型判断是否需要特调逻辑（丰田车特有）
+      is_toyota = self.CP.carFingerprint.startswith(CAR.TOYOTA)
+
+      if is_toyota:
+          toyota_stock_long = self.params.get_bool("ToyotaStockLongitudinal")
+          toyota_tss2_long = self.params.get_bool("ToyotaTSS2Long")
+          toyota_special = toyota_stock_long or toyota_tss2_long
       else:
-        hudControl.setSpeed = float(max(30/3.6, setSpeed))
+          toyota_special = False
+
+      if toyota_special:
+          # 丰田特调模式：忽略 SpeedFromPCM，直接使用纵向计划速度
+          hudControl.setSpeed = setSpeed if lp.xState == 3 else float(desired_kph * CV.KPH_TO_MS)
+      else:
+          # 通用逻辑，依据 SpeedFromPCM 选择速度来源
+          if speed_from_pcm == 1:
+              # 使用 PCM 巡航速度（仅当有效时）
+              if CS.vCruiseCluster > 0:
+                  hudControl.setSpeed = float(CS.vCruiseCluster * CV.KPH_TO_MS)
+              else:
+                  hudControl.setSpeed = setSpeed if lp.xState == 3 else float(desired_kph * CV.KPH_TO_MS)
+          elif speed_from_pcm == 2:
+              # 强制不低于 30 km/h
+              hudControl.setSpeed = float(max(30 / 3.6, desired_kph * CV.KPH_TO_MS))
+          elif speed_from_pcm == 3:
+              # 使用纵向计划速度
+              hudControl.setSpeed = setSpeed if lp.xState == 3 else float(desired_kph * CV.KPH_TO_MS)
+          else:
+              # 默认：不低于 30 km/h，并用 setSpeed 作为基础
+              hudControl.setSpeed = float(max(30 / 3.6, setSpeed))
     else:
+      # 非 PCM 巡航时，直接使用纵向计划速度
       hudControl.setSpeed = setSpeed if lp.xState == 3 else float(desired_kph * CV.KPH_TO_MS)
     hudControl.speedVisible = CC.enabled
     hudControl.lanesVisible = CC.enabled

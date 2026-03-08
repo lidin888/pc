@@ -1,0 +1,68 @@
+=== 无输入模拟器桥接 ===
+这个版本不需要键盘输入，适合后台运行
+[38;20m[INFO] Environment: MetaDriveEnv[0m
+[38;20m[INFO] MetaDrive version: 0.4.2.4[0m
+[38;20m[INFO] Sensors: [lidar: Lidar(), side_detector: SideDetector(), lane_line_detector: LaneLineDetector(), rgb_road: RGBCameraRoad(1928, 1208), rgb_wide: RGBCameraWide(1928, 1208)][0m
+[38;20m[INFO] Render Mode: offscreen[0m
+[38;20m[INFO] Horizon (Max steps per agent): None[0m
+[38;20m[INFO] Assets version: 0.4.2.4[0m
+[38;20m[INFO] Known Pipes: glxGraphicsPipe[0m
+[38;20m[INFO] Assets version: 0.4.2.4[0m
+[38;20m[INFO] Known Pipes: glxGraphicsPipe[0m
+[33;20m[WARNING] You are using too large buffer! The height is 1208, and width is 1928. It may lower the sample efficiency! Consider reducing buffer size or use cuda image by set [image_on_cuda=True]. (base_camera.py:49)[0m
+[33;20m[WARNING] You are using too large buffer! The height is 1208, and width is 1928. It may lower the sample efficiency! Consider reducing buffer size or use cuda image by set [image_on_cuda=True]. (base_camera.py:49)[0m
+[38;20m[INFO] Start Scenario Index: 0, Num Scenarios : 1[0m
+[33;20m[WARNING] env.vehicle will be deprecated soon. Use env.agent instead (base_env.py:733)[0m
+Starting listener for: camerad
+启动自动控制模拟器...
+发送自动控制命令...
+开始自动加速...
+自动控制完成
+Process metadrive process:
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/openpilot/tools/sim/bridge/metadrive/metadrive_process.py", line 128, in metadrive_process
+    _, _, terminated, _, _ = env.step(vc)
+                             ^^^^^^^^^^^^
+  File "/home/dengjian/openpilot/.venv/lib/python3.12/site-packages/metadrive/envs/base_env.py", line 436, in step
+    engine_info = self._step_simulator(actions)  # step the simulation
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dengjian/openpilot/.venv/lib/python3.12/site-packages/metadrive/envs/base_env.py", line 465, in _step_simulator
+    self.engine.step(self.config["decision_repeat"])
+  File "/home/dengjian/openpilot/.venv/lib/python3.12/site-packages/metadrive/engine/base_engine.py", line 448, in step
+    self.task_manager.step()
+  File "/home/dengjian/openpilot/.venv/lib/python3.12/site-packages/direct/task/Task.py", line 517, in step
+    raise KeyboardInterrupt
+KeyboardInterrupt
+* interrupt by keyboard
+Killing old publisher: can
+Traceback (most recent call last):
+  File "/home/dengjian/openpilot/openpilot/tools/sim/lib/simulated_car.py", line 104, in update
+    self.send_can_messages(simulator_state)
+  File "/home/dengjian/openpilot/openpilot/tools/sim/lib/simulated_car.py", line 81, in send_can_messages
+    self.pm.send('can', can_list_to_can_capnp(msg))
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+    raise MultiplePublishersError
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use
+Exception in thread Thread-1 (rk_loop):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.12/threading.py", line 1010, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/openpilot/tools/sim/bridge/common.py", line 33, in rk_loop
+    function()
+  File "/home/dengjian/openpilot/openpilot/tools/sim/lib/simulated_car.py", line 104, in update
+    self.send_can_messages(simulator_state)
+  File "/home/dengjian/openpilot/openpilot/tools/sim/lib/simulated_car.py", line 81, in send_can_messages
+    self.pm.send('can', can_list_to_can_capnp(msg))
+  File "/home/dengjian/openpilot/cereal/messaging/__init__.py", line 247, in send
+    self.sock[s].send(dat)
+  File "msgq_repo/msgq/ipc_pyx.pyx", line 246, in msgq.ipc_pyx.PubSocket.send
+    raise MultiplePublishersError
+msgq.ipc_pyx.MultiplePublishersError: Messaging failure : Address already in use

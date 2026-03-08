@@ -17,7 +17,9 @@ fi
 
 echo "updating uv..."
 # ok to fail, can also fail due to installing with brew
-uv self update || true
+# 设置 30 秒超时
+timeout 30 uv self update || echo "uv 更新超时，继续安装..."
+
 
 echo "installing python packages..."
 uv sync --frozen --all-extras

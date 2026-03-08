@@ -57,6 +57,16 @@ class SelfdriveD:
     else:
       self.CP = CP
 
+    # SunnyPilot additions
+    try:
+        sp_flags = self.params.get_int("ToyotaFlagsSP", 0)
+    except:
+        sp_flags = 0
+
+    self.CP_SP = type('CP_SP', (), {
+        'flags': sp_flags
+    })()
+
     self.car_events = CarSpecificEvents(self.CP)
     self.disengage_on_accelerator = not (self.CP.alternativeExperience & ALTERNATIVE_EXPERIENCE.DISABLE_DISENGAGE_ON_GAS)
 
@@ -246,33 +256,33 @@ class SelfdriveD:
       if self.sm['driverAssistance'].leftLaneDeparture or self.sm['driverAssistance'].rightLaneDeparture:
         self.events.add(EventName.ldw)
 
-    #根据carrotMan消息中的atc_type来判断语音的播报类型
+    #Ã¦Â Â¹Ã¦ÂÂ®carrotManÃ¦Â¶Ë†Ã¦ÂÂ¯Ã¤Â¸Â­Ã§Å¡â€žatc_typeÃ¦ÂÂ¥Ã¥Ë†Â¤Ã¦â€“Â­Ã¨Â¯Â­Ã©Å¸Â³Ã§Å¡â€žÃ¦â€™Â­Ã¦Å Â¥Ã§Â±Â»Ã¥Å¾â€¹
     #if self.sm.alive['carrotMan']:
     if False:
       atc_type = self.sm['carrotMan'].atcType
       if atc_type != self.atc_type_last:
-        if "prepare" not in atc_type and "prepare" in self.atc_type_last: # prepare消失时
+        if "prepare" not in atc_type and "prepare" in self.atc_type_last: # prepareÃ¦Â¶Ë†Ã¥Â¤Â±Ã¦â€”Â¶
           if "atc" in atc_type:
             self.events.add(EventName.audioPreLaneChange)
           elif "fork" in atc_type:
-            if "now" in atc_type:  # 立即变道
+            if "now" in atc_type:  # Ã§Â«â€¹Ã¥ÂÂ³Ã¥ÂËœÃ©Ââ€œ
               self.events.add(EventName.audioLaneChange)
-            else: #准备变道
+            else: #Ã¥â€¡â€ Ã¥Â¤â€¡Ã¥ÂËœÃ©Ââ€œ
              self.events.add(EventName.audioPreLaneChange)
         elif "prepare" in atc_type:
           pass
-        elif "atc" not in atc_type and "atc" in self.atc_type_last: # atc消失时
+        elif "atc" not in atc_type and "atc" in self.atc_type_last: # atcÃ¦Â¶Ë†Ã¥Â¤Â±Ã¦â€”Â¶
           if "fork" in atc_type:
-            if "now" in atc_type:  # 立即变道
+            if "now" in atc_type:  # Ã§Â«â€¹Ã¥ÂÂ³Ã¥ÂËœÃ©Ââ€œ
               self.events.add(EventName.audioLaneChange)
-            else: #准备变道
+            else: #Ã¥â€¡â€ Ã¥Â¤â€¡Ã¥ÂËœÃ©Ââ€œ
              self.events.add(EventName.audioPreLaneChange)
-          elif "turn" in atc_type: # 转弯
+          elif "turn" in atc_type: # Ã¨Â½Â¬Ã¥Â¼Â¯
             self.events.add(EventName.audioTurn)
         elif "turn" in atc_type and "turn" not in self.atc_type_last:   # fork left/right -> turn left/right
           self.events.add(EventName.audioTurn)
         elif "now" in atc_type and "now" not in self.atc_type_last:   # fork left/right -> fork left/right now
-          if "fork" in atc_type: # 立即变道
+          if "fork" in atc_type: # Ã§Â«â€¹Ã¥ÂÂ³Ã¥ÂËœÃ©Ââ€œ
             self.events.add(EventName.audioLaneChange)
 
         self.atc_type_last = atc_type
@@ -300,45 +310,45 @@ class SelfdriveD:
       self.events.add(EventName.laneChange)
       laneChange = True
 
-    #new 添加来自modelV2的events
+    #new Ã¦Â·Â»Ã¥Å Â Ã¦ÂÂ¥Ã¨â€¡ÂªmodelV2Ã§Å¡â€ževents
     model_event_type = self.sm['modelV2'].meta.eventType
     if model_event_type > 0 and model_event_type != self.model_event_type:
       event_type_val = model_event_type & 255
       event_type_id = int((model_event_type-event_type_val)/256)
-      if event_type_val == 1:  # 准备变道
+      if event_type_val == 1:  # Ã¥â€¡â€ Ã¥Â¤â€¡Ã¥ÂËœÃ©Ââ€œ
         self.events.add(EventName.audioPreLaneChange)
         print(f"Event: audioPreLaneChange")
-      elif event_type_val == 2:  # 变道
+      elif event_type_val == 2:  # Ã¥ÂËœÃ©Ââ€œ
         self.events.add(EventName.audioLaneChange)
         print(f"Event: audioLaneChange")
-      elif event_type_val == 3:  # 转弯
+      elif event_type_val == 3:  # Ã¨Â½Â¬Ã¥Â¼Â¯
         self.events.add(EventName.audioTurn)
         print(f"Event: audioTurn")
-      elif event_type_val == 4:  # 领航已退出
+      elif event_type_val == 4:  # Ã©Â¢â€ Ã¨Ë†ÂªÃ¥Â·Â²Ã©â‚¬â‚¬Ã¥â€¡Âº
         self.events.add(EventName.audioAtcCancel)
         print(f"Event: audioAtcCancel")
-      elif event_type_val == 5:  # 领航已恢复
+      elif event_type_val == 5:  # Ã©Â¢â€ Ã¨Ë†ÂªÃ¥Â·Â²Ã¦ÂÂ¢Ã¥Â¤Â
         self.events.add(EventName.audioAtcResume)
         print(f"Event: audioAtcResume")
-      elif event_type_val == 6:  # 盲区有车
+      elif event_type_val == 6:  # Ã§â€ºÂ²Ã¥Å’ÂºÃ¦Å“â€°Ã¨Â½Â¦
         self.events.add(EventName.laneChangeBlocked)
         print(f"Event: laneChangeBlocked")
-      elif event_type_val == 7:  # 准备左变道
+      elif event_type_val == 7:  # Ã¥â€¡â€ Ã¥Â¤â€¡Ã¥Â·Â¦Ã¥ÂËœÃ©Ââ€œ
         self.events.add(EventName.audioPreLaneChangeLeft)
         print(f"Event: audioPreLaneChangeLeft")
-      elif event_type_val == 8:  # 准备右变道
+      elif event_type_val == 8:  # Ã¥â€¡â€ Ã¥Â¤â€¡Ã¥ÂÂ³Ã¥ÂËœÃ©Ââ€œ
         self.events.add(EventName.audioPreLaneChangeRight)
         print(f"Event: audioPreLaneChangeRight")
-      elif event_type_val == 9:  # 变道已完成
+      elif event_type_val == 9:  # Ã¥ÂËœÃ©Ââ€œÃ¥Â·Â²Ã¥Â®Å’Ã¦Ë†Â
         self.events.add(EventName.audioLaneChangeOk)
         print(f"Event: audioLaneChangeOk")
-      elif event_type_val == 10:  # 车辆已靠边
+      elif event_type_val == 10:  # Ã¨Â½Â¦Ã¨Â¾â€ Ã¥Â·Â²Ã©ÂÂ Ã¨Â¾Â¹
         self.events.add(EventName.audioLastLane)
         print(f"Event: audioLastLane")
-      elif event_type_val == 11:  # 出现新车道
+      elif event_type_val == 11:  # Ã¥â€¡ÂºÃ§Å½Â°Ã¦â€“Â°Ã¨Â½Â¦Ã©Ââ€œ
         self.events.add(EventName.audioNewLane)
         print(f"Event: audioNewLane")
-      elif event_type_val == 12:  # 变道已结束
+      elif event_type_val == 12:  # Ã¥ÂËœÃ©Ââ€œÃ¥Â·Â²Ã§Â»â€œÃ¦ÂÅ¸
         self.events.add(EventName.audioLaneChangeEnd)
         print(f"Event: audioLaneChangeEnd")
 
@@ -347,7 +357,7 @@ class SelfdriveD:
       self.model_event_type = model_event_type
       #print(f"val={model_event_type},id={event_type_id},event_type={event_type_val}")
 
-      # 添加调试信息
+      # Ã¦Â·Â»Ã¥Å Â Ã¨Â°Æ’Ã¨Â¯â€¢Ã¤Â¿Â¡Ã¦ÂÂ¯
       #print(f"Current alert types: {self.state_machine.current_alert_types}")
       #print(f"Clear event types: {clear_event_types}")
       #print(f"System state: {self.state_machine.state}")

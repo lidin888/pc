@@ -1,0 +1,252 @@
+system/loggerd/bootlog.cc: bootlog to /home/dengjian/.comma/media/0/realdata/boot/000000f9--4351eef30a.zst
+README.md: needs update
+camera/cam_blindspot: needs update
+cereal/custom.capnp: needs update
+cereal/log.capnp: needs update
+cereal/services.py: needs update
+common/params.cc: needs update
+common/params.h: needs update
+common/params_keys.h: needs update
+opendbc_repo/opendbc/car/car_helpers.py: needs update
+opendbc_repo/opendbc/car/interfaces.py: needs update
+opendbc_repo/opendbc/car/toyota/carcontroller.py: needs update
+opendbc_repo/opendbc/car/toyota/carstate.py: needs update
+opendbc_repo/opendbc/car/toyota/fingerprints.py: needs update
+opendbc_repo/opendbc/car/toyota/interface.py: needs update
+opendbc_repo/opendbc/car/toyota/toyotacan.py: needs update
+opendbc_repo/opendbc/car/toyota/values.py: needs update
+panda/board/obj/gitversion.h: needs update
+pyproject.toml: needs update
+selfdrive/car/card.py: needs update
+selfdrive/controls/controlsd.py: needs update
+selfdrive/controls/lib/drive_helpers.py: needs update
+selfdrive/controls/lib/latcontrol.py: needs update
+selfdrive/controls/lib/latcontrol_pid.py: needs update
+selfdrive/controls/lib/latcontrol_torque.py: needs update
+selfdrive/controls/lib/lateral_mpc_lib/lat_mpc.py: needs update
+selfdrive/locationd/locationd_jy62: needs update
+selfdrive/selfdrived/selfdrived.py: needs update
+selfdrive/ui/SConscript: needs update
+selfdrive/ui/carrot.cc: needs update
+selfdrive/ui/carrot_gpu.cc: needs update
+selfdrive/ui/qt/offroad/settings.cc: needs update
+selfdrive/ui/qt/onroad/model.cc: needs update
+selfdrive/ui/translations/main_ar.ts: needs update
+selfdrive/ui/translations/main_de.ts: needs update
+selfdrive/ui/translations/main_es.ts: needs update
+selfdrive/ui/translations/main_fr.ts: needs update
+selfdrive/ui/translations/main_ja.ts: needs update
+selfdrive/ui/translations/main_ko.ts: needs update
+selfdrive/ui/translations/main_pt-BR.ts: needs update
+selfdrive/ui/translations/main_th.ts: needs update
+selfdrive/ui/translations/main_tr.ts: needs update
+selfdrive/ui/translations/main_zh-CHS.ts: needs update
+selfdrive/ui/translations/main_zh-CHT.ts: needs update
+system/hardware/hw.h: needs update
+system/hardware/hw.py: needs update
+system/manager/manager.py: needs update
+tools/install_python_dependencies.sh: needs update
+tools/op.sh: needs update
+tools/sim/bridge/metadrive/metadrive_bridge.py: needs update
+ * Serving Flask app 'selfdrive.frogpilot.fleetmanager.fleet_manager'
+ * Debug mode: off
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8082
+ * Running on http://10.194.32.122:8082
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+: libpng warning: iCCP: known incorrect sRGB profile
+: libpng warning: iCCP: known incorrect sRGB profile
+kj/filesystem-disk-unix.c++:1734: warning: PWD environment variable doesn't match current directory; pwd = /home/dengjian/openpilot/system/manager
+VIN 00000000000000000
+VIN 00000000000000000
+/bin/sh: 1: /data/openpilot/selfdrive/debug/debug_console_carrot.py: not found
+modeld init
+setting up CL context
+CL context ready; loading model
+models loaded in 0.6s, modeld starting
+vision stream set up, main_wide_camera: False, use_extra_client: True
+connected main cam with buffer size: 3493536 (1928 x 1208)
+connected extra cam with buffer size: 3493536 (1928 x 1208)
+{'event': 'fingerprinted', 'car_fingerprint': 'HONDA_CIVIC_2022', 'source': 2, 'fuzzy': False, 'cached': False, 'fw_count': 0, 'ecu_responses': [], 'vin_rx_addr': -1, 'vin_rx_bus': -1, 'fingerprints': '{0: {344: 8, 464: 8, 662: 4, 401: 8, 304: 8, 773: 7, 399: 7, 330: 8, 420: 8, 432: 7, 427: 3, 450: 8, 1029: 8, 882: 8, 804: 8, 467: 8, 806: 8, 380: 8, 777: 8}, 1: {}, 2: {228: 5, 780: 8, 829: 8}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {}}', 'fw_query_time': 0.0026992959999958543}
+{'event': 'fingerprinted', 'car_fingerprint': 'HONDA_CIVIC_2022', 'source': 2, 'fuzzy': False, 'cached': False, 'fw_count': 0, 'ecu_responses': [], 'vin_rx_addr': -1, 'vin_rx_bus': -1, 'fingerprints': '{0: {344: 8, 464: 8, 662: 4, 401: 8, 304: 8, 773: 7, 399: 7, 330: 8, 420: 8, 432: 7, 427: 3, 450: 8, 1029: 8, 882: 8, 804: 8, 467: 8, 806: 8, 380: 8, 777: 8}, 1: {}, 2: {228: 5, 780: 8, 829: 8}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {}}', 'fw_query_time': 0.0026992959999958543}
+{"event": "selfdrived.initialized", "dt": 0.0, "timeout": false, "canValid": true, "invalid": ["deviceState", "pandaStates", "peripheralState", "modelV2", "liveCalibration", "carOutput", "driverMonitoringState", "longitudinalPlan", "liveLocationKalman", "managerState", "liveParameters", "radarState", "liveTorqueParameters", "controlsState", "carControl", "driverAssistance", "alertDebug", "roadCameraState", "gpsLocation"], "not_alive": ["deviceState", "pandaStates", "peripheralState", "modelV2", "liveCalibration", "driverMonitoringState", "longitudinalPlan", "liveLocationKalman", "managerState", "liveParameters", "radarState", "liveTorqueParameters", "controlsState", "carControl", "driverAssistance", "alertDebug", "roadCameraState", "gpsLocation"], "not_freq_ok": [], "error": true}
+skipping model eval. Dropped 124 frames
+---[14:44:12]atc_type change, curr:none, prev:
+[0]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[10]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[20]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[30]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[40]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[50]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[60]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[70]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[80]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[90]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[100]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[110]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[120]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[130]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[140]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[150]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[160]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[170]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[180]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[190]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[200]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[210]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[220]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[230]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[240]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[250]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[260]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[270]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[280]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[290]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[300]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[310]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[320]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[330]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[340]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[350]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[360]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[370]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[380]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[390]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[400]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[410]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[420]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[430]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[440]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[450]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[460]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[470]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[480]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[490]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[500]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[510]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[520]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[530]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[540]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[550]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[560]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[570]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[580]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[590]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[600]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[610]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[620]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[630]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[640]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[650]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[660]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[670]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[680]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[690]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[700]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[710]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[720]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[730]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[740]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[750]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[760]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[770]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[780]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[790]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[800]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+x=133, y=669, ey=411
+_current_carrot_display1=1
+[810]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[820]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[830]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[840]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[850]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[860]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[870]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[880]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[890]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[900]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[910]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[920]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[930]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[940]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[950]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[960]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[970]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[980]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[990]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+x=950, y=421, ey=659
+_current_carrot_display1=2
+x=1244, y=190, ey=890
+_current_carrot_display1=3
+x=492, y=782, ey=298
+_current_carrot_display1=3
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+x=92, y=518, ey=562
+{"event": "process_not_running", "not_running": "{'ui'}", "error": true}
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+Waiting for CAN messages...
+SelectedCar = HONDA_CIVIC_2022
+Carrot GitBranch = b'cpv9-pc-dev', b"'1770599295 2026-02-09 09:08:15 +0800'"
+########get_nn_model_path : HONDA_CIVIC_2022 
+Estimated radar dt: 0.049842095375061034 sec
+{"event": "process_not_running", "not_running": "{'card', 'ui'}", "error": true}
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+{"event": "process_not_running", "not_running": "{'soundd', 'card', 'ui'}", "error": true}
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+{"event": "process_not_running", "not_running": "{'soundd', 'card', 'ui', 'carrot_man'}", "error": true}
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+{"event": "process_not_running", "not_running": "{'soundd', 'card', 'lane', 'carrot_man', 'ui'}", "error": true}
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+selfdrive/locationd/locationd.cc: Time gap of over 10s detected, kalman reset
+########get_nn_model_path : HONDA_CIVIC_2022 
+###RadarD.. : delay =  0.10000000149011612 3
+####ET.ENABLE event.... [10]
+#######State.disabled => enabled
+#######State.enabled => softDisabling [79, 81]
+#######State.softDisabling => disabled

@@ -2691,10 +2691,10 @@ struct Event {
     # DON'T change the ID (e.g. @107)
     # DON'T change which struct it points to
     carrotMan @107 :Custom.CarrotMan;
-    amapNavi @108 :Custom.AmapNavi; #新加的导航和雷达消息
+    amapNavi @108 :Custom.AmapNavi; #æ–°åŠ çš„å¯¼èˆªå’Œé›·è¾¾æ¶ˆæ¯
     #customReserved1 @108 :Custom.CustomReserved1;
-    customReserved2 @109 :Custom.CustomReserved2;
-    customReserved3 @110 :Custom.CustomReserved3;
+    longitudinalPlanSP @109 :Custom.LongitudinalPlanSP;
+    onroadEventSP @110 :Custom.OnroadEventSP;
     customReserved4 @111 :Custom.CustomReserved4;
     customReserved5 @112 :Custom.CustomReserved5;
     customReserved6 @113 :Custom.CustomReserved6;

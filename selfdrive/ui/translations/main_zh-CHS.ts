@@ -91,35 +91,35 @@
     <name>CarrotPanel</name>
     <message>
         <source>开始</source>
-        <translation type="unfinished"></translation>
+        <translation>开始</translation>
     </message>
     <message>
         <source>巡航</source>
-        <translation type="unfinished"></translation>
+        <translation>巡航</translation>
     </message>
     <message>
         <source>导航</source>
-        <translation type="unfinished"></translation>
+        <translation>导航</translation>
     </message>
     <message>
         <source>速度</source>
-        <translation type="unfinished"></translation>
+        <translation>速度</translation>
     </message>
     <message>
         <source>调节</source>
-        <translation type="unfinished"></translation>
+        <translation>调节</translation>
     </message>
     <message>
         <source>显示</source>
-        <translation type="unfinished"></translation>
+        <translation>显示</translation>
     </message>
     <message>
         <source>轨迹</source>
-        <translation type="unfinished"></translation>
+        <translation>轨迹</translation>
     </message>
     <message>
         <source>选择您的车辆</source>
-        <translation type="unfinished"></translation>
+        <translation>选择您的车辆</translation>
     </message>
 </context>
 <context>
@@ -152,27 +152,27 @@
     <name>DestinationWidget</name>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>家</translation>
     </message>
     <message>
         <source>Work</source>
-        <translation type="unfinished"></translation>
+        <translation>工作</translation>
     </message>
     <message>
         <source>No destination set</source>
-        <translation type="unfinished"></translation>
+        <translation>未设置目的地</translation>
     </message>
     <message>
         <source>home</source>
-        <translation type="unfinished"></translation>
+        <translation>家</translation>
     </message>
     <message>
         <source>work</source>
-        <translation type="unfinished"></translation>
+        <translation>工作</translation>
     </message>
     <message>
         <source>No %1 location set</source>
-        <translation type="unfinished"></translation>
+        <translation>未设置%1位置</translation>
     </message>
 </context>
 <context>
@@ -398,11 +398,11 @@
     </message>
     <message>
         <source>Calibration Status</source>
-        <translation type="unfinished"></translation>
+        <translation>校准状态</translation>
     </message>
     <message>
         <source>SHOW</source>
-        <translation type="unfinished"></translation>
+        <translation>显示</translation>
     </message>
     <message>
         <source>ReCalibration</source>
@@ -410,7 +410,7 @@
     </message>
     <message>
         <source>Reboot &amp; Disengage to Calibration</source>
-        <translation type="unfinished"></translation>
+        <translation>取消openpilot以校准</translation>
     </message>
     <message>
         <source>AllCalibParams</source>
@@ -422,24 +422,20 @@
     </message>
     <message>
         <source>LiveDelay</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">实时延迟</translation>
     </message>
     <message>
         <source>LiveTorqueParameters</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">实时扭矩参数</translation>
     </message>
     <message>
         <source>LiveParameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LiveParametersV2</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">实时学习参数</translation>
     </message>
     <message>
         <source>AllLiveParams</source>
         <translation>实时学习参数</translation>
-    </message>    
+    </message>
     <message>
         <source>Select calibration parameter to reset</source>
         <translation>请选择你要重置的校准参数</translation>
@@ -453,22 +449,42 @@
     <name>DrawCarrot</name>
     <message>
         <source>ECO</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">经济模式</translation>
     </message>
     <message>
         <source>SAFE</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">安全模式</translation>
     </message>
     <message>
         <source>NORM</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">正常模式</translation>
     </message>
     <message>
         <source>FAST</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">快速模式</translation>
     </message>
     <message>
         <source>ERRM</source>
+        <translation type="vanished">错误模式</translation>
+    </message>
+    <message>
+        <source>经 济</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>安 全</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>标 准</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>运 动</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>错 误</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -500,27 +516,29 @@
         <source>openpilot learns to drive by watching humans, like you, drive.
 
 Firehose Mode allows you to maximize your training data uploads to improve openpilot&apos;s driving models. More data means bigger models, which means better Experimental Mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>openpilot 通过观看你驾驶的方式来学习驾驶。
+
+训练数据上传模式允许你最大化上传训练数据以改进 openpilot 的驾驶模型。更多数据意味着更大的模型，这意味着更好的试验模式。</translation>
     </message>
     <message>
         <source>Firehose Mode: ACTIVE</source>
-        <translation type="unfinished"></translation>
+        <translation>训练数据上传模式已激活</translation>
     </message>
     <message>
         <source>For maximum effectiveness, bring your device inside and connect to a good USB-C adapter and Wi-Fi weekly.&lt;br&gt;&lt;br&gt;Firehose Mode can also work while you&apos;re driving if connected to a hotspot or unlimited SIM card.&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Frequently Asked Questions&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;Does it matter how or where I drive?&lt;/i&gt; Nope, just drive as you normally would.&lt;br&gt;&lt;br&gt;&lt;i&gt;What&apos;s a good USB-C adapter?&lt;/i&gt; Any fast phone or laptop charger should be fine.&lt;br&gt;&lt;br&gt;&lt;i&gt;Does it matter which software I run?&lt;/i&gt; Yes, only upstream openpilot (and particular forks) are able to be used for training.</source>
-        <translation type="unfinished"></translation>
+        <translation>为达到最佳效果，请每周将设备带到室内并连接到良好的USB-C适配器和Wi-Fi。&lt;br&gt;&lt;br&gt;如果连接到热点或无限流量SIM卡，训练数据上传模式也可以在您驾驶时工作。&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;常见问题&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;驾驶方式或地点有影响吗？&lt;/i&gt; 没有影响，像平时一样驾驶即可。&lt;br&gt;&lt;br&gt;&lt;i&gt;什么是好的USB-C适配器？&lt;/i&gt; 任何快速手机或笔记本电脑充电器都可以。&lt;br&gt;&lt;br&gt;&lt;i&gt;运行的软件有要求吗？&lt;/i&gt; 是的，只有上游openpilot（以及特定分支）可用于训练。</translation>
     </message>
     <message>
         <source>&lt;b&gt;%1 %2&lt;/b&gt; of your driving are in the training dataset so far.</source>
-        <translation type="unfinished"></translation>
+        <translation>到目前为止，你驾驶的 %1 %2 已被上传到训练数据集中。</translation>
     </message>
     <message>
         <source>ACTIVE</source>
-        <translation type="unfinished"></translation>
+        <translation>训练数据上传模式已激活</translation>
     </message>
     <message>
         <source>&lt;span stylesheet=&apos;font-size: 60px; font-weight: bold; color: #e74c3c;&apos;&gt;INACTIVE&lt;/span&gt;: connect to unmetered network</source>
-        <translation type="unfinished"></translation>
+        <translation>训练数据上传模式已停用：请连接到无流量限制的网络</translation>
     </message>
 </context>
 <context>
@@ -559,48 +577,55 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     </message>
 </context>
 <context>
+    <name>LaneChangeSettings</name>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">返回</translation>
+    </message>
+</context>
+<context>
     <name>MapETA</name>
     <message>
         <source>eta</source>
-        <translation type="unfinished"></translation>
+        <translation>预计到达时间</translation>
     </message>
     <message>
         <source>min</source>
-        <translation type="unfinished"></translation>
+        <translation>分钟</translation>
     </message>
     <message>
         <source>hr</source>
-        <translation type="unfinished"></translation>
+        <translation>小时</translation>
     </message>
 </context>
 <context>
     <name>MapSettings</name>
     <message>
         <source>NAVIGATION</source>
-        <translation type="unfinished"></translation>
+        <translation>导航</translation>
     </message>
     <message>
         <source>Manage at %1</source>
-        <translation type="unfinished"></translation>
+        <translation>在 %1 管理</translation>
     </message>
     <message>
         <source>Manage at connect.comma.ai</source>
-        <translation type="unfinished"></translation>
+        <translation>在 connect.comma.ai 管理</translation>
     </message>
 </context>
 <context>
     <name>MapWindow</name>
     <message>
         <source>Map Loading</source>
-        <translation type="unfinished"></translation>
+        <translation>地图加载中</translation>
     </message>
     <message>
         <source>Waiting for GPS(APN)</source>
-        <translation type="unfinished"></translation>
+        <translation>等待GPS(APN)</translation>
     </message>
     <message>
         <source>Waiting for route</source>
-        <translation type="unfinished"></translation>
+        <translation>等待路线</translation>
     </message>
 </context>
 <context>
@@ -758,14 +783,97 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     <name>PathEndDrawer</name>
     <message>
         <source>Signal Error</source>
-        <translation type="unfinished"></translation>
+        <translation>信号错误</translation>
     </message>
     <message>
         <source>Signal Ready</source>
-        <translation type="unfinished"></translation>
+        <translation>信号就绪</translation>
     </message>
     <message>
         <source>Signal slowing</source>
+        <translation>信号减速</translation>
+    </message>
+</context>
+<context>
+    <name>PlatformSelector</name>
+    <message>
+        <source>Vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SEARCH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search your vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter model year (e.g., 2021) and model name (Toyota Corolla):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SEARCHING</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>REMOVE</source>
+        <translation type="unfinished">删除</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This setting will take effect immediately.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This setting will take effect once the device enters offroad state.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vehicle Selector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translation type="unfinished">确认</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <source>No vehicles found for query: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unrecognized Vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fingerprinted automatically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manually selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not fingerprinted or manually selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select vehicle to force fingerprint manually.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Colors represent fingerprint status:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -849,23 +957,23 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     </message>
     <message>
         <source>km</source>
-        <translation type="unfinished"></translation>
+        <translation>公里</translation>
     </message>
     <message>
         <source>m</source>
-        <translation type="unfinished"></translation>
+        <translation>米</translation>
     </message>
     <message>
         <source>mi</source>
-        <translation type="unfinished"></translation>
+        <translation>英里</translation>
     </message>
     <message>
         <source>ft</source>
-        <translation type="unfinished"></translation>
+        <translation>英尺</translation>
     </message>
     <message>
         <source>carrotpilot</source>
-        <translation type="unfinished"></translation>
+        <translation>carrotpilot</translation>
     </message>
 </context>
 <context>
@@ -910,6 +1018,171 @@ This may take up to a minute.</source>
     </message>
 </context>
 <context>
+    <name>SPPSettingsPanel</name>
+    <message>
+        <source>&lt;span style=&quot;font-size:14px; color:#e0e0e0&quot;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-----------------------------&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;/span&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Steering Learning Settings</source>
+        <translation>转向学习设置</translation>
+    </message>
+    <message>
+        <source>Adjust steering response and learning parameters</source>
+        <translation>调整转向响应和学习参数</translation>
+    </message>
+    <message>
+        <source>Use Lane Turn Desire</source>
+        <translation>使用车道转向意图</translation>
+    </message>
+    <message>
+        <source>Enable lane turn desire learning to improve steering response</source>
+        <translation>启用车道转向意图学习以改善转向响应</translation>
+    </message>
+    <message>
+        <source>Adjust Steering Speed</source>
+        <translation>调整转向速度</translation>
+    </message>
+    <message>
+        <source>Set the maximum speed for lane turn desire. Default is 19 %1.</source>
+        <translation>设置车道转向意图的最大速度。默认值为19 %1。</translation>
+    </message>
+    <message>
+        <source>Live Learning Steer Delay</source>
+        <translation>实时学习转向延迟</translation>
+    </message>
+    <message>
+        <source>Enable: System automatically calculates delay (hides manual settings below).
+Disable: Need to manually set software delay below.</source>
+        <translation>启用：系统自动计算延迟（隐藏下方手动设置）。
+禁用：需要手动设置下方软件延迟。</translation>
+    </message>
+    <message>
+        <source>Adjust Software Delay</source>
+        <translation>调整软件延迟</translation>
+    </message>
+    <message>
+        <source>Adjust the software delay when Live Learning Steer Delay is toggled off. Default software delay value is 0.2</source>
+        <translation>当实时学习转向延迟关闭时调整软件延迟。默认软件延迟值为0.2</translation>
+    </message>
+    <message>
+        <source>Delay Calculation</source>
+        <translation>延迟计算</translation>
+    </message>
+    <message>
+        <source>Total delay = Hardware actuator delay (0.1s) + Software delay</source>
+        <translation type="vanished">总延迟 = 硬件延迟(0.1秒) + 软件延迟</translation>
+    </message>
+    <message>
+        <source>Toyota Specific Settings</source>
+        <translation>丰田特定设置</translation>
+    </message>
+    <message>
+        <source>Toyota vehicle specific adjustment options</source>
+        <translation>丰田车辆特定调整选项</translation>
+    </message>
+    <message>
+        <source>Toyota: Drive Mode Button Link</source>
+        <translation>丰田：驾驶模式按钮联动</translation>
+    </message>
+    <message>
+        <source>Link the vehicle&apos;s drive mode button with acceleration personality (Easy, Standard, Sport) for a seamless driving experience</source>
+        <translation>将车辆的驾驶模式按钮与加速特性（轻松、标准、运动）联动，实现无缝驾驶体验</translation>
+    </message>
+    <message>
+        <source>Toyota: Auto Brake Hold (TSS2 Hybrid)</source>
+        <translation>丰田：自动刹车保持（TSS2混动）</translation>
+    </message>
+    <message>
+        <source>Automatically hold the vehicle when it comes to a stop. This feature is designed for TSS2 hybrid vehicles</source>
+        <translation>车辆停止时自动保持刹车。此功能专为TSS2混动车辆设计</translation>
+    </message>
+    <message>
+        <source>Toyota: Enhanced BSM Support</source>
+        <translation>丰田：增强盲点监测支持</translation>
+    </message>
+    <message>
+        <source>Add enhanced blind spot monitoring support for Toyota vehicles, especially Prius TSS2 and some TSS-P models</source>
+        <translation>为丰田车辆添加增强盲点监测支持，特别是普锐斯TSS2和一些TSS-P车型</translation>
+    </message>
+    <message>
+        <source>Toyota: TSS2 Longitudinal Control</source>
+        <translation>丰田：TSS2纵向控制</translation>
+    </message>
+    <message>
+        <source>Enable optimized longitudinal control for Toyota TSS2 vehicles</source>
+        <translation>为丰田TSS2车辆启用优化的纵向控制</translation>
+    </message>
+    <message>
+        <source>Toyota: Stock Longitudinal Control</source>
+        <translation>丰田：原厂纵向控制</translation>
+    </message>
+    <message>
+        <source>Use Toyota stock longitudinal control parameters</source>
+        <translation>使用丰田原厂纵向控制参数</translation>
+    </message>
+    <message>
+        <source>End to End Settings</source>
+        <translation>端到端设置</translation>
+    </message>
+    <message>
+        <source>End to end control related options</source>
+        <translation>端到端控制相关选项</translation>
+    </message>
+    <message>
+        <source>Enable End to End Control</source>
+        <translation>启用端到端控制</translation>
+    </message>
+    <message>
+        <source>Enable end-to-end neural network control for a more natural steering experience</source>
+        <translation>启用端到端神经网络控制以获得更自然的转向体验</translation>
+    </message>
+    <message>
+        <source>End to End Force Lane Change</source>
+        <translation>端到端强制变道</translation>
+    </message>
+    <message>
+        <source>Force lane change control in end-to-end mode</source>
+        <translation>在端到端模式下强制变道控制</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Live Learning Enabled&lt;/b&gt;&lt;br&gt;System is automatically calculating optimal steering delay.</source>
+        <translation>&lt;b&gt;实时学习已启用&lt;/b&gt;&lt;br&gt;系统正在自动计算最佳转向延迟。</translation>
+    </message>
+    <message>
+        <source>Hardware Delay: </source>
+        <translation>硬件延迟：</translation>
+    </message>
+    <message>
+        <source>Software Delay: </source>
+        <translation>软件延迟：</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Total Delay: &lt;font color=&quot;#4fc3f7&quot;&gt;</source>
+        <translation>&lt;b&gt;总延迟：&lt;font color=&quot;#4fc3f7&quot;&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Manual Setting Mode&lt;/b&gt;&lt;br&gt;Please drag the slider above to adjust software delay.</source>
+        <translation type="vanished">&lt;b&gt;手动设置模式&lt;/b&gt;&lt;br&gt;请拖动上方滑块调整软件延迟。</translation>
+    </message>
+    <message>
+        <source>Total delay = Hardware actuator delay (0.1s) + Software delay&lt;br&gt;&lt;br&gt;</source>
+        <translation>总延迟 = 硬件延迟(0.1秒) + 软件延迟&lt;br&gt;&lt;br&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Manual Setting Mode&lt;/b&gt;&lt;br&gt;Drag the slider above to adjust software delay.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SettingsWindow</name>
     <message>
         <source>×</source>
@@ -933,7 +1206,7 @@ This may take up to a minute.</source>
     </message>
     <message>
         <source>Developer</source>
-        <translation type="vanished">开发人员</translation>
+        <translation type="vanished">开发者选项</translation>
     </message>
     <message>
         <source>Firehose</source>
@@ -941,10 +1214,14 @@ This may take up to a minute.</source>
     </message>
     <message>
         <source>萝卜</source>
-        <translation type="unfinished"></translation>
+        <translation>萝卜</translation>
     </message>
     <message>
         <source>开发</source>
+        <translation>开发者选项</translation>
+    </message>
+    <message>
+        <source>SP设置</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1134,23 +1411,23 @@ This may take up to a minute.</source>
     </message>
     <message>
         <source>永远在线</source>
-        <translation type="unfinished"></translation>
+        <translation>永远在线</translation>
     </message>
     <message>
         <source>温度</source>
-        <translation type="unfinished"></translation>
+        <translation>温度</translation>
     </message>
     <message>
         <source>很热</source>
-        <translation type="unfinished"></translation>
+        <translation>很热</translation>
     </message>
     <message>
         <source>凉爽</source>
-        <translation type="unfinished"></translation>
+        <translation>凉爽</translation>
     </message>
     <message>
         <source>还行</source>
-        <translation type="unfinished"></translation>
+        <translation>还行</translation>
     </message>
 </context>
 <context>
@@ -1295,6 +1572,34 @@ This may take up to a minute.</source>
     </message>
 </context>
 <context>
+    <name>SteeringSettings</name>
+    <message>
+        <source>转向学习设置</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>调整转向响应和学习参数</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>调整转向速度</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>设置车道转向意图的最大速度。默认值为19 %1。</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>调整软件延迟</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>当关闭实时学习转向延迟时调整软件延迟。
+默认软件延迟值为0.2秒</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TermsPage</name>
     <message>
         <source>Decline</source>
@@ -1306,11 +1611,11 @@ This may take up to a minute.</source>
     </message>
     <message>
         <source>Welcome to openpilot</source>
-        <translation type="unfinished"></translation>
+        <translation>欢迎使用openpilot</translation>
     </message>
     <message>
         <source>You must accept the Terms and Conditions to use openpilot. Read the latest terms at &lt;span style=&apos;color: #465BEA;&apos;&gt;https://comma.ai/terms&lt;/span&gt; before continuing.</source>
-        <translation type="unfinished"></translation>
+        <translation>您必须同意条款和条件才能使用openpilot。请在继续之前阅读最新条款&lt;span style=&apos;color: #465BEA;&apos;&gt;https://comma.ai/terms&lt;/span&gt;。</translation>
     </message>
 </context>
 <context>
@@ -1425,14 +1730,57 @@ This may take up to a minute.</source>
     </message>
     <message>
         <source>Record and Upload Microphone Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>记录并上传麦克风音频</translation>
     </message>
     <message>
         <source>Record and store microphone audio while driving. The audio will be included in the dashcam video in comma connect.</source>
-        <translation type="unfinished"></translation>
+        <translation>在驾驶过程中记录并存储麦克风音频。音频将包含在comma connect中的驾驶视频中。</translation>
     </message>
     <message>
         <source>MoreRelaxed</source>
+        <translation>更舒适</translation>
+    </message>
+</context>
+<context>
+    <name>ToyotaSettings</name>
+    <message>
+        <source>Toyota: Drive Mode Button Link</source>
+        <translation type="unfinished">丰田：驾驶模式按钮联动</translation>
+    </message>
+    <message>
+        <source>Links car&apos;s drive mode button with acceleration personalities (Relaxed, Standard, Sport) for seamless driving experience.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toyota: Auto Brake Hold (TSS2 Hybrid)</source>
+        <translation type="unfinished">丰田：自动刹车保持（TSS2混动）</translation>
+    </message>
+    <message>
+        <source>Automatically hold the vehicle at a stop when the lead car is stopped. This feature is specifically designed for TSS2 Hybrid vehicles.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toyota: Enhanced BSM Support</source>
+        <translation type="unfinished">丰田：增强盲点监测支持</translation>
+    </message>
+    <message>
+        <source>Add enhanced Blind Spot Monitoring support for Toyota vehicles, particularly for Prius TSS2 and some TSS-P models.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toyota: TSS2 Custom Tune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable custom longitudinal tuning for Toyota TSS2 vehicles. This provides optimized acceleration and braking behavior for better driving experience.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toyota: Stock Toyota Longitudinal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use the stock Toyota longitudinal control instead of sunnypilot longitudinal control for a more factory-like driving experience.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

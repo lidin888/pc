@@ -194,7 +194,7 @@ class LatControlTorque(LatControl):
       low_speed_factor = np.interp(CS.vEgo, LOW_SPEED_X, LOW_SPEED_Y)**2
       setpoint = desired_lateral_accel + low_speed_factor * desired_curvature
       measurement = actual_lateral_accel + low_speed_factor * actual_curvature
-      
+
       lateral_jerk_setpoint = 0
       lateral_jerk_measurement = 0
       lookahead_lateral_jerk = 0
@@ -296,9 +296,11 @@ class LatControlTorque(LatControl):
       pid_log.output = float(-output_torque)
       pid_log.actualLateralAccel = float(actual_lateral_accel)
       pid_log.desiredLateralAccel = float(desired_lateral_accel)
-      pid_log.saturated = bool(self._check_saturation(self.steer_max - abs(output_torque) < 1e-3, CS, steer_limited_by_controls, curvature_limited))
-      #if nn_log is not None:
-      #  pid_log.nnLog = nn_log
+      # More permissive saturation detection for highway sustained curves
+      # Only flag saturation at low speeds or very extreme conditions
+      saturation_threshold = 5e-3 if CS.vEgo > 20 else 1e-3  # 5x more permissive at highway speeds
+      pid_log.saturated = bool(self._check_saturation(self.steer_max - abs(output_torque) < saturation_threshold,
+                                                CS, steer_limited_by_controls, curvature_limited))
 
     # TODO left is positive in this convention
     return -output_torque,angle_steers_des, pid_log

@@ -48,9 +48,19 @@ class CarState(CarStateBase):
     self.pcm_follow_distance = 0
 
     self.acc_type = 1
+
+    # SunnyPilot additions
+    self.pre_collision_2 = {}
     self.lkas_hud = {}
     self.gvc = 0.0
     self.secoc_synchronization = None
+
+    # 丰田特调相关变量
+    from openpilot.common.params import Params
+    self.toyota_drive_mode = Params().get_bool('ToyotaDriveMode')
+    self.signals_checked = False
+    self.sport_signal_seen = False
+    self.eco_signal_seen = False
 
   def update(self, can_parsers) -> structs.CarState:
     cp = can_parsers[Bus.pt]
@@ -61,6 +71,10 @@ class CarState(CarStateBase):
 
     if not self.CP.flags & ToyotaFlags.SECOC.value:
       self.gvc = cp.vl["VSC1S07"]["GVC"]
+
+    # SunnyPilot additions - store PRE_COLLISION_2 for auto brake hold
+    if "PRE_COLLISION_2" in cp.vl:
+      self.pre_collision_2 = cp.vl["PRE_COLLISION_2"]
 
     ret.doorOpen = any([cp.vl["BODY_CONTROL_STATE"]["DOOR_OPEN_FL"], cp.vl["BODY_CONTROL_STATE"]["DOOR_OPEN_FR"],
                         cp.vl["BODY_CONTROL_STATE"]["DOOR_OPEN_RL"], cp.vl["BODY_CONTROL_STATE"]["DOOR_OPEN_RR"]])
@@ -190,6 +204,91 @@ class CarState(CarStateBase):
 
       ret.buttonEvents = create_button_events(self.distance_button, prev_distance_button, {1: ButtonType.gapAdjustCruise})
 
+    # 丰田特调逻辑 - 驾驶模式检测
+    if self.toyota_drive_mode:
+      # Determine sport signal based on car model
+      sport_signal = 'SPORT_ON_2' if self.CP.carFingerprint in (CAR.TOYOTA_RAV4_TSS2, CAR.LEXUS_ES_TSS2, CAR.TOYOTA_HIGHLANDER_TSS2) else 'SPORT_ON'
+
+      # Check signals once
+      if not self.signals_checked:
+        self.signals_checked = True
+
+        # Try to detect sport mode signal, handle missing signal with a fallback
+        try:
+          sport_mode = cp.vl["GEAR_PACKET"][sport_signal]
+          self.sport_signal_seen = True
+        except KeyError:
+          sport_mode = 0
+          self.sport_signal_seen = False
+
+        # Try to detect eco mode signal, handle missing signal with a fallback
+        try:
+          eco_mode = cp.vl["GEAR_PACKET"]['ECON_ON']
+          self.eco_signal_seen = True
+        except KeyError:
+          eco_mode = 0
+          self.eco_signal_seen = False
+      else:
+        # Always re-check the signals to account for mode changes
+        sport_mode = cp.vl["GEAR_PACKET"][sport_signal] if self.sport_signal_seen else 0
+        eco_mode = cp.vl["GEAR_PACKET"]['ECON_ON'] if self.eco_signal_seen else 0
+
+      # Set acceleration personality based on drive mode
+      if sport_mode:
+        # Sport mode detected - set to aggressive personality
+        from openpilot.common.params import Params
+        Params().put("AccelPersonality", "2")  # Aggressive
+      elif eco_mode:
+        # Eco mode detected - set to relaxed personality
+        from openpilot.common.params import Params
+        Params().put("AccelPersonality", "0")  # Relaxed
+      else:
+        # Normal mode - set to standard personality
+        from openpilot.common.params import Params
+        Params().put("AccelPersonality", "1")  # Standard
+
+    
+    # 丰田特调：驾驶模式按钮链接
+    if self.CP.carFingerprint in TSS2_CAR and Params().get_bool("ToyotaDriveMode"):
+      sport_signal = 'SPORT_ON_2' if self.CP.carFingerprint in (CAR.TOYOTA_RAV4_TSS2, CAR.LEXUS_ES_TSS2, CAR.TOYOTA_HIGHLANDER_TSS2) else 'SPORT_ON'
+
+      # Check signals once
+      if not self.signals_checked:
+        self.signals_checked = True
+
+        # Try to detect sport mode signal, handle missing signal with a fallback
+        try:
+          sport_mode = cp.vl["GEAR_PACKET"][sport_signal]
+          self.sport_signal_seen = True
+        except KeyError:
+          sport_mode = 0
+          self.sport_signal_seen = False
+
+        # Try to detect eco mode signal, handle missing signal with a fallback
+        try:
+          eco_mode = cp.vl["GEAR_PACKET"]['ECON_ON']
+          self.eco_signal_seen = True
+        except KeyError:
+          eco_mode = 0
+          self.eco_signal_seen = False
+      else:
+        # Always re-check the signals to account for mode changes
+        sport_mode = cp.vl["GEAR_PACKET"][sport_signal] if self.sport_signal_seen else 0
+        eco_mode = cp.vl["GEAR_PACKET"]['ECON_ON'] if self.eco_signal_seen else 0
+
+      # Set acceleration personality based on drive mode
+      if sport_mode:
+        # Sport mode detected - set to aggressive personality
+        from openpilot.common.params import Params
+        Params().put("AccelPersonality", "2")  # Aggressive
+      elif eco_mode:
+        # Eco mode detected - set to relaxed personality
+        from openpilot.common.params import Params
+        Params().put("AccelPersonality", "0")  # Relaxed
+      else:
+        # Normal mode - set to standard personality
+        from openpilot.common.params import Params
+        Params().put("AccelPersonality", "1")  # Standard
     return ret
 
   @staticmethod

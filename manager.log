@@ -1,0 +1,131 @@
+README.md: needs update
+camera/cam_blindspot: needs update
+cereal/custom.capnp: needs update
+cereal/log.capnp: needs update
+cereal/services.py: needs update
+common/params.cc: needs update
+common/params.h: needs update
+common/params_keys.h: needs update
+opendbc_repo/opendbc/car/car_helpers.py: needs update
+opendbc_repo/opendbc/car/interfaces.py: needs update
+opendbc_repo/opendbc/car/toyota/carcontroller.py: needs update
+opendbc_repo/opendbc/car/toyota/carstate.py: needs update
+opendbc_repo/opendbc/car/toyota/fingerprints.py: needs update
+opendbc_repo/opendbc/car/toyota/interface.py: needs update
+opendbc_repo/opendbc/car/toyota/toyotacan.py: needs update
+opendbc_repo/opendbc/car/toyota/values.py: needs update
+panda/board/obj/gitversion.h: needs update
+pyproject.toml: needs update
+selfdrive/car/card.py: needs update
+selfdrive/controls/controlsd.py: needs update
+selfdrive/controls/lib/drive_helpers.py: needs update
+selfdrive/controls/lib/latcontrol.py: needs update
+selfdrive/controls/lib/latcontrol_pid.py: needs update
+selfdrive/controls/lib/latcontrol_torque.py: needs update
+selfdrive/controls/lib/lateral_mpc_lib/lat_mpc.py: needs update
+selfdrive/locationd/locationd_jy62: needs update
+selfdrive/selfdrived/selfdrived.py: needs update
+selfdrive/ui/SConscript: needs update
+selfdrive/ui/carrot.cc: needs update
+selfdrive/ui/carrot_gpu.cc: needs update
+selfdrive/ui/qt/offroad/settings.cc: needs update
+selfdrive/ui/qt/onroad/model.cc: needs update
+selfdrive/ui/translations/main_ar.ts: needs update
+selfdrive/ui/translations/main_de.ts: needs update
+selfdrive/ui/translations/main_es.ts: needs update
+selfdrive/ui/translations/main_fr.ts: needs update
+selfdrive/ui/translations/main_ja.ts: needs update
+selfdrive/ui/translations/main_ko.ts: needs update
+selfdrive/ui/translations/main_pt-BR.ts: needs update
+selfdrive/ui/translations/main_th.ts: needs update
+selfdrive/ui/translations/main_tr.ts: needs update
+selfdrive/ui/translations/main_zh-CHS.ts: needs update
+selfdrive/ui/translations/main_zh-CHT.ts: needs update
+system/hardware/hw.h: needs update
+system/hardware/hw.py: needs update
+system/manager/manager.py: needs update
+tools/install_python_dependencies.sh: needs update
+tools/op.sh: needs update
+system/loggerd/bootlog.cc: bootlog to /home/dengjian/.comma/media/0/realdata/boot/00000104--18eb58da22.zst
+ * Serving Flask app 'selfdrive.frogpilot.fleetmanager.fleet_manager'
+ * Debug mode: off
+Address already in use
+Port 8082 is in use by another program. Either identify and stop that program, or start the server with a different port.
+Exception in thread Thread-3 (_lane_recv_thread):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+Exception in thread Thread-4 (_udp_recv_thread):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.12/threading.py", line 1010, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/amap_navi.py", line 604, in _lane_recv_thread
+    self.run()
+  File "/usr/lib/python3.12/threading.py", line 1010, in run
+    sock.bind(('0.0.0.0', self.lane_port))
+OSError: [Errno 98] Address already in use
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/amap_navi.py", line 677, in _udp_recv_thread
+    sock.bind(('0.0.0.0', self.listen_port))
+OSError: [Errno 98] Address already in use
+Exception in thread Thread-7 (start_web_server):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.12/threading.py", line 1010, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/dengjian/openpilot/openpilot/selfdrive/carrot/web_interface.py", line 277, in start_web_server
+    self.web_server = HTTPServer(('0.0.0.0', self.port), handler)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socketserver.py", line 457, in __init__
+    self.server_bind()
+  File "/usr/lib/python3.12/http/server.py", line 136, in server_bind
+    socketserver.TCPServer.server_bind(self)
+  File "/usr/lib/python3.12/socketserver.py", line 473, in server_bind
+    self.socket.bind(self.server_address)
+OSError: [Errno 98] Address already in use
+: libpng warning: iCCP: known incorrect sRGB profile
+: libpng warning: iCCP: known incorrect sRGB profile
+kj/filesystem-disk-unix.c++:1734: warning: PWD environment variable doesn't match current directory; pwd = /home/dengjian/openpilot/system/manager
+VIN 00000000000000000
+VIN 00000000000000000
+/bin/sh: 1: /data/openpilot/selfdrive/debug/debug_console_carrot.py: not found
+modeld init
+setting up CL context
+CL context ready; loading model
+Address already in use
+Port 8888 is in use by another program. Either identify and stop that program, or start the server with a different port.
+============================================================
+车道线服务程序
+访问: http://0.0.0.0:8888
+============================================================
+models loaded in 0.5s, modeld starting
+vision stream set up, main_wide_camera: False, use_extra_client: False
+connected main cam with buffer size: 3493536 (1928 x 1208)
+x=948, y=159, ey=921
+_current_carrot_display1=1
+{'event': 'fingerprinted', 'car_fingerprint': 'HONDA_CIVIC_2022', 'source': 2, 'fuzzy': False, 'cached': False, 'fw_count': 0, 'ecu_responses': [], 'vin_rx_addr': -1, 'vin_rx_bus': -1, 'fingerprints': '{0: {344: 8, 464: 8, 662: 4, 401: 8, 304: 8, 773: 7, 399: 7, 330: 8, 420: 8, 432: 7, 427: 3, 450: 8, 1029: 8, 882: 8, 804: 8, 467: 8, 806: 8, 380: 8, 777: 8}, 1: {}, 2: {228: 5, 780: 8, 829: 8}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {}}', 'fw_query_time': 0.0037533409999923606}
+{'event': 'fingerprinted', 'car_fingerprint': 'HONDA_CIVIC_2022', 'source': 2, 'fuzzy': False, 'cached': False, 'fw_count': 0, 'ecu_responses': [], 'vin_rx_addr': -1, 'vin_rx_bus': -1, 'fingerprints': '{0: {344: 8, 464: 8, 662: 4, 401: 8, 304: 8, 773: 7, 399: 7, 330: 8, 420: 8, 432: 7, 427: 3, 450: 8, 1029: 8, 882: 8, 804: 8, 467: 8, 806: 8, 380: 8, 777: 8}, 1: {}, 2: {228: 5, 780: 8, 829: 8}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {}}', 'fw_query_time': 0.0037533409999923606}
+{"event": "selfdrived.initialized", "dt": 0.0, "timeout": false, "canValid": true, "invalid": ["deviceState", "pandaStates", "peripheralState", "modelV2", "liveCalibration", "driverMonitoringState", "longitudinalPlan", "liveLocationKalman", "managerState", "liveParameters", "radarState", "liveTorqueParameters", "controlsState", "carControl", "driverAssistance", "alertDebug", "roadCameraState", "gpsLocation"], "not_alive": ["deviceState", "pandaStates", "peripheralState", "modelV2", "liveCalibration", "driverMonitoringState", "longitudinalPlan", "liveLocationKalman", "managerState", "liveParameters", "radarState", "liveTorqueParameters", "controlsState", "carControl", "driverAssistance", "alertDebug", "roadCameraState", "gpsLocation"], "not_freq_ok": [], "error": true}
+skipping model eval. Dropped 122 frames
+---[15:25:57]atc_type change, curr:none, prev:
+[0]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[10]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[20]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[30]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+skipping model eval. Dropped 1 frames
+[40]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[50]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+{"event": "process_not_running", "not_running": "{'fleet_manager', 'lane'}", "error": true}
+[60]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[70]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[80]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[90]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[100]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[110]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[120]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[130]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[140]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[150]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000
+[160]Gyro: v[0]=0.000,v[1]=0.000,v[2]=0.000

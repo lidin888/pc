@@ -17,6 +17,8 @@
 #include "selfdrive/ui/qt/widgets/scrollview.h"
 #include "selfdrive/ui/qt/offroad/developer_panel.h"
 #include "selfdrive/ui/qt/offroad/firehose.h"
+#include "selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h"
+#include "selfdrive/ui/sunnypilot/qt/widgets/controls.h"
 
 TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
   // param, title, desc, icon
@@ -538,6 +540,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QFrame(parent) {
   if(false) {
     panels.append({tr("Firehose"), new FirehosePanel(this)});
   }
+  panels.append({ tr("SP设置"), new SPPSettingsPanel(this) });
   panels.append({ tr("萝卜"), new CarrotPanel(this) });
   panels.append({ tr("开发"), new DeveloperPanel(this) });
 
@@ -743,7 +746,26 @@ CarrotPanel::CarrotPanel(QWidget* parent) : QWidget(parent) {
   latLongToggles->addItem(new CValueControl("CustomSR", "横向: 自定义方向盘比x0.1(0)", "CustomSR自定义转向比,设置为0表示使用自学习的值. 胜达建议设置165x0.1", 0, 300, 1));
   latLongToggles->addItem(new CValueControl("SteerRatioRate", "横向: 转向比应用速率x0.01(100)", "SteerRatioRate转向比应用速率，实时学习得到的SteerRatio会乘上这个系数作为最终的转向比", 30, 170, 1));
   latLongToggles->addItem(new CValueControl("PathOffset", "横向: 路径偏移", "(-)左偏, (+)右偏", -150, 150, 1));
-  latLongToggles->addItem(new CValueControl("SteerActuatorDelay", "横向: 转向执行器延迟(30)", "SteerActuatorDelay, x0.01, 0:使用自学习的延迟, 其它值指定延迟", 0, 100, 1));
+  latLongToggles->addItem(new CValueControl("CameraOffset", "横向: 摄像头偏移x0.01(0)",
+    "摄像头安装位置相对于车辆中心线的偏移, (-)左偏, (+)右偏\n\n"
+    "设置原则:\n"
+    "1. 摄像头在中心线左侧: 设置为负值, 能让车辆向左偏移\n"
+    "2. 摄像头在中心线右侧: 设置为正值, 能让车辆向右偏移\n"
+    "3. 摄像头在中心线上: 设置为0\n"
+    "4. 调整方法: 车辆偏左则增加此值, 偏右则减少此值\n"
+    "5. 单位: 0.01米(设置50表示0.5米)", -100, 100, 1));
+
+  // 自定义SteerActuatorDelay控件，当启用SP的LagdToggle时禁用
+  auto steerActuatorDelayControl = new CValueControl("SteerActuatorDelay", "横向: 转向执行器延迟(30)", "SteerActuatorDelay, x0.01, 0:使用自学习的延迟, 其它值指定延迟", 0, 100, 1);
+
+  // 检查LagdToggle状态，如果启用则禁用SteerActuatorDelay
+  bool lagd_enabled = Params().getBool("LagdToggle");
+  steerActuatorDelayControl->setEnabled(!lagd_enabled);
+  if (lagd_enabled) {
+    steerActuatorDelayControl->setDescription("SteerActuatorDelay, x0.01, 已禁用: SP实时转向延迟学习已启用");
+  }
+
+  latLongToggles->addItem(steerActuatorDelayControl);
   latLongToggles->addItem(new CValueControl("LateralTorqueCustom", "横向: 自定义扭矩模式(0),", "LateralTorqueCustom,0 使用自学习的扭矩因子和摩擦,1 使用自定义, 2 使用默认值", 0, 2, 1));
   latLongToggles->addItem(new CValueControl("LateralTorqueAccelFactor", "横向: 扭矩加速度因子(2500)", "LateralTorqueAccelFactor", 1000, 6000, 10));
   latLongToggles->addItem(new CValueControl("LateralTorqueFriction", "横向: 扭矩摩擦补偿(100)", "LateralTorqueFriction", 0, 1000, 10));
