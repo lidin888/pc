@@ -105,3 +105,12 @@ Pipfile
 .history
 .ionide
 .vs
+ADVANCED_SP_MIGRATION_SUMMARY.md
+advanced_sp_migration.py
+diff_files
+sp_migration_log.txt
+SP_MIGRATION_GUIDE.md
+run_advanced_sp_migration.sh
+apply_all_modifications.sh
+COMPLETE_PORTING_GUIDE.md
+*migration*
