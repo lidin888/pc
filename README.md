@@ -1,22 +1,9 @@
-## ⚠️ 법적 안내 / Legal Notice
+## ⚠️ Legal Notice
 
-🚫 대한민국 자동차관리법 개정안에 따라, 본 소프트웨어를 실제 차량에 장착하거나 주행에 사용하는 것은 법률에 위배될 수 있습니다.  
-이 저장소에 있는 모든 소프트웨어는 **연구, 실험, 시뮬레이션 목적**으로만 제공됩니다.  
-개발자는 본 소프트웨어의 실제 사용으로 인해 발생하는 **모든 법적 책임을 지지 않습니다.**
-
-In accordance with the amended **Korean Motor Vehicle Management Act** (effective August 14, 2025),  
-**modifying or installing software that affects the safe operation of a vehicle** is prohibited.
-
-This software is provided **for research and educational use only**.  
+This software is provided **for research and educational use only**.
 The developer does **not take any responsibility** for real-world installation or usage.
 
-**Carrotpilot에서 사용하는 차량(현대,기아)에 따라 Harness가 다릅니다..**
-- CAN통신차량: Comma 정품 Harness, Camera에 연결
-- CANFD-일반차량: Comma정품 Harness, Camera에 연결
-- CANFD-HDA2(ADAS Module 장착)차량: 사제 Harness, ADAS Module에 연결
-- 모든차량이 지원되는것이 아니니 반드시 확인바랍니다.
-  
-**In CarrotPilot, the harness used varies depending on the vehicle(HKG):**
+**In CarrotPilot, the harness used varies depending on the vehicle (HKG):**
 * **CAN vehicles** Use the official Comma harness, connected to the camera.
 * **CAN FD (standard) vehicles** Use the official Comma harness, connected to the camera.
 * **CAN FD vehicles with HDA2 (ADAS module equipped)** Use an aftermarket harness, connected to the ADAS module.
