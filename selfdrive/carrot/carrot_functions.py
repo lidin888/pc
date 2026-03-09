@@ -175,8 +175,21 @@ class CarrotPlanner:
 
       self.params_count = 0
 
-  def get_carrot_accel(self, v_ego):
-    cruiseMaxVals = [self.cruiseMaxVals0, self.cruiseMaxVals1, self.cruiseMaxVals2, self.cruiseMaxVals3, self.cruiseMaxVals4, self.cruiseMaxVals5, self.cruiseMaxVals6]
+  def get_carrot_accel(self, v_ego, params=None):
+    # 如果提供了params参数，则从UI设置中获取加速度曲线
+    if params is not None:
+      cruiseMaxVals = [
+        params.get_float("CruiseMaxVals0") * 0.01,
+        params.get_float("CruiseMaxVals1") * 0.01,
+        params.get_float("CruiseMaxVals2") * 0.01,
+        params.get_float("CruiseMaxVals3") * 0.01,
+        params.get_float("CruiseMaxVals4") * 0.01,
+        params.get_float("CruiseMaxVals5") * 0.01,
+        params.get_float("CruiseMaxVals6") * 0.01
+      ]
+    else:
+      cruiseMaxVals = [self.cruiseMaxVals0, self.cruiseMaxVals1, self.cruiseMaxVals2, self.cruiseMaxVals3, self.cruiseMaxVals4, self.cruiseMaxVals5, self.cruiseMaxVals6]
+
     factor = self.myHighModeFactor if self.myDrivingMode == DrivingMode.High else self.mySafeFactor
     return np.interp(v_ego, A_CRUISE_MAX_BP_CARROT, cruiseMaxVals) * factor
 

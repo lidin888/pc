@@ -13,13 +13,13 @@ from collections import deque
 
 from opendbc.car.car_helpers import interfaces
 from opendbc.car.vehicle_model import VehicleModel
-from opendbc.car.toyota.values import CAR
 
 from openpilot.selfdrive.controls.lib.drive_helpers import clip_curvature, get_lag_adjusted_curvature
 from openpilot.selfdrive.controls.lib.latcontrol import LatControl, MIN_LATERAL_CONTROL_SPEED
 from openpilot.selfdrive.controls.lib.latcontrol_pid import LatControlPID
 from openpilot.selfdrive.controls.lib.latcontrol_angle import LatControlAngle, STEER_ANGLE_SATURATION_THRESHOLD
 from openpilot.selfdrive.controls.lib.latcontrol_torque import LatControlTorque
+from openpilot.selfdrive.controls.lib.lane_turn_desire import LaneTurnController
 from openpilot.selfdrive.controls.lib.longcontrol import LongControl
 
 
@@ -43,16 +43,6 @@ class Controls:
     cloudlog.info("controlsd got CarParams")
 
     self.CI = interfaces[self.CP.carFingerprint](self.CP)
-
-    # SunnyPilot additions
-    try:
-        sp_flags = self.params.get_int("ToyotaFlagsSP", 0)
-    except:
-        sp_flags = 0
-
-    self.CP_SP = type('CP_SP', (), {
-        'flags': sp_flags
-    })()
 
     self.disable_dm = False
 
@@ -81,6 +71,13 @@ class Controls:
       self.LaC = LatControlPID(self.CP, self.CI)
     elif self.CP.lateralTuning.which() == 'torque':
       self.LaC = LatControlTorque(self.CP, self.CI)
+
+    # 初始化LaneTurnController
+    self.lane_turn_controller = LaneTurnController(self)
+
+    # 初始化End-to-End参数
+    self.end_to_end_toggle = self.params.get_bool("EndToEndToggle")
+    self.end_to_end_force_lane_change = self.params.get_bool("EndToEndForceLaneChange")
 
   def update(self):
     self.sm.update(15)
@@ -154,6 +151,20 @@ class Controls:
     if steer_actuator_delay == 0.0:
       steer_actuator_delay = self.sm['liveDelay'].lateralDelay
 
+    # 更新LaneTurnController
+    self.lane_turn_controller.update_params()
+    self.lane_turn_controller.update_lane_turn(
+      CS.leftBlindspot,
+      CS.rightBlindspot,
+      CC.leftBlinker,
+      CC.rightBlinker,
+      CS.vEgo
+    )
+
+    # 更新End-to-End参数
+    self.end_to_end_toggle = self.params.get_bool("EndToEndToggle")
+    self.end_to_end_force_lane_change = self.params.get_bool("EndToEndForceLaneChange")
+
     if len(model_v2.position.yStd) > 0:
       yStd = np.interp(steer_actuator_delay + lat_smooth_seconds, ModelConstants.T_IDXS, model_v2.position.yStd)
       self.yStd = yStd * 0.02 + self.yStd * 0.98
@@ -177,6 +188,14 @@ class Controls:
       new_desired_curvature = model_v2.action.desiredCurvature
 
     self.desired_curvature, curvature_limited = clip_curvature(CS.vEgo, self.desired_curvature, new_desired_curvature, lp.roll)
+
+    # 应用End-to-End参数
+    if self.end_to_end_toggle:
+      # 如果启用了End-to-End控制，应用相应的调整
+      if self.end_to_end_force_lane_change and model_v2.meta.laneChangeState == LaneChangeState.off:
+        # 如果启用了强制变道，检查是否需要变道
+        # 这里可以添加变道逻辑
+        pass
 
     actuators.curvature = float(self.desired_curvature)
     steer, steeringAngleDeg, lac_log = self.LaC.update(CC.latActive, CS, self.VM, lp,
@@ -219,6 +238,7 @@ class Controls:
       if bsd_state:
         set_hud(side_cap, "Dist2", 1)
         set_hud(side_cap, "Lat2",  3.2)
+      # Ã¬Â²Â« Ã«Â²Ë†Ã¬Â§Â¸ÃªÂ°â‚¬ 10m Ã¬ÂÂ´Ã«â€šÂ´Ã«ÂÂ¼Ã«Â©Â´ sub Ã¬â€”â€¦Ã«ÂÂ°Ã¬ÂÂ´Ã­Å Â¸ + Ã«â€˜Â Ã«Â²Ë†Ã¬Â§Â¸Ã«Â¥Â¼ mainÃ¬Å“Â¼Ã«Â¡Å“
       elif len(leads2) > 1 and lead_main.dRel < 10:
         st["sub"]["dRel"] = ema(st["sub"]["dRel"], lead_main.dRel)
         st["sub"]["lat"]  = ema(st["sub"]["lat"],  abs(lead_main.dPath))
@@ -270,44 +290,15 @@ class Controls:
     lp = self.sm['longitudinalPlan']
     if self.CP.pcmCruise:
       speed_from_pcm = self.params.get_int("SpeedFromPCM")
-      # SpeedFromPCM 取值含义：
-      # 1 - 使用 PCM 巡航速度 (vCruiseCluster)
-      # 2 - 不低于 30 km/h（强制最小值）
-      # 3 - 使用纵向计划速度（setSpeed 根据 xState 决定）
-      # 其他 - 默认行为：不低于 30 km/h 并使用 setSpeed
-
-       # 根据车型判断是否需要特调逻辑（丰田车特有）
-      is_toyota = self.CP.carFingerprint.startswith(CAR.TOYOTA)
-
-      if is_toyota:
-          toyota_stock_long = self.params.get_bool("ToyotaStockLongitudinal")
-          toyota_tss2_long = self.params.get_bool("ToyotaTSS2Long")
-          toyota_special = toyota_stock_long or toyota_tss2_long
+      if speed_from_pcm == 1: #toyota
+        hudControl.setSpeed = float(CS.vCruiseCluster * CV.KPH_TO_MS)
+      elif speed_from_pcm == 2:
+        hudControl.setSpeed = float(max(30/3.6, desired_kph * CV.KPH_TO_MS))
+      elif speed_from_pcm == 3: # honda
+        hudControl.setSpeed = setSpeed if lp.xState == 3 else float(desired_kph * CV.KPH_TO_MS)
       else:
-          toyota_special = False
-
-      if toyota_special:
-          # 丰田特调模式：忽略 SpeedFromPCM，直接使用纵向计划速度
-          hudControl.setSpeed = setSpeed if lp.xState == 3 else float(desired_kph * CV.KPH_TO_MS)
-      else:
-          # 通用逻辑，依据 SpeedFromPCM 选择速度来源
-          if speed_from_pcm == 1:
-              # 使用 PCM 巡航速度（仅当有效时）
-              if CS.vCruiseCluster > 0:
-                  hudControl.setSpeed = float(CS.vCruiseCluster * CV.KPH_TO_MS)
-              else:
-                  hudControl.setSpeed = setSpeed if lp.xState == 3 else float(desired_kph * CV.KPH_TO_MS)
-          elif speed_from_pcm == 2:
-              # 强制不低于 30 km/h
-              hudControl.setSpeed = float(max(30 / 3.6, desired_kph * CV.KPH_TO_MS))
-          elif speed_from_pcm == 3:
-              # 使用纵向计划速度
-              hudControl.setSpeed = setSpeed if lp.xState == 3 else float(desired_kph * CV.KPH_TO_MS)
-          else:
-              # 默认：不低于 30 km/h，并用 setSpeed 作为基础
-              hudControl.setSpeed = float(max(30 / 3.6, setSpeed))
+        hudControl.setSpeed = float(max(30/3.6, setSpeed))
     else:
-      # 非 PCM 巡航时，直接使用纵向计划速度
       hudControl.setSpeed = setSpeed if lp.xState == 3 else float(desired_kph * CV.KPH_TO_MS)
     hudControl.speedVisible = CC.enabled
     hudControl.lanesVisible = CC.enabled

@@ -14,7 +14,12 @@
 #include "selfdrive/ui/sunnypilot/qt/ui.h"
 #include "selfdrive/ui/sunnypilot/qt/offroad/settings/settings.h"
 #include "selfdrive/ui/qt/widgets/controls.h"
+#include "selfdrive/ui/sunnypilot/qt/widgets/controls.h"
 #include "selfdrive/ui/qt/offroad/settings.h"
+
+// Forward declaration
+class CValueControl;
+class OptionControlSP;
 
 class SPPSettingsPanel : public QWidget {
   Q_OBJECT
@@ -26,6 +31,9 @@ public:
 
 private:
   bool offroad = false;
+
+  // 初始化默认参数
+  void initDefaultParams();
 
   // UI controls
   ParamControl *lane_turn_desire_toggle;

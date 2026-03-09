@@ -22,6 +22,7 @@ from openpilot.selfdrive.carrot.config import UnifiedParams
 
 LON_MPC_STEP = 0.2  # first step is 0.2s
 A_CRUISE_MIN = -2.0 #-1.2
+# 从UI参数获取加速度曲线
 A_CRUISE_MAX_VALS = [1.6, 1.2, 0.8, 0.6]
 A_CRUISE_MAX_BP = [0., 10.0, 25., 40.]
 CONTROL_N_T_IDX = ModelConstants.T_IDXS[:CONTROL_N]
@@ -33,7 +34,23 @@ _A_TOTAL_MAX_V = [1.7, 3.2]
 _A_TOTAL_MAX_BP = [20., 40.]
 
 
-def get_max_accel(v_ego):
+def get_max_accel(v_ego, params=None):
+  # 如果提供了params参数，则从UI设置中获取加速度曲线
+  if params is not None:
+    # 从UI参数获取加速度曲线
+    cruise_max_vals = [
+      params.get_float("CruiseMaxVals0") * 0.01,
+      params.get_float("CruiseMaxVals1") * 0.01,
+      params.get_float("CruiseMaxVals2") * 0.01,
+      params.get_float("CruiseMaxVals3") * 0.01,
+      params.get_float("CruiseMaxVals4") * 0.01,
+      params.get_float("CruiseMaxVals5") * 0.01,
+      params.get_float("CruiseMaxVals6") * 0.01
+    ]
+    cruise_max_bp = [0., 10.0, 25., 40., 55., 70., 85.]
+    return np.interp(v_ego, cruise_max_bp, cruise_max_vals)
+
+  # 默认加速度曲线
   return np.interp(v_ego, A_CRUISE_MAX_BP, A_CRUISE_MAX_VALS)
 
 def get_coast_accel(pitch):
@@ -240,7 +257,7 @@ class LongitudinalPlanner(LongitudinalPlannerSP): #new
 
     if self.mpc.mode == 'acc':
       #accel_limits = [A_CRUISE_MIN, get_max_accel(v_ego)]
-      accel_limits = [A_CRUISE_MIN, carrot.get_carrot_accel(v_ego)]
+      accel_limits = [A_CRUISE_MIN, carrot.get_carrot_accel(v_ego, self.params)]
       steer_angle_without_offset = sm['carState'].steeringAngleDeg - sm['liveParameters'].angleOffsetDeg
       accel_limits_turns = limit_accel_in_turns(v_ego, steer_angle_without_offset, accel_limits, self.CP)
     else:
@@ -278,7 +295,7 @@ class LongitudinalPlanner(LongitudinalPlannerSP): #new
     self.mpc.set_weights(prev_accel_constraint, personality=sm['selfdriveState'].personality, jerk_factor = carrot.jerk_factor_apply)
     self.mpc.set_accel_limits(accel_limits_turns[0], accel_limits_turns[1])
     self.mpc.set_cur_state(self.v_desired_filter.x, self.a_desired)
-    self.mpc.update(carrot, reset_state, sm['radarState'], v_cruise, x, v, a, j, personality=sm['selfdriveState'].personality)
+    self.mpc.update(carrot, reset_state, sm['radarState'], v_cruise, x, v, a, j, personality=sm['selfdriveState'].personality, params=self.params)
 
     self.v_desired_trajectory = np.interp(CONTROL_N_T_IDX, T_IDXS_MPC, self.mpc.v_solution)
     self.a_desired_trajectory = np.interp(CONTROL_N_T_IDX, T_IDXS_MPC, self.mpc.a_solution)

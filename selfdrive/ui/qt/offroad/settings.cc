@@ -1095,13 +1095,40 @@ void CValueControl::showEvent(QShowEvent* event) {
 }
 
 void CValueControl::refresh() {
-  label.setText(QString::fromStdString(Params().get(m_params.toStdString())));
+  QString value_str = QString::fromStdString(Params().get(m_params.toStdString()));
+
+  // 特殊处理LagdToggleDelay参数，显示为小数
+  if (m_params == "LagdToggleDelay") {
+    float delay_value = value_str.toFloat();
+    value_str = QString::number(delay_value, 'f', 2);
+  } else if (m_unit_conversion_enabled) {
+    // 应用单位转换
+    float value = value_str.toFloat();
+    value = value * m_conversion_factor;
+    value_str = QString::number(static_cast<int>(std::round(value)));
+  }
+
+  label.setText(value_str);
 }
 
 void CValueControl::adjustValue(int delta) {
-  int value = QString::fromStdString(Params().get(m_params.toStdString())).toInt();
-  value = qBound(m_min, value + delta, m_max);
-  Params().putInt(m_params.toStdString(), value);
+  // 特殊处理LagdToggleDelay参数
+  if (m_params == "LagdToggleDelay") {
+    float current_value = QString::fromStdString(Params().get(m_params.toStdString())).toFloat();
+    float new_value = current_value + (delta / 100.0f);
+    new_value = std::max(m_min / 100.0f, std::min(new_value, m_max / 100.0f));
+    Params().putFloat(m_params.toStdString(), new_value);
+  } else {
+    int value = QString::fromStdString(Params().get(m_params.toStdString())).toInt();
+    value = qBound(m_min, value + delta, m_max);
+    Params().putInt(m_params.toStdString(), value);
+  }
+  refresh();
+}
+
+void CValueControl::setUnitConversion(bool enabled, float conversion_factor) {
+  m_unit_conversion_enabled = enabled;
+  m_conversion_factor = conversion_factor;
   refresh();
 }
 

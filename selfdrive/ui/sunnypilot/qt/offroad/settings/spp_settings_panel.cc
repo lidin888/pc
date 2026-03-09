@@ -20,6 +20,9 @@
 #include "selfdrive/ui/qt/widgets/controls.h"
 
 SPPSettingsPanel::SPPSettingsPanel(QWidget *parent) : QWidget(parent) {
+  // 初始化默认参数
+  initDefaultParams();
+
   QVBoxLayout *main_layout = new QVBoxLayout(this);
   main_layout->setContentsMargins(50, 20, 50, 20);
 
@@ -42,18 +45,35 @@ SPPSettingsPanel::SPPSettingsPanel(QWidget *parent) : QWidget(parent) {
   // Lane Turn Value control
   bool is_metric_initial = Params().getBool("IsMetric");
   int max_value_mph = 20;
-  const float K = 1.609344f;
-  int per_value_change_scaled = is_metric_initial ? static_cast<int>(std::round((1.0f / K) * 100.0f)) : 100;
-  std::pair<int, int> range = {5 * 100, max_value_mph * 100};
+
+  // 存储的是mph值，范围是5-20mph
+  std::pair<int, int> range = {5, max_value_mph};
+
+  // 步长设置为1（mph）
+  int per_value_change_scaled = 1;
 
   float current_value = QString::fromStdString(Params().get("LaneTurnValue")).toFloat();
   current_value = std::max(5.0f, std::min(current_value, 20.0f));
+
+  // 如果参数为空，设置默认值为19 mph
+  std::string lane_turn_value = Params().get("LaneTurnValue");
+  if (lane_turn_value.empty()) {
+    current_value = 19.0f;  // 设置默认值为19 mph
+  }
 
   lane_turn_value_control = new CValueControl("LaneTurnValue", tr("Adjust Steering Speed"),
     tr("Set the maximum speed for lane turn desire. Default is 19 %1.").arg(is_metric_initial ? "km/h" : "mph"),
     range.first, range.second, per_value_change_scaled);
 
-  Params().put("LaneTurnValue", QString::number(current_value).toStdString());
+  // 设置单位转换：如果使用公制单位，显示km/h值（mph * 1.609344）
+  if (is_metric_initial) {
+    lane_turn_value_control->setUnitConversion(true, 1.609344f);
+  }
+
+  // 确保参数被正确保存
+  if (lane_turn_value.empty()) {
+    Params().putFloat("LaneTurnValue", current_value);
+  }
   lane_turn_value_control->showDescription();
   list->addItem(lane_turn_value_control);
 
@@ -83,25 +103,30 @@ SPPSettingsPanel::SPPSettingsPanel(QWidget *parent) : QWidget(parent) {
   // ---------------------------------------------------------
   // 2. 调整软件延迟 (滑块 - 仅在关闭实时学习时显示)
   // ---------------------------------------------------------
-  int min_val = 1;   // 0.01s
-  int max_val = 50;  // 0.50s
+  // 使用浮点数控制，支持小数显示
+  float min_val = 0.01f;  // 0.01s
+  float max_val = 0.20f; // 0.20s
 
   std::string delayStr = Params().get("LagdToggleDelay");
-  float current_delay = 0.2f;
+  float current_delay = 0.15f;  // 优化默认值为0.15秒
   if (!delayStr.empty()) {
     try {
       current_delay = std::stof(delayStr);
     } catch (...) {
-      current_delay = 0.2f;
+      current_delay = 0.15f;  // 优化默认值为0.15秒
     }
-    current_delay = std::max(0.01f, std::min(current_delay, 0.5f));
+    current_delay = std::max(min_val, std::min(current_delay, max_val));
   }
 
-  Params().put("LagdToggleDelay", std::to_string(current_delay));
+  // 确保参数被正确保存
+  std::string lagd_delay_value = Params().get("LagdToggleDelay");
+  if (lagd_delay_value.empty()) {
+    Params().putFloat("LagdToggleDelay", current_delay);
+  }
 
   delay_control = new CValueControl("LagdToggleDelay", tr("Adjust Software Delay"),
                                      tr("Adjust the software delay when Live Learning Steer Delay is toggled off. Default software delay value is 0.2"),
-                                     min_val, max_val, 1);
+                                     static_cast<int>(min_val * 100), static_cast<int>(max_val * 100), 1);
 
   list->addItem(delay_control);
 
@@ -126,29 +151,34 @@ SPPSettingsPanel::SPPSettingsPanel(QWidget *parent) : QWidget(parent) {
   list->addItem(toyota_title);
 
   toyota_drive_mode = new ParamControl("ToyotaDriveMode", tr("Toyota: Drive Mode Button Link"),
-    tr("Link the vehicle's drive mode button with acceleration personality (Easy, Standard, Sport) for a seamless driving experience"),
+    tr("Link vehicle's drive mode button with acceleration personality (Easy, Standard, Sport) for a seamless driving experience"),
     "../assets/offroad/icon_shell.png");
   list->addItem(toyota_drive_mode);
+  toyota_drive_mode->refresh();
 
   toyota_auto_hold = new ParamControl("ToyotaAutoHold", tr("Toyota: Auto Brake Hold (TSS2 Hybrid)"),
     tr("Automatically hold the vehicle when it comes to a stop. This feature is designed for TSS2 hybrid vehicles"),
     "../assets/offroad/icon_shell.png");
   list->addItem(toyota_auto_hold);
+  toyota_auto_hold->refresh();
 
   toyota_enhanced_bsm = new ParamControl("ToyotaEnhancedBsm", tr("Toyota: Enhanced BSM Support"),
     tr("Add enhanced blind spot monitoring support for Toyota vehicles, especially Prius TSS2 and some TSS-P models"),
     "../assets/offroad/icon_shell.png");
   list->addItem(toyota_enhanced_bsm);
+  toyota_enhanced_bsm->refresh();
 
   toyota_tss2_long = new ParamControl("ToyotaTSS2Long", tr("Toyota: TSS2 Longitudinal Control"),
     tr("Enable optimized longitudinal control for Toyota TSS2 vehicles"),
     "../assets/offroad/icon_shell.png");
   list->addItem(toyota_tss2_long);
+  toyota_tss2_long->refresh();
 
   toyota_stock_long = new ParamControl("ToyotaStockLongitudinal", tr("Toyota: Stock Longitudinal Control"),
     tr("Use Toyota stock longitudinal control parameters"),
     "../assets/offroad/icon_shell.png");
   list->addItem(toyota_stock_long);
+  toyota_stock_long->refresh();
 
   // End to End Title
   LabelControl *end_to_end_title = new LabelControl(tr("End to End Settings"), tr("End to end control related options"));
@@ -158,11 +188,13 @@ SPPSettingsPanel::SPPSettingsPanel(QWidget *parent) : QWidget(parent) {
     tr("Enable end-to-end neural network control for a more natural steering experience"),
     "../assets/offroad/icon_shell.png");
   list->addItem(end_to_end_toggle);
+  end_to_end_toggle->refresh();
 
   end_to_end_force_lane_change = new ParamControl("EndToEndForceLaneChange", tr("End to End Force Lane Change"),
     tr("Force lane change control in end-to-end mode"),
     "../assets/offroad/icon_shell.png");
   list->addItem(end_to_end_force_lane_change);
+  end_to_end_force_lane_change->refresh();
 }
 
 // 标准控件不需要文件监控，直接移除这个函数
@@ -187,7 +219,7 @@ void SPPSettingsPanel::updateSettings() {
     } catch (...) {
       softwareDelay = 0.2f;
     }
-    softwareDelay = std::max(0.01f, std::min(softwareDelay, 0.5f));
+    softwareDelay = std::max(0.01f, std::min(softwareDelay, 0.2f));
   }
 
   // 更新开关的描述
@@ -228,16 +260,42 @@ void SPPSettingsPanel::refreshLaneTurnValueControl() {
   float stored_value = QString::fromStdString(Params().get("LaneTurnValue")).toFloat();
   bool is_metric = Params().getBool("IsMetric");
   QString unit = is_metric ? "km/h" : "mph";
-  float display_value = stored_value;
 
+  // 确保存储的值在有效范围内（5-20mph）
+  stored_value = std::max(5.0f, std::min(stored_value, 20.0f));
+
+  // 更新存储的值以确保一致性
+  Params().put("LaneTurnValue", QString::number(stored_value).toStdString());
+
+  // 更新单位转换设置
   if (is_metric) {
-    display_value = stored_value * 1.609344f;
+    lane_turn_value_control->setUnitConversion(true, 1.609344f);
+  } else {
+    lane_turn_value_control->setUnitConversion(false, 1.0f);
   }
 
-  display_value = std::max(5.0f, std::min(display_value, 32.0f));
-
-  // CValueControl会自动显示值，我们只需要更新参数值
   // 可见性依赖 LaneTurnDesire 开关
   bool desireEnabled = Params().getBool("LaneTurnDesire");
   lane_turn_value_control->setVisible(desireEnabled);
+}
+
+void SPPSettingsPanel::initDefaultParams() {
+  // 初始化所有SP相关参数的默认值
+
+  // LaneTurn参数
+  if (Params().get("LaneTurnValue").empty()) {
+    Params().putFloat("LaneTurnValue", 19.0f);  // 默认19 mph
+  }
+
+  // LagdToggleDelay参数
+  if (Params().get("LagdToggleDelay").empty()) {
+    Params().putFloat("LagdToggleDelay", 0.15f);  // 默认0.15秒
+  }
+
+  // CameraOffset参数
+  if (Params().get("CameraOffset").empty()) {
+    Params().putInt("CameraOffset", 0);  // 默认0，无偏移
+  }
+
+  // 其他参数默认值已在ParamControl和CValueControl的构造函数中设置
 }

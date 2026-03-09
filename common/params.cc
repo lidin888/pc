@@ -116,11 +116,7 @@ bool Params::checkKey(const std::string &key) {
 }
 
 ParamKeyType Params::getKeyType(const std::string &key) {
-  auto it = keys.find(key);
-  if (it != keys.end()) {
-    return static_cast<ParamKeyType>(it->second.type);
-  }
-  return static_cast<ParamKeyType>(0);
+  return static_cast<ParamKeyType>(keys[key]);
 }
 
 int Params::put(const char* key, const char* value, size_t value_size) {
@@ -209,7 +205,7 @@ void Params::clearAll(ParamKeyType key_type) {
     while ((de = readdir(d))) {
       if (de->d_type != DT_DIR) {
         auto it = keys.find(de->d_name);
-        if (it == keys.end() || (it->second.type & key_type)) {
+        if (it == keys.end() || (it->second & key_type)) {
           unlink(getParamPath(de->d_name).c_str());
         }
       }

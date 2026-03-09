@@ -10,6 +10,12 @@ $Cxx.namespace("cereal");
 # DO rename the structs
 # DON'T change the identifier (e.g. @0x81c2f05a394cf4af)
 
+enum TurnDirection {
+  none @0;
+  turnLeft @1;
+  turnRight @2;
+}
+
 # you can rename the struct, but don't change the identifier
 struct CarrotMan @0x81c2f05a394cf4af {
 	activeCarrot @0 : Int32;
@@ -60,107 +66,10 @@ struct AmapNavi @0xaedffd8f31e7b55d {
 	rightBlind @1 : Int32;
 }
 
-struct LongitudinalPlanSP @0xf35cc4560bbf6ec2 {
-  dec @0 :DynamicExperimentalControl;
-  accelPersonality @3 :AccelerationPersonality;
-  visionTurnSpeedControl @4 :VisionTurnSpeedControl;
-
-  events @1 :List(OnroadEventSP.Event);
-  slc @2 :SpeedLimitControl;
-
-  struct DynamicExperimentalControl {
-    state @0 :DynamicExperimentalControlState;
-    enabled @1 :Bool;
-    active @2 :Bool;
-
-    enum DynamicExperimentalControlState {
-      acc @0;
-      blended @1;
-    }
-  }
-
-  enum AccelerationPersonality {
-    sport @0;
-    normal @1;
-    eco @2;
-  }
-
-  struct VisionTurnSpeedControl {
-    state @0 :VisionTurnSpeedControlState;
-    velocity @1 :Float32;
-    currentLateralAccel @2 :Float32;
-    maxPredictedLateralAccel @3 :Float32;
-
-    enum VisionTurnSpeedControlState {
-      disabled @0; # No predicted substantial turn on vision range or feature disabled.
-      entering @1; # A substantial turn is predicted ahead, adapting speed to turn comfort levels.
-      turning @2; # Actively turning. Managing acceleration to provide a roll on turn feeling.
-      leaving @3; # Road ahead straightens. Start to allow positive acceleration.
-    }
-  }
-
-  struct SpeedLimitControl {
-    state @0 :SpeedLimitControlState;
-    enabled @1 :Bool;
-    active @2 :Bool;
-    speedLimit @3 :Float32;
-    speedLimitOffset @4 :Float32;
-    distToSpeedLimit @5 :Float32;
-  }
-
-  enum SpeedLimitControlState {
-    inactive @0; # No speed limit set or not enabled by parameter.
-    tempInactive @1; # User wants to ignore speed limit until it changes.
-    preActive @2;
-    adapting @3; # Reducing speed to match new speed limit.
-    active @4; # Cruising at speed limit.
-  }
+struct CustomReserved2 @0xf35cc4560bbf6ec2 {
 }
 
-struct OnroadEventSP @0xda96579883444c35 {
-  events @0 :List(Event);
-
-  struct Event {
-    name @0 :EventName;
-
-    # event types
-    enable @1 :Bool;
-    noEntry @2 :Bool;
-    warning @3 :Bool;   # alerts presented only when  enabled or soft disabling
-    userDisable @4 :Bool;
-    softDisable @5 :Bool;
-    immediateDisable @6 :Bool;
-    preEnable @7 :Bool;
-    permanent @8 :Bool; # alerts presented regardless of openpilot state
-    overrideLateral @10 :Bool;
-    overrideLongitudinal @9 :Bool;
-  }
-
-  enum EventName {
-    lkasEnable @0;
-    lkasDisable @1;
-    manualSteeringRequired @2;
-    manualLongitudinalRequired @3;
-    silentLkasEnable @4;
-    silentLkasDisable @5;
-    silentBrakeHold @6;
-    silentWrongGear @7;
-    silentReverseGear @8;
-    silentDoorOpen @9;
-    silentSeatbeltNotLatched @10;
-    silentParkBrake @11;
-    controlsMismatchLateral @12;
-    hyundaiRadarTracksConfirmed @13;
-    experimentalModeSwitched @14;
-    wrongCarModeAlertOnly @15;
-    pedalPressedAlertOnly @16;
-    speedLimitPreActive @17;
-    speedLimitActive @18;
-    speedLimitConfirmed @19;
-    speedLimitValueChange @20;
-    laneTurnLeft @21;
-    laneTurnRight @22;
-  }
+struct CustomReserved3 @0xda96579883444c35 {
 }
 
 struct CustomReserved4 @0x80ae746ee2596b11 {

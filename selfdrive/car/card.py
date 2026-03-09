@@ -104,27 +104,11 @@ class Car:
       self.RI = interfaces[self.CI.CP.carFingerprint].RadarInterface(self.CI.CP)
       self.CP = self.CI.CP
 
-      # SunnyPilot additions
-      try:
-          sp_flags = self.params.get_int("ToyotaFlagsSP", 0)
-      except:
-          sp_flags = 0
-
-      self.CP_SP = getattr(self.CI, 'CP_SP', type('CP_SP', (), {'flags': sp_flags})())
-
       # continue onto next fingerprinting step in pandad
       self.params.put_bool("FirmwareQueryDone", True)
     else:
       self.CI, self.CP = CI, CI.CP
       self.RI = RI
-
-      # SunnyPilot additions
-      try:
-          sp_flags = self.params.get_int("ToyotaFlagsSP", 0)
-      except:
-          sp_flags = 0
-
-      self.CP_SP = getattr(self.CI, 'CP_SP', type('CP_SP', (), {'flags': sp_flags})())
 
     # set alternative experiences from parameters
     disengage_on_accelerator = self.params.get_bool("DisengageOnAccelerator")
@@ -324,7 +308,7 @@ class Car:
     finally:
       e.set()
       t.join()
-
+    
 def main():
   #config_realtime_process(4, Priority.CTRL_HIGH)
   config_realtime_process(6, Priority.CTRL_HIGH)

@@ -980,18 +980,6 @@ This may take up to a minute.</source>
 <context>
     <name>SPPSettingsPanel</name>
     <message>
-        <source>&lt;span style=&quot;font-size:14px; color:#e0e0e0&quot;&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-----------------------------&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;/span&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Steering Learning Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1046,10 +1034,6 @@ Disable: Need to manually set software delay below.</source>
     </message>
     <message>
         <source>Toyota: Drive Mode Button Link</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Link the vehicle&apos;s drive mode button with acceleration personality (Easy, Standard, Sport) for a seamless driving experience</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1113,6 +1097,18 @@ Disable: Need to manually set software delay below.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&lt;b&gt;Manual Setting Mode&lt;/b&gt;&lt;br&gt;Drag the slider above to adjust software delay.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total delay = Hardware actuator delay (0.1s) + Software delay&lt;br&gt;&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;span style=&quot;font-size:14px; color:#e0e0e0&quot;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Hardware Delay: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1121,15 +1117,19 @@ Disable: Need to manually set software delay below.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>-----------------------------&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;b&gt;Total Delay: &lt;font color=&quot;#4fc3f7&quot;&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Total delay = Hardware actuator delay (0.1s) + Software delay&lt;br&gt;&lt;br&gt;</source>
+        <source>&lt;/span&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;b&gt;Manual Setting Mode&lt;/b&gt;&lt;br&gt;Drag the slider above to adjust software delay.</source>
+        <source>Link vehicle&apos;s drive mode button with acceleration personality (Easy, Standard, Sport) for a seamless driving experience</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

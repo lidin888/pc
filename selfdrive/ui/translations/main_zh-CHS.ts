@@ -797,6 +797,18 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
 <context>
     <name>PlatformSelector</name>
     <message>
+        <source>REMOVE</source>
+        <translation type="unfinished">删除</translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translation type="unfinished">确认</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
         <source>Vehicle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -817,10 +829,6 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>REMOVE</source>
-        <translation type="unfinished">删除</translation>
-    </message>
-    <message>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -835,14 +843,6 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     <message>
         <source>Vehicle Selector</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Confirm</source>
-        <translation type="unfinished">确认</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
     </message>
     <message>
         <source>No vehicles found for query: %1</source>
@@ -1095,7 +1095,7 @@ Disable: Need to manually set software delay below.</source>
     </message>
     <message>
         <source>Link the vehicle&apos;s drive mode button with acceleration personality (Easy, Standard, Sport) for a seamless driving experience</source>
-        <translation>将车辆的驾驶模式按钮与加速特性（轻松、标准、运动）联动，实现无缝驾驶体验</translation>
+        <translation type="vanished">将车辆的驾驶模式按钮与加速特性（轻松、标准、运动）联动，实现无缝驾驶体验</translation>
     </message>
     <message>
         <source>Toyota: Auto Brake Hold (TSS2 Hybrid)</source>
@@ -1179,6 +1179,10 @@ Disable: Need to manually set software delay below.</source>
     </message>
     <message>
         <source>&lt;b&gt;Manual Setting Mode&lt;/b&gt;&lt;br&gt;Drag the slider above to adjust software delay.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link vehicle&apos;s drive mode button with acceleration personality (Easy, Standard, Sport) for a seamless driving experience</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1748,20 +1752,20 @@ Disable: Need to manually set software delay below.</source>
         <translation type="unfinished">丰田：驾驶模式按钮联动</translation>
     </message>
     <message>
-        <source>Links car&apos;s drive mode button with acceleration personalities (Relaxed, Standard, Sport) for seamless driving experience.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Toyota: Auto Brake Hold (TSS2 Hybrid)</source>
         <translation type="unfinished">丰田：自动刹车保持（TSS2混动）</translation>
     </message>
     <message>
-        <source>Automatically hold the vehicle at a stop when the lead car is stopped. This feature is specifically designed for TSS2 Hybrid vehicles.</source>
+        <source>Toyota: Enhanced BSM Support</source>
+        <translation type="unfinished">丰田：增强盲点监测支持</translation>
+    </message>
+    <message>
+        <source>Links car&apos;s drive mode button with acceleration personalities (Relaxed, Standard, Sport) for seamless driving experience.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Toyota: Enhanced BSM Support</source>
-        <translation type="unfinished">丰田：增强盲点监测支持</translation>
+        <source>Automatically hold the vehicle at a stop when the lead car is stopped. This feature is specifically designed for TSS2 Hybrid vehicles.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add enhanced Blind Spot Monitoring support for Toyota vehicles, particularly for Prius TSS2 and some TSS-P models.</source>

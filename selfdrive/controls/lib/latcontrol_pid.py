@@ -194,10 +194,8 @@ class AdaptivePIDController:
 
 
 class LatControlPID(LatControl):
-  """PID lateral controller with adaptive parameter tuning."""
-
-  def __init__(self, CP, CI, CP_SP=None):
-    super().__init__(CP, CI, CP_SP)
+  def __init__(self, CP, CI):
+    super().__init__(CP, CI)
 
     # 创建自适应PID控制器
     self.adaptive_pid = AdaptivePIDController(

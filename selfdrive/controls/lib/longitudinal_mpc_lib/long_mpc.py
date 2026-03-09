@@ -38,11 +38,11 @@ X_EGO_COST = 0.
 V_EGO_COST = 0.
 A_EGO_COST = 0.
 J_EGO_COST = 5.0
-A_CHANGE_COST = 250.
+A_CHANGE_COST = 300.
 A_CHANGE_COST_STARTING = 30.
 DANGER_ZONE_COST = 100.
 CRASH_DISTANCE = .25
-LEAD_DANGER_FACTOR = 0.8 # 0.75
+LEAD_DANGER_FACTOR = 0.9
 LIMIT_COST = 1e6
 ACADOS_SOLVER_TYPE = 'SQP_RTI'
 
@@ -65,9 +65,9 @@ def get_jerk_factor(personality=log.LongitudinalPersonality.standard):
   elif personality==log.LongitudinalPersonality.relaxed:
     return 1.0
   elif personality==log.LongitudinalPersonality.standard:
-    return 1.0
+    return 0.8
   elif personality==log.LongitudinalPersonality.aggressive:
-    return 0.5
+    return 0.6
   else:
     raise NotImplementedError("Longitudinal personality not supported")
 
@@ -76,18 +76,22 @@ def get_T_FOLLOW(personality=log.LongitudinalPersonality.standard):
   if personality==log.LongitudinalPersonality.moreRelaxed:
     return 2.0
   elif personality==log.LongitudinalPersonality.relaxed:
-    return 1.75
+    return 1.55
   elif personality==log.LongitudinalPersonality.standard:
-    return 1.45
+    return 1.35
   elif personality==log.LongitudinalPersonality.aggressive:
-    return 1.25
+    return 1.15
   else:
     raise NotImplementedError("Longitudinal personality not supported")
 
 def get_stopped_equivalence_factor(v_lead):
   return (v_lead**2) / (2 * COMFORT_BRAKE)
 
-def get_safe_obstacle_distance(v_ego, t_follow=None, comfort_brake=COMFORT_BRAKE, stop_distance=STOP_DISTANCE):
+def get_safe_obstacle_distance(v_ego, t_follow=None, comfort_brake=COMFORT_BRAKE, stop_distance=STOP_DISTANCE, params=None):
+  # 如果提供了params参数，则从UI设置中获取停车距离
+  if params is not None:
+    stop_distance = params.get_float("StopDistanceCarrot") * 0.01  # 从cm转换为m
+
   if t_follow is None:
     t_follow = get_T_FOLLOW()
   return (v_ego**2) / (2 * comfort_brake) + t_follow * v_ego + stop_distance
@@ -325,7 +329,7 @@ class LongitudinalMpc:
     x_lead_traj = x_lead + np.cumsum(T_DIFFS * v_lead_traj)
     lead_xv = np.column_stack((x_lead_traj, v_lead_traj))
     return lead_xv
-  
+
   def process_lead(self, lead, j_lead):
     v_ego = self.x0[1]
     if lead is not None and lead.status:
@@ -361,7 +365,7 @@ class LongitudinalMpc:
     self.cruise_min_a = min_a
     self.max_a = max_a
 
-  def update(self, carrot, reset_state, radarstate, v_cruise, x, v, a, j, personality=log.LongitudinalPersonality.standard):
+  def update(self, carrot, reset_state, radarstate, v_cruise, x, v, a, j, personality=log.LongitudinalPersonality.standard, params=None):
     t_follow = carrot.get_T_FOLLOW(personality)
     v_ego = self.x0[1]
     a_ego = self.x0[2]
@@ -379,7 +383,11 @@ class LongitudinalMpc:
     mode = self.mode
     comfort_brake = carrot.comfort_brake
     stop_distance = carrot.stop_distance
-    
+
+    # 如果提供了params参数，则从UI设置中获取停车距离
+    if params is not None:
+      stop_distance = params.get_float("StopDistanceCarrot") * 0.01  # 从cm转换为m
+
     if mode == 'blended':
       stop_x = 1000.0
     else:
@@ -392,7 +400,7 @@ class LongitudinalMpc:
     # and then treat that as a stopped car/obstacle at this new distance.
     lead_0_obstacle = lead_xv_0[:,0] + get_stopped_equivalence_factor(lead_xv_0[:,1])
     lead_1_obstacle = lead_xv_1[:,0] + get_stopped_equivalence_factor(lead_xv_1[:,1])
-    
+
     self.desired_distance = desired_follow_distance(v_ego, lead_v_0, comfort_brake, stop_distance, t_follow)
 
     self.params[:,0] = ACCEL_MIN if not reset_state else a_ego
@@ -434,9 +442,9 @@ class LongitudinalMpc:
         self.a_change_cost = A_CHANGE_COST
 
       #safe_distance = lead_0_obstacle[0] - get_safe_obstacle_distance(v_ego, comfort_brake, stop_distance)
-      self.lead_danger_factor = LEAD_DANGER_FACTOR #np.interp(safe_distance, [-30.0, 0.0], [0.9, LEAD_DANGER_FACTOR]) # 이걸적용하니, 사고방지턱 감속시 너무 급정거하는것 같음.
+      self.lead_danger_factor = LEAD_DANGER_FACTOR #np.interp(safe_distance, [-30.0, 0.0], [0.9, LEAD_DANGER_FACTOR]) # ì´ê±¸ì ìš©í•˜ë‹ˆ, ì‚¬ê³ ë°©ì§€í„± ê°ì†ì‹œ ë„ˆë¬´ ê¸‰ì •ê±°í•˜ëŠ”ê²ƒ ê°™ìŒ.
       self.params[:,5] = self.lead_danger_factor
-      
+
     elif mode == 'blended':
       self.params[:,5] = 1.0
 

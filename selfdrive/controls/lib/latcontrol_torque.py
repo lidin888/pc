@@ -83,6 +83,10 @@ class LatControlTorque(LatControl):
     self.latAccelOffset_default = self.torque_params.latAccelOffset
     self.friction_default = self.torque_params.friction
 
+    # LaneTurn参数
+    self.lane_turn_desire = self.params.get_bool("LaneTurnDesire")
+    self.lane_turn_value = float(self.params.get("LaneTurnValue", "0"))
+
     # Twilsonco's Lateral Neural Network Feedforward
     self.use_nnff = CI.use_nnff
     self.use_nnff_lite = CI.use_nnff_lite
@@ -160,6 +164,10 @@ class LatControlTorque(LatControl):
         self.torque_params.friction = self.friction_default
         self.torque_params.latAccelOffset = self.latAccelOffset_default
       self.lateralTorqueCustom = lateralTorqueCustom
+
+      # 更新LaneTurn参数
+      self.lane_turn_desire = self.params.get_bool("LaneTurnDesire")
+      self.lane_turn_value = float(self.params.get("LaneTurnValue", "0"))
 
     pid_log = log.ControlsState.LateralTorqueState.new_message()
     nn_log = None

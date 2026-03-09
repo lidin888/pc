@@ -2,6 +2,7 @@ import numpy as np
 from cereal import log
 from opendbc.car.vehicle_model import ACCELERATION_DUE_TO_GRAVITY
 from openpilot.common.realtime import DT_CTRL, DT_MDL
+from openpilot.common.params import Params
 from openpilot.selfdrive.modeld.constants import ModelConstants
 import numpy as np
 
@@ -33,8 +34,17 @@ def get_lag_adjusted_curvature(CP, v_ego, psis, curvatures, steer_actuator_delay
     distances = [0.0] * CONTROL_N
   v_ego = max(MIN_SPEED, v_ego)
 
-  # TODO this needs more thought, use .2s extra for now to estimate other delays
-  delay = max(0.01, steer_actuator_delay)
+  # 读取LagdToggleDelay参数
+  params = Params()
+  lagd_toggle = params.get_bool("LagdToggle")
+  lagd_toggle_delay = float(params.get("LagdToggleDelay", "0.0"))
+
+  # 如果启用了LagdToggle，则使用LagdToggleDelay作为延迟时间
+  if lagd_toggle:
+    delay = max(0.01, lagd_toggle_delay)
+  else:
+    # TODO this needs more thought, use .2s extra for now to estimate other delays
+    delay = max(0.01, steer_actuator_delay)
 
   # MPC can plan to turn the wheel and turn back before t_delay. This means
   # in high delay cases some corrections never even get commanded. So just use

@@ -73,8 +73,12 @@ class LanePlanner:
     self.d_prob_count = 0
 
     self.params = Params()
+    # 读取CameraOffset参数，单位0.01米
+    self.camera_offset = float(self.params.get("CameraOffset", "0")) * 0.01
 
   def parse_model(self, md):
+    # 更新CameraOffset参数
+    self.camera_offset = float(self.params.get("CameraOffset", "0")) * 0.01
 
     lane_lines = md.laneLines
     edges = md.roadEdges
@@ -247,7 +251,7 @@ class LanePlanner:
           path_xyz[:,1] = self.d_prob * lane_path_y_interp + (1.0 - self.d_prob) * path_xyz[:,1]
 
 
-    path_xyz[:, 1] += (CAMERA_OFFSET + self.lane_offset_filtered.x)
+    path_xyz[:, 1] += (self.camera_offset + self.lane_offset_filtered.x)
 
     self.offset_total = self.lane_offset_filtered.x
 

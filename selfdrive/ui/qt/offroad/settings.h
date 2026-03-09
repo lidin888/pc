@@ -13,6 +13,7 @@
 #include "selfdrive/ui/ui.h"
 #include "selfdrive/ui/qt/util.h"
 #include "selfdrive/ui/qt/widgets/controls.h"
+#include "selfdrive/ui/sunnypilot/qt/offroad/settings/spp_settings_panel.h"
 
 // ********** settings window + top-level panels **********
 class SettingsWindow : public QFrame {
@@ -136,6 +137,7 @@ class CValueControl : public AbstractControl {
 
 public:
   CValueControl(const QString& params, const QString& title, const QString& desc, int min, int max, int unit = 1);
+  void setUnitConversion(bool enabled, float conversion_factor);
 
 private slots:
   void increaseValue();
@@ -154,4 +156,6 @@ private:
   int m_min;
   int m_max;
   int m_unit;
+  bool m_unit_conversion_enabled = false;
+  float m_conversion_factor = 1.0f;
 };
