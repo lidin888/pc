@@ -22,8 +22,8 @@ OFFSET_MAX = 10.0
 OFFSET_LOWERED_MAX = 8.0
 MIN_ACTIVE_SPEED = 1.0
 LOW_ACTIVE_SPEED = 10.0
-# 在大转弯时暂停参数学习的yaw rate阈值（rad/s），约29度/秒
-MAX_YAW_RATE_FOR_LEARNING = 0.5
+# 在大转弯时暂停参数学习的yaw rate阈值（rad/s），约17度/秒
+MAX_YAW_RATE_FOR_LEARNING = 0.3
 
 
 class VehicleParamsLearner:

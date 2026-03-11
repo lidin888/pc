@@ -1,17 +1,31 @@
 #include "selfdrive/ui/qt/qt_window.h"
 
+#include <QKeyEvent>
+#include <QShortcut>
+
+// 全屏切换快捷键
+void setFullScreenShortcut(QWidget *w) {
+  QShortcut *shortcut = new QShortcut(QKeySequence(Qt::Key_F11), w);
+  QObject::connect(shortcut, &QShortcut::activated, [w]() {
+    if (w->isFullScreen()) {
+      w->showNormal();
+    } else {
+      w->showFullScreen();
+    }
+  });
+}
+
 void setMainWindow(QWidget *w) {
   const float scale = util::getenv("SCALE", 1.0f);
-  const QSize sz = QGuiApplication::primaryScreen()->size();
 
-  if (Hardware::PC() && scale == 1.0 && !(sz - DEVICE_SCREEN_SIZE).isValid()) {
-    w->setMinimumSize(QSize(640, 480)); // allow resize smaller than fullscreen
-    w->setMaximumSize(DEVICE_SCREEN_SIZE);
-    w->resize(sz);
+  if (Hardware::PC()) {
+    w->showFullScreen();
+    // 添加F11快捷键切换全屏
+    setFullScreenShortcut(w);
   } else {
     w->setFixedSize(DEVICE_SCREEN_SIZE * scale);
+    w->show();
   }
-  w->show();
 
 #ifdef QCOM2
   QPlatformNativeInterface *native = QGuiApplication::platformNativeInterface();
