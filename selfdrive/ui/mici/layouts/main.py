@@ -3,6 +3,7 @@ import cereal.messaging as messaging
 from openpilot.selfdrive.ui.mici.layouts.home import MiciHomeLayout
 from openpilot.selfdrive.ui.mici.layouts.settings.settings import SettingsLayout
 from openpilot.selfdrive.ui.mici.layouts.offroad_alerts import MiciOffroadAlerts
+from openpilot.selfdrive.ui.mici.layouts.mapd_panel import MapdInfoPanel
 from openpilot.selfdrive.ui.mici.onroad.augmented_road_view import AugmentedRoadView
 from openpilot.selfdrive.ui.ui_state import device, ui_state
 from openpilot.selfdrive.ui.mici.layouts.onboarding import OnboardingWindow
@@ -33,15 +34,17 @@ class MiciMainLayout(Scroller):
     self._alerts_layout = MiciOffroadAlerts()
     self._settings_layout = SettingsLayout()
     self._onroad_layout = AugmentedRoadView(bookmark_callback=self._on_bookmark_clicked)
+    self._mapd_panel = MapdInfoPanel()
 
     # Initialize widget rects
-    for widget in (self._home_layout, self._settings_layout, self._alerts_layout, self._onroad_layout):
+    for widget in (self._home_layout, self._settings_layout, self._alerts_layout, self._onroad_layout,self._mapd_panel):
       # TODO: set parent rect and use it if never passed rect from render (like in Scroller)
       widget.set_rect(rl.Rectangle(0, 0, gui_app.width, gui_app.height))
 
     self._scroller.add_widgets([
       self._alerts_layout,
       self._home_layout,
+      self._mapd_panel,
       self._onroad_layout,
     ])
     self._scroller.set_reset_scroll_at_show(False)
@@ -64,6 +67,11 @@ class MiciMainLayout(Scroller):
     self._home_layout.set_callbacks(on_settings=lambda: gui_app.push_widget(self._settings_layout))
     self._onroad_layout.set_click_callback(lambda: self._scroll_to(self._home_layout))
     device.add_interactive_timeout_callback(self._on_interactive_timeout)
+
+  def _is_on_side_panel(self) -> bool: # TODO: remove sunny not gonna like it ?
+    onroad_x = self._onroad_layout.rect.x
+    current_scroll = self._scroller.scroll_panel.get_offset()
+    return abs(current_scroll - onroad_x) > self._rect.width / 2
 
   def _scroll_to(self, layout: Widget):
     layout_x = int(layout.rect.x)
@@ -97,13 +105,15 @@ class MiciMainLayout(Scroller):
 
     # FIXME: these two pops can interrupt user interacting in the settings
     if self._onroad_time_delay is not None and rl.get_time() - self._onroad_time_delay >= ONROAD_DELAY:
-      gui_app.pop_widgets_to(self, lambda: self._scroll_to(self._onroad_layout))
+      if not self._is_on_side_panel():
+        gui_app.pop_widgets_to(self, lambda: self._scroll_to(self._onroad_layout))
       self._onroad_time_delay = None
 
     # When car leaves standstill, pop nav stack and scroll to onroad
     CS = ui_state.sm["carState"]
     if not CS.standstill and self._prev_standstill:
-      gui_app.pop_widgets_to(self, lambda: self._scroll_to(self._onroad_layout))
+      if not self._is_on_side_panel():
+        gui_app.pop_widgets_to(self, lambda: self._scroll_to(self._onroad_layout))
     self._prev_standstill = CS.standstill
 
   def _on_interactive_timeout(self):
