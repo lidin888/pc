@@ -24,10 +24,10 @@ class MapdPanelColors:
   black: rl.Color = rl.BLACK
   red: rl.Color = rl.Color(255, 0, 0, 255)
   green: rl.Color = rl.Color(0, 255, 0, 255)
-  grey: rl.Color = rl.Color(145, 155, 149, 241)
+  grey: rl.Color = rl.Color(190, 195, 190, 255)
   light_grey: rl.Color = rl.Color(200, 200, 200, 255)
   dark_grey: rl.Color = rl.Color(100, 100, 100, 255)
-  bg_dark: rl.Color = rl.Color(30, 30, 30, 255)
+  bg_dark: rl.Color = rl.Color(0, 0, 0, 255)
   card_bg: rl.Color = rl.Color(50, 50, 50, 200)
 
 
@@ -44,8 +44,6 @@ class MapdInfoPanel(Widget):
     self.next_speed_limit_distance: float = 0.0
     self.road_name: str = ""
     self.current_speed: float = 0.0
-    self.vision_curve_speed: float = 0.0
-    self.map_curve_speed: float = 0.0
 
     self._font_bold: rl.Font = gui_app.font(FontWeight.BOLD)
     self._font_semi_bold: rl.Font = gui_app.font(FontWeight.SEMI_BOLD)
@@ -64,12 +62,9 @@ class MapdInfoPanel(Widget):
     if sm.valid["longitudinalPlanSP"]:
       lp_sp = sm["longitudinalPlanSP"]
       resolver = lp_sp.speedLimit.resolver
-      scc = lp_sp.smartCruiseControl
       self.speed_limit = resolver.speedLimit * speed_conv
       self.speed_limit_valid = resolver.speedLimitValid
       self.speed_limit_offset = resolver.speedLimitOffset * speed_conv
-      self.vision_curve_speed = scc.vision.vTarget * speed_conv if scc.vision.active else 0.0
-      self.map_curve_speed = scc.map.vTarget * speed_conv if scc.map.active else 0.0
 
     if sm.valid["liveMapDataSP"]:
       lmd = sm["liveMapDataSP"]
@@ -85,31 +80,92 @@ class MapdInfoPanel(Widget):
 
     rl.draw_rectangle(int(rect.x), int(rect.y), int(rect.width), int(rect.height), COLORS.bg_dark)
     margin = 20
+    mid_y = rect.y + rect.height / 2
+
+    left_x = rect.x + margin
+    unit = tr("km/h") if ui_state.is_metric else tr("MPH")
+    rl.draw_text_ex(self._font_semi_bold, unit, rl.Vector2(left_x, mid_y - 80), 32, 0, COLORS.grey)
+
+    speed_val = str(round(self.current_speed))
+    if self.speed_limit_valid and self.current_speed > self.speed_limit:
+      speed_color = COLORS.red
+    else:
+      speed_color = COLORS.white
+    rl.draw_text_ex(self._font_bold, speed_val, rl.Vector2(left_x, mid_y - 50), 90, 0, speed_color)
+
     sign_width = 120 if ui_state.is_metric else 105
     sign_height = 120 if ui_state.is_metric else 140
+    right_x = rect.x + rect.width - sign_width - margin
 
-    sign_x = rect.x + margin
-    sign_y = rect.y + (rect.height - sign_height) / 2
-    self._draw_speed_limit_sign(sign_x, sign_y, sign_width, sign_height)
+    road_y = mid_y + 45
+    road_width = right_x - left_x - margin
+    self._draw_road_name(left_x, road_y, road_width)
 
-    right_x = rect.x + margin + sign_width + margin
-    right_width = rect.width - right_x + rect.x - margin
+    sign_y = rect.y + margin
+    self._draw_speed_limit_sign(right_x, sign_y, sign_width, sign_height)
 
-    row_height = 50
-    num_rows = 4
-    total_info_height = num_rows * row_height
-    info_y = rect.y + (rect.height - total_info_height) / 2
+    if self.speed_limit_offset != 0 and self.speed_limit_valid:
+      offset_val = str(abs(round(self.speed_limit_offset)))
+      badge_sz = 30
+      badge_x = right_x + sign_width - badge_sz / 2
+      badge_y = sign_y - badge_sz / 2
 
-    self._draw_road_name(right_x, info_y, right_width)
-    info_y += row_height
+      if ui_state.is_metric:
+        badge_r = badge_sz / 2
+        badge_cx = badge_x + badge_r
+        badge_cy = badge_y + badge_r
+        rl.draw_circle(int(badge_cx), int(badge_cy), badge_r + 2, COLORS.dark_grey)
+        rl.draw_circle(int(badge_cx), int(badge_cy), badge_r, rl.Color(60, 60, 60, 255))
+        self._draw_text_centered(self._font_bold, offset_val, 18, rl.Vector2(badge_cx, badge_cy), COLORS.white)
+      else:
+        badge_rect = rl.Rectangle(badge_x, badge_y, badge_sz, badge_sz)
+        rl.draw_rectangle_rounded(badge_rect, 0.25, 10, rl.Color(60, 60, 60, 255))
+        rl.draw_rectangle_rounded_lines_ex(badge_rect, 0.25, 10, 2, COLORS.dark_grey)
+        self._draw_text_centered(self._font_bold, offset_val, 18, rl.Vector2(badge_x + badge_sz / 2, badge_y + badge_sz / 2), COLORS.white)
 
-    self._draw_offset_info(right_x, info_y, right_width)
-    info_y += row_height
+    info_x = right_x
+    info_y = sign_y + sign_height + 10
 
-    self._draw_next_speed_limit(right_x, info_y, right_width)
-    info_y += row_height
+    if self.next_speed_limit > 0 and self.next_speed_limit != self.speed_limit:
+      next_val = str(round(self.next_speed_limit))
+      dist_str = self._format_distance(self.next_speed_limit_distance)
+      box_w = sign_width
+      box_h = 70
+      box_x = info_x
+      box_y = info_y
+      box_rect = rl.Rectangle(box_x, box_y, box_w, box_h)
+      rl.draw_rectangle_rounded(box_rect, 0.25, 10, COLORS.dark_grey)
+      rl.draw_rectangle_rounded_lines_ex(box_rect, 0.25, 10, 2, rl.Color(80, 80, 80, 255))
 
-    self._draw_curve_speeds(right_x, info_y, right_width)
+      mid_bx = box_x + box_w / 2
+      self._draw_text_centered(self._font_medium, tr("AHEAD"), 18, rl.Vector2(mid_bx, box_y + 13), COLORS.grey)
+      self._draw_text_centered(self._font_bold, next_val, 34, rl.Vector2(mid_bx, box_y + 38), COLORS.white)
+      self._draw_text_centered(self._font_medium, dist_str, 16, rl.Vector2(mid_bx, box_y + 62), COLORS.grey)
+
+    # SCC
+    speed_size = measure_text_cached(self._font_bold, speed_val, 90)
+    scc_x = left_x + speed_size.x + 12
+    scc_y = mid_y - 40
+    self._draw_scc_icons(scc_x, scc_y)
+
+  def _draw_scc_icons(self, x: float, y: float) -> None:
+    sm = ui_state.sm
+    if not sm.valid["longitudinalPlanSP"]:
+      return
+    scc = sm["longitudinalPlanSP"].smartCruiseControl
+
+    box_w, box_h = 40, 26
+    gap = 4
+    drawn = 0
+
+    for label, active in [("V", scc.vision.active), ("M", scc.map.active)]:
+      if not active:
+        continue
+      bx = x
+      by = y + drawn * (box_h + gap)
+      rl.draw_rectangle_rounded(rl.Rectangle(bx, by, box_w, box_h), 0.3, 10, COLORS.green)
+      self._draw_text_centered(self._font_bold, label, 18, rl.Vector2(bx + box_w / 2, by + box_h / 2), COLORS.black)
+      drawn += 1
 
   def _draw_speed_limit_sign(self, x: float, y: float, sign_width: float, sign_height: float) -> None:
     speed_str = str(round(self.speed_limit)) if self.speed_limit_valid else "--"
@@ -122,7 +178,7 @@ class MapdInfoPanel(Widget):
 
   def _draw_road_name(self, x: float, y: float, width: float) -> None:
     road_display = self.road_name if self.road_name else "--"
-    font_size = 42
+    font_size = 30
     road_size = measure_text_cached(self._font_semi_bold, road_display, font_size)
     text_width = road_size.x
 
@@ -154,28 +210,6 @@ class MapdInfoPanel(Widget):
       rl.draw_text_ex(self._font_semi_bold, road_display, text_pos, font_size, 0, COLORS.white)
       rl.end_scissor_mode()
 
-  def _draw_offset_info(self, x: float, y: float, width: float) -> None:
-    if self.speed_limit_offset != 0 and self.speed_limit_valid:
-      offset_str = ("+" if self.speed_limit_offset > 0 else "") + str(round(self.speed_limit_offset))
-      unit = tr("km/h") if ui_state.is_metric else tr("mph")
-      offset_text = f"Offset  {offset_str} {unit}"
-    else:
-      offset_text = "Offset  --"
-    rl.draw_text_ex(self._font_medium, offset_text, rl.Vector2(x, y), 36, 0, COLORS.light_grey)
-
-  def _draw_next_speed_limit(self, x: float, y: float, width: float) -> None:
-    if self.next_speed_limit > 0 and self.next_speed_limit != self.speed_limit:
-      next_text = f"Next  {round(self.next_speed_limit)} in {self._format_distance(self.next_speed_limit_distance)}"
-    else:
-      next_text = "Next  --"
-    rl.draw_text_ex(self._font_medium, next_text, rl.Vector2(x, y), 36, 0, COLORS.light_grey)
-
-  def _draw_curve_speeds(self, x: float, y: float, width: float) -> None:
-    vision_val = str(round(self.vision_curve_speed)) if self.vision_curve_speed > 0 else "--"
-    map_val = str(round(self.map_curve_speed)) if self.map_curve_speed > 0 else "--"
-    curve_text = f"Curve  V:{vision_val}  M:{map_val}"
-    rl.draw_text_ex(self._font_medium, curve_text, rl.Vector2(x, y), 36, 0, COLORS.light_grey)
-
   def _draw_vienna_sign(self, x: float, y: float, width: float, height: float, speed_str: str, speed_color: rl.Color) -> None:
     center = rl.Vector2(x + width / 2, y + height / 2)
     outer_radius = min(width, height) / 2
@@ -201,8 +235,8 @@ class MapdInfoPanel(Widget):
     rl.draw_rectangle_rounded_lines_ex(inner_rect, inner_roundness, 10, 3, COLORS.black)
 
     mid_x = x + width / 2
-    self._draw_text_centered(self._font_semi_bold, tr("SPEED"), 24, rl.Vector2(mid_x, y + 28), COLORS.black)
-    self._draw_text_centered(self._font_semi_bold, tr("LIMIT"), 24, rl.Vector2(mid_x, y + 54), COLORS.black)
+    self._draw_text_centered(self._font_bold, tr("SPEED"), 28, rl.Vector2(mid_x, y + 28), COLORS.black)
+    self._draw_text_centered(self._font_bold, tr("LIMIT"), 28, rl.Vector2(mid_x, y + 56), COLORS.black)
 
     font_size = 44 if len(speed_str) >= 3 else 56
     self._draw_text_centered(self._font_bold, speed_str, font_size, rl.Vector2(mid_x, y + 100), speed_color)
