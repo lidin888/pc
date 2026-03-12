@@ -122,7 +122,7 @@ bool decode_jpeg(const void* mjpeg_data, size_t mjpeg_size, std::vector<uint8_t>
 camera::camera(const char* device, const char* type, int width, int height, int fps, const std::string& output_prefix)
       : m_device(device), m_type(type), m_width(width), m_height(height),
       m_fps(fps), m_output_prefix(output_prefix),m_pm(NULL),
-      m_current_exposure(0) {
+      m_current_exposure(0), m_initialized(false), m_fd(-1) {
 
     if (m_type == "roadCameraState") {
         m_pm = new PubMaster({"roadCameraState"});
@@ -316,6 +316,7 @@ void camera::reading_loop(int fd) {
     auto start = nanos_since_boot();
     int count = 0;
     int count_empty = 0;
+    auto empty_start = nanos_since_boot();
     m_jpeg_handle = tjInitDecompress();
     m_yuv_data.resize(m_width*m_height + m_width*m_height/2);
 
@@ -339,12 +340,20 @@ void camera::reading_loop(int fd) {
             std::cerr << "decode jpeg failed." << std::endl;
             count_empty++;
             printf("%s count empty=%d mjpeg_size=%ld \n", m_type.c_str(), count_empty, mjpeg_size);
-            if (count_empty > 30) {
-                exit(-2);
+
+            // 添加超时检查：如果连续5秒没有有效数据，则退出
+            auto current_time = nanos_since_boot();
+            if ((current_time - empty_start) / (1000ULL * 1000ULL * 1000ULL) >= 5) {
+                std::cerr << "Camera " << m_type << " error: No valid data for 5 seconds, exiting reading loop" << std::endl;
+                m_initialized = false;
+                return;
             }
 
             continue;
         }
+
+        // 成功解码，重置空数据计时器
+        empty_start = nanos_since_boot();
         count_empty = 0;
 
         // update m_yuv_data
@@ -394,14 +403,16 @@ void camera::send_yuv(uint32_t frame_id, VisionIpcServer &vipc_server) {
     } else {
         std::cerr << "Error: send_yuv, m_yuv_data.empty() " << m_type << std::endl;
         count_err++;
-        if (count_err > 30)
-          exit(-2);
+        if (count_err > 30) {
+            std::cerr << "Camera " << m_type << " error: Too many empty data errors, marking as uninitialized" << std::endl;
+            m_initialized = false;
+        }
         return;
     }
   }
 
-  auto timestamp_sof = (uint64_t)(frame_id*0.05*1000000000);//m_frame_sof;//
-  VisionIpcBufExtra extra = {frame_id, timestamp_sof, timestamp_sof};//m_frame_eof
+  auto timestamp_sof = (uint64_t)(frame_id*0.05*1000000000);
+  VisionIpcBufExtra extra = {frame_id, timestamp_sof, timestamp_sof};
   vipc_server.send(cur_yuv_buf, &extra, false);
 
   MessageBuilder msg;
@@ -695,11 +706,14 @@ bool camera::init_cam() {
         return false;
     }
 
+    m_initialized = true;
     return true;
 }
 
 bool camera::run() {
-    init_cam();
+    if (!init_cam()) {
+        return false;
+    }
 
     // reading_loop
     std::vector<std::thread> threads;
