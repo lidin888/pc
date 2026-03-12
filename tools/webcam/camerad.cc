@@ -80,12 +80,7 @@ const char *get_device(const char *addr, char *device)
 }
 */
 void camerad::camera_runner() {
-  //cl_device_id device_id = cl_get_device_id(CL_DEVICE_TYPE_DEFAULT);
-  //cl_device_type device_type = CL_DEVICE_TYPE_GPU | CL_DEVICE_TYPE_CPU;
-  cl_device_type device_type = CL_DEVICE_TYPE_GPU;
-  cl_device_id device_id = cl_get_device_id(device_type);
-  cl_context context = CL_CHECK_ERR(clCreateContext(NULL, 1, &device_id, NULL, NULL, &err));
-  VisionIpcServer vipc_server("camerad", device_id, context);
+  VisionIpcServer vipc_server("camerad");
 
   for (camera *cam : m_cameras) {
     vipc_server.create_buffers(cam->get_stream_type(),20, cam->width(), cam->height()); //false,
