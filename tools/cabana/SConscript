@@ -2,7 +2,7 @@ import subprocess
 import os
 import shutil
 
-Import('env', 'arch', 'common', 'messaging', 'visionipc', 'cereal', 'vipc_libs', 'vipc_frameworks')
+Import('env', 'arch', 'common', 'messaging', 'visionipc', 'cereal', 'vipc_libs')
 
 # Detect Qt - skip build if not available
 if arch == "Darwin":
@@ -68,7 +68,6 @@ base_frameworks = list(qt_env['FRAMEWORKS'])
 base_libs = vipc_libs + [common, messaging, cereal, visionipc, 'm', 'ssl', 'crypto', 'pthread'] + qt_env["LIBS"]
 
 if arch == "Darwin":
-  base_frameworks.extend(vipc_frameworks if vipc_frameworks else [])
   base_frameworks.append('QtCharts')
   base_frameworks.append('QtSerialBus')
 else:

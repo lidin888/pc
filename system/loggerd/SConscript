@@ -1,4 +1,4 @@
-Import('env', 'arch', 'messaging', 'common', 'visionipc', 'vipc_libs', 'vipc_frameworks')
+Import('env', 'arch', 'messaging', 'common', 'visionipc', 'vipc_libs')
 
 libs = [common, messaging, visionipc] + vipc_libs + ['avformat', 'avcodec', 'swresample', 'avutil', 'x264',
         'yuv', 'pthread', 'z', 'm', 'zstd']
@@ -14,9 +14,9 @@ if arch == "Darwin":
 logger_lib = env.Library('logger', src)
 libs.insert(0, logger_lib)
 
-env.Program('loggerd', ['loggerd.cc'], LIBS=libs, FRAMEWORKS=vipc_frameworks)
-env.Program('encoderd', ['encoderd.cc'], LIBS=libs + ["jpeg"], FRAMEWORKS=vipc_frameworks)
-env.Program('bootlog.cc', LIBS=libs, FRAMEWORKS=vipc_frameworks)
+env.Program('loggerd', ['loggerd.cc'], LIBS=libs)
+env.Program('encoderd', ['encoderd.cc'], LIBS=libs + ["jpeg"])
+env.Program('bootlog.cc', LIBS=libs)
 
 if GetOption('extras'):
-  env.Program('tests/test_logger', ['tests/test_runner.cc', 'tests/test_logger.cc', 'tests/test_zstd_writer.cc'], LIBS=libs + ['curl', 'crypto'], FRAMEWORKS=vipc_frameworks)
+  env.Program('tests/test_logger', ['tests/test_runner.cc', 'tests/test_logger.cc', 'tests/test_zstd_writer.cc'], LIBS=libs + ['curl', 'crypto'])
