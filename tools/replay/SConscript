@@ -1,10 +1,10 @@
-Import('env', 'arch', 'common', 'messaging', 'visionipc', 'cereal')
+Import('env', 'arch', 'common', 'messaging', 'visionipc', 'cereal', 'vipc_libs', 'vipc_frameworks')
 
 replay_env = env.Clone()
 replay_env['CCFLAGS'] += ['-Wno-deprecated-declarations']
 
-base_frameworks = []
-base_libs = [common, messaging, cereal, visionipc, 'm', 'ssl', 'crypto', 'pthread']
+base_frameworks = vipc_frameworks if vipc_frameworks else []
+base_libs = vipc_libs + [common, messaging, cereal, visionipc, 'm', 'ssl', 'crypto', 'pthread']
 
 replay_lib_src = ["replay.cc", "consoleui.cc", "camera.cc", "filereader.cc", "logreader.cc", "framereader.cc",
                   "route.cc", "util.cc", "seg_mgr.cc", "timeline.cc", "api.cc"]
@@ -16,4 +16,4 @@ replay_libs = [replay_lib, 'avformat', 'avcodec', 'swresample', 'avutil', 'x264'
 replay_env.Program("replay", ["main.cc"], LIBS=replay_libs, FRAMEWORKS=base_frameworks)
 
 if GetOption('extras'):
-  replay_env.Program('tests/test_replay', ['tests/test_replay.cc'], LIBS=replay_libs)
+  replay_env.Program('tests/test_replay', ['tests/test_replay.cc'], LIBS=replay_libs, FRAMEWORKS=base_frameworks)
