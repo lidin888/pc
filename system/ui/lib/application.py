@@ -284,7 +284,7 @@ class GuiApplication(GuiApplicationExt):
       if ENABLE_FULLSCREEN:
         rl.toggle_fullscreen()
 
-      needs_render_texture = self._scale != 1.0 or BURN_IN_MODE or RECORD
+      needs_render_texture = self._scale != 1.0 or BURN_IN_MODE or RECORD or PC
       if self._scale != 1.0:
         rl.set_mouse_scale(1 / self._scale, 1 / self._scale)
       if needs_render_texture:
@@ -557,7 +557,15 @@ class GuiApplication(GuiApplicationExt):
 
         # Handle F11 key to toggle fullscreen/windowed mode on PC
         if PC and rl.is_key_pressed(rl.KeyboardKey.KEY_F11):
-          rl.toggle_fullscreen()
+          # Check if currently fullscreen
+          is_fullscreen = rl.is_window_fullscreen()
+          if is_fullscreen:
+            # Switch to windowed mode with smaller size
+            rl.toggle_fullscreen()
+            rl.set_window_size(1280, 720)
+          else:
+            # Switch to fullscreen
+            rl.toggle_fullscreen()
 
         # Skip rendering when screen is off
         if not self._should_render:
@@ -589,7 +597,10 @@ class GuiApplication(GuiApplicationExt):
           rl.begin_drawing()
           rl.clear_background(rl.BLACK)
           src_rect = rl.Rectangle(0, 0, float(self._width), -float(self._height))
-          dst_rect = rl.Rectangle(0, 0, float(self._scaled_width), float(self._scaled_height))
+          # Use current window size for dynamic scaling
+          current_width = rl.get_screen_width()
+          current_height = rl.get_screen_height()
+          dst_rect = rl.Rectangle(0, 0, float(current_width), float(current_height))
           texture = self._render_texture.texture
           if texture:
             if BURN_IN_MODE and self._burn_in_shader:
@@ -792,30 +803,24 @@ class GuiApplication(GuiApplicationExt):
 
   @staticmethod
   def _default_width() -> int:
-    if ENABLE_FULLSCREEN and not PC:
+    if ENABLE_FULLSCREEN:
       # Use monitor resolution in fullscreen mode (auto-adaptive)
       rl.init_window(1, 1, "")
       w = rl.get_monitor_width(0)
       rl.close_window()
       # Use actual monitor width, no fixed minimum
       return w if w > 0 else 1920
-    elif PC:
-      # PC: Use smaller window size for windowed mode (F11 toggle)
-      return 1280  # Reasonable width that fits most screens
     return 2160 if GuiApplication.big_ui() else 536
 
   @staticmethod
   def _default_height() -> int:
-    if ENABLE_FULLSCREEN and not PC:
+    if ENABLE_FULLSCREEN:
       # Use monitor resolution in fullscreen mode (auto-adaptive)
       rl.init_window(1, 1, "")
       h = rl.get_monitor_height(0)
       rl.close_window()
       # Use actual monitor height, no fixed minimum
       return h if h > 0 else 1080
-    elif PC:
-      # PC: Use smaller window size for windowed mode (F11 toggle)
-      return 720  # Reasonable height that fits most screens
     return 1080 if GuiApplication.big_ui() else 240
 
   @staticmethod
