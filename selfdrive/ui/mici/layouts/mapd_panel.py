@@ -45,6 +45,8 @@ class MapdInfoPanel(Widget):
     self.road_name: str = ""
     self.current_speed: float = 0.0
 
+    self._sign_slide: float = 0.0
+
     self._font_bold: rl.Font = gui_app.font(FontWeight.BOLD)
     self._font_semi_bold: rl.Font = gui_app.font(FontWeight.SEMI_BOLD)
     self._font_medium: rl.Font = gui_app.font(FontWeight.MEDIUM)
@@ -84,31 +86,60 @@ class MapdInfoPanel(Widget):
 
     left_x = rect.x + margin
     unit = tr("km/h") if ui_state.is_metric else tr("MPH")
-    rl.draw_text_ex(self._font_semi_bold, unit, rl.Vector2(left_x, mid_y - 80), 32, 0, COLORS.grey)
+    rl.draw_text_ex(self._font_semi_bold, unit, rl.Vector2(left_x, mid_y - 95), 38, 0, COLORS.grey)
 
     speed_val = str(round(self.current_speed))
     if self.speed_limit_valid and self.current_speed > self.speed_limit:
       speed_color = COLORS.red
     else:
       speed_color = COLORS.white
-    rl.draw_text_ex(self._font_bold, speed_val, rl.Vector2(left_x, mid_y - 50), 90, 0, speed_color)
+    rl.draw_text_ex(self._font_bold, speed_val, rl.Vector2(left_x, mid_y - 60), 110, 0, speed_color)
 
-    sign_width = 120 if ui_state.is_metric else 105
-    sign_height = 120 if ui_state.is_metric else 140
-    right_x = rect.x + rect.width - sign_width - margin
+    sign_width = 135 if ui_state.is_metric else 135
+    sign_height = 135 if ui_state.is_metric else 175
 
-    road_y = mid_y + 45
-    road_width = right_x - left_x - margin
+    has_next = self.next_speed_limit > 0 and self.next_speed_limit != self.speed_limit
+    target_slide = 1.0 if has_next else 0.0
+    slide_speed = 3.0 * rl.get_frame_time()
+    if self._sign_slide < target_slide:
+      self._sign_slide = min(self._sign_slide + slide_speed, target_slide)
+    elif self._sign_slide > target_slide:
+      self._sign_slide = max(self._sign_slide - slide_speed, target_slide)
+
+    next_w = int(sign_width * 0.7)
+    next_h = int(sign_height * 0.7)
+    next_peek = int(next_w * 0.85) + 5
+    centered_x = rect.x + rect.width - sign_width - margin
+    shifted_x = rect.x + rect.width - sign_width - margin - next_peek
+    sign_x = centered_x + (shifted_x - centered_x) * self._sign_slide
+    sign_y = rect.y + (rect.height - sign_height) / 2
+
+    road_y = mid_y + 55
+    road_width = sign_x - left_x - margin
     self._draw_road_name(left_x, road_y, road_width)
 
-    sign_y = rect.y + margin
-    self._draw_speed_limit_sign(right_x, sign_y, sign_width, sign_height)
+    if has_next and self._sign_slide > 0.01:
+      next_val = str(round(self.next_speed_limit))
+      dist_str = self._format_distance(self.next_speed_limit_distance)
+      next_x = sign_x + sign_width - int(next_w * 0.15)
+      next_y = sign_y + (sign_height - next_h) / 2
+
+      next_speed_color = COLORS.black
+      if ui_state.is_metric:
+        self._draw_vienna_sign(next_x, next_y, next_w, next_h, next_val, next_speed_color, is_upcoming=True)
+      else:
+        self._draw_mutcd_sign(next_x, next_y, next_w, next_h, next_val, next_speed_color, is_upcoming=True)
+
+      dist_size = measure_text_cached(self._font_medium, dist_str, 24)
+      rl.draw_text_ex(self._font_medium, dist_str, rl.Vector2(next_x + next_w / 2 - dist_size.x / 2, next_y + next_h + 4), 24, 0, COLORS.grey)
+
+    self._draw_speed_limit_sign(sign_x, sign_y, sign_width, sign_height)
 
     if self.speed_limit_offset != 0 and self.speed_limit_valid:
       offset_val = str(abs(round(self.speed_limit_offset)))
-      badge_sz = 30
-      badge_x = right_x + sign_width - badge_sz / 2
-      badge_y = sign_y - badge_sz / 2
+      badge_sz = 34
+      badge_x = sign_x + sign_width - badge_sz * 0.85
+      badge_y = sign_y - badge_sz * 0.15
 
       if ui_state.is_metric:
         badge_r = badge_sz / 2
@@ -116,36 +147,19 @@ class MapdInfoPanel(Widget):
         badge_cy = badge_y + badge_r
         rl.draw_circle(int(badge_cx), int(badge_cy), badge_r + 2, COLORS.dark_grey)
         rl.draw_circle(int(badge_cx), int(badge_cy), badge_r, rl.Color(60, 60, 60, 255))
-        self._draw_text_centered(self._font_bold, offset_val, 18, rl.Vector2(badge_cx, badge_cy), COLORS.white)
+        self._draw_text_centered(self._font_bold, offset_val, 20, rl.Vector2(badge_cx, badge_cy), COLORS.white)
       else:
-        badge_rect = rl.Rectangle(badge_x, badge_y, badge_sz, badge_sz)
+        mutcd_badge_x = sign_x + sign_width - badge_sz * 0.65
+        mutcd_badge_y = sign_y - badge_sz * 0.35
+        badge_rect = rl.Rectangle(mutcd_badge_x, mutcd_badge_y, badge_sz, badge_sz)
         rl.draw_rectangle_rounded(badge_rect, 0.25, 10, rl.Color(60, 60, 60, 255))
         rl.draw_rectangle_rounded_lines_ex(badge_rect, 0.25, 10, 2, COLORS.dark_grey)
-        self._draw_text_centered(self._font_bold, offset_val, 18, rl.Vector2(badge_x + badge_sz / 2, badge_y + badge_sz / 2), COLORS.white)
-
-    info_x = right_x
-    info_y = sign_y + sign_height + 10
-
-    if self.next_speed_limit > 0 and self.next_speed_limit != self.speed_limit:
-      next_val = str(round(self.next_speed_limit))
-      dist_str = self._format_distance(self.next_speed_limit_distance)
-      box_w = sign_width
-      box_h = 70
-      box_x = info_x
-      box_y = info_y
-      box_rect = rl.Rectangle(box_x, box_y, box_w, box_h)
-      rl.draw_rectangle_rounded(box_rect, 0.25, 10, COLORS.dark_grey)
-      rl.draw_rectangle_rounded_lines_ex(box_rect, 0.25, 10, 2, rl.Color(80, 80, 80, 255))
-
-      mid_bx = box_x + box_w / 2
-      self._draw_text_centered(self._font_medium, tr("AHEAD"), 18, rl.Vector2(mid_bx, box_y + 13), COLORS.grey)
-      self._draw_text_centered(self._font_bold, next_val, 34, rl.Vector2(mid_bx, box_y + 38), COLORS.white)
-      self._draw_text_centered(self._font_medium, dist_str, 16, rl.Vector2(mid_bx, box_y + 62), COLORS.grey)
+        self._draw_text_centered(self._font_bold, offset_val, 20, rl.Vector2(mutcd_badge_x + badge_sz / 2, mutcd_badge_y + badge_sz / 2), COLORS.white)
 
     # SCC
-    speed_size = measure_text_cached(self._font_bold, speed_val, 90)
-    scc_x = left_x + speed_size.x + 12
-    scc_y = mid_y - 40
+    speed_size = measure_text_cached(self._font_bold, speed_val, 110)
+    scc_x = left_x + speed_size.x + 14
+    scc_y = mid_y - 50
     self._draw_scc_icons(scc_x, scc_y)
 
   def _draw_scc_icons(self, x: float, y: float) -> None:
@@ -154,8 +168,8 @@ class MapdInfoPanel(Widget):
       return
     scc = sm["longitudinalPlanSP"].smartCruiseControl
 
-    box_w, box_h = 40, 26
-    gap = 4
+    box_w, box_h = 56, 36
+    gap = 6
     drawn = 0
 
     for label, active in [("V", scc.vision.active), ("M", scc.map.active)]:
@@ -164,7 +178,7 @@ class MapdInfoPanel(Widget):
       bx = x
       by = y + drawn * (box_h + gap)
       rl.draw_rectangle_rounded(rl.Rectangle(bx, by, box_w, box_h), 0.3, 10, COLORS.green)
-      self._draw_text_centered(self._font_bold, label, 18, rl.Vector2(bx + box_w / 2, by + box_h / 2), COLORS.black)
+      self._draw_text_centered(self._font_bold, label, 24, rl.Vector2(bx + box_w / 2, by + box_h / 2), COLORS.black)
       drawn += 1
 
   def _draw_speed_limit_sign(self, x: float, y: float, sign_width: float, sign_height: float) -> None:
@@ -172,9 +186,9 @@ class MapdInfoPanel(Widget):
     speed_color = COLORS.black if not self.speed_limit_valid or self.current_speed <= self.speed_limit else COLORS.red
 
     if ui_state.is_metric:
-      self._draw_vienna_sign(x, y, sign_width, sign_height, speed_str, speed_color)
+      self._draw_vienna_sign(x, y, sign_width, sign_height, speed_str, speed_color, is_upcoming=False)
     else:
-      self._draw_mutcd_sign(x, y, sign_width, sign_height, speed_str, speed_color)
+      self._draw_mutcd_sign(x, y, sign_width, sign_height, speed_str, speed_color, is_upcoming=False)
 
   def _draw_road_name(self, x: float, y: float, width: float) -> None:
     road_display = self.road_name if self.road_name else "--"
@@ -210,7 +224,7 @@ class MapdInfoPanel(Widget):
       rl.draw_text_ex(self._font_semi_bold, road_display, text_pos, font_size, 0, COLORS.white)
       rl.end_scissor_mode()
 
-  def _draw_vienna_sign(self, x: float, y: float, width: float, height: float, speed_str: str, speed_color: rl.Color) -> None:
+  def _draw_vienna_sign(self, x: float, y: float, width: float, height: float, speed_str: str, speed_color: rl.Color, is_upcoming: bool = False) -> None:
     center = rl.Vector2(x + width / 2, y + height / 2)
     outer_radius = min(width, height) / 2
 
@@ -223,11 +237,11 @@ class MapdInfoPanel(Widget):
     text_pos = rl.Vector2(center.x - text_size.x / 2, center.y - text_size.y / 2)
     rl.draw_text_ex(self._font_bold, speed_str, text_pos, font_size, 0, speed_color)
 
-  def _draw_mutcd_sign(self, x: float, y: float, width: float, height: float, speed_str: str, speed_color: rl.Color) -> None:
+  def _draw_mutcd_sign(self, x: float, y: float, width: float, height: float, speed_str: str, speed_color: rl.Color, is_upcoming: bool = False) -> None:
     sign_rect = rl.Rectangle(x, y, width, height)
     rl.draw_rectangle_rounded(sign_rect, 0.35, 10, COLORS.white)
 
-    inset = 6
+    inset = max(4, width * 0.05)
     inner_rect = rl.Rectangle(x + inset, y + inset, width - inset * 2, height - inset * 2)
     outer_radius = 0.35 * width / 2.0
     inner_radius = outer_radius - inset
@@ -235,11 +249,15 @@ class MapdInfoPanel(Widget):
     rl.draw_rectangle_rounded_lines_ex(inner_rect, inner_roundness, 10, 3, COLORS.black)
 
     mid_x = x + width / 2
-    self._draw_text_centered(self._font_bold, tr("SPEED"), 28, rl.Vector2(mid_x, y + 28), COLORS.black)
-    self._draw_text_centered(self._font_bold, tr("LIMIT"), 28, rl.Vector2(mid_x, y + 56), COLORS.black)
+    label_size = max(16, int(width * 0.22))
+    if is_upcoming:
+      self._draw_text_centered(self._font_bold, tr("AHEAD"), label_size, rl.Vector2(mid_x, y + height * 0.27), COLORS.black)
+    else:
+      self._draw_text_centered(self._font_bold, tr("SPEED"), label_size, rl.Vector2(mid_x, y + height * 0.18), COLORS.black)
+      self._draw_text_centered(self._font_bold, tr("LIMIT"), label_size, rl.Vector2(mid_x, y + height * 0.36), COLORS.black)
 
-    font_size = 44 if len(speed_str) >= 3 else 56
-    self._draw_text_centered(self._font_bold, speed_str, font_size, rl.Vector2(mid_x, y + 100), speed_color)
+    speed_font_size = int(width * 0.42) if len(speed_str) >= 3 else int(width * 0.50)
+    self._draw_text_centered(self._font_bold, speed_str, speed_font_size, rl.Vector2(mid_x, y + height * 0.66), speed_color)
 
   def _draw_text_centered(self, font, text, size, pos_center, color):
     sz = measure_text_cached(font, text, size)
