@@ -274,13 +274,15 @@ class GuiApplication(GuiApplicationExt):
       atexit.register(self.close)
 
       flags = rl.ConfigFlags.FLAG_MSAA_4X_HINT
-      if ENABLE_FULLSCREEN:
-        flags |= rl.ConfigFlags.FLAG_FULLSCREEN_MODE
       if ENABLE_VSYNC:
         flags |= rl.ConfigFlags.FLAG_VSYNC_HINT
       rl.set_config_flags(flags)
 
       rl.init_window(self._scaled_width, self._scaled_height, title)
+
+      # Manually set fullscreen after window init to allow F11 toggle
+      if ENABLE_FULLSCREEN:
+        rl.toggle_fullscreen()
 
       needs_render_texture = self._scale != 1.0 or BURN_IN_MODE or RECORD
       if self._scale != 1.0:
@@ -553,6 +555,10 @@ class GuiApplication(GuiApplicationExt):
         if len(self._mouse_events) > 0:
           self._last_mouse_event = self._mouse_events[-1]
 
+        # Handle F11 key to toggle fullscreen/windowed mode on PC
+        if PC and rl.is_key_pressed(rl.KeyboardKey.KEY_F11):
+          rl.toggle_fullscreen()
+
         # Skip rendering when screen is off
         if not self._should_render:
           if PC:
@@ -786,24 +792,30 @@ class GuiApplication(GuiApplicationExt):
 
   @staticmethod
   def _default_width() -> int:
-    if ENABLE_FULLSCREEN:
+    if ENABLE_FULLSCREEN and not PC:
       # Use monitor resolution in fullscreen mode (auto-adaptive)
       rl.init_window(1, 1, "")
       w = rl.get_monitor_width(0)
       rl.close_window()
       # Use actual monitor width, no fixed minimum
       return w if w > 0 else 1920
+    elif PC:
+      # PC: Use smaller window size for windowed mode (F11 toggle)
+      return 1280  # Reasonable width that fits most screens
     return 2160 if GuiApplication.big_ui() else 536
 
   @staticmethod
   def _default_height() -> int:
-    if ENABLE_FULLSCREEN:
+    if ENABLE_FULLSCREEN and not PC:
       # Use monitor resolution in fullscreen mode (auto-adaptive)
       rl.init_window(1, 1, "")
       h = rl.get_monitor_height(0)
       rl.close_window()
       # Use actual monitor height, no fixed minimum
       return h if h > 0 else 1080
+    elif PC:
+      # PC: Use smaller window size for windowed mode (F11 toggle)
+      return 720  # Reasonable height that fits most screens
     return 1080 if GuiApplication.big_ui() else 240
 
   @staticmethod

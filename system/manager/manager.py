@@ -175,6 +175,14 @@ def manager_thread() -> None:
     running = ' '.join("{}{}\u001b[0m".format("\u001b[32m" if p.proc.is_alive() else "\u001b[31m", p.name)
                        for p in managed_processes.values() if p.proc)
     print(running)
+
+    # PC: Exit when UI closes
+    if PC:
+      ui_proc = managed_processes.get("ui")
+      if ui_proc is not None and ui_proc.proc is not None and not ui_proc.proc.is_alive():
+        cloudlog.warning("UI process exited, shutting down manager")
+        break
+
     # 每10次循环检查一次传感器连接状态（启动初期检查）
     if sensor_check_count < 10:
       if not gyro_connected and sensor_sm.updated['gyroscope']:
