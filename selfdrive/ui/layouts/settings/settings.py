@@ -2,6 +2,7 @@ import pyray as rl
 from dataclasses import dataclass
 from enum import IntEnum
 from collections.abc import Callable
+from openpilot.selfdrive.ui.layouts.settings.carrot import CarrotLayout
 from openpilot.selfdrive.ui.layouts.settings.developer import DeveloperLayout
 from openpilot.selfdrive.ui.layouts.settings.device import DeviceLayout
 from openpilot.selfdrive.ui.layouts.settings.firehose import FirehoseLayout
@@ -39,6 +40,7 @@ class PanelType(IntEnum):
   SOFTWARE = 3
   FIREHOSE = 4
   DEVELOPER = 5
+  CARROT = 6
 
 
 @dataclass
@@ -58,12 +60,13 @@ class SettingsLayout(Widget):
     wifi_manager.set_active(False)
 
     self._panels = {
-      PanelType.DEVICE: PanelInfo("Device", DeviceLayout()),
-      PanelType.NETWORK: PanelInfo("Network", WifiManagerUI(wifi_manager)),
-      PanelType.TOGGLES: PanelInfo("Toggles", TogglesLayout()),
-      PanelType.SOFTWARE: PanelInfo("Software", SoftwareLayout()),
-      PanelType.FIREHOSE: PanelInfo("Firehose", FirehoseLayout()),
-      PanelType.DEVELOPER: PanelInfo("Developer", DeveloperLayout()),
+      PanelType.DEVICE: PanelInfo("设备", DeviceLayout()),
+      PanelType.NETWORK: PanelInfo("网络", WifiManagerUI(wifi_manager)),
+      PanelType.TOGGLES: PanelInfo("开关", TogglesLayout()),
+      PanelType.SOFTWARE: PanelInfo("软件", SoftwareLayout()),
+      PanelType.FIREHOSE: PanelInfo("数据上传", FirehoseLayout()),
+      PanelType.DEVELOPER: PanelInfo("开发者", DeveloperLayout()),
+      PanelType.CARROT: PanelInfo("萝卜", CarrotLayout()),
     }
 
     self._font_medium = gui_app.font(FontWeight.MEDIUM)

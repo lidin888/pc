@@ -29,21 +29,21 @@ class PrimeWidget(Widget):
     w = rect.width - 160
 
     # Title
-    gui_label(rl.Rectangle(x, y, w, 90), "Upgrade Now", 75, font_weight=FontWeight.BOLD)
+    gui_label(rl.Rectangle(x, y, w, 90), "立即升级", 75, font_weight=FontWeight.BOLD)
 
     # Description with wrapping
     desc_y = y + 140
     font = gui_app.font(FontWeight.LIGHT)
-    wrapped_text = "\n".join(wrap_text(font, "Become a comma prime member at connect.comma.ai", 56, int(w)))
+    wrapped_text = "\n".join(wrap_text(font, "成为 comma prime 会员，请访问 connect.comma.ai", 56, int(w)))
     text_size = measure_text_cached(font, wrapped_text, 56)
     rl.draw_text_ex(font, wrapped_text, rl.Vector2(x, desc_y), 56, 0, rl.WHITE)
 
     # Features section
     features_y = desc_y + text_size.y + 50
-    gui_label(rl.Rectangle(x, features_y, w, 50), "PRIME FEATURES:", 41, font_weight=FontWeight.BOLD)
+    gui_label(rl.Rectangle(x, features_y, w, 50), "PRIME 功能:", 41, font_weight=FontWeight.BOLD)
 
     # Feature list
-    features = ["Remote access", "24/7 LTE connectivity", "1 year of drive storage", "Remote snapshots"]
+    features = ["远程访问", "24/7 LTE 连接", "1 年驾驶数据存储", "远程快照"]
     for i, feature in enumerate(features):
       item_y = features_y + 80 + i * 65
       gui_label(rl.Rectangle(x, item_y, 50, 60), "✓", 50, color=rl.Color(70, 91, 234, 255))
@@ -58,5 +58,5 @@ class PrimeWidget(Widget):
     y = rect.y + 40
 
     font = gui_app.font(FontWeight.BOLD)
-    rl.draw_text_ex(font, "✓ SUBSCRIBED", rl.Vector2(x, y), 41, 0, rl.Color(134, 255, 78, 255))
+    rl.draw_text_ex(font, "✓ 已订阅", rl.Vector2(x, y), 41, 0, rl.Color(134, 255, 78, 255))
     rl.draw_text_ex(font, "comma prime", rl.Vector2(x, y + 61), 75, 0, rl.WHITE)

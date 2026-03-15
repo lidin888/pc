@@ -139,7 +139,7 @@ class HomeLayout(Widget):
       highlight_color = rl.Color(255, 140, 40, 255) if self.current_state == HomeLayoutState.UPDATE else rl.Color(255, 102, 0, 255)
       rl.draw_rectangle_rounded(self.update_notif_rect, 0.3, 10, highlight_color)
 
-      text = "UPDATE"
+      text = "更新"
       text_width = measure_text_cached(font, text, HEAD_BUTTON_FONT_SIZE).x
       text_x = self.update_notif_rect.x + (self.update_notif_rect.width - text_width) // 2
       text_y = self.update_notif_rect.y + (self.update_notif_rect.height - HEAD_BUTTON_FONT_SIZE) // 2
@@ -151,7 +151,7 @@ class HomeLayout(Widget):
       highlight_color = rl.Color(255, 70, 70, 255) if self.current_state == HomeLayoutState.ALERTS else rl.Color(226, 44, 44, 255)
       rl.draw_rectangle_rounded(self.alert_notif_rect, 0.3, 10, highlight_color)
 
-      alert_text = f"{self.alert_count} ALERT{'S' if self.alert_count > 1 else ''}"
+      alert_text = f"{self.alert_count} 个警报{'S' if self.alert_count > 1 else ''}"
       text_width = measure_text_cached(font, alert_text, HEAD_BUTTON_FONT_SIZE).x
       text_x = self.alert_notif_rect.x + (self.alert_notif_rect.width - text_width) // 2
       text_y = self.alert_notif_rect.y + (self.alert_notif_rect.height - HEAD_BUTTON_FONT_SIZE) // 2

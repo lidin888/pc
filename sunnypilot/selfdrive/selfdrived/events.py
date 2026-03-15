@@ -226,4 +226,29 @@ EVENTS_SP: dict[int, dict[str, Alert | AlertCallbackType]] = {
       AlertStatus.normal, AlertSize.none,
       Priority.MID, VisualAlert.none, AudibleAlert.prompt, 3.),
   },
+
+  # CarrotPilot traffic signal events
+  EventNameSP.trafficSignGreen: {
+    ET.WARNING: Alert(
+      "Green Light — Go",
+      "",
+      AlertStatus.normal, AlertSize.small,
+      Priority.LOW, VisualAlert.none, AudibleAlert.prompt, 2.),
+  },
+
+  EventNameSP.trafficSignChanged: {
+    ET.WARNING: Alert(
+      "Traffic Signal Changed",
+      "",
+      AlertStatus.normal, AlertSize.small,
+      Priority.LOW, VisualAlert.none, AudibleAlert.prompt, 2.),
+  },
+
+  EventNameSP.trafficStopping: {
+    ET.WARNING: Alert(
+      "Stopping for Traffic Signal",
+      "",
+      AlertStatus.normal, AlertSize.small,
+      Priority.LOW, VisualAlert.none, AudibleAlert.none, 2.),
+  },
 }

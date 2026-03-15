@@ -1,9 +1,10 @@
 from cereal import car, log, custom
 import cereal.messaging as messaging
+from openpilot.common.params import Params
 from opendbc.car import DT_CTRL, structs
 from opendbc.car.interfaces import MAX_CTRL_SPEED
 
-from openpilot.selfdrive.selfdrived.events import Events
+from openpilot.selfdrive.selfdrived.events import Events, ET
 
 ButtonType = structs.CarState.ButtonEvent.Type
 GearShifter = structs.CarState.GearShifter
@@ -35,7 +36,14 @@ class CarSpecificEvents:
     self.no_steer_warning = False
     self.silent_steer_warning = True
 
+    # carrot
+    self.params = Params()
+    self.frame = 0
+    self.vCruise_prev = 250
+    self.carrotCruise_prev = False
+
   def update(self, CS: car.CarState, CS_prev: car.CarState, CC: car.CarControl):
+    self.frame += 1
     if self.CP.brand in ('body', 'mock'):
       events = Events()
 
@@ -127,6 +135,15 @@ class CarSpecificEvents:
     else:
       events = self.create_common_events(CS, CS_prev)
 
+    # carrot cruise events
+    if CC.enabled:
+      if self.vCruise_prev == 0 and CS.vCruise > 0:
+        events.add(EventName.audioPrompt)
+    if self.carrotCruise_prev != CS.carrotCruise:
+      events.add(EventName.audioPrompt)
+    self.carrotCruise_prev = CS.carrotCruise
+    self.vCruise_prev = CS.vCruise
+
     return events
 
   def create_common_events(self, CS: structs.CarState, CS_prev: car.CarState, extra_gears=None, pcm_enable=True,
@@ -142,7 +159,7 @@ class CarSpecificEvents:
       events.add(EventName.wrongGear)
     if CS.gearShifter == GearShifter.reverse:
       events.add(EventName.reverseGear)
-    if not CS.cruiseState.available:
+    if not CS.cruiseState.available and self.CP.openpilotLongitudinalControl:
       events.add(EventName.wrongCarMode)
     if CS.espDisabled:
       events.add(EventName.espDisabled)
@@ -213,5 +230,15 @@ class CarSpecificEvents:
         events.add(EventName.pcmEnable)
       elif not CS.cruiseState.enabled:
         events.add(EventName.pcmDisable)
+
+    # carrot: activateCruise and softHold
+    if not self.CP.pcmCruise:
+      if CS.activateCruise > 0 and CS_prev.activateCruise <= 0:
+        if not events.contains(ET.NO_ENTRY):
+          events.add(EventName.buttonEnable)
+      elif CS.activateCruise < 0 and CS_prev.activateCruise >= 0:
+        events.add(EventName.buttonCancel)
+      if CS.softHoldActive > 0:
+        events.add(EventName.softHold)
 
     return events

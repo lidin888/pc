@@ -18,6 +18,13 @@ HudRendererSP::HudRendererSP() {
   int size = e2e_alert_size * 2 - 40;
   green_light_alert_img = loadPixmap("../../sunnypilot/selfdrive/assets/images/green_light.png", {size, size});
   lead_depart_alert_img = loadPixmap("../../sunnypilot/selfdrive/assets/images/lead_depart.png", {size, size});
+
+  // Turn-by-turn navigation icons
+  turn_l_img = loadPixmap("../../sunnypilot/selfdrive/assets/images/turn_l.png", {128, 128});
+  turn_r_img = loadPixmap("../../sunnypilot/selfdrive/assets/images/turn_r.png", {128, 128});
+  turn_u_img = loadPixmap("../../sunnypilot/selfdrive/assets/images/turn_u.png", {128, 128});
+  lane_change_l_img = loadPixmap("../../sunnypilot/selfdrive/assets/images/lane_change_l.png", {128, 128});
+  lane_change_r_img = loadPixmap("../../sunnypilot/selfdrive/assets/images/lane_change_r.png", {128, 128});
 }
 
 void HudRendererSP::updateState(const UIState &s) {
@@ -27,6 +34,7 @@ void HudRendererSP::updateState(const UIState &s) {
   devUiInfo = s.scene.dev_ui_info;
   roadName = s.scene.road_name;
   showTurnSignals = s.scene.turn_signals;
+  carrotPanelSide = s.scene.carrot_panel_side;
   speedLimitMode = static_cast<SpeedLimitMode>(s.scene.speed_limit_mode);
   speedUnit = is_metric ? tr("km/h") : tr("mph");
   standstillTimer = s.scene.standstill_timer;
@@ -152,6 +160,81 @@ void HudRendererSP::updateState(const UIState &s) {
 
   speedCluster = car_state.getCruiseState().getSpeedCluster() * speedConv;
 
+  // CarrotMan navigation data
+  carrotManAlive = sm.alive("carrotMan");
+  if (carrotManAlive && sm.updated("carrotMan")) {
+    const auto cm = sm["carrotMan"].getCarrotMan();
+    carrotActiveCarrot = cm.getActiveCarrot();
+    carrotNaviSpeedLimit = cm.getNRoadLimitSpeed();
+    carrotSpdType = cm.getXSpdType();
+    carrotSpdLimit = cm.getXSpdLimit();
+    carrotSpdDist = cm.getXSpdDist();
+    carrotSpdCountDown = cm.getXSpdCountDown();
+    carrotTurnInfo = cm.getXTurnInfo();
+    carrotDistToTurn = cm.getXDistToTurn();
+    carrotTrafficState = cm.getTrafficState();
+    carrotTrafficCountdown = cm.getTrafficCountdown();
+    carrotDesiredSpeed = cm.getDesiredSpeed();
+    carrotDestDist = cm.getNGoPosDist();
+    carrotDestTime = cm.getNGoPosTime();
+    carrotLeftSec = cm.getLeftSec();
+    carrotRoadCate = cm.getRoadCate();
+    carrotVTurnSpeed = cm.getVTurnSpeed();
+    carrotLeftBlind = cm.getLeftBlind();
+    carrotRightBlind = cm.getRightBlind();
+    carrotExtBlinker = cm.getExtBlinker();
+    carrotRoadName = QString::fromUtf8(cm.getSzPosRoadName().cStr());
+    carrotTBTText = QString::fromUtf8(cm.getSzTBTMainText().cStr());
+    carrotDesiredSource = QString::fromUtf8(cm.getDesiredSource().cStr());
+    carrotSdiDescr = QString::fromUtf8(cm.getSzSdiDescr().cStr());
+    carrotAtcType = QString::fromUtf8(cm.getAtcType().cStr());
+    carrotGoalName = QString::fromUtf8(cm.getSzGoalName().cStr());
+    carrotTBTTextNext = QString::fromUtf8(cm.getSzTBTMainTextNext().cStr());
+    carrotNearDirName = QString::fromUtf8(cm.getSzNearDirName().cStr());
+    carrotTurnCountDown = cm.getXTurnCountDown();
+  } else if (!carrotManAlive) {
+    carrotActiveCarrot = 0;
+    carrotSpdType = -1;
+    carrotSpdLimit = 0;
+    carrotSpdDist = 0;
+    carrotSpdCountDown = 0;
+    carrotTurnInfo = -1;
+    carrotDistToTurn = 0;
+    carrotTrafficState = 0;
+    carrotTrafficCountdown = 0;
+    carrotDestDist = 0;
+    carrotDestTime = 0;
+    carrotDesiredSpeed = 0;
+    carrotLeftSec = 0;
+    carrotRoadCate = 0;
+    carrotVTurnSpeed = 0;
+    carrotLeftBlind = 0;
+    carrotRightBlind = 0;
+    carrotExtBlinker = 0;
+    carrotRoadName.clear();
+    carrotTBTText.clear();
+    carrotGoalName.clear();
+    carrotTBTTextNext.clear();
+    carrotNearDirName.clear();
+    carrotTurnCountDown = 0;
+    carrotSdiDescr.clear();
+    carrotAtcType.clear();
+  }
+
+  // Supplement road name from carrot navigation (carrot takes priority)
+  if (carrotManAlive && !carrotRoadName.isEmpty()) {
+    roadNameStr = carrotRoadName;
+  }
+
+  // When carrotMan provides road speed limit and SP map limit is unavailable,
+  // feed carrot's nRoadLimitSpeed into the SP speed limit sign display
+  if (carrotManAlive && carrotNaviSpeedLimit > 0 && !speedLimitValid && !speedLimitLastValid) {
+    speedLimitLast = carrotNaviSpeedLimit;
+    speedLimitLastValid = true;
+    speedLimitFinalLast = carrotNaviSpeedLimit;
+    speedLimitOffset = 0;
+  }
+
   allow_e2e_alerts = sm["selfdriveState"].getSelfdriveState().getAlertSize() == cereal::SelfdriveState::AlertSize::NONE &&
                      sm.rcv_frame("driverStateV2") > s.scene.started_frame && !reversing;
 }
@@ -244,6 +327,83 @@ void HudRendererSP::draw(QPainter &p, const QRect &surface_rect) {
 
     // Road Name
     drawRoadName(p, surface_rect);
+
+    // CarrotMan Navigation Panel (bottom-left)
+    if (carrotManAlive) {
+      drawCarrotPanel(p, surface_rect);
+
+      // ===== Blind Spot Warning (screen edge overlay) =====
+      if (carrotLeftBlind > 0 || carrotRightBlind > 0) {
+        p.save();
+        p.setRenderHint(QPainter::Antialiasing, true);
+        int bsH = surface_rect.height() * 2 / 3;
+        int bsW = 40;
+        int bsY = surface_rect.height() / 6;
+
+        if (carrotLeftBlind > 0) {
+          QLinearGradient gradL(0, 0, bsW, 0);
+          gradL.setColorAt(0.0, QColor(0, 100, 255, 180));
+          gradL.setColorAt(1.0, QColor(0, 100, 255, 0));
+          p.setPen(Qt::NoPen);
+          p.setBrush(gradL);
+          p.drawRect(QRect(0, bsY, bsW, bsH));
+        }
+        if (carrotRightBlind > 0) {
+          QLinearGradient gradR(surface_rect.width() - bsW, 0, surface_rect.width(), 0);
+          gradR.setColorAt(0.0, QColor(0, 100, 255, 0));
+          gradR.setColorAt(1.0, QColor(0, 100, 255, 180));
+          p.setPen(Qt::NoPen);
+          p.setBrush(gradR);
+          p.drawRect(QRect(surface_rect.width() - bsW, bsY, bsW, bsH));
+        }
+        p.restore();
+      }
+
+      // ===== External Blinker Indicator =====
+      if (carrotExtBlinker > 0) {
+        p.save();
+        p.setRenderHint(QPainter::Antialiasing, true);
+        int blinkY = 30;
+        int arrowW = 60, arrowH = 40;
+        int centerX = surface_rect.width() / 2;
+        QColor blinkColor(0, 220, 80, 200);
+
+        auto drawArrow = [&](int cx, int cy, bool pointRight) {
+          QPolygon arrow;
+          if (pointRight) {
+            arrow << QPoint(cx - arrowW/2, cy - arrowH/4)
+                  << QPoint(cx, cy - arrowH/4)
+                  << QPoint(cx, cy - arrowH/2)
+                  << QPoint(cx + arrowW/2, cy)
+                  << QPoint(cx, cy + arrowH/2)
+                  << QPoint(cx, cy + arrowH/4)
+                  << QPoint(cx - arrowW/2, cy + arrowH/4);
+          } else {
+            arrow << QPoint(cx + arrowW/2, cy - arrowH/4)
+                  << QPoint(cx, cy - arrowH/4)
+                  << QPoint(cx, cy - arrowH/2)
+                  << QPoint(cx - arrowW/2, cy)
+                  << QPoint(cx, cy + arrowH/2)
+                  << QPoint(cx, cy + arrowH/4)
+                  << QPoint(cx + arrowW/2, cy + arrowH/4);
+          }
+          p.setPen(Qt::NoPen);
+          p.setBrush(blinkColor);
+          p.drawPolygon(arrow);
+        };
+
+        // 1=left, 2=right, 3=both(hazard)
+        if (carrotExtBlinker == 1 || carrotExtBlinker == 3) {
+          drawArrow(centerX - 120, blinkY + arrowH/2, false);
+          drawArrow(centerX - 190, blinkY + arrowH/2, false);
+        }
+        if (carrotExtBlinker == 2 || carrotExtBlinker == 3) {
+          drawArrow(centerX + 120, blinkY + arrowH/2, true);
+          drawArrow(centerX + 190, blinkY + arrowH/2, true);
+        }
+        p.restore();
+      }
+    }
 
     // Green Light & Lead Depart Alerts
     if (greenLightAlert || leadDepartAlert) {
@@ -635,6 +795,10 @@ void HudRendererSP::drawUpcomingSpeedLimit(QPainter &p) {
 void HudRendererSP::drawRoadName(QPainter &p, const QRect &surface_rect) {
   if (!roadName || roadNameStr.isEmpty()) return;
 
+  // When carrotMan is alive, suppress generic/empty road names at the top
+  // since the carrot panel handles road display
+  if (carrotManAlive) return;
+
   // Measure text to size container
   p.setFont(InterFont(46, QFont::DemiBold));
   QFontMetrics fm(p.font());
@@ -881,6 +1045,384 @@ void HudRendererSP::drawBlinker(QPainter &p, const QRect &surface_rect) {
 
     drawCircle(s.cx, y_offset, bgBrush);
     drawArrow(s.cx, y_offset, s.dir, arrowBrush);
+  }
+
+  p.restore();
+}
+
+// ==================== CarrotMan Navigation Panel (Bottom-Right) ====================
+
+void HudRendererSP::drawCarrotPanel(QPainter &p, const QRect &surface_rect) {
+  // Show panel if we have any useful carrot data
+  bool hasDest = (carrotDestDist > 0 && carrotDestTime > 0);
+  bool hasGoalName = !carrotGoalName.isEmpty();
+  bool hasTurn = (carrotTurnInfo > 0);
+  bool hasCamera = (carrotSpdLimit > 0 && carrotSpdDist > 0);
+  bool hasTraffic = (carrotTrafficState > 0);
+  bool hasRoad = !carrotRoadName.isEmpty();
+  bool hasSdi = !carrotSdiDescr.isEmpty();
+  bool hasRoadLimit = (carrotNaviSpeedLimit > 0);
+  bool hasApply = (carrotDesiredSpeed > 0 && !carrotDesiredSource.isEmpty());
+  if (!hasDest && !hasGoalName && !hasTurn && !hasCamera && !hasTraffic && !hasRoad && !hasSdi && !hasRoadLimit && !hasApply) return;
+
+  p.save();
+  p.setRenderHint(QPainter::Antialiasing, true);
+
+  // --- Panel position: left or right side ---
+  const int panelW = 790;
+  const int panelH = 240;
+  int panelX = (carrotPanelSide == 1) ? (surface_rect.width() - panelW + 11) : -11;
+  int panelY = surface_rect.height() - panelH - 59;
+
+  // Draw panel background (semi-transparent Mediterranean blue)
+  p.setPen(QPen(QColor(255, 255, 255, 60), 1));
+  p.setBrush(QColor(0, 105, 148, 100));
+  p.drawRoundedRect(QRect(panelX, panelY - 60, panelW, panelH + 60), 30, 30);
+
+  // ========== TBT Main Text (above main content) ==========
+  if (!carrotTBTText.isEmpty()) {
+    p.setFont(InterFont(40, QFont::Bold));
+    p.setPen(Qt::white);
+    QFontMetrics fm(p.font());
+    QString tbtDisplay = carrotTBTText;
+    // Append near direction name if available
+    if (!carrotNearDirName.isEmpty()) {
+      tbtDisplay += QString(" → %1").arg(carrotNearDirName);
+    }
+    QString truncTBT = fm.elidedText(tbtDisplay, Qt::ElideRight, panelW - 40);
+    p.drawText(QRect(panelX + 20, panelY - 55, panelW - 40, 45), Qt::AlignLeft | Qt::AlignVCenter, truncTBT);
+  }
+
+  // ========== Turn Icon + Distance (left side) ==========
+  if (carrotTurnInfo > 0) {
+    int iconX = panelX + 20;
+    int iconY = panelY + 20;
+    int iconSz = 128;
+
+    // Green background for turn icon area when atcType is set
+    if (!carrotAtcType.isEmpty()) {
+      QColor greenBg = carrotAtcType.contains("prepare") ? QColor(0, 180, 0, 100) : QColor(0, 180, 0, 255);
+      p.setPen(QPen(Qt::black, 1));
+      p.setBrush(greenBg);
+      p.drawRoundedRect(QRect(iconX - 16, iconY - 26, 160, 230), 15, 15);
+    }
+
+    // Draw turn icon (PNG)
+    QPixmap *icon = nullptr;
+    switch (carrotTurnInfo) {
+      case 1: icon = &turn_l_img; break;
+      case 2: icon = &turn_r_img; break;
+      case 3: icon = &lane_change_l_img; break;
+      case 4: icon = &lane_change_r_img; break;
+      case 7: icon = &turn_u_img; break;
+      default: break;
+    }
+
+    if (icon && !icon->isNull()) {
+      p.drawPixmap(iconX, iconY, iconSz, iconSz, *icon);
+    } else {
+      // Fallback text for turn types without icons
+      p.setFont(InterFont(35, QFont::Bold));
+      p.setPen(Qt::white);
+      QString turnLabel;
+      if (carrotTurnInfo == 6) turnLabel = "TG";
+      else if (carrotTurnInfo == 8) turnLabel = tr("目的地");
+      else turnLabel = QString(tr("减速:%1")).arg(carrotTurnInfo);
+      p.drawText(QRect(iconX, iconY, iconSz, iconSz), Qt::AlignCenter, turnLabel);
+    }
+
+    // v-Turn speed (curve advisory speed) below turn icon
+    // Only show when it's a meaningful advisory (below 120 km/h, meaning actual curve ahead)
+    if (carrotVTurnSpeed > 0 && carrotVTurnSpeed < 120) {
+      p.setFont(InterFont(34, QFont::Bold));
+      p.setPen(QColor(255, 200, 50));
+      p.drawText(QRect(iconX - 16, iconY + iconSz + 4, 160, 32),
+                 Qt::AlignCenter, QString("%1km/h").arg(carrotVTurnSpeed));
+    }
+
+    // Turn distance below icon
+    QString turnDist;
+    if (carrotDistToTurn > 0) {
+      if (is_metric) {
+        if (carrotDistToTurn < 1000)
+          turnDist = QString::number(carrotDistToTurn) + " m";
+        else
+          turnDist = QString::number(carrotDistToTurn / 1000.0, 'f', 1) + " km";
+      } else {
+        if (carrotDistToTurn < 1609)
+          turnDist = QString::number((int)(carrotDistToTurn * 3.28084)) + " ft";
+        else
+          turnDist = QString::number(carrotDistToTurn / 1609.344, 'f', 1) + " mi";
+      }
+      p.setFont(InterFont(40, QFont::Bold));
+      p.setPen(Qt::white);
+      p.drawText(QRect(iconX - 16, iconY + iconSz + 10, 160, 45),
+                 Qt::AlignCenter, turnDist);
+
+    // Turn countdown (seconds)
+    if (carrotTurnCountDown > 0) {
+      p.setFont(InterFont(30, QFont::Bold));
+      p.setPen(QColor(255, 220, 100));
+      p.drawText(QRect(iconX - 16, iconY + iconSz + 55, 160, 35),
+                 Qt::AlignCenter, QString("%1s").arg(carrotTurnCountDown));
+    }
+    }
+  }
+
+  // ========== ETA + Destination Info (right side) ==========
+  int infoX = panelX + 190;
+  int infoY = panelY + 15;
+
+  if (hasDest) {
+  // ETA: arrival time calculation
+  {
+    time_t now = time(NULL);
+    struct tm localTime;
+    localtime_r(&now, &localTime);
+    int remaining_minutes = carrotDestTime / 60;
+    localTime.tm_min += remaining_minutes;
+    mktime(&localTime);
+
+    QString etaStr;
+    if (remaining_minutes >= 60) {
+      int hours = remaining_minutes / 60;
+      int mins = remaining_minutes % 60;
+      etaStr = QString("ETA: %1h%2m(%3:%4)")
+                 .arg(hours).arg(mins, 2, 10, QChar('0'))
+                 .arg(localTime.tm_hour, 2, 10, QChar('0'))
+                 .arg(localTime.tm_min, 2, 10, QChar('0'));
+    } else {
+      etaStr = QString("ETA: %1min(%2:%3)")
+                 .arg(remaining_minutes)
+                 .arg(localTime.tm_hour, 2, 10, QChar('0'))
+                 .arg(localTime.tm_min, 2, 10, QChar('0'));
+    }
+
+    p.setFont(InterFont(50, QFont::Bold));
+    p.setPen(Qt::white);
+    p.drawText(QRect(infoX, infoY, panelW - 200, 55), Qt::AlignLeft | Qt::AlignVCenter, etaStr);
+  }
+
+  // Destination distance + Goal Name (same line)
+  {
+    QString destDist;
+    if (is_metric) {
+      destDist = QString::number(carrotDestDist / 1000.0, 'f', 1) + " km";
+    } else {
+      destDist = QString::number(carrotDestDist / 1000.0 * 0.621371, 'f', 1) + " mi";
+    }
+
+    // Combine: "12.5 km  🏁 目的地名"
+    if (hasGoalName) {
+      destDist += QString("  \U0001F3C1 ") + carrotGoalName;
+    }
+
+    p.setFont(InterFont(40, QFont::Bold));
+    p.setPen(Qt::white);
+    QFontMetrics fmDest(p.font());
+    QString truncDest = fmDest.elidedText(destDist, Qt::ElideRight, panelW - 210);
+    p.drawText(QRect(infoX, infoY + 55, panelW - 210, 48),
+               Qt::AlignLeft | Qt::AlignVCenter, truncDest);
+  }
+  } // hasDest
+
+  // ========== Goal Name only (no destination) ==========
+  if (!hasDest && hasGoalName) {
+    p.setFont(InterFont(36, QFont::DemiBold));
+    p.setPen(QColor(180, 230, 255));
+    QFontMetrics fmGoal(p.font());
+    QString truncGoal = fmGoal.elidedText(QString("\U0001F3C1 ") + carrotGoalName, Qt::ElideRight, panelW - 210);
+    p.drawText(QRect(infoX, infoY, panelW - 210, 42),
+               Qt::AlignLeft | Qt::AlignVCenter, truncGoal);
+  }
+
+  // ========== SDI Description (green background) or Road Name ==========
+  int bottomY = panelY + 190;
+  if (!carrotSdiDescr.isEmpty()) {
+    p.setFont(InterFont(40, QFont::Bold));
+    QFontMetrics fm(p.font());
+    int textW = fm.horizontalAdvance(carrotSdiDescr);
+    int textH = fm.height();
+    int sdiX = infoX;
+    int sdiY = bottomY;
+
+    // Green background behind SDI text
+    p.setPen(Qt::NoPen);
+    p.setBrush(QColor(0, 180, 0));
+    p.drawRoundedRect(QRect(sdiX - 10, sdiY - 2, textW + 20, textH + 6), 10, 10);
+
+    p.setPen(Qt::white);
+    p.drawText(QRect(sdiX, sdiY, textW + 4, textH + 4), Qt::AlignLeft | Qt::AlignVCenter, carrotSdiDescr);
+  } else if (!carrotRoadName.isEmpty()) {
+    // Road category label
+    QString roadCateLabel;
+    switch (carrotRoadCate) {
+      case 0: roadCateLabel = ""; break;
+      case 1: roadCateLabel = tr("高速"); break;
+      case 2: roadCateLabel = tr("城快"); break;
+      case 3: roadCateLabel = tr("国道"); break;
+      case 4: roadCateLabel = tr("省道"); break;
+      case 5: roadCateLabel = tr("县道"); break;
+      case 6: roadCateLabel = tr("乡道"); break;
+      default: roadCateLabel = ""; break;
+    }
+
+    int cateW = 0;
+    if (!roadCateLabel.isEmpty()) {
+      p.setFont(InterFont(28, QFont::Bold));
+      QFontMetrics fmCate(p.font());
+      cateW = fmCate.horizontalAdvance(roadCateLabel) + 16;
+      // Category tag with color
+      QColor cateBg;
+      if (carrotRoadCate == 1) cateBg = QColor(0, 130, 0, 200);
+      else if (carrotRoadCate == 2) cateBg = QColor(200, 130, 0, 200);
+      else cateBg = QColor(100, 100, 100, 200);
+      p.setPen(Qt::NoPen);
+      p.setBrush(cateBg);
+      p.drawRoundedRect(QRect(infoX, bottomY + 2, cateW, 30), 8, 8);
+      p.setPen(Qt::white);
+      p.drawText(QRect(infoX, bottomY + 2, cateW, 30), Qt::AlignCenter, roadCateLabel);
+    }
+
+    p.setFont(InterFont(40, QFont::Bold));
+    p.setPen(Qt::white);
+    QFontMetrics fm(p.font());
+    int roadNameX = infoX + cateW + (cateW > 0 ? 8 : 0);
+    QString truncRoad = fm.elidedText(carrotRoadName, Qt::ElideRight, panelW - 210 - cateW);
+    p.drawText(QRect(roadNameX, bottomY, panelW - 210 - cateW, fm.height() + 4),
+               Qt::AlignLeft | Qt::AlignVCenter, truncRoad);
+  }
+
+  // ========== Road Speed Limit + Desired Speed (middle-right area) ==========
+  if (hasRoadLimit || hasApply) {
+    int rsY = panelY + 140;
+
+    // Current road speed limit (LIMIT box)
+    if (hasRoadLimit) {
+      bool overLimit = (vEgo * 3.6 > carrotNaviSpeedLimit + 2);
+      QColor limitBg = overLimit ? QColor(255, 50, 50, 210) : QColor(255, 255, 255, 210);
+      QColor limitText = overLimit ? Qt::white : Qt::black;
+
+      // Label
+      p.setFont(InterFont(24, QFont::Bold));
+      p.setPen(Qt::white);
+      p.drawText(QRect(infoX, rsY - 28, 90, 24), Qt::AlignCenter, "LIMIT");
+
+      // Speed box
+      p.setPen(QPen(Qt::black, 2));
+      p.setBrush(limitBg);
+      p.drawRoundedRect(QRect(infoX, rsY, 90, 42), 12, 12);
+      p.setFont(InterFont(36, QFont::Bold));
+      p.setPen(limitText);
+      p.drawText(QRect(infoX, rsY, 90, 42), Qt::AlignCenter, QString::number(carrotNaviSpeedLimit));
+    }
+
+    // Desired/applied speed + source
+    if (hasApply) {
+      int applyX = hasRoadLimit ? infoX + 110 : infoX;
+      p.setFont(InterFont(24, QFont::Bold));
+      p.setPen(QColor(255, 180, 50));
+      QFontMetrics fmSrc(p.font());
+      QString truncSrc = fmSrc.elidedText(carrotDesiredSource, Qt::ElideRight, 120);
+      p.drawText(QRect(applyX, rsY - 28, 120, 24), Qt::AlignCenter, truncSrc);
+
+      QColor applyBg(255, 180, 50, 210);
+      p.setPen(QPen(Qt::black, 2));
+      p.setBrush(applyBg);
+      p.drawRoundedRect(QRect(applyX, rsY, 90, 42), 12, 12);
+      p.setFont(InterFont(36, QFont::Bold));
+      p.setPen(Qt::white);
+      p.drawText(QRect(applyX, rsY, 90, 42), Qt::AlignCenter, QString::number(carrotDesiredSpeed));
+    }
+  }
+
+  // ========== Speed Camera Info (middle area, if present) ==========
+  if (carrotSpdLimit > 0 && carrotSpdDist > 0) {
+    int camY = panelY + 190;
+
+    // Speed limit circle
+    int circleR = 35;
+    int circleCx = infoX + circleR;
+    int circleCy = camY + circleR;
+
+    bool overspeed = std::nearbyint(speed) > carrotSpdLimit;
+
+    // Red circle border
+    p.setPen(QPen(overspeed ? QColor(255, 50, 50) : QColor(255, 80, 80), 4));
+    p.setBrush(QColor(255, 255, 255, 200));
+    p.drawEllipse(QPoint(circleCx, circleCy), circleR, circleR);
+
+    // Speed limit number
+    p.setFont(InterFont(40, QFont::Bold));
+    p.setPen(overspeed ? QColor(255, 50, 50) : Qt::black);
+    p.drawText(QRect(circleCx - circleR, circleCy - circleR, circleR * 2, circleR * 2),
+               Qt::AlignCenter, QString::number(carrotSpdLimit));
+
+    // Camera distance
+    QString camDist;
+    if (carrotSpdDist >= 1000)
+      camDist = QString::number(carrotSpdDist / 1000.0, 'f', 1) + " km";
+    else
+      camDist = QString::number(carrotSpdDist) + " m";
+
+    if (carrotSpdCountDown > 0)
+      camDist += QString(" %1s").arg(carrotSpdCountDown);
+
+    p.setFont(InterFont(36, QFont::Bold));
+    p.setPen(Qt::white);
+    p.drawText(QRect(circleCx + circleR + 15, circleCy - 20, panelW - 300, 40),
+               Qt::AlignLeft | Qt::AlignVCenter, camDist);
+
+    // Camera type text
+    QString typeLabel;
+    if (carrotSpdType == 2 || carrotSpdType == 4) typeLabel = tr("区间测速");
+    else if (carrotSpdType == 22) typeLabel = tr("减速带");
+    else if (carrotSpdType == 100) typeLabel = tr("移动测速");
+
+    if (!typeLabel.isEmpty()) {
+      p.setFont(InterFont(26, QFont::Normal));
+      p.setPen(QColor(255, 200, 50));
+      p.drawText(QRect(circleCx + circleR + 15, circleCy + 18, panelW - 300, 30),
+                 Qt::AlignLeft | Qt::AlignVCenter, typeLabel);
+    }
+  }
+
+  // ========== Traffic Light (compact, next to speed camera area) ==========
+  if (carrotTrafficState > 0) {
+    int tlY = (carrotSpdLimit > 0 && carrotSpdDist > 0) ? panelY + 190 + 80 : panelY + 190;
+
+    QColor lightColor;
+    QString lightText;
+    switch (carrotTrafficState) {
+      case 1: lightColor = QColor(255, 50, 50);  lightText = tr("红灯"); break;
+      case 2: lightColor = QColor(50, 255, 50);  lightText = tr("绿灯"); break;
+      case 3: lightColor = QColor(50, 255, 100); lightText = tr("左转绿灯"); break;
+      default: lightColor = QColor(200, 200, 50); lightText = tr("信号灯"); break;
+    }
+
+    int lightR = 14;
+    int lightCx = infoX + lightR;
+    int lightCy = tlY + lightR;
+    p.setPen(QPen(QColor(60, 60, 60), 2));
+    p.setBrush(lightColor);
+    p.drawEllipse(QPoint(lightCx, lightCy), lightR, lightR);
+
+    p.setFont(InterFont(32, QFont::DemiBold));
+    p.setPen(lightColor);
+    p.drawText(QRect(lightCx + lightR + 10, tlY, 200, lightR * 2),
+               Qt::AlignLeft | Qt::AlignVCenter, lightText);
+
+    if (carrotTrafficCountdown > 0) {
+      p.setFont(InterFont(30, QFont::Bold));
+      p.setPen(Qt::white);
+      p.drawText(QRect(lightCx + lightR + 10 + 140, tlY, 100, lightR * 2),
+                 Qt::AlignLeft | Qt::AlignVCenter, QString("%1s").arg(carrotTrafficCountdown));
+    } else if (carrotLeftSec > 0) {
+      p.setFont(InterFont(30, QFont::Bold));
+      p.setPen(Qt::white);
+      p.drawText(QRect(lightCx + lightR + 10 + 140, tlY, 100, lightR * 2),
+                 Qt::AlignLeft | Qt::AlignVCenter, QString("%1s").arg(carrotLeftSec));
+    }
   }
 
   p.restore();

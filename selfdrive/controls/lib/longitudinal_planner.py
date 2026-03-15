@@ -92,11 +92,11 @@ class LongitudinalPlanner(LongitudinalPlannerSP):
       throttle_prob = 1.0
     return x, v, a, j, throttle_prob
 
-  def update(self, sm):
+  def update(self, sm, carrot=None):
     mode = 'blended' if sm['selfdriveState'].experimentalMode else 'acc'
     if not self.mlsim:
       self.mpc.mode = mode
-    LongitudinalPlannerSP.update(self, sm)
+    LongitudinalPlannerSP.update(self, sm, carrot=carrot)
     if dec_mpc_mode := self.get_mpc_mode():
       mode = dec_mpc_mode
       if not self.mlsim:
@@ -119,12 +119,18 @@ class LongitudinalPlanner(LongitudinalPlannerSP):
     reset_state = long_control_off if self.CP.openpilotLongitudinalControl else not sm['selfdriveState'].enabled
     # PCM cruise speed may be updated a few cycles later, check if initialized
     reset_state = reset_state or not v_cruise_initialized
+    # Carrot: soft_hold_active also triggers reset
+    if carrot is not None and carrot.soft_hold_active:
+      reset_state = True
 
     # No change cost when user is controlling the speed, or when standstill
     prev_accel_constraint = not (reset_state or sm['carState'].standstill)
 
     if mode == 'acc':
-      accel_clip = [ACCEL_MIN, get_max_accel(v_ego)]
+      if carrot is not None:
+        accel_clip = [ACCEL_MIN, carrot.get_carrot_accel(v_ego)]
+      else:
+        accel_clip = [ACCEL_MIN, get_max_accel(v_ego)]
       steer_angle_without_offset = sm['carState'].steeringAngleDeg - sm['liveParameters'].angleOffsetDeg
       accel_clip = limit_accel_in_turns(v_ego, steer_angle_without_offset, accel_clip, self.CP)
     else:
@@ -146,15 +152,24 @@ class LongitudinalPlanner(LongitudinalPlannerSP):
       clipped_accel_coast_interp = np.interp(v_ego, [MIN_ALLOW_THROTTLE_SPEED, MIN_ALLOW_THROTTLE_SPEED*2], [accel_clip[1], clipped_accel_coast])
       accel_clip[1] = min(accel_clip[1], clipped_accel_coast_interp)
 
+    # Carrot: update CarrotPlanner and get modified v_cruise
+    if carrot is not None:
+      self.v_cruise_kph = carrot.update(sm, v_cruise_kph, self.mpc.mode)
+      self.mpc.mode = carrot.mode
+      v_cruise = self.v_cruise_kph * CV.KPH_TO_MS
+    else:
+      self.v_cruise_kph = v_cruise_kph
+
     # Get new v_cruise and a_desired from Smart Cruise Control and Speed Limit Assist
     v_cruise, self.a_desired = LongitudinalPlannerSP.update_targets(self, sm, self.v_desired_filter.x, self.a_desired, v_cruise)
 
     if force_slow_decel:
       v_cruise = 0.0
 
-    self.mpc.set_weights(prev_accel_constraint, personality=sm['selfdriveState'].personality)
+    jerk_factor = carrot.jerk_factor_apply if carrot is not None else None
+    self.mpc.set_weights(prev_accel_constraint, personality=sm['selfdriveState'].personality, jerk_factor=jerk_factor)
     self.mpc.set_cur_state(self.v_desired_filter.x, self.a_desired)
-    self.mpc.update(sm['radarState'], v_cruise, x, v, a, j, personality=sm['selfdriveState'].personality)
+    self.mpc.update(sm['radarState'], v_cruise, x, v, a, j, personality=sm['selfdriveState'].personality, carrot=carrot)
 
     self.v_desired_trajectory = np.interp(CONTROL_N_T_IDX, T_IDXS_MPC, self.mpc.v_solution)
     self.a_desired_trajectory = np.interp(CONTROL_N_T_IDX, T_IDXS_MPC, self.mpc.a_solution)
@@ -188,7 +203,7 @@ class LongitudinalPlanner(LongitudinalPlannerSP):
     self.output_a_target = np.clip(output_a_target, accel_clip[0], accel_clip[1])
     self.prev_accel_clip = accel_clip
 
-  def publish(self, sm, pm):
+  def publish(self, sm, pm, carrot=None):
     plan_send = messaging.new_message('longitudinalPlan')
 
     plan_send.valid = sm.all_checks(service_list=['carState', 'controlsState', 'selfdriveState', 'radarState'])

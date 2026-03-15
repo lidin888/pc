@@ -22,9 +22,9 @@ from openpilot.system.ui.widgets.list_view import (
 
 
 class SshKeyActionState(Enum):
-  LOADING = "LOADING"
-  ADD = "ADD"
-  REMOVE = "REMOVE"
+  LOADING = "加载中"
+  ADD = "添加"
+  REMOVE = "移除"
 
 
 class SshKeyAction(ItemAction):
@@ -83,7 +83,7 @@ class SshKeyAction(ItemAction):
   def _handle_button_click(self):
     if self._state == SshKeyActionState.ADD:
       self._keyboard.clear()
-      self._keyboard.set_title("Enter your GitHub username")
+      self._keyboard.set_title("输入您的 GitHub 用户名")
       gui_app.set_modal_overlay(self._keyboard, callback=self._on_username_submit)
     elif self._state == SshKeyActionState.REMOVE:
       self._params.remove("GithubUsername")

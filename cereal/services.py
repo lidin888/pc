@@ -91,6 +91,11 @@ _services: dict[str, tuple] = {
   "modelDataV2SP": (True, 20.),
   "liveLocationKalman": (True, 20.),
 
+  # carrot (phone projection & navigation)
+  "carrotMan": (True, 10., 1),
+  "amapNavi": (True, 20., 1),
+  "navInstructionCarrot": (True, 1., 10),
+
   # debug
   "uiDebug": (True, 0., 1),
   "testJoystick": (True, 0.),

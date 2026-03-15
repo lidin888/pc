@@ -131,6 +131,15 @@ struct OnroadEvent @0xc4fa6047f024e718 {
     excessiveActuation @96;
     audioFeedback @97;
 
+    # CarrotPilot traffic events
+    trafficSignChanged @98;
+    trafficSignGreen @99;
+    trafficStopping @100;
+
+    # CarrotPilot cruise events
+    softHold @101;
+    audioPrompt @102;
+
     soundsUnavailableDEPRECATED @47;
   }
 }
@@ -139,6 +148,7 @@ enum LongitudinalPersonality {
   aggressive @0;
   standard @1;
   relaxed @2;
+  moreRelaxed @3;
 }
 
 struct InitData {
@@ -866,6 +876,9 @@ struct ControlsState @0x97ff69c53601abf1 {
   desiredCurvature @61 :Float32;  # lag adjusted curvatures used by lateral controllers
   forceDecel @51 :Bool;
 
+  # CarrotPilot fields
+  activeLaneLine @67 :Bool;
+
   lateralControlState :union {
     pidState @53 :LateralPIDState;
     angleState @58 :LateralAngleState;
@@ -1251,6 +1264,17 @@ struct LongitudinalPlan @0xe00b5b3eba12876c {
   shouldStop @37: Bool;
   allowThrottle @38: Bool;
   allowBrake @39: Bool;
+
+  # CarrotPilot fields
+  xState @40 :Int32;
+  trafficState @41 :Int32;
+  events @42 :List(OnroadEvent);
+  vTargetNow @43 :Float32;
+  cruiseTarget @44 :Float32;
+  jTargetNow @45 :Float32;
+  tFollow @46 :Float32;
+  desiredDistance @47 :Float32;
+  myDrivingMode @48 :Int32;
 
 
   solverExecutionTime @35 :Float32;
@@ -2632,9 +2656,9 @@ struct Event {
     carStateSP @114 :Custom.CarStateSP;
     liveMapDataSP @115 :Custom.LiveMapDataSP;
     modelDataV2SP @116 :Custom.ModelDataV2SP;
-    customReserved10 @136 :Custom.CustomReserved10;
-    customReserved11 @137 :Custom.CustomReserved11;
-    customReserved12 @138 :Custom.CustomReserved12;
+    carrotMan @136 :Custom.CarrotMan;
+    amapNavi @137 :Custom.AmapNavi;
+    navInstructionCarrot @138 :Custom.NavInstructionCarrot;
     customReserved13 @139 :Custom.CustomReserved13;
     customReserved14 @140 :Custom.CustomReserved14;
     customReserved15 @141 :Custom.CustomReserved15;

@@ -16,11 +16,11 @@ class SoftwareLayout(Widget):
 
   def _init_items(self):
     items = [
-      text_item("Current Version", ""),
-      button_item("Download", "CHECK", callback=self._on_download_update),
-      button_item("Install Update", "INSTALL", callback=self._on_install_update),
-      button_item("Target Branch", "SELECT", callback=self._on_select_branch),
-      button_item("Uninstall", "UNINSTALL", callback=self._on_uninstall),
+      text_item("当前版本", ""),
+      button_item("下载", "检查", callback=self._on_download_update),
+      button_item("安装更新", "安装", callback=self._on_install_update),
+      button_item("目标分支", "选择", callback=self._on_select_branch),
+      button_item("卸载", "卸载", callback=self._on_uninstall),
     ]
     return items
 
@@ -37,6 +37,6 @@ class SoftwareLayout(Widget):
         self._params.put_bool("DoUninstall", True)
 
     gui_app.set_modal_overlay(
-      lambda: confirm_dialog("Are you sure you want to uninstall?", "Uninstall"),
+      lambda: confirm_dialog("您确定要卸载吗？", "卸载"),
       callback=handle_uninstall_confirmation,
     )

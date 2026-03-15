@@ -144,7 +144,7 @@ class HudRenderer(Widget):
       elif ui_state.status == UIStatus.OVERRIDE:
         max_color = COLORS.override
 
-    max_text = "MAX"
+    max_text = "最大"
     max_text_width = measure_text_cached(self._font_semi_bold, max_text, FONT_SIZES.max_speed).x
     rl.draw_text_ex(
       self._font_semi_bold,
@@ -173,7 +173,7 @@ class HudRenderer(Widget):
     speed_pos = rl.Vector2(rect.x + rect.width / 2 - speed_text_size.x / 2, 180 - speed_text_size.y / 2)
     rl.draw_text_ex(self._font_bold, speed_text, speed_pos, FONT_SIZES.current_speed, 0, COLORS.white)
 
-    unit_text = "km/h" if ui_state.is_metric else "mph"
+    unit_text = "公里/小时" if ui_state.is_metric else "英里/小时"
     unit_text_size = measure_text_cached(self._font_medium, unit_text, FONT_SIZES.speed_unit)
     unit_pos = rl.Vector2(rect.x + rect.width / 2 - unit_text_size.x / 2, 290 - unit_text_size.y / 2)
     rl.draw_text_ex(self._font_medium, unit_text, unit_pos, FONT_SIZES.speed_unit, 0, COLORS.white_translucent)

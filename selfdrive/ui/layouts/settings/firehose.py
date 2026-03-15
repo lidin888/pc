@@ -13,20 +13,20 @@ from openpilot.system.ui.lib.wrap_text import wrap_text
 from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.lib.api_helpers import get_token
 
-TITLE = "Firehose Mode"
+TITLE = "数据上传模式"
 DESCRIPTION = (
-  "openpilot learns to drive by watching humans, like you, drive.\n\n"
-  + "Firehose Mode allows you to maximize your training data uploads to improve "
-  + "openpilot's driving models. More data means bigger models, which means better Experimental Mode."
+  "openpilot 通过观察人类（如您）驾驶来学习驾驶。\n\n"
+  + "数据上传模式允许您最大化训练数据上传，以改进 "
+  + "openpilot 的驾驶模型。更多数据意味着更大的模型，这意味着更好的实验模式。"
 )
 INSTRUCTIONS = (
-  "For maximum effectiveness, bring your device inside and connect to a good USB-C adapter and Wi-Fi weekly.\n\n"
-  + "Firehose Mode can also work while you're driving if connected to a hotspot or unlimited SIM card.\n\n"
-  + "Frequently Asked Questions\n\n"
-  + "Does it matter how or where I drive? Nope, just drive as you normally would.\n\n"
-  + "Do all of my segments get pulled in Firehose Mode? No, we selectively pull a subset of your segments.\n\n"
-  + "What's a good USB-C adapter? Any fast phone or laptop charger should be fine.\n\n"
-  + "Does it matter which software I run? Yes, only upstream openpilot (and particular forks) are able to be used for training."
+  "为了获得最大效果，请每周将设备带入室内并连接到良好的 USB-C 适配器和 Wi-Fi。\n\n"
+  + "数据上传模式也可以在驾驶时工作（如果连接到热点或无限 SIM 卡）。\n\n"
+  + "常见问题解答\n\n"
+  + "驾驶方式或地点重要吗？不重要，只需像平常一样驾驶即可。\n\n"
+  + "所有片段都会在数据上传模式下被拉取吗？不，我们有选择地拉取您的片段子集。\n\n"
+  + "好的 USB-C 适配器是什么？任何快速的手机或笔记本电脑充电器都可以。\n\n"
+  + "运行什么软件重要吗？是的，只有上游 openpilot（和特定分支）能够用于训练。"
 )
 
 
@@ -131,7 +131,7 @@ class FirehoseLayout(Widget):
 
     # Contribution count (if available)
     if self.segment_count > 0:
-      contrib_text = f"{self.segment_count} segment(s) of your driving is in the training dataset so far."
+      contrib_text = f"迄今为止，您的驾驶中有 {self.segment_count} 个片段已进入训练数据集。"
       y = self._draw_wrapped_text(x, y, w, contrib_text, gui_app.font(FontWeight.BOLD), 52, rl.WHITE)
       y += 20
 
@@ -154,9 +154,9 @@ class FirehoseLayout(Widget):
     network_metered = ui_state.sm["deviceState"].networkMetered
 
     if not network_metered and network_type != 0:  # Not metered and connected
-      return "ACTIVE", self.GREEN
+      return "激活", self.GREEN
     else:
-      return "INACTIVE: connect to an unmetered network", self.RED
+      return "未激活：连接到非计量网络", self.RED
 
   def _fetch_firehose_stats(self):
     try:

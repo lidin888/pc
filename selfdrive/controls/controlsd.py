@@ -47,7 +47,8 @@ class Controls(ControlsExt, ModelStateBase):
 
     self.sm = messaging.SubMaster(['liveParameters', 'liveTorqueParameters', 'modelV2', 'selfdriveState',
                                    'liveCalibration', 'livePose', 'longitudinalPlan', 'carState', 'carOutput',
-                                   'driverMonitoringState', 'onroadEvents', 'driverAssistance', 'liveDelay'] + self.sm_services_ext,
+                                   'driverMonitoringState', 'onroadEvents', 'driverAssistance', 'liveDelay',
+                                   'carrotMan', 'radarState'] + self.sm_services_ext,
                                   poll='selfdriveState')
     self.pm = messaging.PubMaster(['carControl', 'controlsState'] + self.pm_services_ext)
 
@@ -57,6 +58,13 @@ class Controls(ControlsExt, ModelStateBase):
 
     self.pose_calibrator = PoseCalibrator()
     self.calibrated_pose: Pose | None = None
+
+    # carrot
+    self.lanefull_mode_enabled = False
+    self.side_state = {
+        "left":  {"main": {"dRel": None, "lat": None}, "sub": {"dRel": None, "lat": None}},
+        "right": {"main": {"dRel": None, "lat": None}, "sub": {"dRel": None, "lat": None}},
+    }
 
     self.LoC = LongControl(self.CP, self.CP_SP)
     self.VM = VehicleModel(self.CP)
@@ -113,7 +121,15 @@ class Controls(ControlsExt, ModelStateBase):
     # Get which state to use for active lateral control
     _lat_active = self.get_lat_active(self.sm)
 
-    CC.latActive = _lat_active and not CS.steerFaultTemporary and not CS.steerFaultPermanent and \
+    # CS.latEnabled is from carrot cruise helper (_lat_enabled), requires cruiseState.enabled rising edge.
+    # When MADS is available, lateral control has its own state machine (lkasEnable/lkasDisable),
+    # independent of ACC engagement state. Bypass CS.latEnabled in MADS mode.
+    # CS.latEnabled来自carrot的_lat_enabled，需要cruiseState.enabled上升沿。
+    # MADS模式下横向控制有独立状态机，不依赖ACC激活状态，绕过CS.latEnabled。
+    _mads_available = self.sm['selfdriveStateSP'].mads.available
+    _lat_enabled = CS.latEnabled or _mads_available
+
+    CC.latActive = _lat_active and _lat_enabled and not CS.steerFaultTemporary and not CS.steerFaultPermanent and \
                    (not standstill or self.CP.steerAtStandstill)
     CC.longActive = CC.enabled and not any(e.overrideLongitudinal for e in self.sm['onroadEvents']) and \
                     (self.CP.openpilotLongitudinalControl or not self.CP_SP.pcmCruiseSpeed)
@@ -158,6 +174,39 @@ class Controls(ControlsExt, ModelStateBase):
 
     return CC, lac_log
 
+  def _update_side(self, side: str, leads2, road_edge, bsd_state, hudControl):
+    def ema(prev, curr, a=0.02):
+      return curr if prev is None else prev * (1 - a) + curr * a
+
+    def set_hud(side_cap, name, val):
+      setattr(hudControl, f"lead{side_cap}{name}", float(val if val is not None else 0.0))
+
+    st = self.side_state[side]
+    if road_edge <= 2.0 or not leads2:
+      st["main"] = {"dRel": None, "lat": None}
+      st["sub"]  = {"dRel": None, "lat": None}
+      if not bsd_state:
+        return
+
+    lead_main = leads2[0] if len(leads2) > 0 else None
+    side_cap = side.capitalize()
+
+    if bsd_state:
+      set_hud(side_cap, "Dist2", 1)
+      set_hud(side_cap, "Lat2",  3.2)
+    elif len(leads2) > 1 and lead_main.dRel < 10:
+      st["sub"]["dRel"] = ema(st["sub"]["dRel"], lead_main.dRel)
+      st["sub"]["lat"]  = ema(st["sub"]["lat"],  abs(lead_main.dPath))
+      set_hud(side_cap, "Dist2", st["sub"]["dRel"])
+      set_hud(side_cap, "Lat2",  st["sub"]["lat"])
+      lead_main = leads2[1]
+
+    if len(leads2) > 0:
+      st["main"]["dRel"] = ema(st["main"]["dRel"], lead_main.dRel)
+      st["main"]["lat"]  = ema(st["main"]["lat"],  abs(lead_main.dPath))
+      set_hud(side_cap, "Dist", st["main"]["dRel"])
+      set_hud(side_cap, "Lat",  st["main"]["lat"])
+
   def publish(self, CC, lac_log):
     CS = self.sm['carState']
 
@@ -172,19 +221,73 @@ class Controls(ControlsExt, ModelStateBase):
     CC.cruiseControl.cancel = CS.cruiseState.enabled and (not CC.enabled or not self.CP.pcmCruise)
     CC.cruiseControl.resume = CC.enabled and CS.cruiseState.standstill and not self.sm['longitudinalPlan'].shouldStop
 
+    # carrot: desiredSpeed / setSpeed
+    carrot_man = self.sm['carrotMan']
+    desired_kph = min(CS.vCruiseCluster, carrot_man.desiredSpeed) if self.sm.alive.get('carrotMan', False) and carrot_man.desiredSpeed > 0 else CS.vCruiseCluster
+    setSpeed = float(desired_kph * CV.KPH_TO_MS)
+    lp = self.sm['longitudinalPlan']
+    speeds = lp.speeds
+    if len(speeds):
+      CC.cruiseControl.resume = CC.enabled and CS.cruiseState.standstill and speeds[-1] > 0.1
+      vCluRatio = CS.vCluRatio if CS.vCluRatio > 0.5 else 1.0
+      setSpeed = speeds[-1] / vCluRatio
+
     hudControl = CC.hudControl
-    hudControl.setSpeed = float(CS.vCruiseCluster * CV.KPH_TO_MS)
+    # carrot: hudControl fields
+    if self.sm.alive.get('carrotMan', False):
+      hudControl.activeCarrot = carrot_man.activeCarrot
+      hudControl.atcDistance = carrot_man.xDistToTurn
+
+    if self.CP.pcmCruise:
+      speed_from_pcm = self.params.get_int("SpeedFromPCM")
+      if speed_from_pcm == 1:
+        hudControl.setSpeed = float(CS.vCruiseCluster * CV.KPH_TO_MS)
+      elif speed_from_pcm == 2:
+        hudControl.setSpeed = float(max(30/3.6, desired_kph * CV.KPH_TO_MS))
+      elif speed_from_pcm == 3:
+        hudControl.setSpeed = setSpeed if lp.xState == 3 else float(desired_kph * CV.KPH_TO_MS)
+      else:
+        hudControl.setSpeed = float(max(30/3.6, setSpeed))
+    else:
+      hudControl.setSpeed = setSpeed if lp.xState == 3 else float(desired_kph * CV.KPH_TO_MS)
     hudControl.speedVisible = CC.enabled
     hudControl.lanesVisible = CC.enabled
     hudControl.leadVisible = self.sm['longitudinalPlan'].hasLead
     hudControl.leadDistanceBars = self.sm['selfdriveState'].personality.raw + 1
     hudControl.visualAlert = self.sm['selfdriveState'].alertHudVisual
 
+    # carrot: lead and radar info
+    radarState = self.sm['radarState']
+    leadOne = radarState.leadOne
+    hudControl.leadDistance = leadOne.dRel if leadOne.status else 0
+    hudControl.leadRelSpeed = leadOne.vRel if leadOne.status else 0
+    hudControl.leadRadar = 1 if leadOne.radar else 0
+    hudControl.leadDPath = leadOne.dPath
+
+    meta = self.sm['modelV2'].meta
+    # derive desire from desireState probabilities (SP MetaData has no .desire field)
+    desire_state = list(meta.desireState) if len(meta.desireState) > 0 else []
+    if len(desire_state) > 3:
+      # desireState indices: 0=none, 1=turnLeft, 2=turnRight, 3=laneChangeLeft, 4=laneChangeRight, ...
+      max_idx = max(range(len(desire_state)), key=lambda i: desire_state[i])
+      hudControl.modelDesire = 1 if max_idx == 1 else 2 if max_idx == 2 else 0
+    else:
+      hudControl.modelDesire = 0
+
     hudControl.rightLaneVisible = True
     hudControl.leftLaneVisible = True
     if self.sm.valid['driverAssistance']:
       hudControl.leftLaneDepart = self.sm['driverAssistance'].leftLaneDeparture
       hudControl.rightLaneDepart = self.sm['driverAssistance'].rightLaneDeparture
+
+    # carrot: side vehicle tracking (use roadEdges y[0] as approximate distance, fallback 5.0)
+    model_v2 = self.sm['modelV2']
+    road_edges = list(model_v2.roadEdges)
+    dist_left = abs(road_edges[0].y[0]) if len(road_edges) > 0 and len(road_edges[0].y) > 0 else 5.0
+    dist_right = abs(road_edges[1].y[0]) if len(road_edges) > 1 and len(road_edges[1].y) > 0 else 5.0
+    # SP RadarState has no leadsLeft2/leadsRight2, pass empty list
+    self._update_side("left",  [],  dist_left,  CS.leftBlindspot, hudControl)
+    self._update_side("right", [], dist_right, CS.rightBlindspot, hudControl)
 
     if self.sm['selfdriveState'].active:
       CO = self.sm['carOutput']
@@ -220,6 +323,8 @@ class Controls(ControlsExt, ModelStateBase):
       cs.lateralControlState.pidState = lac_log
     elif lat_tuning == 'torque':
       cs.lateralControlState.torqueState = lac_log
+
+    cs.activeLaneLine = self.lanefull_mode_enabled
 
     self.pm.send('controlsState', dat)
 

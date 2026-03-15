@@ -21,7 +21,9 @@ void setMainWindow(QWidget *w) {
 
   w->setWindowState(Qt::WindowFullScreen);
   w->setVisible(true);
-
+// 设置全屏
+  if (util::getenv("FULLSCREEN", 0) || !Hardware::PC()) {
+    w->setWindowState(Qt::WindowFullScreen);
   // ensure we have a valid eglDisplay, otherwise the ui will silently fail
   void *egl = native->nativeResourceForWindow("egldisplay", w->windowHandle());
   assert(egl != nullptr);

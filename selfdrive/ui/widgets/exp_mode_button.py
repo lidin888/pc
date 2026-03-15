@@ -49,7 +49,7 @@ class ExperimentalModeButton(Widget):
     rl.draw_line_ex(rl.Vector2(line_x, rect.y), rl.Vector2(line_x, rect.y + rect.height), 3, separator_color)
 
     # Draw text label (left aligned)
-    text = "EXPERIMENTAL MODE ON" if self.experimental_mode else "CHILL MODE ON"
+    text = "实验模式开启" if self.experimental_mode else "舒适模式开启"
     text_x = rect.x + self.horizontal_padding
     text_y = rect.y + rect.height / 2 - 45 // 2  # Center vertically
 

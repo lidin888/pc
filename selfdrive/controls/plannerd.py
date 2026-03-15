@@ -6,6 +6,7 @@ from openpilot.common.realtime import Priority, config_realtime_process
 from openpilot.common.swaglog import cloudlog
 from openpilot.selfdrive.controls.lib.ldw import LaneDepartureWarning
 from openpilot.selfdrive.controls.lib.longitudinal_planner import LongitudinalPlanner
+from openpilot.selfdrive.carrot.carrot_functions import CarrotPlanner
 import cereal.messaging as messaging
 
 
@@ -25,17 +26,18 @@ def main():
 
   ldw = LaneDepartureWarning()
   longitudinal_planner = LongitudinalPlanner(CP, CP_SP)
+  carrot = CarrotPlanner()
   pm = messaging.PubMaster(['longitudinalPlan', 'driverAssistance', 'longitudinalPlanSP'])
   sm = messaging.SubMaster(['carControl', 'carState', 'controlsState', 'liveParameters', 'radarState', 'modelV2', 'selfdriveState',
-                            'liveMapDataSP', 'carStateSP', gps_location_service],
+                            'liveMapDataSP', 'carStateSP', 'carrotMan', gps_location_service],
                            poll='carState')
 
   while True:
     sm.update()
     longitudinal_planner.sla.update_car_state(sm['carState'])
     if sm.updated['modelV2']:
-      longitudinal_planner.update(sm)
-      longitudinal_planner.publish(sm, pm)
+      longitudinal_planner.update(sm, carrot)
+      longitudinal_planner.publish(sm, pm, carrot)
 
       ldw.update(sm.frame, sm['modelV2'], sm['carState'], sm['carControl'])
       msg = messaging.new_message('driverAssistance')

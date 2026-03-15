@@ -228,6 +228,7 @@ class LongitudinalMpc:
     self.solver = AcadosOcpSolverCython(MODEL_NAME, ACADOS_SOLVER_TYPE, N)
     self.reset()
     self.source = SOURCES[2]
+    self.t_follow = get_T_FOLLOW()
 
   def reset(self):
     # self.solver = AcadosOcpSolverCython(MODEL_NAME, ACADOS_SOLVER_TYPE, N)
@@ -274,8 +275,9 @@ class LongitudinalMpc:
     for i in range(N):
       self.solver.cost_set(i, 'Zl', Zl)
 
-  def set_weights(self, prev_accel_constraint=True, personality=log.LongitudinalPersonality.standard):
-    jerk_factor = get_jerk_factor(personality)
+  def set_weights(self, prev_accel_constraint=True, personality=log.LongitudinalPersonality.standard, jerk_factor=None):
+    if jerk_factor is None:
+      jerk_factor = get_jerk_factor(personality)
     if self.mode == 'acc':
       a_change_cost = A_CHANGE_COST if prev_accel_constraint else 0
       cost_weights = [X_EGO_OBSTACLE_COST, X_EGO_COST, V_EGO_COST, A_EGO_COST, jerk_factor * a_change_cost, jerk_factor * J_EGO_COST]
@@ -327,8 +329,11 @@ class LongitudinalMpc:
     lead_xv = self.extrapolate_lead(x_lead, v_lead, a_lead, a_lead_tau)
     return lead_xv
 
-  def update(self, radarstate, v_cruise, x, v, a, j, personality=log.LongitudinalPersonality.standard):
-    t_follow = get_T_FOLLOW(personality)
+  def update(self, radarstate, v_cruise, x, v, a, j, personality=log.LongitudinalPersonality.standard, carrot=None):
+    if carrot is not None:
+      t_follow = carrot.get_T_FOLLOW(personality)
+    else:
+      t_follow = get_T_FOLLOW(personality)
     v_ego = self.x0[1]
     self.status = radarstate.leadOne.status or radarstate.leadTwo.status
 
@@ -340,6 +345,19 @@ class LongitudinalMpc:
     # and then treat that as a stopped car/obstacle at this new distance.
     lead_0_obstacle = lead_xv_0[:,0] + get_stopped_equivalence_factor(lead_xv_0[:,1])
     lead_1_obstacle = lead_xv_1[:,0] + get_stopped_equivalence_factor(lead_xv_1[:,1])
+
+    # Apply carrot comfort_brake and stop_distance overrides
+    comfort_brake = COMFORT_BRAKE
+    stop_distance = STOP_DISTANCE
+    if carrot is not None:
+      comfort_brake = carrot.comfort_brake
+      stop_distance = carrot.stop_distance
+      # dynamic_t_follow adjusts t_follow based on lead distance and lane change state
+      desired_dist = get_safe_obstacle_distance(v_ego, t_follow) - get_stopped_equivalence_factor(
+        radarstate.leadOne.vLead if radarstate.leadOne.status else v_ego + 10.0)
+      t_follow = carrot.dynamic_t_follow(t_follow, radarstate.leadOne, desired_dist, self.prev_a)
+
+    self.t_follow = t_follow
 
     self.params[:,0] = ACCEL_MIN
     self.params[:,1] = ACCEL_MAX
@@ -357,8 +375,18 @@ class LongitudinalMpc:
                                  v_lower,
                                  v_upper)
       cruise_obstacle = np.cumsum(T_DIFFS * v_cruise_clipped) + get_safe_obstacle_distance(v_cruise_clipped, t_follow)
-      x_obstacles = np.column_stack([lead_0_obstacle, lead_1_obstacle, cruise_obstacle])
-      self.source = SOURCES[np.argmin(x_obstacles[0])]
+
+      # Carrot: apply stop_dist as an additional obstacle if traffic light stop is active
+      if carrot is not None and carrot.xState.value >= 3:  # e2eStop or e2eStopped
+        carrot_stop_x = carrot.stop_dist
+        if carrot_stop_x < 900:
+          stop_obstacle = np.full(N+1, carrot_stop_x + stop_distance)
+          x_obstacles = np.column_stack([lead_0_obstacle, lead_1_obstacle, cruise_obstacle, stop_obstacle])
+        else:
+          x_obstacles = np.column_stack([lead_0_obstacle, lead_1_obstacle, cruise_obstacle])
+      else:
+        x_obstacles = np.column_stack([lead_0_obstacle, lead_1_obstacle, cruise_obstacle])
+      self.source = SOURCES[min(np.argmin(x_obstacles[0]), len(SOURCES)-1)]
 
       # These are not used in ACC mode
       x[:], v[:], a[:], j[:] = 0.0, 0.0, 0.0, 0.0

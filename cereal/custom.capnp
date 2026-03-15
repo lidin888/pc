@@ -84,32 +84,47 @@ struct SelfdriveStateSP @0x81c2f05a394cf4af {
     promptRepeat @7;
     promptDistracted @8;
 
-    # unused, these are reserved for upstream events so we don't collide
-    reserved9 @9;
-    reserved10 @10;
-    reserved11 @11;
-    reserved12 @12;
-    reserved13 @13;
-    reserved14 @14;
-    reserved15 @15;
-    reserved16 @16;
-    reserved17 @17;
-    reserved18 @18;
-    reserved19 @19;
-    reserved20 @20;
-    reserved21 @21;
-    reserved22 @22;
-    reserved23 @23;
-    reserved24 @24;
-    reserved25 @25;
-    reserved26 @26;
-    reserved27 @27;
-    reserved28 @28;
-    reserved29 @29;
-    reserved30 @30;
+    # CarrotPilot audio alerts (mapped from reserved slots)
+    audioTurn @9;
+    longEngaged @10;
+    longDisengaged @11;
+    trafficSignGreen @12;
+    trafficSignChanged @13;
+    laneChangeCarrot @14;
+    stopping @15;
+    autoHold @16;
+    engage2 @17;
+    disengage2 @18;
+    trafficError @19;
+    bsdWarning @20;
+    speedDown @21;
+    stopStop @22;
+    reverseGear2 @23;
+    audio1 @24;
+    audio2 @25;
+    audio3 @26;
+    audio4 @27;
+    audio5 @28;
+    audio6 @29;
+    audio7 @30;
 
     promptSingleLow @31;
     promptSingleHigh @32;
+
+    # Additional CarrotPilot audio alerts
+    audio8 @33;
+    audio9 @34;
+    audio10 @35;
+    nnff @36;
+    preLaneChangeCarrot @37;
+    atcCancel @38;
+    atcResume @39;
+    preLaneChangeLeft2 @40;
+    preLaneChangeRight2 @41;
+    laneChangeOk @42;
+    lastLane @43;
+    newLane @44;
+    laneChangeEnd @45;
   }
 }
 
@@ -340,6 +355,9 @@ struct OnroadEventSP @0xda96579883444c35 {
     speedLimitChanged @21;
     speedLimitPending @22;
     e2eChime @23;
+    trafficSignGreen @24;
+    trafficSignChanged @25;
+    trafficStopping @26;
   }
 }
 
@@ -454,13 +472,74 @@ struct ModelDataV2SP @0xa1680744031fdb2d {
   }
 }
 
-struct CustomReserved10 @0xcb9fd56c7057593a {
+struct CarrotMan @0xcb9fd56c7057593a {
+  activeCarrot @0 :Int32;
+  nRoadLimitSpeed @1 :Int32;
+  remote @2 :Text;
+  xSpdType @3 :Int32;
+  xSpdLimit @4 :Int32;
+  xSpdDist @5 :Int32;
+  xSpdCountDown @6 :Int32;
+  xTurnInfo @7 :Int32;
+  xDistToTurn @8 :Int32;
+  xTurnCountDown @9 :Int32;
+  atcType @10 :Text;
+  vTurnSpeed @11 :Int32;
+  szPosRoadName @12 :Text;
+  szTBTMainText @13 :Text;
+  desiredSpeed @14 :Int32;
+  desiredSource @15 :Text;
+  carrotCmdIndex @16 :Int32;
+  carrotCmd @17 :Text;
+  carrotArg @18 :Text;
+  xPosLat @19 :Float32;
+  xPosLon @20 :Float32;
+  xPosAngle @21 :Float32;
+  xPosSpeed @22 :Float32;
+  trafficState @23 :Int32;
+  nGoPosDist @24 :Int32;
+  nGoPosTime @25 :Int32;
+  szSdiDescr @26 :Text;
+  naviPaths @27 :Text;
+  leftSec @28 :Int32;
+  xDistToTurnNav @29 :Int32;
+  xDistToTurnNavLast @30 :Int32;
+  xDistToTurnMax @31 :Int32;
+  xDistToTurnMaxCnt @32 :Int32;
+  xLeftTurnSec @33 :Int32;
+  roadCate @34 :Int32;
+  extBlinker @35 :Int32;
+  extState @36 :Int32;
+  leftBlind @37 :Int32;
+  rightBlind @38 :Int32;
+  trafficCountdown @39 :Int32;
+  szGoalName @40 :Text;
+  szTBTMainTextNext @41 :Text;
+  szNearDirName @42 :Text;
 }
 
-struct CustomReserved11 @0xc2243c65e0340384 {
+struct AmapNavi @0xc2243c65e0340384 {
+  leftBlind @0 :Int32;
+  rightBlind @1 :Int32;
 }
 
-struct CustomReserved12 @0x9ccdc8676701b412 {
+struct NavInstructionCarrot @0x9ccdc8676701b412 {
+  maneuverPrimaryText @0 :Text;
+  maneuverSecondaryText @1 :Text;
+  maneuverDistance @2 :Float32;
+  maneuverType @3 :Text;
+  maneuverModifier @4 :Text;
+  distanceRemaining @5 :Float32;
+  timeRemaining @6 :Float32;
+  timeRemainingTypical @7 :Float32;
+  speedLimit @8 :Float32;
+  allManeuvers @9 :List(Maneuver);
+
+  struct Maneuver {
+    distance @0 :Float32;
+    type @1 :Text;
+    modifier @2 :Text;
+  }
 }
 
 struct CustomReserved13 @0xcd96dafb67a082d0 {

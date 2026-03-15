@@ -51,17 +51,60 @@ class DesireHelper:
     self.alc = AutoLaneChangeController(self)
     self.lane_turn_controller = LaneTurnController(self)
     self.lane_turn_direction = TurnDirection.none
+    # CarrotPilot ATC (auto turn control) state
+    self.carrot_atc_active = False
+    self.carrot_cmd_index_last = 0
+    self.carrot_virtual_blinker = 0  # 0=none, 1=left, 2=right
 
   @staticmethod
   def get_lane_change_direction(CS):
     return LaneChangeDirection.left if CS.leftBlinker else LaneChangeDirection.right
 
-  def update(self, carstate, lateral_active, lane_change_prob):
+  def _get_effective_direction(self, carstate):
+    """Get lane change direction considering carrot ATC virtual blinker"""
+    if self.carrot_virtual_blinker == 1:
+      return LaneChangeDirection.left
+    elif self.carrot_virtual_blinker == 2:
+      return LaneChangeDirection.right
+    return self.get_lane_change_direction(carstate)
+
+  def update(self, carstate, lateral_active, lane_change_prob, carrot_man=None):
     self.alc.update_params()
     self.lane_turn_controller.update_params()
     v_ego = carstate.vEgo
     one_blinker = carstate.leftBlinker != carstate.rightBlinker
     below_lane_change_speed = v_ego < LANE_CHANGE_SPEED_MIN
+
+    # CarrotPilot ATC: process carrotMan commands to inject virtual blinker
+    if carrot_man is not None:
+      atc_type = carrot_man.atcType
+      if atc_type in ["turn left", "turn right", "atc left", "atc right", "fork left", "fork right"]:
+        self.carrot_atc_active = True
+        if "left" in atc_type:
+          self.carrot_virtual_blinker = 1
+        else:
+          self.carrot_virtual_blinker = 2
+        # For turns at low speed, use turn desire directly
+        if atc_type in ["turn left", "turn right"]:
+          below_lane_change_speed = True
+      else:
+        self.carrot_atc_active = False
+        self.carrot_virtual_blinker = 0
+
+      # Process LANECHANGE/OVERTAKE commands
+      if carrot_man.carrotCmdIndex != self.carrot_cmd_index_last:
+        self.carrot_cmd_index_last = carrot_man.carrotCmdIndex
+        if carrot_man.carrotCmd in ["LANECHANGE", "OVERTAKE"]:
+          if carrot_man.carrotArg == "LEFT":
+            self.carrot_virtual_blinker = 1
+          elif carrot_man.carrotArg == "RIGHT":
+            self.carrot_virtual_blinker = 2
+
+      # Merge virtual blinker with real blinker state for lane change logic
+      if self.carrot_virtual_blinker == 1:
+        one_blinker = True
+      elif self.carrot_virtual_blinker == 2:
+        one_blinker = True
 
     # Lane turn controller update
     self.lane_turn_controller.update_lane_turn(blindspot_left=carstate.leftBlindspot, blindspot_right=carstate.rightBlindspot,
@@ -77,12 +120,12 @@ class DesireHelper:
         self.lane_change_state = LaneChangeState.preLaneChange
         self.lane_change_ll_prob = 1.0
         # Initialize lane change direction to prevent UI alert flicker
-        self.lane_change_direction = self.get_lane_change_direction(carstate)
+        self.lane_change_direction = self._get_effective_direction(carstate)
 
       # LaneChangeState.preLaneChange
       elif self.lane_change_state == LaneChangeState.preLaneChange:
         # Update lane change direction
-        self.lane_change_direction = self.get_lane_change_direction(carstate)
+        self.lane_change_direction = self._get_effective_direction(carstate)
 
         torque_applied = carstate.steeringPressed and \
                          ((carstate.steeringTorque > 0 and self.lane_change_direction == LaneChangeDirection.left) or

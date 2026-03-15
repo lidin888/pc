@@ -143,7 +143,7 @@ class AbstractAlert(Widget, ABC):
     self.dismiss_btn_rect.y = footer_y
     rl.draw_rectangle_rounded(self.dismiss_btn_rect, 0.3, 10, AlertColors.BUTTON)
 
-    text = "Close"
+    text = "关闭"
     text_width = measure_text_cached(font, text, AlertConstants.FONT_SIZE).x
     text_x = self.dismiss_btn_rect.x + (AlertConstants.BUTTON_SIZE[0] - text_width) // 2
     text_y = self.dismiss_btn_rect.y + (AlertConstants.BUTTON_SIZE[1] - AlertConstants.FONT_SIZE) // 2
@@ -156,7 +156,7 @@ class AbstractAlert(Widget, ABC):
       self.snooze_btn_rect.y = footer_y
       rl.draw_rectangle_rounded(self.snooze_btn_rect, 0.3, 10, AlertColors.SNOOZE_BG)
 
-      text = "Snooze Update"
+      text = "推迟更新"
       text_width = measure_text_cached(font, text, AlertConstants.FONT_SIZE).x
       text_x = self.snooze_btn_rect.x + (AlertConstants.SNOOZE_BUTTON_SIZE[0] - text_width) // 2
       text_y = self.snooze_btn_rect.y + (AlertConstants.SNOOZE_BUTTON_SIZE[1] - AlertConstants.FONT_SIZE) // 2
@@ -167,7 +167,7 @@ class AbstractAlert(Widget, ABC):
       self.reboot_btn_rect.y = footer_y
       rl.draw_rectangle_rounded(self.reboot_btn_rect, 0.3, 10, AlertColors.BUTTON)
 
-      text = "Reboot and Update"
+      text = "重启并更新"
       text_width = measure_text_cached(font, text, AlertConstants.FONT_SIZE).x
       text_x = self.reboot_btn_rect.x + (AlertConstants.REBOOT_BUTTON_SIZE[0] - text_width) // 2
       text_y = self.reboot_btn_rect.y + (AlertConstants.REBOOT_BUTTON_SIZE[1] - AlertConstants.FONT_SIZE) // 2
@@ -319,7 +319,7 @@ class UpdateAlert(AbstractAlert):
         AlertColors.TEXT,
       )
     else:
-      no_notes_text = "No release notes available."
+      no_notes_text = "没有可用的发布说明。"
       text_width = rl.measure_text(no_notes_text, AlertConstants.FONT_SIZE)
       text_x = content_rect.x + (content_rect.width - text_width) // 2
       text_y = content_rect.y + 50

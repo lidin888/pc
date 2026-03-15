@@ -17,13 +17,13 @@ from openpilot.system.ui.widgets.scroller import Scroller
 
 # Description constants
 DESCRIPTIONS = {
-  'pair_device': "Pair your device with comma connect (connect.comma.ai) and claim your comma prime offer.",
-  'driver_camera': "Preview the driver facing camera to ensure that driver monitoring has good visibility. (vehicle must be off)",
+  'pair_device': "将您的设备与 comma connect (connect.comma.ai) 配对并领取您的 comma prime 优惠。",
+  'driver_camera': "预览驾驶员面部摄像头以确保驾驶员监控有良好的可见性。（车辆必须熄火）",
   'reset_calibration': (
-      "openpilot requires the device to be mounted within 4° left or right and within 5° " +
-      "up or 9° down. openpilot is continuously calibrating, resetting is rarely required."
+      "openpilot 要求设备安装在左或右 4° 内，以及向上 5° 或向下 9° 内。 " +
+      "openpilot 正在持续校准，重置很少需要。"
   ),
-  'review_guide': "Review the rules, features, and limitations of openpilot",
+  'review_guide': "查看 openpilot 的规则、功能和限制",
 }
 
 
@@ -45,15 +45,15 @@ class DeviceLayout(Widget):
     serial = self._params.get("HardwareSerial") or "N/A"
 
     items = [
-      text_item("Dongle ID", dongle_id),
-      text_item("Serial", serial),
-      button_item("Pair Device", "PAIR", DESCRIPTIONS['pair_device'], callback=self._pair_device),
-      button_item("Driver Camera", "PREVIEW", DESCRIPTIONS['driver_camera'], callback=self._show_driver_camera, enabled=ui_state.is_offroad),
-      button_item("Reset Calibration", "RESET", DESCRIPTIONS['reset_calibration'], callback=self._reset_calibration_prompt),
-      regulatory_btn := button_item("Regulatory", "VIEW", callback=self._on_regulatory),
-      button_item("Review Training Guide", "REVIEW", DESCRIPTIONS['review_guide'], self._on_review_training_guide),
-      button_item("Change Language", "CHANGE", callback=self._show_language_selection, enabled=ui_state.is_offroad),
-      dual_button_item("Reboot", "Power Off", left_callback=self._reboot_prompt, right_callback=self._power_off_prompt),
+      text_item("设备 ID", dongle_id),
+      text_item("序列号", serial),
+      button_item("配对设备", "配对", DESCRIPTIONS['pair_device'], callback=self._pair_device),
+      button_item("驾驶员摄像头", "预览", DESCRIPTIONS['driver_camera'], callback=self._show_driver_camera, enabled=ui_state.is_offroad),
+      button_item("重置校准", "重置", DESCRIPTIONS['reset_calibration'], callback=self._reset_calibration_prompt),
+      regulatory_btn := button_item("监管", "查看", callback=self._on_regulatory),
+      button_item("查看训练指南", "查看", DESCRIPTIONS['review_guide'], self._on_review_training_guide),
+      button_item("更改语言", "更改", callback=self._show_language_selection, enabled=ui_state.is_offroad),
+      dual_button_item("重启", "关机", left_callback=self._reboot_prompt, right_callback=self._power_off_prompt),
     ]
     regulatory_btn.set_visible(TICI)
     return items
@@ -67,7 +67,7 @@ class DeviceLayout(Widget):
       with open(languages_file, encoding='utf-8') as f:
         languages = json.load(f)
 
-      self._select_language_dialog = MultiOptionDialog("Select a language", languages)
+      self._select_language_dialog = MultiOptionDialog("选择一种语言", languages)
       gui_app.set_modal_overlay(self._select_language_dialog, callback=self._handle_language_selection)
     except FileNotFoundError:
       pass
@@ -87,11 +87,11 @@ class DeviceLayout(Widget):
 
   def _reset_calibration_prompt(self):
     if ui_state.engaged:
-      gui_app.set_modal_overlay(lambda: alert_dialog("Disengage to Reset Calibration"))
+      gui_app.set_modal_overlay(lambda: alert_dialog("脱离驾驶以重置校准"))
       return
 
     gui_app.set_modal_overlay(
-      lambda: confirm_dialog("Are you sure you want to reset calibration?", "Reset"),
+      lambda: confirm_dialog("您确定要重置校准吗？", "重置"),
       callback=self._reset_calibration,
     )
 
@@ -108,11 +108,11 @@ class DeviceLayout(Widget):
 
   def _reboot_prompt(self):
     if ui_state.engaged:
-      gui_app.set_modal_overlay(lambda: alert_dialog("Disengage to Reboot"))
+      gui_app.set_modal_overlay(lambda: alert_dialog("脱离驾驶以重启"))
       return
 
     gui_app.set_modal_overlay(
-      lambda: confirm_dialog("Are you sure you want to reboot?", "Reboot"),
+      lambda: confirm_dialog("您确定要重启吗？", "重启"),
       callback=self._perform_reboot,
     )
 
@@ -122,11 +122,11 @@ class DeviceLayout(Widget):
 
   def _power_off_prompt(self):
     if ui_state.engaged:
-      gui_app.set_modal_overlay(lambda: alert_dialog("Disengage to Power Off"))
+      gui_app.set_modal_overlay(lambda: alert_dialog("脱离驾驶以关机"))
       return
 
     gui_app.set_modal_overlay(
-      lambda: confirm_dialog("Are you sure you want to power off?", "Power Off"),
+      lambda: confirm_dialog("您确定要关机吗？", "关机"),
       callback=self._perform_power_off,
     )
 

@@ -29,7 +29,7 @@ UIStateSP::UIStateSP(QObject *parent) : UIState(parent) {
     "wideRoadCameraState", "managerState", "selfdriveState", "longitudinalPlan",
     "modelManagerSP", "selfdriveStateSP", "longitudinalPlanSP", "backupManagerSP",
     "carControl", "gpsLocationExternal", "gpsLocation", "liveTorqueParameters",
-    "carStateSP", "liveParameters", "liveMapDataSP", "carParamsSP"
+    "carStateSP", "liveParameters", "liveMapDataSP", "carParamsSP", "carrotMan"
   });
 
   // update timer
@@ -44,6 +44,7 @@ UIStateSP::UIStateSP(QObject *parent) : UIState(parent) {
   });
   param_watcher->addParam("DevUIInfo");
   param_watcher->addParam("StandstillTimer");
+  param_watcher->addParam("CarrotPanelSide");
 }
 
 // This method overrides completely the update method from the parent class intentionally.
@@ -76,6 +77,7 @@ void ui_update_params_sp(UIStateSP *s) {
   s->scene.chevron_info = std::atoi(params.get("ChevronInfo").c_str());
   s->scene.blindspot_ui = params.getBool("BlindSpot");
   s->scene.rainbow_mode = params.getBool("RainbowMode");
+  s->scene.carrot_panel_side = std::atoi(params.get("CarrotPanelSide").c_str());
 }
 
 void UIStateSP::reset_onroad_sleep_timer(OnroadTimerStatusToggle toggleTimerStatus) {

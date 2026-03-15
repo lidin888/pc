@@ -88,7 +88,7 @@ class PairingDialog:
     y += close_size + 40
 
     # Title
-    title = "Pair your device to your comma account"
+    title = "将您的设备配对到您的 comma 账户"
     title_font = gui_app.font(FontWeight.NORMAL)
     left_width = int(content_rect.width * 0.5 - 15)
 
@@ -113,9 +113,9 @@ class PairingDialog:
 
   def _render_instructions(self, rect: rl.Rectangle) -> None:
     instructions = [
-      "Go to https://connect.comma.ai on your phone",
-      "Click \"add new device\" and scan the QR code on the right",
-      "Bookmark connect.comma.ai to your home screen to use it like an app",
+      "在您的手机上访问 https://connect.comma.ai",
+      "点击\"添加新设备\"并扫描右侧的二维码",
+      "将 connect.comma.ai 加入书签到您的主屏幕，像使用应用一样使用它",
     ]
 
     font = gui_app.font(FontWeight.BOLD)

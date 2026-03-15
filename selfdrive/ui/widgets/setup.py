@@ -34,11 +34,11 @@ class SetupWidget(Widget):
 
     # Title
     font = gui_app.font(FontWeight.BOLD)
-    rl.draw_text_ex(font, "Finish Setup", rl.Vector2(x, y), 75, 0, rl.WHITE)
+    rl.draw_text_ex(font, "完成设置", rl.Vector2(x, y), 75, 0, rl.WHITE)
     y += 113  # 75 + 38 spacing
 
     # Description
-    desc = "Pair your device with comma connect (connect.comma.ai) and claim your comma prime offer."
+    desc = "将您的设备与 comma connect (connect.comma.ai) 配对并领取您的 comma prime 优惠。"
     light_font = gui_app.font(FontWeight.LIGHT)
     wrapped = wrap_text(light_font, desc, 50, int(w))
     for line in wrapped:
@@ -46,7 +46,7 @@ class SetupWidget(Widget):
       y += 50
 
     button_rect = rl.Rectangle(x, y + 50, w, 128)
-    if gui_button(button_rect, "Pair device", button_style=ButtonStyle.PRIMARY):
+    if gui_button(button_rect, "配对设备", button_style=ButtonStyle.PRIMARY):
       self._show_pairing()
 
   def _render_firehose_prompt(self, rect: rl.Rectangle):
@@ -62,13 +62,13 @@ class SetupWidget(Widget):
 
     # Title with fire emojis
     title_font = gui_app.font(FontWeight.MEDIUM)
-    title_text = "Firehose Mode"
+    title_text = "数据上传模式"
     rl.draw_text_ex(title_font, title_text, rl.Vector2(x, y), 64, 0, rl.WHITE)
     y += 64 + spacing
 
     # Description
     desc_font = gui_app.font(FontWeight.NORMAL)
-    desc_text = "Maximize your training data uploads to improve openpilot's driving models."
+    desc_text = "最大化您的训练数据上传，以改善 openpilot 的驾驶模型。"
     wrapped_desc = wrap_text(desc_font, desc_text, 40, int(w))
 
     for line in wrapped_desc:
@@ -80,7 +80,7 @@ class SetupWidget(Widget):
     # Open button
     button_height = 48 + 64  # font size + padding
     button_rect = rl.Rectangle(x, y, w, button_height)
-    if gui_button(button_rect, "Open", button_style=ButtonStyle.PRIMARY):
+    if gui_button(button_rect, "打开", button_style=ButtonStyle.PRIMARY):
       if self._open_settings_callback:
         self._open_settings_callback()
 

@@ -7,13 +7,13 @@ from openpilot.system.ui.widgets.scroller import Scroller
 # Description constants
 DESCRIPTIONS = {
   'enable_adb': (
-    "ADB (Android Debug Bridge) allows connecting to your device over USB or over the network. " +
-    "See https://docs.comma.ai/how-to/connect-to-comma for more info."
+    "ADB (Android Debug Bridge) 允许通过 USB 或网络连接到您的设备。 " +
+    "有关更多信息，请参见 https://docs.comma.ai/how-to/connect-to-comma。"
   ),
-  'joystick_debug_mode': "Preview the driver facing camera to ensure that driver monitoring has good visibility. (vehicle must be off)",
+  'joystick_debug_mode': "启用操纵杆调试模式，用于测试和调试驾驶输入。",
   'ssh_key': (
-    "Warning: This grants SSH access to all public keys in your GitHub settings. Never enter a GitHub username " +
-    "other than your own. A comma employee will NEVER ask you to add their GitHub username."
+    "警告：这会授予 SSH 访问权限给您 GitHub 设置中的所有公钥。切勿输入除您自己以外的 GitHub 用户名。 " +
+    "comma 员工绝不会要求您添加他们的 GitHub 用户名。"
   ),
 }
 
@@ -24,26 +24,26 @@ class DeveloperLayout(Widget):
     self._params = Params()
     items = [
       toggle_item(
-        "Enable ADB",
+        "启用 ADB",
         description=DESCRIPTIONS["enable_adb"],
         initial_state=self._params.get_bool("AdbEnabled"),
         callback=self._on_enable_adb,
       ),
-      ssh_key_item("SSH Key", description=DESCRIPTIONS["ssh_key"]),
+      ssh_key_item("SSH 密钥", description=DESCRIPTIONS["ssh_key"]),
       toggle_item(
-        "Joystick Debug Mode",
+        "操纵杆调试模式",
         description=DESCRIPTIONS["joystick_debug_mode"],
         initial_state=self._params.get_bool("JoystickDebugMode"),
         callback=self._on_joystick_debug_mode,
       ),
       toggle_item(
-        "Longitudinal Maneuver Mode",
+        "纵向机动模式",
         description="",
         initial_state=self._params.get_bool("LongitudinalManeuverMode"),
         callback=self._on_long_maneuver_mode,
       ),
       toggle_item(
-        "openpilot Longitudinal Control (Alpha)",
+        "openpilot 纵向控制 (Alpha)",
         description="",
         initial_state=self._params.get_bool("AlphaLongitudinalEnabled"),
         callback=self._on_alpha_long_enabled,

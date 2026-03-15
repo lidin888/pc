@@ -40,6 +40,16 @@ private:
   void drawCurrentSpeedSP(QPainter &p, const QRect &surface_rect);
   void drawBlinker(QPainter &p, const QRect &surface_rect);
 
+  // CarrotMan navigation
+  void drawCarrotPanel(QPainter &p, const QRect &surface_rect);
+
+  // Turn-by-turn icons
+  QPixmap turn_l_img;
+  QPixmap turn_r_img;
+  QPixmap turn_u_img;
+  QPixmap lane_change_l_img;
+  QPixmap lane_change_r_img;
+
   bool lead_status;
   float lead_d_rel;
   float lead_v_rel;
@@ -120,4 +130,36 @@ private:
   float speedCluster = 0;
   int icbm_active_counter = 0;
   bool pcmCruiseSpeed = true;
+
+  // CarrotMan navigation state
+  bool carrotManAlive = false;
+  int carrotActiveCarrot = 0;
+  int carrotNaviSpeedLimit = 0;
+  int carrotSpdType = -1;
+  int carrotSpdLimit = 0;
+  int carrotSpdDist = 0;
+  int carrotSpdCountDown = 0;
+  int carrotTurnInfo = -1;
+  int carrotDistToTurn = 0;
+  int carrotTrafficState = 0;
+  int carrotTrafficCountdown = 0;
+  int carrotDesiredSpeed = 0;
+  int carrotDestDist = 0;
+  int carrotDestTime = 0;
+  int carrotLeftSec = 0;
+  int carrotRoadCate = 0;
+  int carrotVTurnSpeed = 0;
+  int carrotLeftBlind = 0;
+  int carrotRightBlind = 0;
+  int carrotExtBlinker = 0;
+  QString carrotRoadName;
+  QString carrotTBTText;
+  QString carrotDesiredSource;
+  QString carrotSdiDescr;
+  QString carrotAtcType;
+  QString carrotGoalName;
+  QString carrotTBTTextNext;
+  QString carrotNearDirName;
+  int carrotTurnCountDown = 0;
+  int carrotPanelSide = 0;  // 0=left, 1=right
 };

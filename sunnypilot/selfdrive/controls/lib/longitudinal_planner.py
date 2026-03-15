@@ -77,10 +77,14 @@ class LongitudinalPlannerSP:
     self.output_v_target, self.output_a_target = targets[self.source]
     return self.output_v_target, self.output_a_target
 
-  def update(self, sm: messaging.SubMaster) -> None:
+  def update(self, sm: messaging.SubMaster, carrot=None) -> None:
     self.events_sp.clear()
     self.dec.update(sm)
     self.e2e_alerts_helper.update(sm, self.events_sp)
+    # Merge carrot traffic events into SP events channel
+    if carrot is not None:
+      for e in carrot.events.names:
+        self.events_sp.add(e)
 
   def publish_longitudinal_plan_sp(self, sm: messaging.SubMaster, pm: messaging.PubMaster) -> None:
     plan_sp_send = messaging.new_message('longitudinalPlanSP')

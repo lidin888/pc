@@ -188,11 +188,11 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
     <message>
         <source>openpilot Longitudinal Control (Alpha)</source>
-        <translation>Contrôle longitudinal openpilot (Alpha)</translation>
+        <translation type="vanished">Contrôle longitudinal openpilot (Alpha)</translation>
     </message>
     <message>
         <source>WARNING: openpilot longitudinal control is in alpha for this car and will disable Automatic Emergency Braking (AEB).</source>
-        <translation>ATTENTION : le contrôle longitudinal openpilot est en alpha pour cette voiture et désactivera le freinage d&apos;urgence automatique (AEB).</translation>
+        <translation type="vanished">ATTENTION : le contrôle longitudinal openpilot est en alpha pour cette voiture et désactivera le freinage d&apos;urgence automatique (AEB).</translation>
     </message>
     <message>
         <source>Enable ADB</source>
@@ -203,7 +203,15 @@ Please use caution when using this feature. Only use the blinker when traffic an
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>On this car, sunnypilot defaults to the car&apos;s built-in ACC instead of openpilot&apos;s longitudinal control. Enable this to switch to openpilot longitudinal control. Enabling Experimental mode is recommended when enabling openpilot longitudinal control alpha.</source>
+        <source>sunnypilot Longitudinal Control (Alpha)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: sunnypilot longitudinal control is in alpha for this car and will disable Automatic Emergency Braking (AEB).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On this car, sunnypilot defaults to the car&apos;s built-in ACC instead of sunnypilot&apos;s longitudinal control. Enable this to switch to sunnypilot longitudinal control. Enabling Experimental mode is recommended when enabling sunnypilot longitudinal control alpha.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -779,6 +787,10 @@ DEPARTING</source>
         <source>MAX</source>
         <translation type="unfinished">MAX</translation>
     </message>
+    <message>
+        <source>STOPPED</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HyundaiSettings</name>
@@ -799,10 +811,6 @@ DEPARTING</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This feature can only be used with openpilot longitudinal control enabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enable &quot;Always Offroad&quot; in Device panel, or turn vehicle off to select an option.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -819,7 +827,11 @@ DEPARTING</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fine-tune your driving experience by adjusting acceleration smoothness with openpilot longitudinal control.</source>
+        <source>This feature can only be used with sunnypilot longitudinal control enabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fine-tune your driving experience by adjusting acceleration smoothness with sunnypilot longitudinal control.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -918,10 +930,6 @@ DEPARTING</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This feature can only be used with openpilot longitudinal control enabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This feature is not supported on this platform due to vehicle limitations.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -955,6 +963,30 @@ DEPARTING</source>
     </message>
     <message>
         <source>Speed Limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dynamic Experimental Control (DEC)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable toggle to allow the model to determine when to use sunnypilot ACC or sunnypilot End to End Longitudinal.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Intelligent Cruise Button Management is currently unavailable on this platform.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable the sunnypilot Longitudinal Control (alpha) toggle to allow Intelligent Cruise Button Management.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sunnypilot Longitudinal Control is the default longitudinal control for this platform.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This feature can only be used with sunnypilot longitudinal control enabled.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1346,7 +1378,7 @@ The default software delay value is 0.2</source>
     </message>
     <message>
         <source>An update to your device&apos;s operating system is downloading in the background. You will be prompted to update when it&apos;s ready to install.</source>
-        <translation>Une mise à jour du système d&apos;exploitation de votre appareil est en cours de téléchargement en arrière-plan. Vous serez invité à effectuer la mise à jour lorsqu&apos;elle sera prête à être installée.</translation>
+        <translation type="vanished">Une mise à jour du système d&apos;exploitation de votre appareil est en cours de téléchargement en arrière-plan. Vous serez invité à effectuer la mise à jour lorsqu&apos;elle sera prête à être installée.</translation>
     </message>
     <message>
         <source>Device failed to register with the comma.ai backend. It will not connect or upload to comma.ai servers, and receives no support from comma.ai. If this is a device purchased at comma.ai/shop, open a ticket at https://comma.ai/support.</source>
@@ -1381,13 +1413,17 @@ The default software delay value is 0.2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>OpenStreetMap database is out of date. New maps must be downloaded if you wish to continue using OpenStreetMap data for Enhanced Speed Control and road name display.
+        <source>设备操作系统更新正在后台下载。准备就绪时将提示您更新。</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OpenStreetMap 数据库已过期。如需继续使用 OpenStreetMap 数据进行增强速度控制和道路名称显示，必须下载新地图。
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;b&gt;Unsupported branch detected&lt;/b&gt; - The current version of &lt;b&gt;&lt;u&gt;%1&lt;/u&gt;&lt;/b&gt; branch is no longer supported on the comma three. Please go to &lt;b&gt;[Device &gt; Software]&lt;/b&gt; and install a supported branch with &lt;b&gt;&lt;u&gt;-tici&lt;/u&gt;&lt;/b&gt; in the branch name for the comma three.</source>
+        <source>&lt;b&gt;检测到不支持的分支&lt;/b&gt; - 当前版本的 &lt;b&gt;&lt;u&gt;%1&lt;/u&gt;&lt;/b&gt; 分支在 comma three 上不再受支持。请转到 &lt;b&gt;[设备 &gt; 软件]&lt;/b&gt; 并安装分支名称中带有 &lt;b&gt;&lt;u&gt;-tici&lt;/u&gt;&lt;/b&gt; 的受支持分支。</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1564,6 +1600,34 @@ Warning: You are on a metered connection!</source>
     </message>
     <message>
         <source>Time remaining: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search Country</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter search keywords, or leave blank to list all countries.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Country</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter search keywords, or leave blank to list all states.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No results found for keywords: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1762,59 +1826,6 @@ Warning: You are on a metered connection!</source>
     </message>
     <message>
         <source>sunnypilot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fixed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Car
-Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Map
-Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Car
-First</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Map
-First</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Combined
-Data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Assist</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2181,6 +2192,31 @@ Data</source>
         <source>⦿ Combined: Use combined Speed Limit data from Car &amp; OpenStreetMaps</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Car
+Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Map
+Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Car
+First</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Map
+First</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Combined
+Data</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SpeedLimitSettings</name>
@@ -2228,6 +2264,34 @@ Data</source>
         <source>⦿ Assist: Adjusts the vehicle&apos;s cruise speed based on the current road&apos;s speed limit when operating the +/- buttons.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Percent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Assist</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SshControl</name>
@@ -2273,6 +2337,52 @@ Data</source>
     <message>
         <source>Enable SSH</source>
         <translation>Activer SSH</translation>
+    </message>
+</context>
+<context>
+    <name>SubaruSettings</name>
+    <message>
+        <source>Stop and Go (Beta)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop and Go for Manual Parking Brake (Beta)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Experimental feature to enable auto-resume during stop-and-go for certain supported Subaru platforms.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Experimental feature to enable stop and go for Subaru Global models with manual handbrake. Models with electric parking brake should keep this disabled. Thanks to martinl for this implementation!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This feature is currently not available on this platform.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start the car to check car compatibility.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable &quot;Always Offroad&quot; in Device panel, or turn vehicle off to toggle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SunnylinkCommunityPopup</name>
+    <message>
+        <source>Scan the QR code and join us!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Join the sunnypilot Community Forum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We&apos;re excited to announce our &lt;b&gt;sunnypilot Community Forum&lt;/b&gt;&lt;br&gt;&lt;br&gt;Over the years, Discord just hasn&apos;t scaled well for our growing community.&lt;br&gt;It&apos;s noisy, unsearchable, and great discussions disappear too easily.&lt;br&gt;Our new community forum aims to fix that by making it easier to &lt;b&gt;find answers, share ideas, track feedback, report bugs, help newcomers&lt;/b&gt; and more!&lt;br&gt;&lt;br&gt;&lt;b&gt;Here&apos;s what&apos;s waiting for you:&lt;/b&gt;&lt;br&gt;• Fully &lt;b&gt;indexable&lt;/b&gt; and discoverable through search engines 🔎&lt;br&gt;• &lt;b&gt;AI-powered&lt;/b&gt;🤖 topic and chat summaries, spam detection, and more&lt;br&gt;• A &lt;b&gt;trust-level system&lt;/b&gt;✅ that rewards meaningful contributions&lt;br&gt;• Designed to work &lt;b&gt;on your own time&lt;/b&gt;.🧘&lt;br&gt;&lt;br&gt;Scan the QR code on the right and join the discussion!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2402,10 +2512,6 @@ Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>[Don&apos;t use] Enable sunnylink uploader</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>🚀 sunnylink 🚀</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2419,6 +2525,10 @@ Data</source>
     </message>
     <message>
         <source>Click the sponsor button for more details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable sunnylink uploader (infrastructure test)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2437,10 +2547,6 @@ Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>If sponsorship status was not updated, please contact a moderator on Discord at https://discord.gg/sunnypilot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Scan the QR code to visit sunnyhaibin&apos;s GitHub Sponsors page</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2449,15 +2555,19 @@ Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Join our community on Discord at https://discord.gg/sunnypilot and reach out to a moderator to confirm your sponsor status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pair your GitHub account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Early Access: Become a sunnypilot Sponsor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If sponsorship status was not updated, please contact a moderator on our forum at https://community.sunnypilot.ai</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Join our Community Forum at https://community.sunnypilot.ai and reach out to a moderator if you have issues</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2477,6 +2587,25 @@ Data</source>
     </message>
     <message>
         <source>You must accept the Terms and Conditions to use sunnypilot. Read the latest terms at &lt;span style=&apos;color: #465BEA;&apos;&gt;https://comma.ai/terms&lt;/span&gt; before continuing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TeslaSettings</name>
+    <message>
+        <source>Warning: May experience steering oscillations below %5 %6 during turns, recommend disabling this feature if you experience these.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allows the driver to provide limited steering input while openpilot is engaged.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only works above %4 %6.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cooperative Steering (Beta)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2540,7 +2669,7 @@ Data</source>
     </message>
     <message>
         <source>openpilot longitudinal control may come in a future update.</source>
-        <translation>Le contrôle longitudinal openpilot pourrait être disponible dans une future mise à jour.</translation>
+        <translation type="vanished">Le contrôle longitudinal openpilot pourrait être disponible dans une future mise à jour.</translation>
     </message>
     <message>
         <source>End-to-End Longitudinal Control</source>
@@ -2575,14 +2704,6 @@ Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enable Dynamic Experimental Control</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable toggle to allow the model to determine when to use sunnypilot ACC or sunnypilot End to End Longitudinal.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>When enabled, pressing the accelerator pedal will disengage sunnypilot.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2608,6 +2729,10 @@ Data</source>
     </message>
     <message>
         <source>Enable the sunnypilot longitudinal control (alpha) toggle to allow Experimental mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sunnypilot longitudinal control may come in a future update.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2719,10 +2844,6 @@ Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Display useful metrics below the chevron that tracks the lead car (only applicable to cars with openpilot longitudinal control).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enable Tesla Rainbow Mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2807,19 +2928,39 @@ Bottom</source>
         <source>Display real-time parameters and metrics from various sources.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>When enabled, the speedometer on the onroad screen is not displayed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Turn Signals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When enabled, visual turn indicators are drawn on the HUD.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display useful metrics below the chevron that tracks the lead car (only applicable to cars with sunnypilot longitudinal control).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This feature requires sunnypilot longitudinal control to be available.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WiFiPromptWidget</name>
     <message>
-        <source>Open</source>
+        <source>sunnypilot Community</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Maximize your training data uploads to improve openpilot&apos;s driving models.</source>
+        <source>Need help or have ideas?&lt;br&gt;&lt;b&gt;Join&lt;/b&gt; our community now!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;span style=&apos;font-family: &quot;Noto Color Emoji&quot;;&apos;&gt;🔥&lt;/span&gt; Firehose Mode &lt;span style=&apos;font-family: Noto Color Emoji;&apos;&gt;🔥&lt;/span&gt;</source>
+        <source>Learn More</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
