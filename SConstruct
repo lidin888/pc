@@ -375,6 +375,10 @@ if Dir('#tools/cabana/').exists() and GetOption('extras'):
   if arch != "larch64":
     SConscript(['tools/cabana/SConscript'])
 
+# Build USB camera support
+if arch == "x86_64":
+  SConscript(['tools/webcam/SConscript'])
+
 external_sconscript = GetOption('external_sconscript')
 if external_sconscript:
   SConscript([external_sconscript])
