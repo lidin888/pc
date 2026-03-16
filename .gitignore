@@ -57,6 +57,10 @@ compile_commands.json
 !third_party/libyuv/**/*.a
 # Don't ignore third_party raylib libraries
 !third_party/raylib/**/*.a
+# Don't ignore third_party snpe libraries
+!third_party/snpe/**/*.so
+!third_party/snpe/**/*.so.*
+!third_party/snpe/**/*.a
 compare_runtime*.html
 
 persist
