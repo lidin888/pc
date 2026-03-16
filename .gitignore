@@ -48,6 +48,15 @@ a.out
 config.json
 clcache
 compile_commands.json
+# Don't ignore third_party acados libraries
+!third_party/acados/**/*.so
+!third_party/acados/**/*.so.*
+!third_party/acados/**/*.dylib
+!third_party/acados/**/*.a
+# Don't ignore third_party libyuv libraries
+!third_party/libyuv/**/*.a
+# Don't ignore third_party raylib libraries
+!third_party/raylib/**/*.a
 compare_runtime*.html
 
 persist
