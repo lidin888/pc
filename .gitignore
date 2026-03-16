@@ -27,6 +27,12 @@ a.out
 .*.swo
 .*.un~
 *.tmp
+# Don't ignore third_party acados libraries
+!third_party/acados/**/*.so
+!third_party/acados/**/*.so.*
+!third_party/acados/**/*.dylib
+!third_party/acados/**/*.a
+
 *.o
 *.o-*
 *.os
