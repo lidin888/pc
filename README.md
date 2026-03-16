@@ -1,5 +1,25 @@
 ![](https://user-images.githubusercontent.com/47793918/233812617-beab2e71-57b9-479e-8bff-c3931347ca40.png)
 
+## ⚠️ Cloning this Repository
+
+**Due to GitHub LFS quota limits, please clone with LFS skip option:**
+
+```bash
+GIT_LFS_SKIP_SMUDGE=1 git clone -b sunnyplot-du https://github.com/lidin888/pc.git sunnypilot-dt
+```
+
+This will clone the repository without downloading LFS files. If you need LFS files later:
+```bash
+cd sunnypilot-dt
+# Download specific file types only
+git lfs pull --include="*.onnx"
+
+# Or download all LFS files (may fail if quota exceeded)
+git lfs pull
+```
+
+---
+
 ## 🌞 What is sunnypilot?
 [sunnypilot](https://github.com/sunnyhaibin/sunnypilot) is a fork of comma.ai's openpilot, an open source driver assistance system. sunnypilot offers the user a unique driving experience for over 300+ supported car makes and models with modified behaviors of driving assist engagements. sunnypilot complies with comma.ai's safety rules as accurately as possible.
 
