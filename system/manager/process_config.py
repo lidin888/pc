@@ -15,6 +15,7 @@ from sunnypilot.sunnylink.utils import sunnylink_need_register, sunnylink_ready,
 import glob
 
 WEBCAM = os.getenv("USE_WEBCAM") is not None
+USBCAM = os.getenv("USE_USBCAM") is not None
 NO_DM = os.getenv("NO_DM") is not None
 
 # def usb_imu_available() -> bool:
@@ -117,12 +118,13 @@ def and_(*fns):
 procs = [
   DaemonProcess("manage_athenad", "system.athena.manage_athenad", "AthenadPid"),
 
-  NativeProcess("loggerd", "system/loggerd", ["./loggerd"], logging, enabled=not PC),
+  #NativeProcess("loggerd", "system/loggerd", ["./loggerd"], logging, enabled=not PC),
   NativeProcess("encoderd", "system/loggerd", ["./encoderd"], only_onroad, enabled=not PC),
   NativeProcess("stream_encoderd", "system/loggerd", ["./encoderd", "--stream"], notcar, enabled=not PC),
   PythonProcess("logmessaged", "system.logmessaged", always_run, enabled=not PC),
 
-  NativeProcess("camerad", "system/camerad", ["./camerad"], driverview, enabled=not WEBCAM),
+  NativeProcess("usbcamerad", "tools/webcam", ["./camerad"], driverview, enabled=USBCAM),
+  #NativeProcess("camerad", "system/camerad", ["./camerad"], driverview, enabled=not WEBCAM),
   PythonProcess("webcamerad", "tools.webcam.camerad", driverview, enabled=WEBCAM),
   PythonProcess("proclogd", "system.proclogd", only_onroad, enabled=not PC),
   PythonProcess("journald", "system.journald", only_onroad, enabled=not PC),
