@@ -48,9 +48,9 @@ class VCruiseHelperSP:
     self.v_cruise_min = 0
     self.enabled_prev = False
 
-    self.custom_acc_enabled = self.params.get_bool("CustomAccIncrementsEnabled")
-    self.short_increment = self.params.get("CustomAccShortPressIncrement", return_default=True)
-    self.long_increment = self.params.get("CustomAccLongPressIncrement", return_default=True)
+    self.custom_acc_enabled = True  # 默认启用自定义增量
+    self.short_increment = 1  # 短按+1
+    self.long_increment = 10  # 长按+10
 
     self.enable_button_timers = CRUISE_BUTTON_TIMER
 
@@ -65,9 +65,10 @@ class VCruiseHelperSP:
     self.req_minus = False
 
   def read_custom_set_speed_params(self) -> None:
-    self.custom_acc_enabled = self.params.get_bool("CustomAccIncrementsEnabled")
-    self.short_increment = self.params.get("CustomAccShortPressIncrement", return_default=True)
-    self.long_increment = self.params.get("CustomAccLongPressIncrement", return_default=True)
+    # 保持默认值：短按+1，长按+10
+    self.custom_acc_enabled = True
+    self.short_increment = 1
+    self.long_increment = 10
 
   def update_v_cruise_delta(self, long_press: bool, v_cruise_delta: float) -> tuple[bool, float]:
     if not self.custom_acc_enabled:

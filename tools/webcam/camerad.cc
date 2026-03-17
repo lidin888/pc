@@ -4,7 +4,7 @@
 #include <vector>
 
 #define USE_ROADCAMERASTATE
-#define USE_WIDEROADCAMERASTATE
+//#define USE_WIDEROADCAMERASTATE
 #define CAM_WIDTH 2592//1920
 #define CAM_HEIGHT 1944//1080
 #define CAM_FPS 20
