@@ -52,7 +52,7 @@ for model_name in ['driving_vision', 'driving_policy', 'dmonitoring_model']:
   flags = {
     'larch64': 'DEV=QCOM',
     'Darwin': 'DEV=CPU IMAGE=0',
-  }.get(arch, 'DEV=GPU BEAM=0 IMAGE=0')  # 确保使用GPU(opencl)
+  }.get(arch, 'GPU=1 DEV=GPU BEAM=0 IMAGE=0')  # 确保使用GPU(opencl)
   tg_compile(flags, model_name)
 
 # Compile BIG model if USB GPU is available

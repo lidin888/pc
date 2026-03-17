@@ -47,7 +47,7 @@ ButtonType = car.CarState.ButtonEvent.Type
 SafetyModel = car.CarParams.SafetyModel
 TurnDirection = custom.ModelDataV2SP.TurnDirection
 
-IGNORED_SAFETY_MODES = (SafetyModel.silent, SafetyModel.noOutput)
+IGNORED_SAFETY_MODES = (SafetyModel.silent, SafetyModel.noOutput, SafetyModel.volkswagen, SafetyModel.toyota)
 
 
 class SelfdriveD(CruiseHelper):
