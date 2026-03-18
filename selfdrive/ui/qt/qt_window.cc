@@ -5,7 +5,7 @@ void setMainWindow(QWidget *w) {
   const QSize sz = QGuiApplication::primaryScreen()->size();
 
   if (Hardware::PC() && scale == 1.0 && !(sz - DEVICE_SCREEN_SIZE).isValid()) {
-    w->setMinimumSize(QSize(640, 480)); // allow resize smaller than fullscreen
+    w->setMinimumSize(QSize(1920, 1080)); // allow resize smaller than fullscreen
     w->setMaximumSize(DEVICE_SCREEN_SIZE);
     w->resize(sz);
   } else {
@@ -21,7 +21,10 @@ void setMainWindow(QWidget *w) {
 
   w->setWindowState(Qt::WindowFullScreen);
   w->setVisible(true);
-
+// 如果设置了FULLSCREEN环境变量或在设备上运行，则全屏显示
+  if (util::getenv("FULLSCREEN", 0) || !Hardware::PC()) {
+    w->setWindowState(Qt::WindowFullScreen);
+  }
   // ensure we have a valid eglDisplay, otherwise the ui will silently fail
   void *egl = native->nativeResourceForWindow("egldisplay", w->windowHandle());
   assert(egl != nullptr);
