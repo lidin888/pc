@@ -24,6 +24,10 @@ MIN_STD_SANITY_CHECK = 1e-5  # m or rad
 MAX_FILTER_REWIND_TIME = 0.8  # s
 MAX_SENSOR_TIME_DIFF = 0.1  # s
 YAWRATE_CROSS_ERR_CHECK_FACTOR = 30
+# 串口 IMU 在弯道可能出现持续偏置：当视觉 yaw 标准差足够可信时，
+# 再叠加一个“绝对残差上限”来约束 gyro 与 camodo 的 yaw 偏差。
+GYRO_CAMODO_YAW_RATE_ERR_MAX = 0.07  # rad/s，gyro-camodo yaw 绝对残差上限
+CAMODO_YAW_STD_CONFIDENT_MAX = 0.20  # rad/s，camodo yaw std 低于该值才启用绝对残差门控
 INPUT_INVALID_LIMIT = 2.0 # 1 (camodo) / 9 (sensor) bad input[s] ignored
 INPUT_INVALID_RECOVERY = 10.0 # ~10 secs to resume after exceeding allowed bad inputs by one
 POSENET_STD_INITIAL_VALUE = 10.0
@@ -131,9 +135,12 @@ class LocationEstimator:
       gyro_bias = self.kf.x[States.GYRO_BIAS]
       gyro_camodo_yawrate_err = np.abs((meas[2] - gyro_bias[2]) - self.camodo_yawrate_distribution[0])
       gyro_camodo_yawrate_err_threshold = YAWRATE_CROSS_ERR_CHECK_FACTOR * self.camodo_yawrate_distribution[1]
-      gyro_valid = gyro_camodo_yawrate_err < gyro_camodo_yawrate_err_threshold
+      gyro_cross_valid = gyro_camodo_yawrate_err < gyro_camodo_yawrate_err_threshold  # 相对门限：按 camodo std 自适应
+      camodo_std_untrusted = self.camodo_yawrate_distribution[1] > CAMODO_YAW_STD_CONFIDENT_MAX  # std 大说明视觉不可信
+      gyro_abs_valid = camodo_std_untrusted or (gyro_camodo_yawrate_err < GYRO_CAMODO_YAW_RATE_ERR_MAX)  # 视觉可信时再看绝对上限
+      gyro_valid = gyro_cross_valid and gyro_abs_valid  # 两层门控同时通过才接收 gyro
 
-      if np.linalg.norm(meas) >= ROTATION_SANITY_CHECK or not gyro_valid:
+      if np.linalg.norm(meas) >= ROTATION_SANITY_CHECK or not gyro_valid:  # 角速度越界或门控失败时，直接丢弃该帧输入
         return HandleLogResult.INPUT_INVALID
 
       gyro_res = self.kf.predict_and_observe(sensor_time, ObservationKind.PHONE_GYRO, meas)
