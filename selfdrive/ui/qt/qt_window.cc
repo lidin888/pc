@@ -4,10 +4,13 @@ void setMainWindow(QWidget *w) {
   const float scale = util::getenv("SCALE", 1.0f);
   const QSize sz = QGuiApplication::primaryScreen()->size();
 
-  if (Hardware::PC() && scale == 1.0 && !(sz - DEVICE_SCREEN_SIZE).isValid()) {
+  if (Hardware::PC() && scale == 1.0) {
+    // PC环境下自适应分辨率并全屏显示
     w->setMinimumSize(QSize(1920, 1080)); // allow resize smaller than fullscreen
     w->setMaximumSize(DEVICE_SCREEN_SIZE);
     w->resize(sz);
+    // PC环境下全屏显示，自动适应屏幕分辨率
+    w->showFullScreen();
   } else {
     w->setFixedSize(DEVICE_SCREEN_SIZE * scale);
   }
