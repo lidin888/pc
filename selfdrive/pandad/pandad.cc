@@ -112,13 +112,14 @@ void can_send_thread(Panda *panda, bool fake_send) {
     cereal::Event::Reader event = cmsg.getRoot<cereal::Event>();
 
     // Don't send if older than 1 second
-    if ((nanos_since_boot() - event.getLogMonoTime() < 1e9) && !fake_send) {
+    // Disabled for black panda (F4 device) as it doesn't support timestamp checking
+    // if ((nanos_since_boot() - event.getLogMonoTime() < 1e9) && !fake_send) {
       LOGT("sending sendcan to panda: %s", (panda->hw_serial()).c_str());
       panda->can_send(event.getSendcan());
       LOGT("sendcan sent to panda: %s", (panda->hw_serial()).c_str());
-    } else {
-      LOGE("sendcan too old to send: %" PRIu64 ", %" PRIu64, nanos_since_boot(), event.getLogMonoTime());
-    }
+    // } else {
+    //   LOGE("sendcan too old to send: %" PRIu64 ", %" PRIu64, nanos_since_boot(), event.getLogMonoTime());
+    // }
   }
 }
 
