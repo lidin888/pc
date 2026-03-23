@@ -34,7 +34,8 @@ def set_core_affinity(cores: list[int]) -> None:
 
 
 def config_realtime_process(cores: int | list[int], priority: int) -> None:
-  gc.disable()
+  # gc.disable()  # DISABLED: pycapnp C++ circular refs need GC
+  gc.set_threshold(5000, 50, 20)  # 约每5秒一次gen0回收，暂停<0.5ms
   if sys.platform == 'linux' and not PC:
     os.sched_setscheduler(0, os.SCHED_FIFO, os.sched_param(priority))
   c = cores if isinstance(cores, list) else [cores, ]
