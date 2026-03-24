@@ -45,7 +45,8 @@ function install_ubuntu_deps() {
     libcurl4-openssl-dev \
     locales \
     git \
-    xvfb
+    xvfb \
+    setserial
 
   if [[ -d "/etc/udev/rules.d/" ]]; then
     # Setup jungle udev rules
@@ -69,6 +70,12 @@ EOF
     # Setup adb udev rules
     $SUDO tee /etc/udev/rules.d/50-comma-adb.rules > /dev/null <<EOF
 SUBSYSTEM=="usb", ATTR{idVendor}=="04d8", ATTR{idProduct}=="1234", ENV{adb_user}="yes"
+EOF
+
+    # Setup USB serial low latency udev rules
+    $SUDO tee /etc/udev/rules.d/99-ttyusb-lowlatency.rules > /dev/null <<EOF
+ACTION=="add", KERNEL=="ttyUSB[0-9]*", RUN+="/usr/bin/setserial /dev/%k low_latency"
+ACTION=="add", KERNEL=="ttyACM[0-9]*", RUN+="/usr/bin/setserial /dev/%k low_latency"
 EOF
 
     $SUDO udevadm control --reload-rules && $SUDO udevadm trigger || true
