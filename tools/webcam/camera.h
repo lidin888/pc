@@ -103,7 +103,6 @@ public:
   VisionStreamType get_stream_type() { return m_type_vision; }
   int width() {return m_width;}
   int height() {return m_height;}
-  bool is_initialized() { return m_initialized; }
 
   bool init_cam();
 
@@ -131,7 +130,6 @@ private:
   uint64_t m_frame_sof;
   uint64_t m_frame_eof;
   PubMaster *m_pm;
-  bool m_initialized;              // Camera initialization status
 
   static std::map<VisionStreamType, FrameInfo> m_shared_frame_info;
   static std::mutex m_shared_frame_mutex;

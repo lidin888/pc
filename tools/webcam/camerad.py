@@ -6,18 +6,8 @@ from collections import namedtuple
 from msgq.visionipc import VisionIpcServer, VisionStreamType
 from cereal import messaging
 
+from openpilot.tools.webcam.camera import CameraMJPG
 from openpilot.common.realtime import Ratekeeper
-
-# 摄像头后端选择开关
-# 设置环境变量 USE_VAAPI=1 使用 VAAPI 硬件加速，否则使用原始 CameraMJPG
-USE_VAAPI = os.getenv("USE_VAAPI", "0") == "1"
-
-if USE_VAAPI:
-  from openpilot.tools.webcam.camera_vaapi import CameraVAAPI as CameraBackend
-  print("🚀 使用 VAAPI 硬件加速摄像头")
-else:
-  from openpilot.tools.webcam.camera import CameraMJPG as CameraBackend
-  print("📷 使用原始 CameraMJPG")
 
 WIDE_CAM = os.getenv("WIDE_CAM")
 CameraType = namedtuple("CameraType", ["msg_name", "stream_type", "cam_id"])
@@ -37,7 +27,7 @@ class Camerad:
     for c in CAMERAS:
       cam_device = f"/dev/video{c.cam_id}"
       print(f"opening {c.msg_name} at {cam_device}")
-      cam = CameraBackend(c.msg_name, c.stream_type, cam_device)
+      cam = CameraMJPG(c.msg_name, c.stream_type, cam_device)
       self.cameras.append(cam)
       self.vipc_server.create_buffers(c.stream_type, 20, cam.W, cam.H)
 

@@ -5,8 +5,8 @@
 
 #define USE_ROADCAMERASTATE
 #define USE_WIDEROADCAMERASTATE
-#define CAM_WIDTH 2592//2592//1920
-#define CAM_HEIGHT 1944//1944//1080
+#define CAM_WIDTH 2592//1920
+#define CAM_HEIGHT 1944//1080
 #define CAM_FPS 20
 
 const char *PATH_VIDEOS = "/home/op/videos/"; // Save record videos.
@@ -80,10 +80,15 @@ const char *get_device(const char *addr, char *device)
 }
 */
 void camerad::camera_runner() {
-  VisionIpcServer vipc_server("camerad");
+  //cl_device_id device_id = cl_get_device_id(CL_DEVICE_TYPE_DEFAULT);
+  //cl_device_type device_type = CL_DEVICE_TYPE_GPU | CL_DEVICE_TYPE_CPU;
+  cl_device_type device_type = CL_DEVICE_TYPE_GPU;
+  cl_device_id device_id = cl_get_device_id(device_type);
+  cl_context context = CL_CHECK_ERR(clCreateContext(NULL, 1, &device_id, NULL, NULL, &err));
+  VisionIpcServer vipc_server("camerad", device_id, context);
 
   for (camera *cam : m_cameras) {
-    vipc_server.create_buffers(cam->get_stream_type(),20, cam->width(), cam->height());
+    vipc_server.create_buffers(cam->get_stream_type(),20, cam->width(), cam->height()); //false,
   }
   vipc_server.start_listener();
   RateKeeper rk("roadCameraState", 20);
@@ -91,10 +96,8 @@ void camerad::camera_runner() {
   uint32_t frame_id = 1;
   while (!m_do_exit) {
     for (camera *cam : m_cameras) {
-      if (cam->is_initialized()) {
-        cam->send_yuv(frame_id, vipc_server);
+          cam->send_yuv(frame_id, vipc_server);
       }
-    }
 
     frame_id++;
     rk.keepTime();
@@ -121,64 +124,40 @@ void camerad::run() {
 #ifdef USE_ROADCAMERASTATE
   if (strlen(device_path0) == 0)
   {
+      //std::cerr << "Error finding video " << "usb-0000:04:00.3-2.2" << std::endl;
       strcpy(device_path0, "/dev/video0");
-  }
-  // 检查设备是否存在
-  if (access(device_path0, F_OK) != 0) {
-      std::cerr << "Warning: Camera device not found: " << device_path0 << std::endl;
-      std::cerr << "Skipping road camera initialization" << std::endl;
+      // return;
   }
 #endif
 
 #ifdef USE_ROADCAMERASTATE
   if (strlen(device_path1) == 0)
   {
+      //std::cerr << "Error finding video " << "usb-0000:04:00.3-2.3" << std::endl;
       strcpy(device_path1, "/dev/video2");
-  }
-  // 检查设备是否存在
-  if (access(device_path1, F_OK) != 0) {
-      std::cerr << "Warning: Camera device not found: " << device_path1 << std::endl;
-      std::cerr << "Skipping wide road camera initialization" << std::endl;
+      // return;
   }
 #endif
 
 #ifdef USE_ROADCAMERASTATE
-  const char* device0 = device_path0;
+  const char* device0 = device_path0;//"/dev/video0";
   int width = CAM_WIDTH;
   int height = CAM_HEIGHT;
-  std::string output_prefix = PATH_VIDEOS;
-  // 仅在设备存在时创建摄像头对象
-  if (access(device0, F_OK) == 0) {
-    camera *cam_road = new camera(device0, "roadCameraState", width, height, CAM_FPS, output_prefix);
-    m_cameras.push_back(cam_road);
-  }
+  std::string output_prefix = PATH_VIDEOS; // PC has a large hard drive capacity, so you can use it as a dashcam.
+  camera *cam_road = new camera(device0, "roadCameraState", width, height, CAM_FPS, output_prefix);
+  m_cameras.push_back(cam_road);
 #endif
 
 #ifdef USE_WIDEROADCAMERASTATE
-  const char* device1 = device_path1;
+  const char* device1 = device_path1; //"/dev/video2";
   width = CAM_WIDTH;
   height = CAM_HEIGHT;
-  // 仅在设备存在时创建摄像头对象
-  if (access(device1, F_OK) == 0) {
-    camera *cam_wide = new camera(device1, "wideRoadCameraState", width, height,  CAM_FPS, output_prefix);
-    m_cameras.push_back(cam_wide);
-  }
+  camera *cam_wide = new camera(device1, "wideRoadCameraState", width, height,  CAM_FPS, output_prefix);
+  m_cameras.push_back(cam_wide);
 #endif
 
-  // 初始化所有摄像头
-  for (auto it = m_cameras.begin(); it != m_cameras.end(); ) {
-    if (!(*it)->run()) {
-      std::cerr << "Failed to initialize camera: " << (*it)->get_vision_type() << std::endl;
-      delete *it;  // 清理未成功初始化的摄像头
-      it = m_cameras.erase(it);
-    } else {
-      ++it;
-    }
-  }
-
-  if (m_cameras.empty()) {
-    std::cerr << "Error: No cameras were successfully initialized. Exiting." << std::endl;
-    return;
+  for (camera *cam : m_cameras) {
+      cam->run();
   }
 
   std::thread th_cam(&camerad::camera_runner, this);

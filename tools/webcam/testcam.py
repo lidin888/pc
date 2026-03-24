@@ -6,9 +6,9 @@ video = cv.VideoCapture()     # 调用摄像头，PC电脑中0为内置摄像头
 video.open(2, apiPreference=cv.CAP_V4L2)#
 
 print("focus = ", video.set(cv.CAP_PROP_FOURCC, cv.VideoWriter_fourcc('M', 'J', 'P', 'G')))
-video.set(cv.CAP_PROP_FRAME_WIDTH, 1920)#1920
-video.set(cv.CAP_PROP_FRAME_HEIGHT, 1080)#1080
-video.set(cv.CAP_PROP_FPS, 30)
+video.set(cv.CAP_PROP_FRAME_WIDTH, 2592)#2592
+video.set(cv.CAP_PROP_FRAME_HEIGHT, 1944)#1944
+video.set(cv.CAP_PROP_FPS, 20)
 video.set(cv.CAP_PROP_BRIGHTNESS,-10)
 #video.set(cv.CAP_PROP_AUTO_EXPOSURE, 3)
 #video.set(cv.CAP_PROP_EXPOSURE, 50)
@@ -22,7 +22,7 @@ print("fps = ", video.get(cv.CAP_PROP_FPS))
 
 start = int(round(time.time() * 1000))
 
-out = cv.VideoWriter('output.mp4', cv.VideoWriter_fourcc(*'mp4v'), 20.0, (1920, 1080))
+out = cv.VideoWriter('output.mp4', cv.VideoWriter_fourcc(*'mp4v'), 20.0, (2592, 1944))
 #out = cv.VideoWriter('output.mp4', cv.VideoWriter_fourcc('M','P','4','2'), 20.0, (1920, 1080))
 
 #cv2.VideoWriter_fourcc(*'X265')
