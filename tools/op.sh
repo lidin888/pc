@@ -119,12 +119,8 @@ function op_check_git() {
   fi
 
   echo "Checking for git lfs files..."
-  if [[ $(file -b $OPENPILOT_ROOT/selfdrive/modeld/models/dmonitoring_model.onnx) == "data" ]]; then
-    echo -e " ↳ [${GREEN}✔${NC}] git lfs files found."
-  else
-    echo -e " ↳ [${RED}✗${NC}] git lfs files not found! Run 'git lfs pull'"
-    return 1
-  fi
+  # LFS is disabled - all files are stored as regular Git files
+  echo -e " ↳ [${GREEN}✔${NC}] git lfs not used, all files are regular Git files."
 
   echo "Checking for git submodules..."
   for name in $(git config --file .gitmodules --get-regexp path | awk '{ print $2 }' | tr '\n' ' '); do
@@ -253,15 +249,8 @@ function op_setup() {
   et="$(date +%s)"
   echo -e " ↳ [${GREEN}✔${NC}] Submodules installed successfully in $((et - st)) seconds."
 
-  echo "Pulling git lfs files..."
-  st="$(date +%s)"
-  if ! retry 3 git lfs pull; then
-    echo -e " ↳ [${RED}✗${NC}] Pulling git lfs files failed!"
-    loge "ERROR_GIT_LFS"
-    return 1
-  fi
-  et="$(date +%s)"
-  echo -e " ↳ [${GREEN}✔${NC}] Files pulled successfully in $((et - st)) seconds."
+  # LFS is disabled - no need to pull LFS files
+  echo "Skipping git lfs pull (LFS is disabled)..."
 
   op_check
 }
