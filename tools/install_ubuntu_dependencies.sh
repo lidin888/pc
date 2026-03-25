@@ -67,7 +67,8 @@ function install_ubuntu_common_requirements() {
     libqt5x11extras5-dev \
     libqt5opengl5-dev \
     libopencv-dev \
-    libturbojpeg-dev
+    libturbojpeg-dev \
+    setserial
 }
 
 # Install Ubuntu 24.04 LTS packages
@@ -120,6 +121,12 @@ SUBSYSTEM=="usb", ATTRS{idVendor}=="3801", ATTRS{idProduct}=="ddcc", MODE="0666"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="3801", ATTRS{idProduct}=="ddee", MODE="0666"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="bbaa", ATTRS{idProduct}=="ddcc", MODE="0666"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="bbaa", ATTRS{idProduct}=="ddee", MODE="0666"
+EOF
+
+    # Setup USB serial low latency udev rules
+    $SUDO tee /etc/udev/rules.d/99-ttyusb-lowlatency.rules > /dev/null <<EOF
+ACTION=="add", KERNEL=="ttyUSB[0-9]*", RUN+="/usr/bin/setserial /dev/%k low_latency"
+ACTION=="add", KERNEL=="ttyACM[0-9]*", RUN+="/usr/bin/setserial /dev/%k low_latency"
 EOF
 
     $SUDO udevadm control --reload-rules && $SUDO udevadm trigger || true
