@@ -245,8 +245,10 @@ SConscript(['sunnypilot/SConscript'])
 if Dir('#tools/cabana/').exists() and arch != "larch64":
   SConscript(['tools/cabana/SConscript'])
 
-if Dir('#tools/webcam/').exists() and arch == "x86_64":
-  SConscript(['tools/webcam/SConscript'])
+# Webcam tool is deprecated and has compatibility issues with current msgq
+# Skip building it for now
+# if Dir('#tools/webcam/').exists() and arch == "x86_64":
+#   SConscript(['tools/webcam/SConscript'])
 
 
 env.CompilationDatabase('compile_commands.json')
